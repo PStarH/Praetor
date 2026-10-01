@@ -12,6 +12,7 @@ packages/core/screenshots/
 
 # Dependencies
 node_modules/
+.pnpm-store
 .pnpm-store/
 
 # Build outputs
@@ -53,6 +54,7 @@ temp/
 *.tmp
 
 # Git worktrees (local agent isolation)
+.worktrees
 .worktrees/
 
 # Commander state
@@ -182,6 +184,7 @@ apps/api/dist/
 .mimocode/
 .sisyphus/
 .codex/
+.serena
 .serena/
 
 # Root-level HTML artifacts (research reports, benchmark outputs) — regenerated on demand, do not commit
@@ -228,6 +231,7 @@ private/
 __pycache__/
 *.pyc
 *.egg-info/
+.venv
 .venv/
 .ruff_cache/
 .pytest_cache/

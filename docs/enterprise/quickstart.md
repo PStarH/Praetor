@@ -1,10 +1,10 @@
 # Enterprise Pilot Quickstart
 
-For the current enterprise evaluation, start with [Shadow Pilot Phase A](../pilot/shadow/README.md).
-It evaluates historical observations without executing or authorizing external writes.
-The live-write acceptance procedure below is a gated engineering reference;
-Kubernetes rollback is frozen and is not offered as the current customer pilot.
-Shared multi-tenant hosting remains alpha.
+For governed external actions, start with the [GitHub pilot](../pilot/github/README.md)
+(same-repository PR creation with approval and response-loss recovery).
+For historical observation evaluation without external writes, see [Shadow Pilot Phase A](../pilot/shadow/README.md).
+The live-write procedure below is a gated engineering reference for Kubernetes rollback;
+live Kubernetes rollback remains frozen. Shared multi-tenant hosting remains alpha.
 
 ## Future live-write acceptance target
 

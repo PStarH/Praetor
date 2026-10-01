@@ -258,7 +258,7 @@ for the contract that locks this in place.
 One step: append a `registerRouter()` call in the manifest section of
 [apps/api/src/index.ts](../apps/api/src/index.ts). No scattered `app.use()` needed —
 `mountRegisteredRouters(app)` mounts everything in registration order. See
-[apps/api/tests/routerRegistry.test.ts](../apps/api/tests/routerRegistry.test.ts) for the contract.
+[apps/api/test/routerRegistry.test.ts](../apps/api/test/routerRegistry.test.ts) for the contract.
 
 ### Adding a plugin
 

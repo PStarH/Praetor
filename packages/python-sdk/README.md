@@ -24,7 +24,7 @@ from commander import CommanderClient
 async def main():
     async with CommanderClient(
         api_key="cmd-...",
-        base_url="http://localhost:3001",
+        base_url="http://localhost:4000",
     ) as client:
         # Zero-cost planning
         plan = await client.plan("audit repository for security vulnerabilities")
@@ -248,7 +248,7 @@ For scripts and non-async contexts:
 ```python
 from commander import CommanderClientSync
 
-client = CommanderClientSync(api_key="cmd-...", base_url="http://localhost:3001")
+client = CommanderClientSync(api_key="cmd-...", base_url="http://localhost:4000")
 result = client.run("analyze this")
 client.close()
 ```

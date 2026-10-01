@@ -9,6 +9,7 @@ Product and operator docs that ship with the repository.
 | Doc | Purpose |
 |-----|---------|
 | [getting-started.md](./getting-started.md) | Quick start |
+| [pilot/github/README.md](./pilot/github/README.md) | GitHub pilot: action approval and response-loss recovery |
 | [pilot/shadow/README.md](./pilot/shadow/README.md) | Current enterprise historical evaluation; no external writes |
 | [enterprise/quickstart.md](./enterprise/quickstart.md) | Gated live-write acceptance reference; rollback frozen |
 | [enterprise/workflow-template-kubernetes-rollback.md](./enterprise/workflow-template-kubernetes-rollback.md) | Future live-write workflow mapping; rollback frozen |

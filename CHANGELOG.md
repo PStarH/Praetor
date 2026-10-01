@@ -56,39 +56,6 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 - Empty catch block in API shutdown handler
 - TypeScript type errors in `orchestrator.ts` (runContext, invocationProfile)
 
-### Security
-
-- CD pipeline now generates random API key on first deploy instead of using example default
-- Post-deploy smoke tests validate health, status, and OpenAPI endpoints
-
-### Added (v0.2.1-pre)
-
-- **SQLite persistence**: `SqliteWarRoomStore` with WAL mode, 9 indexes, transaction safety
-  - Enable with `WARROOM_STORAGE=sqlite` environment variable
-  - `createWarRoomStore()` factory for transparent storage switching
-- **Prettier + EditorConfig**: Code formatting enforced in CI
-- **Staging environment**: CD pipeline deploys to staging before production
-- **260+ new unit tests** across 15 test files covering:
-  - Sandbox: `execPolicy`, `lane`
-  - Ultimate: `deliberation`
-  - Memory: `userModel`, `jsonStore`, `curator`
-  - Plugin: `pluginManager`
-  - Orchestration: `taskPool`
-  - Runtime: `capabilityMatcher`, `executionTrace`, `messageBus`, `provenance`
-  - API: `securityMiddleware`, `governanceCheckpoint`, `episodicMemoryStore`
-
-### Changed
-
-- ESLint `no-explicit-any` promoted from warn to error (with legacy file exemptions)
-- Coverage thresholds raised: statements 40→60%, functions 55→70%, lines 40→60%
-- API orchestrator now delegates to core `deliberate()` instead of inline keyword matching
-- Removed `Math.random()` from delegation planning for deterministic behavior
-- Shutdown handler now logs persist errors instead of silent catch
-
-### Fixed
-
-- Empty catch block in API shutdown handler
-- TypeScript type errors in `orchestrator.ts` (runContext, invocationProfile)
 
 ## [0.2.0] — 2026-05-19
 
@@ -203,4 +170,4 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 - 233+ tests across module, integration, E2E, and chaos tests
 - MIT License
 
-[Unreleased]: https://github.com/PStarH/Commander/compare/main...HEAD
+[Unreleased]: https://github.com/PStarH/Commander/compare/master...HEAD

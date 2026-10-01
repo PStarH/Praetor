@@ -10,7 +10,7 @@ import re
 import shutil
 import stat
 
-ROOT = pathlib.Path("/Users/sampan/Documents/GitHub/Commander")
+ROOT = pathlib.Path(__file__).resolve().parent.parent
 
 # ============================================================================
 # Helpers

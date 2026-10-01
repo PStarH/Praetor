@@ -1,314 +1,352 @@
 <p align="center">
-  <img src="https://img.shields.io/badge/license-MIT-yellow?style=flat-square" />
+  <a href="https://github.com/PStarH/Commander/actions/workflows/ci.yml?query=branch%3Amaster"><img src="https://img.shields.io/github/actions/workflow/status/PStarH/Commander/ci.yml?branch=master&style=flat-square&label=CI&logo=github" /></a>
+  <img src="https://img.shields.io/github/license/PStarH/Commander?style=flat-square&color=EAB308" />
 </p>
 
 <h1 align="center">Commander</h1>
-<p align="center"><strong>ローカルエージェントランタイムとアクション管理ゲートウェイ · Alpha</strong></p>
+<p align="center"><strong>Coding / DevOps エージェント向けの承認と復旧 — GitHub パイロット · alpha</strong></p>
 
-> **注記：** この翻訳は最新版に追従していません。現在の位置づけ（Coding / DevOps エージェント向けの承認と復旧、GitHub パイロット）、証拠、制約は [英語版 README](README.md) を参照してください。
-
-> **Alpha 注意:** Commander は現在 alpha で、プロダクション対応ではありません。出力、ベンチマーク、POC
+> **Alpha 注意:** Commander は現在 alpha であり、プロダクション対応ではありません。出力、ベンチマーク、POC
 > シナリオ、ダッシュボード値は開発またはデモ用の信号です。独自の確認なしに、無人の本番ワークロードや機密データに使用しないでください。
 
 <p align="center">
-  <code>pnpm exec tsx packages/core/src/cliEntry.ts watch "investigate this bug"</code><br>
-  <sub>ソースのインストールと設定後、実行イベントとツール呼び出しをターミナルで確認できます。</sub>
+  <code>pnpm demo:github --help</code><br>
+  <sub>実際の Gateway を使用した段階的な GitHub アクションパイロット。外部書き込みにはデプロイ設定が必要です。</sub>
 </p>
 
 <p align="center">
-  <img src="docs/assets/commander-watch-demo.svg" alt="Commander watch demo — リアルタイムエージェントストリーミング" width="90%">
+  <a href="#クイックスタート"><img src="https://img.shields.io/badge/TRY_NOW-000?style=for-the-badge" /></a>
+  <a href="https://github.com/PStarH/Commander/stargazers"><img src="https://img.shields.io/github/stars/PStarH/Commander?style=social" /></a>
+  <a href="https://github.com/PStarH/commander-docs"><img src="https://img.shields.io/badge/DOCS-000?style=for-the-badge" /></a>
 </p>
 
 ---
 
-> **2 つの実行形態：** Commander は **Local CLI**（ローカル開発ツール）と **Enterprise Gateway**（`/v1`、PostgreSQL 必須、**alpha**）を提供します。共有マルチテナント SaaS の受入完了を意味しません。企業評価は [Shadow Phase A](docs/pilot/shadow/README.md) から開始し、履歴サンプルのみを評価します。外部 rollback の実行・承認は行わず、ライブ rollback は引き続き凍結中です。詳細は英語の [README.md](README.md) と [ENTERPRISE_READINESS.md](ENTERPRISE_READINESS.md) を参照。
+## Commander とは
 
-## Commander の独自性
+エージェントが Pull Request の作成を要求します。人間がそれを承認します。GitHub は書き込みを受け付けましたが、Worker がレスポンスを受信する前に切断されました。操作は本当に成功したのか？ 次の Worker は何をすべきか？
 
-**透明性——実行イベントを確認。** 各エージェントのイベント、ツール呼び出し、利用可能なゲート決定が SSE を介してリアルタイムでストリーミングされます。出力された作業トレースを段階的に確認できます。
+Commander は、承認された要求とその実行状態をエージェントの外部に一元管理します。GitHub アダプターはレスポンス喪失後も一致する結果を照会し、証拠が曖昧な場合は未解決状態を安全に保持し、マージされていない PR を閉じる場合も別途承認された補償アクションを通じてのみ実行します。
 
-**信頼性——設定可能な出力チェック。** 検証パイプラインを有効にした経路では、品質ゲートが結果を返す前に設定済みのチェックを実行します。ハルシネーション検出、整合性、完全性、正確性、安全性を含み、失敗時は再試行または失敗を報告します。
+最初のパイロットは意図的に限定されています：**同一リポジトリ内の既存ブランチからの PR 作成**。コードの生成や push、PR の自動マージ、本番環境へのデプロイは行いません。ブランチの内容は引き続き GitHub 上でのレビューとチェックが必要です。
 
-**コスト効率——スマートな支出。** 推論エンジンがトークンを消費する前にタスクを分析します。適切なトポロジを自動選択——単純なタスクには 1 エージェント、複雑なタスクには並列エージェント。実際のコストはプロバイダー、モデル、タスク、設定した検証によって異なります。
+- [GitHub パイロットの実行](docs/pilot/github/README.md): 提案 → 承認 → 検査 → 別途承認によるクローズ
+- [なぜ GitHub 標準権限や Actions 承認だけでは不十分なのか？](docs/pilot/github/native-controls.md): ネイティブの制御で十分な場合も多くあります。統一されたアクション識別、復旧、監査証跡に明確な価値がある場合に Commander を使用してください。
+- [セキュリティ境界と制限事項](docs/pilot/github/threat-model.md): 相関マーカーは電子署名ではなく、外部の副作用は必ずしも完全な Exactly-Once を保証できません。
 
-**25 の LLM プロバイダー。** OpenAI、Anthropic、Google、Azure、DeepSeek、GLM、MiMo、Xiaomi、Groq、Together、Perplexity、Fireworks、Replicate、Mistral、Cohere、OpenRouter、xAI、Anyscale、DeepInfra、Agnes、Ollama、vLLM、AWS Bedrock、StepFun、MiniMax——環境変数を 1 つ設定するだけで、Commander が残りを処理します。フォールバックチェーン付き。
-
-**自己改善。** Meta-learner は Thompson Sampling + Reflexion を使用して、記録された実行に基づきエージェント設定を調整します。効果はタスク、モデル、データに依存します。
+アダプター契約と CLI は自動化されたローカルテストを備えています。手動トリガーの CI ジョブは、単一のサンドボックスリポジトリに対して実際の Gateway、Worker、PostgreSQL を実際の GitHub API 上で実行します。テストプロキシが作成レスポンスを切断または保持し、Worker が強制終了されて再起動し、新しい Worker が重複 PR を作成することなく既存の PR を検出します。失われたレスポンスはテストプロキシによって注入されたものであり、自然なネットワーク障害ではありません。本番運用の保証や採択の推奨を意味するものではありません。既存のローカルエージェントランタイムと読み取り専用レビューツールも以下から利用可能です。
 
 ---
 
-## 30 秒デモ
+## ランタイムパス
+
+GitHub パイロットは、現在 **alpha** 段階の永続サーバーパスである **Enterprise Gateway** を使用します。**Local CLI** は独立したローカルエージェントランタイムであり、そのシミュレーションデモは Gateway の管理された書き込み動作を証明するものではありません。
+
+|                    | Local CLI                                                                     | Enterprise Gateway                                                     |
+| ------------------ | ----------------------------------------------------------------------------- | ---------------------------------------------------------------------- |
+| **エントリ**       | `commander review --real`（最初のプロバイダー検証）；その他のコマンドは alpha | `POST /v1/runs`（`apps/api` 経由）                                     |
+| **状態管理**       | ローカル SQLite / JSON (`.commander_state/`)                                  | Postgres kernel (`runs`/`steps`/`events`/outbox/leases)                |
+| **認証**           | なし（単一ユーザー）                                                          | `COMMANDER_API_KEY` + JWT テナントクレーム                             |
+| **マルチテナント** | なし（暗黙の `__default__`）                                                  | Alpha — kernel RLS + テナント対応シングルトン；ストレージ分離は opt-in |
+| **永続 Kernel**    | なし                                                                          | あり（本番環境 / Postgres DSN 設定時に自動有効化）                     |
+| **ステータス**     | Alpha ローカル評価ツール — 本番未対応                                         | Alpha — 実際のバックエンドでの実戦検証前                               |
+
+以下の初回ユーザーパスは、ソースコードに基づく **E0 シミュレーションデモ** です。認証情報は不要で、プロバイダーや外部ターゲットシステムへの書き込みを行わず、プロバイダーを利用する Local CLI や E1 Enterprise Gateway パイロットパスとは完全に分離されています。clone、install、build はマシン上にチェックアウト、依存関係キャッシュ、ビルド成果物を書き込みます。
+
+---
+
+## クイックスタート
+
+新しい GitHub アクションパスについては、[パイロットガイド](docs/pilot/github/README.md) を参照してください。認証情報不要の契約テスト、設定済み Gateway デモ、オプトインの実 GitHub アダプターテストが明確に分かれています。以下のローカルランタイムデモは独立したシミュレーション例です。そのアニメーションはローカル CLI の表示であり、GitHub の承認やレスポンス喪失復旧の録画ではありません。
+
+<p align="center">
+  <img src="docs/assets/commander-watch-demo.svg" alt="ローカル CLI ヘルプアニメーション。GitHub 復旧の録画ではありません。" width="100%">
+</p>
+
+### E0 シミュレーションデモの実行（初回推奨）
+
+Node.js 22.x と pnpm 9 を使用します（Corepack が固定バージョンを選択します）。このライフサイクルはソースコードのチェックアウトから完全に動作します：
+
+クローンと初期インストールには、GitHub およびパッケージレジストリへの通常のアクセスが必要です。`--offline` フラグはプロバイダーへのリクエストを行わないことを意味し、完全なオフラインインストールを意味するものではありません。
 
 ```bash
-# インストールと設定を済ませたソースディレクトリで実行
-pnpm exec tsx packages/core/src/cliEntry.ts watch "find the bug in src/server.ts and fix it"
+git clone https://github.com/PStarH/Commander.git
+cd Commander
+corepack enable
+pnpm install --frozen-lockfile
+pnpm build
+
+pnpm exec tsx packages/core/src/cliEntry.ts --help
+pnpm exec tsx packages/core/src/cliEntry.ts doctor --offline
+pnpm demo:l4-a
 ```
 
-これは UI を示す録画デモで、CLI の SSE ストリーミング操作を紹介します。プロダクション実行や顧客環境の証拠を示すものではありません。
+`doctor --offline` は LLM プロバイダーに接続せずにローカルの前提条件を確認します。`demo:l4-a` はシミュレートされたインメモリ依存関係とループバックサーバーを使用し、実際のプロバイダー呼び出しや外部書き込みは行いません。デモはループバックサーバーを自己管理して終了時に自動停止するため、外部リソースの破棄コマンドは不要です。コマンドの正常終了により E0 のクリーンアップが完了します。
 
----
+このパスの完了は開発・デモ用の検証結果にすぎません。公開パッケージのインストール、E1 の管理された書き込みの証明、あるいは Commander が本番対応であることを示すものではありません。
 
-## 30 秒でわかる仕組み
+### 実プロバイダーによる読み取り専用コードレビュー（最初の実機検証）
 
 ```bash
-# 1. インストール
-pnpm install
-
-# 2. API キーを設定（25 プロバイダーから自動検出）
+# 明示的に 1 つのプロバイダーを選択
 export OPENAI_API_KEY=sk-...
+pnpm exec tsx packages/core/src/cliEntry.ts review \
+  --commit HEAD --real --provider=openai
 
-# 3. 何でも実行
-pnpm exec tsx packages/core/src/cliEntry.ts run "analyze this repository"
-pnpm exec tsx packages/core/src/cliEntry.ts plan "implement authentication"    # 実行前に計画を確認
-pnpm exec tsx packages/core/src/cliEntry.ts watch "debug the failing test"     # エージェントのイベントをリアルタイム表示
+# または Anthropic を使用
+export ANTHROPIC_API_KEY=sk-ant-...
+pnpm exec tsx packages/core/src/cliEntry.ts review \
+  --commit HEAD --real --provider=anthropic
 ```
 
----
+このコマンドは指定された Git diff とローカルのレビューガイドラインを読み取り、選択されたプロバイダーに最大 15,000 文字の diff を送信し、レスポンスを 4,000 トークンおよび 8 MiB に制限します。Commander は 120 秒後にプロバイダー通信を中止し、JSON 解析前に 8 MiB を超えるレスポンス本文を拒否します。プロバイダーおよびモデルには実行ツールが付与されていないため、コマンドの実行、ファイルの編集、Web ブラウジング、またはターゲットシステムへの書き込みを開始することはできません。CLI 自体は固定された読み取り専用の `git diff` コマンドを実行し、システム一時ディレクトリ内のプロセス間レート制限状態を更新します。
 
-## Commander と他のフレームワークの比較
+出力には `source=real`、プロバイダー、モデル、エンドポイントホスト、プロンプトバイト数、切り詰められた diff の実際のカバレッジ割合、およびレスポンス上限が明記されます。認証情報の欠落、空の diff、プロバイダーエラー、タイムアウト、サイズ超過レスポンス、無効な構造化出力は非ゼロの終了ステータスで失敗し、シミュレーションレビューに静かにフォールバックすることはありません。
 
-|                               | Commander             | LangGraph         | CrewAI          | AutoGen                     |
-| ----------------------------- | --------------------- | ----------------- | --------------- | --------------------------- |
-| **ライブ SSE ストリーミング** | ✅ 組み込み           | ❌                | ❌              | ❌                          |
-| **自動トポロジ選択**          | ✅ 5 トポロジ         | ❌ 手動グラフ構築 | ❌ 固定順序実行 | ❌ 手動オーケストレーション |
-| **品質ゲート**                | ✅ 多層検証           | ❌                | ❌              | ❌                          |
-| **ハルシネーション検出**      | ✅ 組み込み           | ❌                | ❌              | ❌                          |
-| **推論エンジン**              | ✅ スマートタスク分析 | ❌                | ❌              | ❌                          |
-| **Meta-learner**              | ✅ 自動チューニング   | ❌                | ❌              | ❌                          |
-| **プロバイダー数**            | ✅ 25                 | ❌ 1-2            | ❌ 1-2          | ❌ 1-2                      |
-| **CLI エクスペリエンス**      | ✅ 36 コマンド        | ❌ API のみ       | ❌ API のみ     | ❌ API のみ                 |
-| **Web GUI**                   | ✅ Agent War Room     | ❌                | ❌              | ❌                          |
-| **TUI ダッシュボード**        | ✅ ターミナル UI      | ❌                | ❌              | ❌                          |
+Diff とガイドラインはマシンから送信され、リポジトリの機密情報を含む可能性があり、プロバイダーの保持ポリシーの対象となります。実行前に [PRIVACY.md](PRIVACY.md) を確認してください。通常の `commander run`、`pnpm gui`、MCP、SDK、および Enterprise Gateway のフローはこの初回ユーザーパスには含まれず、読み取り専用または本番対応として提示してはなりません。
+
+### Enterprise Gateway（alpha）
+
+この初回ユーザーガイドでは、直接実行可能な Gateway コマンドをあえて記載していません。このパスには追加のシークレット、PostgreSQL、および運用管理が必要です。企業評価には、履歴サンプルのみを評価し外部ロールバックを行わない [Shadow パイロット Phase A](docs/pilot/shadow/README.md) を使用してください。ゲート管理された [ライブ書き込みリファレンス](docs/enterprise/quickstart.md) は [ENTERPRISE_READINESS.md](ENTERPRISE_READINESS.md) と併せて確認する必要があります。境界が定められた E1 デザインパートナーワークフローは、引き続き [ローンチレディネス・ランブック](docs/runbooks/design-partner-launch-readiness.md) によって管理されます。開発用 Gateway の起動は外部書き込みの承認や証明を意味するものではなく、共有マルチテナント利用は依然として alpha 段階です。
 
 ---
 
-## トポロジ
+## 主な機能
 
-Commander は 5 つの標準トポロジから適切な構成を自動選択します：
+### 推論エンジン（Deliberation Engine）
 
-- **SINGLE** — 単一エージェント、単純なクエリ、迅速な回答
-- **CHAIN** — 順次パイプライン、段階的な精緻化
-- **DISPATCH** — 複数の独立したサブタスクを並列分派
-- **ORCHESTRATOR** — オーケストレーターが複数のサブエージェントを調整（再帰的分解含む）
-- **REVIEW** — 生成後にレビューエージェントで検証
+タスク分類、複雑度推定、トポロジ選択をすべて自動化。Commander はタスクを分類（CODING / RESEARCH / ANALYSIS / FACTUAL）し、複雑度を推定し、5 つの標準トポロジ（SINGLE、CHAIN、DISPATCH、ORCHESTRATOR、REVIEW）から選択します。1 行のタスクには 1 エージェントを使用し、リポジトリ全体の監査では最大 15 エージェントに分散展開できます。
 
-（下位互換のため 9 個のレガシー別名も保持。）
+### リアルタイムストリーミング（Live Streaming）
+
+エージェントイベント、ツール呼び出し、設定されたゲート判定がターミナルまたは SSE エンドポイントにリアルタイムでストリーミングされます。事後ポーリングや実行後ログではありません。出力された作業トレースをステップごとに検査できます。
+
+```
+┌─ Deliberation ──────────────────────────────────────────────┐
+│ Task: "audit this repo for security issues"                  │
+│ Classification: ANALYSIS · Complexity: 7/10                  │
+│ Topology: DISPATCH (3 agents)                                │
+├─ Agent α (security-scanner) ─────────────────────────────────┤
+│ [event] Scanning package.json for known CVEs...              │
+│ [tool] npm audit · 2 critical, 5 moderate                    │
+│ [gate] ACCURACY ✓ · COMPLETENESS ✓                           │
+├─ Agent β (code-reviewer) ────────────────────────────────────┤
+│ [event] Checking for hardcoded secrets...                    │
+│ [tool] grep · found 1 potential secret in config.ts          │
+│ [gate] SAFETY ⚠ · Potential secret detected                  │
+├─ Agent γ (dependency-checker) ───────────────────────────────┤
+│ [event] Analyzing license compliance...                      │
+│ [tool] license-check · No GPL/AGPL dependencies              │
+│ [gate] COMPLETENESS ✓ · ACCURACY ✓                           │
+├─ Synthesizer ────────────────────────────────────────────────┤
+│ Merging 3 agent outputs...                                   │
+│ Leader synthesis · 4 findings, 2 critical                    │
+└──────────────────────────────────────────────────────────────┘
+```
+
+### 25 のプロバイダーと自動フェイルオーバー
+
+いずれか 1 つの API キーを設定するだけで、Commander がプロバイダーを自動検出し、障害発生時は設定されたチェーンに従ってフォールバックします。OpenAI → Anthropic → DeepSeek → Groq → Ollama — 順序を定義すれば、ルーティングは Commander が処理します。
+
+OpenAI · Anthropic · Google · Azure · DeepSeek · GLM · MiMo · Xiaomi · Groq · Together · Perplexity · Fireworks · Replicate · Mistral · Cohere · OpenRouter · xAI · Anyscale · DeepInfra · Agnes · Ollama · vLLM · AWS Bedrock · StepFun · MiniMax
+
+### 設定可能な品質ゲート（Quality Gates）
+
+検証パイプラインが有効なパスにおいて、Commander は結果を返す前に以下の 5 つの設定されたチェックを実行します：
+
+| ゲート | チェック内容 |
+| ------------- | ------------------------------------------- |
+| ハルシネーション (Hallucination) | LLM-as-Judge による捏造された事実の検出 |
+| 整合性 (Consistency) | エージェント間の一致、自己矛盾の排除 |
+| 完全性 (Completeness) | 必要なすべてのディメンションの網羅 |
+| 正確性 (Accuracy) | ソース資料に基づく事実の正確性 |
+| 安全性 (Safety) | コンテンツスキャンとプロンプトインジェクション検出 |
+
+出力がいずれかの設定されたゲートに失敗した場合、システムは再試行するか、完全なコンテキストとともに失敗を報告します。
+
+### 耐障害性と回復性（Resilience）
+
+| 機能 | 実装 |
+| ----------------- | ------------------------------------------------------------------ |
+| サーキットブレーカー (Circuit Breakers) | 3 状態（CLOSED/OPEN/HALF-OPEN）、プロバイダー別エラー率追跡 |
+| デッドレターキュー (Dead Letter Queue) | 追記専用 NDJSON、7 カテゴリ、リプレイ対応 |
+| Saga 補償 (Saga Compensation) | 登録された補償ステップ；外部ロールバックは完全保証されません |
+| チェックポインティング (Checkpointing) | SQLite + WAL、クラッシュ耐性復旧（目標 <5s） |
+| セマンティックキャッシュ (Semantic Caching) | SHA-256 完全一致 + コサイン類似度による重複排除 |
+
+### セキュリティ（Security）
+
+AES-256-GCM 暗号化シークレット保管庫。プロセス内の改ざん検知 HMAC 監査チェーン（外部 WORM/KMS 証拠は準備中）。権能トークンによる RBAC。ISO 42001 / NIST AI RMF コンプライアンス**レポート足場**（レポート生成ツールであり、認証書ではありません）。レッドチームフレームワーク（47 シナリオ、8 攻撃カテゴリ）。リクエストコンテキストによるテナントスコープ（AsyncLocalStorage）；ストレージ層の分離はオプトイン — Enterprise Gateway、alpha。
+
+### 自己最適化（Self-Optimization）
+
+Thompson Sampling と Reflexion を用いたメタ学習器が、実行をまたいでエージェント構成を調整します。どのタスク種別にどのトポロジが最適か、どのプロバイダーが最速か、どのパラメータの組み合わせが最高品質の結果を生み出すかを学習します。5 回以上の記録された実行後に有効化されます。
 
 ---
 
 ## アーキテクチャ
 
 ```
-packages/core/src/
-├── ultimate/          # オーケストレーションエンジン（deliberation / topologyRouter / atomizer / synthesizer / qualityGates）
-├── runtime/           # 実行エンジン（agentRuntime / modelRouter / providers / messageBus / saga 統合）
-├── security/          # セキュリティサブシステム（ゼロトラスト / 監査チェーン / レッドチーム / コンプライアンス）
-├── tools/             # 組み込みツール（createAllTools、既定で 18 個を登録）
-├── memory/            # 3 層メモリ（working / episodic / long-term）
-├── mcp/               # Model Context Protocol + A2A
-├── saga/              # 永続的補償トランザクション
-├── selfEvolution/     # Meta-learning（Thompson Sampling + Reflexion）
-├── sandbox/           # サンドボックス（TEE / seccomp / ネットワークプロキシ）
-└── ... その他のコアモジュール
+                        ┌──────────────────────────────┐
+                        │      DELIBERATION ENGINE      │
+                        │  Task classification          │
+                        │  Complexity estimation        │
+                        │  Topology selection           │
+                        └──────────┬───────────────────┘
+                                   │
+                        ┌──────────▼───────────────────┐
+                        │       TOPOLOGY ROUTER          │
+                        │  SINGLE · CHAIN · DISPATCH     │
+                        │  ORCHESTRATOR · REVIEW          │
+                        └──────────┬───────────────────┘
+                                   │
+                ┌──────────────────┼──────────────────┐
+                ▼                   ▼                   ▼
+         ┌──────────────┐   ┌──────────────┐   ┌──────────────┐
+         │   AGENT 1    │   │   AGENT 2    │   │   AGENT N    │
+         │  LLM → Tool  │   │  LLM → Tool  │   │  LLM → Tool  │
+         │  → Verify    │   │  → Verify    │   │  → Verify    │
+         └──────┬───────┘   └──────┬───────┘   └──────┬───────┘
+                └──────────────────┼──────────────────┘
+                                   ▼
+                        ┌──────────────────────────────┐
+                        │         SYNTHESIS              │
+                        │  Merge · Resolve conflicts    │
+                        └──────────┬───────────────────┘
+                                   ▼
+                        ┌──────────────────────────────┐
+                        │       QUALITY GATES           │
+                        │  Hallucination · Consistency  │
+                        │  Completeness · Accuracy     │
+                        │  Safety                      │
+                        └──────────┬───────────────────┘
+                                   ▼
+                                RESULT
 ```
 
 ---
 
-## 品質ゲート
+## Web コンソール
 
-検証パイプラインを有効にした経路では、結果は返却前に設定済みのチェックを通ります：
+Commander には、視覚的監視、対話型エージェント操作、およびガバナンスのための Web ベース管理コンソールが含まれています：
 
+```bash
+# PostgreSQL と明示的な JWT_SECRET および ADMIN_PASSWORD が必要です（docs/deploy.md 参照）。
+# :4000 で API を、:5173 で Web を起動し、ブラウザを開きます。
+pnpm gui
 ```
-タスク入力 → エージェント実行 → [品質ゲート] → 設定済みチェック後の出力
-                            │
-                            ├─ ハルシネーション検出（hallucination）
-                            ├─ 整合性（consistency）
-                            ├─ 完全性（completeness）
-                            ├─ 正確性（accuracy）
-                            └─ 安全性（safety）
-```
+
+`http://localhost:5173` を開きます。コンソールのルート一覧：
+
+| ルート | ページ |
+| ---------------------------- | --------------------------------------------------------------------------------------- |
+| `/`                          | ダッシュボード — 戦況報告、トークン傾向、リアルタイムトポロジ、エージェント名簿、ミッションボード |
+| `/agents`                    | エージェント名簿 |
+| `/missions`                  | ミッションボードと承認キュー |
+| `/execution`                 | リアルタイム実行フィード |
+| `/memory`                    | メモリブラウザと検索 |
+| `/governance`                | 承認キューとポリシー設定 |
+| `/security`                  | セキュリティ態勢 — ISO 42001 / NIST AI RMF **レポート足場**（レポートツールであり認証ではありません） |
+| `/slo`                       | SLO パネル |
+| `/chat`                      | エージェントのリアルタイムストリーミング対話インターフェース |
+| `/dlq`                       | リプレイ対応デッドレターキュー管理 |
+| `/audit`                     | 監査ログ |
+| `/cost`                      | コストとトークンレポート |
+| `/knowledge`                 | ナレッジベース |
+| `/alerts`                    | アラート |
+| `/onboarding`                | 初回オンボーディング |
+| `/users`                     | ユーザー管理 |
+| `/settings`, `/settings/sso` | 設定および OIDC/SSO シングルサインオン設定 |
+| `/workflows`                 | ワークフロー一覧とスケジューリング |
+| `/poc`                       | POC / デモビュー |
+| `/research`                  | 調査ビュー |
+| `/actions`                   | Action Gateway キュー（承認 / 却下 / 補償） |
+
+`pnpm gui` の代わりに Compose の `web` プロファイルを使用する場合、同じコンソールが `http://localhost:3000` で提供されます。
 
 ---
 
-## はじめに
+## 信頼性目標
 
-### 前提条件
-
-- Node.js 22.x（≥ 22.9.0、< 23）
-- pnpm（推奨）または npm
-- 任意の LLM プロバイダーの API キー
-
-### インストール
-
-```bash
-git clone https://github.com/PStarH/Commander.git
-cd Commander
-pnpm install
-```
-
-### 設定
-
-```bash
-# サンプル環境ファイルをコピー
-cp .env.example .env
-
-# 少なくとも 1 つの API キーを設定
-export OPENAI_API_KEY=sk-...
-# または
-export ANTHROPIC_API_KEY=sk-ant-...
-```
-
-### 実行
-
-```bash
-# CLI を使用
-pnpm exec tsx packages/core/src/cliEntry.ts run "your task here"
-
-# 基本例を実行
-pnpm exec tsx examples/basic.ts
-
-# Docker を使用（api は認証用 PostgreSQL DSN を必要とするため v2 profile を使用）
-docker compose -f docker-compose.yml -f docker-compose.v2.yml --profile v2 up -d --build
-```
+| 目標 | 基準 | 実装メカニズム |
+| ------------------- | ---- | -------------------------- |
+| チェックポイント復旧 | <5s  | SQLite + WAL               |
+| プロバイダーフェイルオーバー | <10s | 自動フォールバックチェーン |
+| Saga 補償 | <30s | 補償スケジューラー |
+| DLQ 処理 | <60s | 追記専用 NDJSON、リプレイ対応 |
 
 ---
 
 ## ベンチマーク
 
-> 以下のベンチマークはシミュレーション/スクリプト化 harness または CI ベースラインで実行されます。プロダクション SLA や SOC 証拠を測るものではありません。
+> 以下のすべてのベンチマークは、**シミュレーション/スクリプト化されたハーネス**または **CI ベースライン**として実行されます。これらはテストハーネスを測定したものであり、本番の SLA や SOC 監査証拠ではありません。
+
+| スイート | 対象 | 結果 |
+| ----------------- | ----------------------------------------- | ------------------------------------------------- |
+| カオスエンジニアリング (Chaos Engineering) | 200 合成 + 55 変異（計 255） | ハーネス登録；保持されたベースラインマトリクスを参照 |
+| レッドチーム (Red Team) | 47 シナリオ、8 攻撃カテゴリ | 記載されたすべてのケースをブロック（シミュレーションハーネス） |
+| AgentDojo | 12 セキュリティテストケース | 記載されたすべてのケースをブロック（シミュレーションハーネス） |
+| GAIA Spine | コア機能ベンチマーク | クイック/オフライン実行をスケジューリング；完全なフィクスチャは準備中 |
+| SLO | API 可用性 99.95%、P95 スケジュール <5s | CI ベースラインであり、本番 SLA ではありません |
+
+詳細マトリクス: [BENCHMARK.md](BENCHMARK.md)
+
+---
+
+## ヘルスチェック
 
 ```bash
-pnpm benchmark:gaia        # GAIA ベンチマークを実行（詳細なスクリプトは package.json の scripts を参照）
+curl http://localhost:4000/health          # 基本 Liveness (200 / 503)
+curl http://localhost:4000/health/detailed # 全コンポーネント詳細
+curl http://localhost:4000/ready           # Readiness (DB, kernel, ストレージ)
+curl http://localhost:4000/v1/health       # Gateway 限定 Readiness
+curl http://localhost:4000/metrics         # Prometheus メトリクス
+curl http://localhost:4000/system/status   # ランタイムモジュール概要
 ```
 
----
+`/readyz` や `/livez` という別名は存在しません — API の準備完了確認は `/ready` です。
 
-| スイート | カバレッジ | 結果 |
-| -------- | ---------- | ---- |
-| Chaos Engineering | 合成 200 ケース + mutation 55 ケース（計 255） | harness の入口；結果は基準マトリクスを参照 |
-| Red Team | 47 シナリオ、8 攻撃カテゴリ | 掲載ケースはすべて blocked（シミュレーション harness） |
-| AgentDojo | 12 セキュリティテストケース | 掲載ケースはすべて blocked（シミュレーション harness） |
-| GAIA Spine | コア機能ベンチマーク | quick/offline 回帰をスケジュール；完全な fixture は保留 |
-| SLO | API 可用性 99.95%、P95 スケジュール <5s | CI ベースライン、プロダクション SLA ではない |
-
-```bash
-# 任意のベンチマークを再現
-pnpm test:core                   # コアスイートとローカルベースラインを検証
-pnpm test:core                   # 完全なコアスイート：node:test + vitest
-pnpm benchmark:chaos:full        # カオスエンジニアリングベンチマーク（255 シナリオ）
-```
+監視項目: メモリ、サーキットブレーカー、DLQ サイズ、チェックポイント遅延、保留中の補償、イベントバス滞留、プロバイダー可用性、ディスク容量。
 
 ---
 
-## コマンド
+## なぜ Commander か
 
-| コマンド                           | 機能説明                                                    |
-| ---------------------------------- | ----------------------------------------------------------- |
-| `commander run <task>`             | 完全なマルチエージェント実行（`--dry-run` で計画表示、`--stream` でリアルタイム SSE、`--tui` で端末ダッシュボード） |
-| `commander fix`                    | lint・フォーマット・型エラーを自動修正                      |
-| `commander init`                   | ゼロ設定環境スキャン + プロバイダー接続テスト               |
-| `commander company <task>`         | ローカル company モード：計画 → 構築 → レビュー → 改善 |
-| `commander swarm <task>`           | 再帰的分解 + 並列実行                                       |
-| `commander drive <task>`           | 自律的な段階的実行                                          |
-| `commander goal <task>`            | 多輪収束ループ                                              |
-| `commander review`                 | P0-P3 の構造化コードレビュー                                |
-| `commander status`                 | システムステータス、プロバイダー正常性、MetaLearner 統計    |
-| `commander config`                 | 設定の表示または変更                                        |
-| `commander doctor`                 | 診断を実行                                                  |
-| `commander history`                | セッション管理                                              |
-| `commander gui`                    | Web ダッシュボード（Agent War Room）                        |
-| `commander skill`                  | 学習可能スキル管理                                          |
-| `commander plugin`                 | プラグインのインストール/一覧/アンインストール               |
-| `commander mode`                   | 承認モードの表示または設定                                   |
-| `commander feedback`               | フィードバックの送信                                        |
-| `commander budget`                 | トークンバジェット状況の表示                                 |
-| `commander checkpoint`             | チェックポイント文書の表示                                   |
-| `commander saga`                   | Saga トランザクション管理                                    |
-| `commander cost`                   | トークン使用量とコストレポート                               |
+エージェントのアクションが外部システムに到達した際、タイムアウトやクラッシュによって「実行されたのか」「何回実行されたのか」「どのようなペイロードだったのか」という 3 つの疑問が残ります。無暗な再試行は書き込みの重複を招き、諦めればアクションが喪失します。
+
+Commander は、承認された要求とその実行状態をエージェントの外部に記録し、曖昧な応答の後に結果を照会し、証拠が決定的でない場合は明示的な未知状態にとどまります。副作用を取り消す処理は、個別に承認された別のアクションとして実行されます。
+
+GitHub 標準の権限や Actions の承認などのネイティブ制御で十分な場合も多くあります。Commander は、エージェントとワーカーにわたって一元的な承認と復旧の記録を必要とするチーム向けに設計されています。
 
 ---
-
-## API 使用
-
-CLI または `@commander/core` の `Commander` エントリで使用します：
-
-```bash
-pnpm exec tsx packages/core/src/cliEntry.ts run "analyze this repository"
-```
-
-または HTTP API（`apps/api`、既定 `:4000`）および Web コンソール（`pnpm gui`）経由で統合できます。
-
----
-
-## プロバイダー
-
-環境変数を 1 つ設定するだけ。Commander が **25 プロバイダー**から自動検出します：
-
-`OPENAI_API_KEY` · `AZURE_OPENAI_API_KEY` · `ANTHROPIC_API_KEY` · `GOOGLE_API_KEY` · `DEEPSEEK_API_KEY` · `ZHIPU_API_KEY` (GLM) · `MIMO_API_KEY` · `XIAOMI_API_KEY` · `GROQ_API_KEY` · `TOGETHER_API_KEY` · `PERPLEXITY_API_KEY` · `FIREWORKS_API_KEY` · `REPLICATE_API_TOKEN` · `MISTRAL_API_KEY` · `CO_API_KEY` · `OPENROUTER_API_KEY` · `OLLAMA_HOST` · `VLLM_BASE_URL` · `AWS_ACCESS_KEY_ID` (Bedrock) · `XAI_API_KEY` · `ANYSCALE_API_KEY` · `DEEPINFRA_API_KEY` · `AGNES_API_KEY` · `STEPFUN_API_KEY` · `MINIMAX_API_KEY`
-
----
-
-## デプロイ
-
-```bash
-# ローカル（Docker Compose）— API のみ、SQLite、kernel は明示的に無効
-# 注意: api の 5 つの認証オーソリティは PostgreSQL 専用でローカル代替がなく、
-# この profile は DATABASE_URL を注入しないため、コンテナは起動時に
-# AUTH_DATABASE_URL_REQUIRED で終了します。起動可能な経路は下の v2 profile。
-cp .env.example .env   # 必須シークレットをすべて入力（雛形のままでは起動しません）
-docker compose up -d
-# → api コンテナは起動直後に終了（AUTH_DATABASE_URL_REQUIRED）
-
-# ローカル + Web コンソール（同じく認証 DSN が無く api は終了）
-docker compose --profile web up -d
-
-# 起動可能なローカル／本番形態（Postgres + kernel + worker plane、commander_app DSN 付き）
-docker compose -f docker-compose.yml -f docker-compose.v2.yml --profile v2 up -d --build
-
-# 本番環境（VM / VPS、ビルド済みイメージ）
-./scripts/deploy-vm.sh your-vm-ip --env-file .env.production
-```
-
-既定の `docker compose up` は `api` のみを起動します（ローカル SQLite）が、そのコンテナには `DATABASE_URL` が無いため起動時に `AUTH_DATABASE_URL_REQUIRED` で終了します。api の 5 つの認証オーソリティ（ユーザー、API キー、refresh token、認証失敗、レート制限）は PostgreSQL 専用で `commander_app` ロールを要求し、ローカル／SQLite／インメモリのフォールバックは存在しません。実際に起動するスタックには `v2` または `cell` profile を使用してください。Web コンソール、Postgres、worker plane は対応する profile を明示的に有効化してください。詳細は `docs/deploy.md` を参照。
-
-本番 Compose オーバーレイで追加できるもの：CPU/メモリ制限、JSON ファイルログ、自動再起動、ヘルスチェック、レート制限。マルチテナンシーは **Enterprise Gateway（alpha）** —— リクエスト文脈の隔離はあり、ストレージ隔離は opt-in。`ENTERPRISE_READINESS.md` を参照し、完成形 SaaS 隔離とみなさないでください。
-
----
-
-## CI/CD
-
-`.github/workflows/ci.yml` — 品質チェック（型チェック + 完全なコアテストスイート + ベンチマーク + ビルド）+ Docker + Web GUI。`.github/workflows/cd.yml` で main ブランチに自動デプロイ。
-
----
-
 
 ## ドキュメント
 
-- [docs/architecture/](docs/architecture/000-index.md) — アーキテクチャ決定記録（V2 リソースモデル・状態機械・永続化・アイデンティティ・effect broker・worker プロトコル・イベントセマンティクス）
-- [docs/getting-started.md](docs/getting-started.md) — クイックスタート
-- [docs/deploy.md](docs/deploy.md) — デプロイ
-- [docs/v2-migration-guide.md](docs/v2-migration-guide.md) — Architecture V2 移行
+- [docs/architecture/](docs/architecture/000-index.md) — アーキテクチャ決定記録（ADR: V2 リソースモデル、ステートマシン、永続化、アイデンティティ、Effect Broker、Worker プロトコル、イベントセマンティクス）
+- [docs/getting-started.md](docs/getting-started.md) — クイックスタートガイド
+- [docs/deploy.md](docs/deploy.md) — デプロイガイド
+- [docs/v2-migration-guide.md](docs/v2-migration-guide.md) — アーキテクチャ V2 移行ガイド
 - [docs/slo.md](docs/slo.md) — SLO 定義
-- [SECURITY.md](SECURITY.md) — セキュリティモデル・脅威モデル・コンプライアンス
-- [BENCHMARK.md](BENCHMARK.md) — ベンチマーク行列と手法
+- [SECURITY.md](SECURITY.md) — セキュリティモデル、脅威モデル、コンプライアンス
+- [BENCHMARK.md](BENCHMARK.md) — 完全なベンチマークマトリクスと測定手法
 - [CHANGELOG.md](CHANGELOG.md) — リリース履歴
-- [docs/README.md](docs/README.md) — 公開ドキュメント索引
 
-内部監査・AI 作業計画・デューデリジェンスメモは**本リポジトリに含まれません**。開発者ローカルの `.internal/`（gitignore）のみです。
+## パブリック境界とフィードバック
 
-## プライバシー、フィードバック、セキュリティ
+- **リアル vs シミュレーション:** オンボーディングタスクの結果は、UI/API が `source=real` を報告した場合にのみ実際の実行結果となります。フォールバックや POC の数値はシミュレーション/デモデータです。
+- **プライバシー:** プロンプトは選択した LLM プロバイダーに送信される場合があり、ローカルトレース、メモリ、監査データ、オプションの OpenTelemetry エクスポートが永続化される場合があります。機密データを入力する前に [PRIVACY.md](PRIVACY.md) を確認してください。
+- **バグ報告:** [GitHub Issues](https://github.com/PStarH/Commander/issues) に投稿してください。事前にプロンプト、ログ、設定、個人情報（PII）、シークレットをマスキングしてください。
+- **質問や提案:** [GitHub Issues](https://github.com/PStarH/Commander/issues) をご利用ください。
+- **セキュリティの脆弱性:** 公開 Issue を作成せず、[SECURITY.md](SECURITY.md) の手順に従って非公開で報告してください。
 
-- [PRIVACY.md](PRIVACY.md): provider への送信、trace/memory/audit の保存、保持と削除の境界。
-- 通常のバグは [GitHub Issues](https://github.com/PStarH/Commander/issues) に、prompt・ログ・設定・PII・秘密情報を必ずマスキングして報告してください。
-- 質問や提案は [GitHub issue](https://github.com/PStarH/Commander/issues) で受け付けています。
-- セキュリティ脆弱性は [SECURITY.md](SECURITY.md) に従って非公開で報告し、公開 issue は作成しないでください。
+---
 
 ## ライセンス
 
-MIT
+MIT。[LICENSE](LICENSE) および [COPYRIGHT.md](COPYRIGHT.md) を参照。
 
 ---
 
 <p align="center">
-  <sub>AI が実際に何をしているか見たい開発者のために ❤️ を込めて構築。</sub>
+  <sub>外部システムに到達するエージェントアクションのための承認と復旧。</sub>
 </p>

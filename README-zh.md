@@ -1,314 +1,352 @@
 <p align="center">
-  <img src="https://img.shields.io/badge/license-MIT-yellow?style=flat-square" />
+  <a href="https://github.com/PStarH/Commander/actions/workflows/ci.yml?query=branch%3Amaster"><img src="https://img.shields.io/github/actions/workflow/status/PStarH/Commander/ci.yml?branch=master&style=flat-square&label=CI&logo=github" /></a>
+  <img src="https://img.shields.io/github/license/PStarH/Commander?style=flat-square&color=EAB308" />
 </p>
 
 <h1 align="center">Commander</h1>
-<p align="center"><strong>本地智能体运行时与行动治理网关 · Alpha</strong></p>
-
-> **说明：** 本译文未随最新版本更新。当前定位（面向 Coding / DevOps 智能体的审批与恢复，GitHub 试点）、证据和限制以 [英文 README](README.md) 为准。
+<p align="center"><strong>面向 Coding / DevOps 智能体的审批与恢复 — GitHub 试点 · alpha</strong></p>
 
 > **Alpha 提示：** Commander 目前是 alpha，尚未达到生产就绪标准。输出、基准、POC
 > 场景和仪表盘数据都可能是开发或演示信号；未经自行审查，不要用于无人值守的生产工作负载或敏感数据。
 
 <p align="center">
-  <code>pnpm exec tsx packages/core/src/cliEntry.ts watch "investigate this bug"</code><br>
-  <sub>完成源码安装及配置后，可在终端查看运行事件与工具调用。</sub>
+  <code>pnpm demo:github --help</code><br>
+  <sub>使用真实 Gateway 的分步 GitHub 操作试点。外部写入需要已配置的部署。</sub>
 </p>
 
 <p align="center">
-  <img src="docs/assets/commander-watch-demo.svg" alt="Commander watch demo — 实时智能体流式传输" width="90%">
+  <a href="#快速上手"><img src="https://img.shields.io/badge/TRY_NOW-000?style=for-the-badge" /></a>
+  <a href="https://github.com/PStarH/Commander/stargazers"><img src="https://img.shields.io/github/stars/PStarH/Commander?style=social" /></a>
+  <a href="https://github.com/PStarH/commander-docs"><img src="https://img.shields.io/badge/DOCS-000?style=for-the-badge" /></a>
 </p>
 
 ---
 
-> **两种运行方式：** Commander 提供 **Local CLI**（本地开发工具）与 **Enterprise Gateway**（`/v1`，需要 PostgreSQL，**alpha**，不代表完整多租户 SaaS 已通过验收）。当前企业试用从 [Shadow Phase A](docs/pilot/shadow/README.md) 开始，仅评估历史样本，不执行或授权外部 rollback。实时 rollback 仍冻结。详见英文 [README.md](README.md) 与 [ENTERPRISE_READINESS.md](ENTERPRISE_READINESS.md)。
+## 什么是 Commander
 
-## Commander 的独特之处
+智能体请求创建一个 Pull Request。人类批准了它。GitHub 接受了写入——但工作节点（Worker）丢失了响应。操作是否真正发生了？下一个 Worker 该做什么？
 
-**透明——查看运行事件。** 智能体事件、工具调用和可用的质量门决策会通过 SSE 实时流式传输。你可以逐步检查已发出的工作轨迹。
+Commander 将已批准的请求及其执行状态保存在一起。其 GitHub 适配器能够在响应丢失后查询匹配结果，在证据不明确时保留未决结果，并且只能通过经单独授权的补偿操作关闭未合并的 PR。
 
-**可靠——可配置的输出检查。** 在启用验证管线的路径上，质量门控会在返回结果前运行配置的检查，包括幻觉检测、一致性、完整性、准确性与安全性。失败时系统会重试或报告失败。
+首个试点有意保持聚焦：**基于同仓库现有分支创建 PR**。它不生成或推送代码，不合并 PR，也不部署到生产环境。分支内容仍需通过 GitHub 的常规审查与检查。
 
-**经济高效——智能花费。** 推理引擎在消耗 token 之前会分析你的任务。自动选择合适的拓扑结构——简单任务使用 1 个智能体，复杂任务使用并行智能体。实际成本取决于提供商、模型、任务和启用的验证检查。
+- [运行 GitHub 试点](docs/pilot/github/README.md)：提议 → 批准 → 检查 → 单独授权关闭。
+- [为什么不仅使用 GitHub 原生权限和 Actions 审批？](docs/pilot/github/native-controls.md)：原生控制通常已经足够；只有当统一的操作身份、恢复机制和存证链有明确价值时才使用 Commander。
+- [安全边界与限制](docs/pilot/github/threat-model.md)：关联标记不是数字签名，外部副作用无法保证全局绝对 Exactly-Once。
 
-**25 个 LLM 提供商。** OpenAI、Anthropic、Google、Azure、DeepSeek、GLM、MiMo、Xiaomi、Groq、Together、Perplexity、Fireworks、Replicate、Mistral、Cohere、OpenRouter、xAI、Anyscale、DeepInfra、Agnes、Ollama、vLLM、AWS Bedrock、StepFun、MiniMax——设置一个环境变量，Commander 会处理其余一切。包含回退链。
-
-**自我改进。** Meta-learner 使用 Thompson Sampling + Reflexion 根据已记录运行调优智能体配置；效果取决于任务、模型和数据。
+适配器契约与 CLI 包含自动化本地测试。一个手动触发的 CI 任务针对单一沙箱仓库，在真实的 GitHub API 上运行真实 Gateway、Worker 和 PostgreSQL：测试代理切断或保留创建响应，Worker 被终止并重启，重启后的新 Worker 找到已存在的 PR 而不是创建重复 PR。丢失的响应由该测试代理注入，并非自然网络故障。此处不代表任何采纳承诺或生产就绪声明。下文同样提供既有的本地智能体运行时与只读审查工具。
 
 ---
 
-## 30 秒演示
+## 运行时路径
+
+GitHub 试点使用 **Enterprise Gateway**，这是一条仍处于 **alpha** 阶段的持久化服务端路径。**Local CLI** 是独立的本地智能体运行时；其模拟演示并不能证明 Gateway 的受治理写入行为。
+
+|                    | Local CLI                                                                     | Enterprise Gateway                                                     |
+| ------------------ | ----------------------------------------------------------------------------- | ---------------------------------------------------------------------- |
+| **入口**           | `commander review --real`（首个提供商试用）；其他命令仍为 alpha               | `POST /v1/runs`（经由 `apps/api`）                                     |
+| **状态**           | 本地 SQLite / JSON (`.commander_state/`)                                      | Postgres kernel (`runs`/`steps`/`events`/outbox/leases)                |
+| **认证**           | 无（单用户）                                                                  | `COMMANDER_API_KEY` + JWT 租户声明                                     |
+| **多租户**         | 无（隐式 `__default__`）                                                      | Alpha — kernel RLS + 租户感知单例；存储隔离为 opt-in                   |
+| **持久化 Kernel**  | 否                                                                            | 是（生产环境 / 设置 Postgres DSN 时自动开启）                           |
+| **状态**           | Alpha 本地评估工具 — 尚未达到生产就绪                                         | Alpha — 尚未在真实后端经过实战检验                                     |
+
+以下首用户路径是基于源码的 **E0 模拟演示**。它不需要凭据，不向提供商或目标系统发起写入，且与基于真实提供商的 Local CLI 使用及 E1 Enterprise Gateway 试点路径相互独立。克隆、安装和构建仍会在本机写入检出目录、依赖缓存和构建产物。
+
+---
+
+## 快速上手
+
+针对全新的 GitHub 操作路径，请遵循 [试点指南](docs/pilot/github/README.md)。该指南将无凭据契约测试、已配置的 Gateway 演示与可选择执行的真实 GitHub 适配器测试清晰分隔。下方的本地运行时演示依然是独立的模拟示例。其动画展示的是本地 CLI，并非 GitHub 审批或响应丢失恢复的录屏。
+
+<p align="center">
+  <img src="docs/assets/commander-watch-demo.svg" alt="本地 CLI 帮助动画。这不是 GitHub 恢复的录屏。" width="100%">
+</p>
+
+### E0 模拟演示（推荐首次运行）
+
+使用 Node.js 22.x 和 pnpm 9（Corepack 会选择仓库固定的 pnpm 版本）。该生命周期完全从源码检出目录运行：
+
+克隆和全新安装仍需要正常访问 GitHub 和 npm 注册表。`--offline` 标志表示不向提供商发起请求，并不代表完全无网络的安装过程。
 
 ```bash
-# 在已完成安装和配置的源码目录中运行
-pnpm exec tsx packages/core/src/cliEntry.ts watch "find the bug in src/server.ts and fix it"
+git clone https://github.com/PStarH/Commander.git
+cd Commander
+corepack enable
+pnpm install --frozen-lockfile
+pnpm build
+
+pnpm exec tsx packages/core/src/cliEntry.ts --help
+pnpm exec tsx packages/core/src/cliEntry.ts doctor --offline
+pnpm demo:l4-a
 ```
 
-这是用于展示界面的录制示例，展示 CLI 的 SSE 流式交互；它不代表生产运行结果或客户现场证据。
+`doctor --offline` 检查本地前置条件，不联系 LLM 提供商。`demo:l4-a` 使用模拟/内存依赖和本机回环服务器；它不调用真实提供商，也不执行外部写入。演示进程拥有并会自动停止其回环服务器，因此无需外部资源清理命令。命令成功退出即完成 E0 清理。
 
----
+跑通此路径仅作为开发/演示证据。它不是已发布的包安装，不是 E1 受治理写入证明，也不是 Commander 达到生产就绪的凭证。
 
-## 30 秒了解工作原理
+### 真实 Provider 的受控只读代码审查（首个真实 Provider 试用）
 
 ```bash
-# 1. 安装
-pnpm install
-
-# 2. 设置任意 API 密钥（自动检测 25 个提供商）
+# 显式选择一家提供商
 export OPENAI_API_KEY=sk-...
+pnpm exec tsx packages/core/src/cliEntry.ts review \
+  --commit HEAD --real --provider=openai
 
-# 3. 运行任何任务
-pnpm exec tsx packages/core/src/cliEntry.ts run "analyze this repository"
-pnpm exec tsx packages/core/src/cliEntry.ts plan "implement authentication"    # 执行前查看计划
-pnpm exec tsx packages/core/src/cliEntry.ts watch "debug the failing test"     # 实时查看智能体事件
+# 或使用 Anthropic
+export ANTHROPIC_API_KEY=sk-ant-...
+pnpm exec tsx packages/core/src/cliEntry.ts review \
+  --commit HEAD --real --provider=anthropic
 ```
 
----
+此命令读取选定的 Git diff 和本地审查指引，最多向显式选定的提供商发送 15,000 个 diff 字符，并将提供商响应限制在 4,000 tokens 与 8 MiB 内。Commander 在 120 秒后中止提供商传输，并在 JSON 解析前拒绝超过 8 MiB 的响应正文。提供商/模型未分配任何执行工具，因此无法发起命令执行、文件修改、网络浏览或目标系统写入。CLI 本身运行固定的只读 `git diff` 命令，并在系统临时目录中更新跨进程速率限制状态。
 
-## Commander 与其他框架对比
+输出会标识 `source=real`、提供商、模型、端点主机、提示词字节数、截断 diff 的实际覆盖比例以及完成响应上限。凭据缺失、空 diff、提供商错误、超时、超限响应和无效结构化输出均会以非零状态退出，绝不静默回退至模拟审查。
 
-|                       | Commander         | LangGraph     | CrewAI          | AutoGen     |
-| --------------------- | ----------------- | ------------- | --------------- | ----------- |
-| **实时 SSE 流式传输** | ✅ 内置           | ❌            | ❌              | ❌          |
-| **自动拓扑选择**      | ✅ 5 种标准拓扑    | ❌ 手动构建图 | ❌ 固定顺序执行 | ❌ 手动编排 |
-| **质量门控**          | ✅ 多层验证       | ❌            | ❌              | ❌          |
-| **幻觉检测**          | ✅ 内置           | ❌            | ❌              | ❌          |
-| **推理引擎**          | ✅ 智能任务分析   | ❌            | ❌              | ❌          |
-| **Meta-learner**      | ✅ 自动调优       | ❌            | ❌              | ❌          |
-| **提供商数量**        | ✅ 25 个          | ❌ 1-2 个     | ❌ 1-2 个       | ❌ 1-2 个   |
-| **CLI 体验**          | ✅ 36 个命令      | ❌ 仅 API     | ❌ 仅 API       | ❌ 仅 API   |
-| **Web GUI**           | ✅ Agent War Room | ❌            | ❌              | ❌          |
-| **TUI 仪表盘**        | ✅ 终端 UI        | ❌            | ❌              | ❌          |
+Diff 和审查指引会离开本机，可能包含仓库敏感材料，并受提供商保留政策约束。使用前请先阅读 [PRIVACY.md](PRIVACY.md)。普通 `commander run`、`pnpm gui`、MCP、SDK 以及 Enterprise Gateway 流程不属于此首用户路径，不得表述为只读或生产就绪。
+
+### Enterprise Gateway（alpha）
+
+本首用户指南有意不提供可直接运行的 Gateway 命令：该路径需要额外的密钥、PostgreSQL 以及运维控制。企业评估请使用 [Shadow 试点阶段 A](docs/pilot/shadow/README.md)，该试点仅评估历史观察样本，不执行外部 rollback。受门控的 [实时写入参考](docs/enterprise/quickstart.md) 必须与 [ENTERPRISE_READINESS.md](ENTERPRISE_READINESS.md) 对照阅读。限定边界的 E1 设计伙伴工作流仍由 [上线就绪 Runbook](docs/runbooks/design-partner-launch-readiness.md) 严格门控。启动开发版 Gateway 并不构成外部写入的授权或证明，共享多租户使用仍处于 alpha 阶段。
 
 ---
 
-## 拓扑结构
+## 核心特性
 
-Commander 自动从 5 种标准拓扑中选择合适的方案：
+### 推理引擎（Deliberation Engine）
 
-- **SINGLE** — 单一智能体，简单查询、快速回答
-- **CHAIN** — 顺序管线，逐步精炼
-- **DISPATCH** — 并行分派多个独立子任务
-- **ORCHESTRATOR** — 编排器协调多个子智能体（含递归拆解）
-- **REVIEW** — 生成后交由审查智能体校验
+任务分类、复杂度评估和拓扑选择——全自动完成。Commander 将任务分类（CODING / RESEARCH / ANALYSIS / FACTUAL），估算复杂度，并从 5 种标准拓扑中选择：SINGLE、CHAIN、DISPATCH、ORCHESTRATOR、REVIEW。一行简短任务使用 1 个智能体；跨仓库全面审计可扩展到 15 个智能体。
 
-（另保留 9 个历史别名以兼容旧配置。）
+### 实时流式传输（Live Streaming）
+
+智能体事件、工具调用和配置的门控决策会实时流式传输到终端或 SSE 端点。不是事后轮询，不是事后日志。你可以逐步检查已发出的工作轨迹。
+
+```
+┌─ Deliberation ──────────────────────────────────────────────┐
+│ Task: "audit this repo for security issues"                  │
+│ Classification: ANALYSIS · Complexity: 7/10                  │
+│ Topology: DISPATCH (3 agents)                                │
+├─ Agent α (security-scanner) ─────────────────────────────────┤
+│ [event] Scanning package.json for known CVEs...              │
+│ [tool] npm audit · 2 critical, 5 moderate                    │
+│ [gate] ACCURACY ✓ · COMPLETENESS ✓                           │
+├─ Agent β (code-reviewer) ────────────────────────────────────┤
+│ [event] Checking for hardcoded secrets...                    │
+│ [tool] grep · found 1 potential secret in config.ts          │
+│ [gate] SAFETY ⚠ · Potential secret detected                  │
+├─ Agent γ (dependency-checker) ───────────────────────────────┤
+│ [event] Analyzing license compliance...                      │
+│ [tool] license-check · No GPL/AGPL dependencies              │
+│ [gate] COMPLETENESS ✓ · ACCURACY ✓                           │
+├─ Synthesizer ────────────────────────────────────────────────┤
+│ Merging 3 agent outputs...                                   │
+│ Leader synthesis · 4 findings, 2 critical                    │
+└──────────────────────────────────────────────────────────────┘
+```
+
+### 25 个提供商与自动故障转移
+
+设置任意一个 API 密钥。Commander 自动检测提供商；若调用失败，则按可配置链回退。OpenAI → Anthropic → DeepSeek → Groq → Ollama —— 你定义顺序，Commander 处理路由。
+
+OpenAI · Anthropic · Google · Azure · DeepSeek · GLM · MiMo · Xiaomi · Groq · Together · Perplexity · Fireworks · Replicate · Mistral · Cohere · OpenRouter · xAI · Anyscale · DeepInfra · Agnes · Ollama · vLLM · AWS Bedrock · StepFun · MiniMax
+
+### 配置的质量门控（Quality Gates）
+
+在启用验证管线的路径上，Commander 在返回结果前运行以下 5 项配置的检查：
+
+| 门控 | 检查内容 |
+| ------------- | ------------------------------------------- |
+| 幻觉检测 (Hallucination) | 基于 LLM-as-Judge 检测编造的事实 |
+| 一致性 (Consistency) | 跨智能体一致性，杜绝自相矛盾 |
+| 完整性 (Completeness) | 覆盖所有必需维度 |
+| 准确性 (Accuracy) | 对照源材料的事实正确性 |
+| 安全性 (Safety) | 内容扫描与提示注入检测 |
+
+如果输出未能通过配置的门控，系统会重试或附带完整上下文报告失败。
+
+### 弹性与容错（Resilience）
+
+| 能力 | 实现机制 |
+| ----------------- | ------------------------------------------------------------------ |
+| 断路器 (Circuit Breakers) | 三态（CLOSED/OPEN/HALF-OPEN），单提供商错误率跟踪 |
+| 死信队列 (Dead Letter Queue) | 追加写入 NDJSON，7 种分类，支持重放 |
+| Saga 补偿 (Saga Compensation) | 注册补偿步骤；外部回滚无法绝对保证 |
+| 检查点 (Checkpointing) | SQLite + WAL，崩溃安全恢复（目标 <5s） |
+| 语义缓存 (Semantic Caching) | SHA-256 精确匹配 + 余弦相似度去重 |
+
+### 安全体系（Security）
+
+AES-256-GCM 加密密钥库。进程内防篡改 HMAC 审计链（外部 WORM/KMS 存证待补齐）。基于权能令牌的 RBAC。ISO 42001 / NIST AI RMF 合规**报告脚手架**（生成报告工具，非认证证书）。红队评估框架（47 个场景，8 类攻击）。基于请求上下文的租户作用域（AsyncLocalStorage）；存储层隔离为 opt-in —— Enterprise Gateway，alpha。
+
+### 自我优化（Self-Optimization）
+
+基于 Thompson Sampling 与 Reflexion 的元学习器跨运行调优智能体配置。它学习哪种拓扑最适合何种任务类型、哪个提供商速度最快、以及哪种参数组合产生最高质量的结果。在记录 5 次以上运行后激活。
 
 ---
 
 ## 架构
 
 ```
-packages/core/src/
-├── ultimate/          # 编排引擎（deliberation / topologyRouter / atomizer / synthesizer / qualityGates）
-├── runtime/           # 执行引擎（agentRuntime / modelRouter / providers / messageBus / saga 集成）
-├── security/          # 安全子系统（零信任 / 审计链 / 红队 / 合规）
-├── tools/             # 内置工具（createAllTools，默认注册 18 个）
-├── memory/            # 三层记忆（working / episodic / long-term）
-├── mcp/               # Model Context Protocol + A2A
-├── saga/              # 持久化补偿事务
-├── selfEvolution/     # Meta-learning（Thompson Sampling + Reflexion）
-├── sandbox/           # 沙箱（TEE / seccomp / 网络代理）
-└── ... 其他核心模块
+                        ┌──────────────────────────────┐
+                        │      DELIBERATION ENGINE      │
+                        │  Task classification          │
+                        │  Complexity estimation        │
+                        │  Topology selection           │
+                        └──────────┬───────────────────┘
+                                   │
+                        ┌──────────▼───────────────────┐
+                        │       TOPOLOGY ROUTER          │
+                        │  SINGLE · CHAIN · DISPATCH     │
+                        │  ORCHESTRATOR · REVIEW          │
+                        └──────────┬───────────────────┘
+                                   │
+                ┌──────────────────┼──────────────────┐
+                ▼                   ▼                   ▼
+         ┌──────────────┐   ┌──────────────┐   ┌──────────────┐
+         │   AGENT 1    │   │   AGENT 2    │   │   AGENT N    │
+         │  LLM → Tool  │   │  LLM → Tool  │   │  LLM → Tool  │
+         │  → Verify    │   │  → Verify    │   │  → Verify    │
+         └──────┬───────┘   └──────┬───────┘   └──────┬───────┘
+                └──────────────────┼──────────────────┘
+                                   ▼
+                        ┌──────────────────────────────┐
+                        │         SYNTHESIS              │
+                        │  Merge · Resolve conflicts    │
+                        └──────────┬───────────────────┘
+                                   ▼
+                        ┌──────────────────────────────┐
+                        │       QUALITY GATES           │
+                        │  Hallucination · Consistency  │
+                        │  Completeness · Accuracy     │
+                        │  Safety                      │
+                        └──────────┬───────────────────┘
+                                   ▼
+                                RESULT
 ```
 
 ---
 
-## 质量门控
+## Web 控制台
 
-在启用验证管线的路径上，结果会在返回前经过配置的检查：
+Commander 包含基于 Web 的控制台，用于可视化监控、基于对话的智能体交互和治理：
 
+```bash
+# 需要 PostgreSQL 以及显式设置的 JWT_SECRET 和 ADMIN_PASSWORD；详见 docs/deploy.md。
+# 在 :4000 启动 API，在 :5173 启动 Web，随后打开浏览器。
+pnpm gui
 ```
-任务输入 → 智能体执行 → [质量门控] → 配置检查后的输出
-                            │
-                            ├─ 幻觉检测（hallucination）
-                            ├─ 一致性（consistency）
-                            ├─ 完整性（completeness）
-                            ├─ 准确性（accuracy）
-                            └─ 安全性（safety）
-```
+
+打开 `http://localhost:5173`。控制台路由清单：
+
+| 路由 | 页面说明 |
+| ---------------------------- | --------------------------------------------------------------------------------------- |
+| `/`                          | 仪表盘 — 战报、Token 趋势、实时拓扑、智能体花名册、任务看板 |
+| `/agents`                    | 智能体花名册 |
+| `/missions`                  | 任务看板与审批队列 |
+| `/execution`                 | 实时执行动态源 |
+| `/memory`                    | 记忆浏览器与检索 |
+| `/governance`                | 审批队列与策略统一配置 |
+| `/security`                  | 安全态势 — ISO 42001 / NIST AI RMF **报告脚手架**（生成报告工具，非认证证书） |
+| `/slo`                       | SLO 监控面板 |
+| `/chat`                      | 对话交互界面，支持智能体实时流式输出 |
+| `/dlq`                       | 死信队列管理与重放 |
+| `/audit`                     | 审计日志 |
+| `/cost`                      | 成本与 Token 用量报告 |
+| `/knowledge`                 | 知识库管理 |
+| `/alerts`                    | 告警中心 |
+| `/onboarding`                | 首次使用引导 |
+| `/users`                     | 用户管理 |
+| `/settings`, `/settings/sso` | 系统设置与 OIDC/SSO 单点登录配置 |
+| `/workflows`                 | 工作流列表与调度 |
+| `/poc`                       | POC / 演示视图 |
+| `/research`                  | 调研视图 |
+| `/actions`                   | Action Gateway 队列（审批 / 拒绝 / 补偿） |
+
+当使用 Compose 的 `web` profile 而非 `pnpm gui` 运行时，控制台运行在 `http://localhost:3000`。
 
 ---
 
-## 开始使用
+## 可靠性目标
 
-### 前提条件
-
-- Node.js 22.x（≥ 22.9.0，< 23）
-- pnpm（推荐）或 npm
-- 任意 LLM 提供商的 API 密钥
-
-### 安装
-
-```bash
-git clone https://github.com/PStarH/Commander.git
-cd Commander
-pnpm install
-```
-
-### 配置
-
-```bash
-# 复制示例环境文件
-cp .env.example .env
-
-# 设置至少一个 API 密钥
-export OPENAI_API_KEY=sk-...
-# 或
-export ANTHROPIC_API_KEY=sk-ant-...
-```
-
-### 运行
-
-```bash
-# 使用 CLI
-pnpm exec tsx packages/core/src/cliEntry.ts run "your task here"
-
-# 运行基础示例
-pnpm exec tsx examples/basic.ts
-
-# 使用 Docker
-docker compose up -d
-```
+| 目标 | 预期指标 | 实现机制 |
+| ------------------- | ---- | -------------------------- |
+| 检查点恢复 | <5s  | SQLite + WAL               |
+| 提供商故障转移 | <10s | 自动回退链 |
+| Saga 补偿 | <30s | 补偿调度器 |
+| DLQ 队列处理 | <60s | 追加写入 NDJSON，支持重放 |
 
 ---
 
 ## 基准测试
 
-> 以下基准运行于模拟/脚本化 harness 或 CI 基线，衡量的是 harness，不是生产 SLA 或 SOC 证据。
-
-```bash
-pnpm benchmark:gaia        # 运行 GAIA 基准测试（完整脚本见 package.json scripts）
-```
-
----
+> 以下所有基准测试均运行在**模拟/脚本化测试套件**或作为 **CI 基线**。它们衡量的是测试工具本身，而非生产环境 SLA 或 SOC 审计凭证。
 
 | 套件 | 覆盖范围 | 结果 |
-| ---- | -------- | ---- |
-| 混沌工程 | 200 个合成案例 + 55 个变异案例（共 255） | 仅列出 harness；结果见基准矩阵 |
-| 红队 | 47 个场景、8 类攻击 | 所列用例均 blocked（模拟 harness） |
-| AgentDojo | 12 个安全测试案例 | 所列用例均 blocked（模拟 harness） |
-| GAIA Spine | 核心能力基准 | 已调度 quick/offline 回归；完整 fixture 待补齐 |
-| SLO | API 可用性 99.95%、P95 调度 <5s | CI 基线，不是生产 SLA |
+| ----------------- | ----------------------------------------- | ------------------------------------------------- |
+| 混沌工程 (Chaos Engineering) | 200 个合成案例 + 55 个变异案例（共 255） | 测试套件入口；结果见基准矩阵保留数据 |
+| 红队 (Red Team) | 47 个场景、8 类攻击 | 所列用例均已阻断（模拟套件） |
+| AgentDojo | 12 个安全测试案例 | 所列用例均已阻断（模拟套件） |
+| GAIA Spine | 核心能力基准 | 已调度快速/离线运行；完整 fixture 待补齐 |
+| SLO | API 可用性 99.95%、P95 调度延迟 <5s | CI 基线，非生产环境 SLA |
+
+完整矩阵：[BENCHMARK.md](BENCHMARK.md)
+
+---
+
+## 健康检查
 
 ```bash
-# 复现任意基准测试
-pnpm test:core                   # 运行核心套件并验证本地基线
-pnpm test:core                   # 完整核心套件：node:test + vitest
-pnpm benchmark:chaos:full        # 混沌工程基准测试（255 场景）
+curl http://localhost:4000/health          # 基础存活探针 (200 / 503)
+curl http://localhost:4000/health/detailed # 全组件详细状态
+curl http://localhost:4000/ready           # 就绪探针 (DB, kernel, 存储)
+curl http://localhost:4000/v1/health       # Gateway 收敛就绪探针
+curl http://localhost:4000/metrics         # Prometheus 指标
+curl http://localhost:4000/system/status   # 运行时模块摘要
 ```
 
----
+不存在 `/readyz` 或 `/livez` 别名 —— API 就绪端点为 `/ready`。
 
-## 命令
-
-| 命令                           | 功能说明                                          |
-| ------------------------------ | ------------------------------------------------- |
-| `commander run <task>`         | 完整多智能体执行（`--dry-run` 显示计划，`--stream` 实时 SSE 流，`--tui` 终端仪表盘） |
-| `commander fix`                | 自动修复 lint、格式和类型错误                     |
-| `commander init`               | 零配置环境扫描 + 提供商连接测试                   |
-| `commander company <task>`     | 本地 company 模式：质量门控 + 记忆                 |
-| `commander swarm <task>`       | 递归拆解 + 并行执行                               |
-| `commander drive <task>`       | 自主逐步执行                                      |
-| `commander goal <task>`        | 多轮收敛循环                                      |
-| `commander review`             | 结构化代码审查，P0-P3 级别发现                    |
-| `commander status`             | 系统状态、提供商健康状况、MetaLearner 统计         |
-| `commander config`             | 查看或修改设置                                    |
-| `commander doctor`             | 运行诊断                                          |
-| `commander history`            | 会话管理                                          |
-| `commander gui`                | Web 仪表盘（Agent War Room）                      |
-| `commander skill`              | 可学习技能管理                                    |
-| `commander plugin`             | 安装/列出/卸载插件                                |
-| `commander mode`               | 显示或设置审批模式                               |
-| `commander feedback`           | 提交反馈                                          |
-| `commander budget`             | 查看令牌预算状态                                  |
-| `commander checkpoint`         | 查看检查点文档                                    |
-| `commander saga`               | Saga 事务管理                                     |
-| `commander cost`               | 令牌用量和成本报告                                |
+监控项：内存、断路器、DLQ 容量、检查点延迟、待处理补偿、事件总线积压、提供商可用性、磁盘空间。
 
 ---
 
-## API 使用
+## 为什么选择 Commander
 
-通过 CLI 或 `@commander/core` 的 `Commander` 入口使用：
+一旦智能体的操作触达外部系统，超时或崩溃就会留下三个悬而未决的问题：操作是否发生、发生了几次、携带了什么载荷。盲目重试可能导致重复写入；直接放弃可能丢失操作。
 
-```bash
-pnpm exec tsx packages/core/src/cliEntry.ts run "analyze this repository"
-```
+Commander 将已批准的请求及其执行状态保存在智能体外部，在响应模糊时查询真实结果，并在证据不确定时停留在明确的未知状态。撤销副作用是单独发起并需单独批准的操作。
 
-或通过 HTTP API（`apps/api`，默认 `:4000`）与 Web 控制台（`pnpm gui`）集成。
+GitHub 原生权限和 Actions 审批等控制手段通常已足够。Commander 适用于需要在智能体与工作节点间维护统一审批与恢复记录的团队。
 
 ---
 
-## 提供商
+## 文档体系
 
-设置任意一个环境变量。Commander 会自动检测 **25 个提供商**：
+- [docs/architecture/](docs/architecture/000-index.md) — 架构决策记录（ADR：V2 资源模型、状态机、持久化、身份体系、Effect Broker、Worker 协议、事件语义）
+- [docs/getting-started.md](docs/getting-started.md) — 快速上手指南
+- [docs/deploy.md](docs/deploy.md) — 部署指南
+- [docs/v2-migration-guide.md](docs/v2-migration-guide.md) — 架构 V2 迁移指南
+- [docs/slo.md](docs/slo.md) — SLO 指标定义
+- [SECURITY.md](SECURITY.md) — 安全模型、威胁模型与合规
+- [BENCHMARK.md](BENCHMARK.md) — 完整基准测试矩阵与方法学
+- [CHANGELOG.md](CHANGELOG.md) — 发布历史记录
 
-`OPENAI_API_KEY` · `AZURE_OPENAI_API_KEY` · `ANTHROPIC_API_KEY` · `GOOGLE_API_KEY` · `DEEPSEEK_API_KEY` · `ZHIPU_API_KEY` (GLM) · `MIMO_API_KEY` · `XIAOMI_API_KEY` · `GROQ_API_KEY` · `TOGETHER_API_KEY` · `PERPLEXITY_API_KEY` · `FIREWORKS_API_KEY` · `REPLICATE_API_TOKEN` · `MISTRAL_API_KEY` · `CO_API_KEY` · `OPENROUTER_API_KEY` · `OLLAMA_HOST` · `VLLM_BASE_URL` · `AWS_ACCESS_KEY_ID` (Bedrock) · `XAI_API_KEY` · `ANYSCALE_API_KEY` · `DEEPINFRA_API_KEY` · `AGNES_API_KEY` · `STEPFUN_API_KEY` · `MINIMAX_API_KEY`
+## 公共边界与反馈
 
----
-
-## 部署
-
-```bash
-# 本地（Docker Compose）— 仅 API，SQLite 存储，kernel 显式关闭
-# 注意：api 的五个认证权威仅支持 PostgreSQL 且无本地回退，
-# 该 profile 未注入 DATABASE_URL，容器会在启动阶段以
-# AUTH_DATABASE_URL_REQUIRED 退出。可启动路径请使用下面的 v2 profile。
-cp .env.example .env   # 填入全部必需密钥，示例值不可直接启动
-docker compose up -d
-# → api 容器启动即退出（AUTH_DATABASE_URL_REQUIRED）
-
-# 本地 + Web 控制台（同样缺少认证 DSN，api 会退出）
-docker compose --profile web up -d
-
-# 可启动的本地/生产形态（Postgres + kernel + worker plane，含 commander_app DSN）
-docker compose -f docker-compose.yml -f docker-compose.v2.yml --profile v2 up -d --build
-
-# 生产环境（VM / VPS，预构建镜像）
-./scripts/deploy-vm.sh your-vm-ip --env-file .env.production
-```
-
-默认 `docker compose up` 只启动 `api`（本地 SQLite），但该容器没有 `DATABASE_URL`，会在启动阶段以 `AUTH_DATABASE_URL_REQUIRED` 退出：api 的五个认证权威（用户、API Key、refresh token、认证失败、限流）仅由 PostgreSQL 提供，且必须使用 `commander_app` 角色，没有任何本地 / SQLite / 内存回退。要启动真正可用的栈，请使用 `v2` 或 `cell` profile。Web 控制台、Postgres、worker plane 均需显式启用对应 profile；完整清单见 `docs/deploy.md`。
-
-生产 Compose 覆盖层还可加：CPU/内存限制、JSON 文件日志、自动重启、健康检查、速率限制。多租户属于 **Enterprise Gateway（alpha）**——请求上下文隔离已有；存储层隔离为 opt-in，须对照 `ENTERPRISE_READINESS.md`，**勿当作完整多租户 SaaS**。
+- **真实 vs 模拟：** 新手引导任务结果仅在 UI/API 报告 `source=real` 时为真实执行；回退与 POC 均为模拟/演示数据。
+- **隐私：** 提示词可能会发送给所选 LLM 提供商，本地追踪、记忆、审计数据及可选的 OpenTelemetry 导出可能被持久化。录入敏感数据前请参阅 [PRIVACY.md](PRIVACY.md)。
+- **Bug 报告：** 请提交 [GitHub issue](https://github.com/PStarH/Commander/issues)，并提前脱敏提示词、日志、配置、PII 和密钥。
+- **问题与建议：** 请提交 [GitHub issue](https://github.com/PStarH/Commander/issues)。
+- **安全漏洞：** 请遵循 [SECURITY.md](SECURITY.md) 流程私下披露；请勿提交公开 issue。
 
 ---
-
-## CI/CD
-
-`.github/workflows/ci.yml` — 质量检查（类型检查 + 完整核心测试套件 + 基准测试 + 构建）+ Docker + Web GUI。通过 `.github/workflows/cd.yml` 在 main 分支上自动部署。
-
----
-
-
-## 文档
-
-- [docs/architecture/](docs/architecture/000-index.md) — 架构决策记录（V2 资源模型、状态机、持久化、身份、effect broker、worker 协议、事件语义）
-- [docs/getting-started.md](docs/getting-started.md) — 快速开始
-- [docs/deploy.md](docs/deploy.md) — 部署
-- [docs/v2-migration-guide.md](docs/v2-migration-guide.md) — Architecture V2 迁移
-- [docs/slo.md](docs/slo.md) — SLO 定义
-- [SECURITY.md](SECURITY.md) — 安全模型、威胁模型、合规
-- [BENCHMARK.md](BENCHMARK.md) — 基准测试矩阵与方法
-- [CHANGELOG.md](CHANGELOG.md) — 发布历史
-- [docs/README.md](docs/README.md) — 公开文档索引
-
-内部审计、AI 工作计划与尽调笔记**不在本仓库**；仅存在于开发者本机的 `.internal/`（已被 gitignore）。
-
-## 隐私、反馈与安全
-
-- [PRIVACY.md](PRIVACY.md)：provider 外发、trace/memory/audit 保存、保留与删除边界。
-- 普通 bug 请提交 [GitHub Issues](https://github.com/PStarH/Commander/issues)，先脱敏 prompt、日志、配置、PII 和密钥。
-- 问题讨论和建议请提交 [GitHub issue](https://github.com/PStarH/Commander/issues)。
-- 安全漏洞请按 [SECURITY.md](SECURITY.md) 私下报告，不要开公开 issue。
 
 ## 许可证
 
-MIT
+MIT。详见 [LICENSE](LICENSE) 与 [COPYRIGHT.md](COPYRIGHT.md)。
 
 ---
 
 <p align="center">
-  <sub>为希望看清 AI 实际在做什么的开发者用心打造 ❤️</sub>
+  <sub>为触达外部系统的智能体操作提供审批与恢复。</sub>
 </p>

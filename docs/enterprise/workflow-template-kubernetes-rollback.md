@@ -1,8 +1,9 @@
 # Workflow Template: Kubernetes Deployment Rollback
 
 This is a gated live-write design reference, not the current customer pilot.
-Kubernetes rollback execution remains frozen. Start with
-[Shadow Pilot Phase A](../pilot/shadow/README.md) for historical evaluation only.
+Kubernetes rollback execution remains frozen. For governed external actions, start with the
+[GitHub pilot](../pilot/github/README.md). For historical evaluation without external writes, see
+[Shadow Pilot Phase A](../pilot/shadow/README.md).
 The future live-write scope is deliberately narrow:
 one tenant, one allowlisted cluster/namespace, one Deployment, mandatory human
 approval, and a reversible rollback target.

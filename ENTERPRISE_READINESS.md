@@ -79,7 +79,7 @@ using tenant-aware singletons. In production, instances outside an explicit tena
 | DATA-1 | GDPR Art 17 right-to-erasure endpoint (function-preserving delete) | ✅     | @compliance | `packages/core/src/storage/dataRetention.ts` (DataRetentionJanitor + auditOnDelete)                                 | 2026-Q3 (delivered) |
 | DATA-2 | DPA (Data Processing Agreement) template                           | ❌     | @legal      | Not committed; required for paid EU customer                                                                        | 2026-Q4             |
 | DATA-3 | Encrypted-at-rest storage for memory + audit (provider-side)       | 🟡     | @storage    | `encryptedSecretsVault` covers API keys; memory + audit rely on storage backend encryption (sqlite/json file-level) | 2026-Q4             |
-| DATA-4 | Backup / restore runbook (`dr-backup-restore.md`)                  | ❌     | @ops        | Not started                                                                                                         | 2027-Q1             |
+| DATA-4 | Backup / restore runbook (`dr-backup-restore.md`)                  | 🟡     | @ops        | `docs/runbooks/dr-backup-restore.md`; tested by `packages/core/tests/architecture/v2-rpo-rto-drill.test.ts`; live drill rehearsal tracked in WS9 | 2026-Q3 (runbook delivered; live drill pending) |
 
 ### Go-to-market / Pilot references
 

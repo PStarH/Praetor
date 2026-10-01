@@ -11,7 +11,7 @@ nodes:
     extraMounts:
       # 挂载目录而非单文件：virtiofs 对单文件 bind mount 不可靠，
       # kubelet 为 apiserver 静态 Pod 创建 hostPath volume 时读不到文件。
-      - hostPath: /Users/sampan/Documents/GitHub/Commander/scripts/fixtures/kubernetes-rollback-kind/audit
+      - hostPath: ./scripts/fixtures/kubernetes-rollback-kind/audit
         containerPath: /etc/kubernetes/audit
         readOnly: true
     kubeadmConfigPatches:

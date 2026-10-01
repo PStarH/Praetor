@@ -3,14 +3,15 @@
  * Commander CLI — Multi-Agent Orchestration System
  *
  * Usage:
- *   commander <task>                    Quick plan (default)
- *   commander run <task>                Execute with full pipeline
- *   commander plan <task>               Show deliberation plan
- *   commander watch <task>              Real-time execution stream
- *   commander company <task>            Company mode execution
- *   commander workers [topics]          Parallel research workers
+ *   commander run <task> [flags]        Execute with full pipeline
  *   commander review [options]          Code review (P0-P3 findings)
+ *   commander fix [--test]              Auto-fix lint/type errors
+ *   commander company <task>            Company mode execution (local·exp)
+ *   commander swarm <task> [flags]      Recursive swarm (local·exp)
+ *   commander drive <task> [flags]      Autonomous drive loop (local·exp)
+ *   commander init [flags]              Zero-config scan + fallback chain
  *   commander quickstart                Interactive setup guide
+ *   commander doctor [--offline]        System diagnostics
  *   commander --version                 Show version
  *   commander help                      Show this help
  */
@@ -465,6 +466,7 @@ async function main() {
         'security',
         'workflow',
         'diagnose',
+        'action',
       ];
       const didYouMean = validCmds.filter((c) => c.startsWith(cmd.toLowerCase()));
       const hint =

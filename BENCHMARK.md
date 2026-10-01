@@ -14,7 +14,7 @@ Run all benchmarks and verify readiness:
 
 ```bash
 pnpm benchmark:all          # WAL + Recovery + Replay + SLO + Tenant Isolation + RedTeam + AgentDojo + Readiness check
-pnpm check:readiness        # Verify all baselines exist and are current
+pnpm check:readiness --non-strict # Parse and validate baseline schemas (strict mode requires an approved profile)
 ```
 
 Individual benchmarks:
@@ -38,9 +38,6 @@ pnpm benchmark:crab          # CRAB capability scaffold
 pnpm benchmark:swebench      # SWE-bench capability scaffold
 pnpm benchmark:mlcommons:ailuminate # MLCommons AILuminate scaffold
 pnpm benchmark:caict:ai-safety       # 信通院 AI Safety Benchmark scaffold
-pnpm benchmark:gaia          # GAIA benchmark (full, requires Phase 2 fixture)
-pnpm benchmark:gaia:quick    # GAIA 10-task offline dry-run + scoring self-test
-pnpm benchmark:gaia:all      # GAIA full run alias
 
 # Performance benchmarks
 pnpm bench:wal               # WAL throughput baseline
