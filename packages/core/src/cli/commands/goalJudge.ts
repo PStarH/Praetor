@@ -19,14 +19,16 @@ interface FlagMap {
   budget?: string;
 }
 
+import { $ } from '../util';
+
 // Color helpers (consistent with the rest of the CLI)
-const res = (s: string) => `\x1b[0m${s}\x1b[0m`;
-const bold = (s: string) => `\x1b[1m${s}\x1b[0m`;
-const dim = (s: string) => `\x1b[2m${s}\x1b[0m`;
-const green = (s: string) => `\x1b[32m${s}\x1b[0m`;
-const red = (s: string) => `\x1b[31m${s}\x1b[0m`;
-const yellow = (s: string) => `\x1b[33m${s}\x1b[0m`;
-const cyan = (s: string) => `\x1b[36m${s}\x1b[0m`;
+const res = $.reset;
+const bold = (s: string) => `${$.bold}${s}${$.reset}`;
+const dim = (s: string) => `${$.dim}${s}${$.reset}`;
+const green = (s: string) => `${$.green}${s}${$.reset}`;
+const red = (s: string) => `${$.red}${s}${$.reset}`;
+const yellow = (s: string) => `${$.yellow}${s}${$.reset}`;
+const cyan = (s: string) => `${$.cyan}${s}${$.reset}`;
 
 const TYPE_LABELS: Record<string, string> = {
   MUST_HAVE: 'MUST_HAVE',
@@ -58,11 +60,12 @@ export function formatJudgeVerdict(verdict: {
   lines.push('');
   lines.push(statusColor(`${statusIcon}  ${bold('Goal Judge Verdict')}`));
   lines.push('');
+  const confColor = verdict.confidence >= 0.8 ? $.green : $.yellow;
   lines.push(
-    `${bold('Confidence:')} ${verdict.confidence >= 0.8 ? green : yellow}${(verdict.confidence * 100).toFixed(0)}%${res}`,
+    `${bold('Confidence:')} ${confColor}${(verdict.confidence * 100).toFixed(0)}%${$.reset}`,
   );
   lines.push(
-    `${bold('Model:')}      ${cyan}${verdict.modelUsed}${res}  ${dim}(${verdict.tokensUsed} tokens)${res}`,
+    `${bold('Model:')}      ${cyan(verdict.modelUsed)}  ${dim(`(${verdict.tokensUsed} tokens)`)}`,
   );
   lines.push(`${bold('Reasoning:')}  ${verdict.reasoning}`);
   lines.push('');
@@ -72,8 +75,8 @@ export function formatJudgeVerdict(verdict: {
     for (const c of verdict.conditionsChecked) {
       const icon = c.passed ? '✅' : '❌';
       const color = c.passed ? green : red;
-      lines.push(`  ${icon} ${color}[${c.conditionId}]${res} ${c.description}`);
-      lines.push(`     ${dim(c.evidence)}${res}`);
+      lines.push(`  ${icon} ${color(`[${c.conditionId}]`)} ${c.description}`);
+      lines.push(`     ${dim(c.evidence)}`);
     }
     lines.push('');
   }
