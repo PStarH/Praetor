@@ -1,0 +1,82 @@
+{
+  "schemaVersion": 2,
+  "benchmark": "recovery-bootstrap",
+  "results": [
+    {
+      "scale": 10,
+      "scanMs": 19,
+      "recovered": 10,
+      "aborted": 10,
+      "skipped": 0,
+      "totalScanned": 10,
+      "perRunMs": 1.9
+    },
+    {
+      "scale": 100,
+      "scanMs": 54,
+      "recovered": 100,
+      "aborted": 100,
+      "skipped": 0,
+      "totalScanned": 100,
+      "perRunMs": 0.54
+    },
+    {
+      "scale": 1000,
+      "scanMs": 2815,
+      "recovered": 1000,
+      "aborted": 1000,
+      "skipped": 0,
+      "totalScanned": 1000,
+      "perRunMs": 2.815
+    }
+  ],
+  "summary": {
+    "passed": true,
+    "errors": 0,
+    "failed": 0,
+    "skipped": 0
+  },
+  "scale10": {
+    "scale": 10,
+    "scanMs": 19,
+    "recovered": 10,
+    "aborted": 10,
+    "skipped": 0,
+    "totalScanned": 10,
+    "perRunMs": 1.9
+  },
+  "scale100": {
+    "scale": 100,
+    "scanMs": 54,
+    "recovered": 100,
+    "aborted": 100,
+    "skipped": 0,
+    "totalScanned": 100,
+    "perRunMs": 0.54
+  },
+  "scale1000": {
+    "scale": 1000,
+    "scanMs": 2815,
+    "recovered": 1000,
+    "aborted": 1000,
+    "skipped": 0,
+    "totalScanned": 1000,
+    "perRunMs": 2.815
+  },
+  "env": {
+    "evidence": "simulated",
+    "gitSha": "b91cc1d83364536842356f3b924ba4cdef049ae0",
+    "gitBranch": "fix/public-spec-citations",
+    "gitDirty": true,
+    "nodeVersion": "v22.22.0",
+    "pnpmVersion": "9.15.4",
+    "topology": {
+      "gateways": 1,
+      "workers": 1,
+      "operations": 1,
+      "model": "single"
+    },
+    "datasetVersion": "recovery-bootstrap-v1"
+  },
+  "runAt": "2026-10-02T05:03:27.370Z"
+}

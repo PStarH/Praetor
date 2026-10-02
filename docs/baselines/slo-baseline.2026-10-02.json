@@ -1,0 +1,58 @@
+{
+  "schemaVersion": 2,
+  "benchmark": "slo",
+  "thresholds": {
+    "recovery": 5000,
+    "failover": 10000,
+    "compensation": 30000,
+    "dlq": 60000
+  },
+  "measurements": [
+    {
+      "name": "recovery",
+      "actualMs": 106,
+      "thresholdMs": 5000,
+      "passed": true
+    },
+    {
+      "name": "failover_rto_simulated",
+      "actualMs": 6,
+      "thresholdMs": 10000,
+      "passed": true
+    },
+    {
+      "name": "compensation",
+      "actualMs": 1,
+      "thresholdMs": 30000,
+      "passed": true
+    },
+    {
+      "name": "dlq",
+      "actualMs": 13,
+      "thresholdMs": 60000,
+      "passed": true
+    }
+  ],
+  "summary": {
+    "passed": true,
+    "total": 4,
+    "passedCount": 4,
+    "failed": 0
+  },
+  "env": {
+    "evidence": "simulated",
+    "gitSha": "b91cc1d83364536842356f3b924ba4cdef049ae0",
+    "gitBranch": "fix/public-spec-citations",
+    "gitDirty": true,
+    "nodeVersion": "v22.22.0",
+    "pnpmVersion": "9.15.4",
+    "topology": {
+      "gateways": 1,
+      "workers": 1,
+      "operations": 1,
+      "model": "single"
+    },
+    "datasetVersion": "slo-v1"
+  },
+  "runAt": "2026-10-02T05:04:10.523Z"
+}

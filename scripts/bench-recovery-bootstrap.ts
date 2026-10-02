@@ -64,17 +64,23 @@ async function main() {
       const bundle = getRunLedgerBundle();
 
       for (let i = 0; i < scale; i++) {
-        // ttlSeconds: -1 makes lease expire immediately → zombie
-        sched.beginRun({
-          runId: `zombie-${scale}-${i}`,
+        const runId = `zombie-${scale}-${i}`;
+        const handle = sched.beginRun({
+          runId,
           goal: `benchmark zombie run ${i}`,
-          ttlSeconds: -1,
         });
+        bundle.lease.heartbeat(runId, handle.leaseToken, { ttlSeconds: -1 });
+        const live = bundle.lease.get(runId);
+        if (live) {
+          bundle.ledger.syncLeaseCredentials(runId, live.token, live.fencingEpoch, {
+            expiresAt: live.expiresAt,
+          });
+        }
       }
 
       // Measure bootstrap
       const start = Date.now();
-      const result = RecoveryBootstrapper.bootstrap({
+      const result = await RecoveryBootstrapper.bootstrap({
         forceAbort: true,
         holder: `bench-recovery-${process.pid}`,
       });
