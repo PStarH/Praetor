@@ -21,6 +21,32 @@
 
 ## The Distributed Systems Problem for AI Agents
 
+```
+   ┌────────────────────────────────────────────────────────┐
+   │        AI Agent Frameworks & LLMs                      │
+   │  Claude Code · Cursor · OpenAI Agents · LangGraph      │
+   └──────────────────────────┬─────────────────────────────┘
+                              │ 1. Propose Mutation (No direct write tokens)
+                              ▼
+   ┌────────────────────────────────────────────────────────┐
+   │            Commander Control Plane                     │
+   │  ┌─────────────────────────┐ ┌──────────────────────┐  │
+   │  │ Preflight Idempotency   │ │ Two-Phase Human Gate │  │
+   │  │ (Query-Before-Retry)    │ │ (Cryptographic Hash) │  │
+   │  └─────────────────────────┘ └──────────────────────┘  │
+   │  ┌─────────────────────────┐ ┌──────────────────────┐  │
+   │  │ Durable Postgres Kernel │ │ Tamper-Evident Audit │  │
+   │  │ (Crash-safe step lease) │ │ (Ed25519 Signed JWS) │  │
+   │  └─────────────────────────┘ └──────────────────────┘  │
+   └──────────────────────────┬─────────────────────────────┘
+                              │ 2. Governed Write & Auto-Compensation
+                              ▼
+   ┌────────────────────────────────────────────────────────┐
+   │       External Infrastructure & Version Control        │
+   │   GitHub (PRs/Issues) · Kubernetes · Cloud APIs        │
+   └────────────────────────────────────────────────────────┘
+```
+
 When an AI agent (e.g. Claude Code, OpenAI Agents SDK, or custom coding agent) attempts an external mutation — like creating a GitHub pull request, rolling back a Kubernetes deployment, or modifying infrastructure — **a dropped connection or worker restart leaves the world in an ambiguous state**:
 
 Did the write happen? How many times? What was actually committed?
@@ -85,6 +111,31 @@ on your machine.
 ---
 
 ## Quick Start
+
+### ⚡ 4 Ways to Experience Commander (Under 60 Seconds)
+
+| Path | Command | What It Exercises |
+| --- | --- | --- |
+| **1. Zero-Dependency Demo** | `pnpm demo:l4-a` | Multi-agent deliberation, 5 quality gates, in-memory execution (no API key needed) |
+| **2. Real Provider Code Review** | `pnpm exec tsx packages/core/src/cliEntry.ts review --commit HEAD --real --provider=openai` | Read-only analysis of your Git diff across configured quality gates |
+| **3. Interactive Web Console** | `pnpm gui` | Live control room on `:5173`: agent topology, DLQ inspection, and approval queue |
+| **4. Governed Action Offline Test** | `pnpm test:github:offline` | 130 offline contract assertions for idempotency & response-loss recovery |
+
+### 📦 4-Line Integration (Python SDK)
+
+```python
+from commander_sdk import CommanderClient
+
+# Connect to the Commander execution control plane
+client = CommanderClient(base_url="http://localhost:4000")
+
+# Dispatch a mutation with preflight query-before-retry and cryptographic approval
+run = client.runs.create(
+    task="Review auth module diff and propose hotfix PR",
+    require_approval=True
+)
+print(f"Run {run.run_id} initiated; approval required: {run.approval_required}")
+```
 
 For the new GitHub action path, follow the [pilot guide](docs/pilot/github/README.md).
 It separates credential-free contract tests from the configured Gateway demo
