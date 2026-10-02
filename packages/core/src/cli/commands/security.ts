@@ -29,7 +29,7 @@
  *   node_modules/.bin/tsx packages/core/src/security/runRedTeamBattery.ts --rounds 3
  */
 
-import { execFile, type ExecFileOptions } from 'node:child_process';
+import { execFileSync } from 'node:child_process';
 import { existsSync } from 'fs';
 import path from 'path';
 import { $, section, bullet } from '../util';
@@ -129,29 +129,22 @@ export async function cmdSecurity(args: string[]): Promise<void> {
   const childArgs = [resolved.path, ...passThroughArgs];
 
   try {
-    const exitCode = await new Promise<number>((resolve, reject) => {
-      execFile(
-        childCmd,
-        childArgs,
-        { stdio: 'inherit', env: { ...process.env } } as ExecFileOptions,
-        (err) => {
-          if (!err) {
-            resolve(0);
-            return;
-          }
-          const code = (err as NodeJS.ErrnoException).code;
-          if (typeof code === 'number') resolve(code);
-          else reject(err);
-        },
-      );
+    execFileSync(childCmd, childArgs, {
+      stdio: 'inherit',
+      env: { ...process.env },
     });
-    if (exitCode !== 0) process.exitCode = exitCode;
-  } catch (err) {
-    const msg = err instanceof Error ? err.message : String(err);
-    console.log(
-      `\n  ${$.red}✗${$.reset} Failed to run ${$.bold}${subcommand}${$.reset}: ${msg}\n` +
-        `  Tip: run standalone with ${$.dim}node_modules/.bin/tsx packages/core/src/security/${scriptName}${$.reset}\n`,
-    );
-    process.exitCode = 1;
+  } catch (err: unknown) {
+    const errorWithStatus = err as { status?: number; code?: number };
+    const exitCode = typeof errorWithStatus.status === 'number' ? errorWithStatus.status : (errorWithStatus.code ?? 1);
+    process.exitCode = exitCode;
+    if (typeof exitCode !== 'number' || exitCode === 0) {
+      // Child printed output
+    } else {
+      const msg = err instanceof Error ? err.message : String(err);
+      console.log(
+        `\n  ${$.red}✗${$.reset} Subcommand ${$.bold}${subcommand}${$.reset} failed: ${msg}\n` +
+          `  Tip: run standalone with ${$.dim}node_modules/.bin/tsx packages/core/src/security/${scriptName}${$.reset}\n`,
+      );
+    }
   }
 }

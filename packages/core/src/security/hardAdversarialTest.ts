@@ -24,6 +24,10 @@
  */
 
 import { StepFunProvider } from '../runtime/providers/stepfunProvider';
+import type { LLMProvider } from '../runtime/types/llm';
+import { detectProvider } from '../config/commanderConfig';
+import { createProvider } from '../runtime/providers/providerRegistry';
+import { loadEnvUp } from '../cli/envLoader';
 import type { LLMMessage } from '../runtime/types';
 import {
   createComprehensiveDefender,
@@ -384,11 +388,12 @@ function pickVectorsForCategory(
 }
 
 async function generatePayload(
-  provider: StepFunProvider,
+  provider: LLMProvider,
   category: AttackCategory,
   round: number,
   previousAttempts: Array<{ payload: string; result: string; defense?: string }>,
   allVectors: AttackVector[],
+  model?: string,
 ): Promise<{ payload: string; vectorsUsed: string[] }> {
   const vectors = pickVectorsForCategory(category, round, allVectors);
   const systemPrompt = buildRedTeamSystemPrompt(category, round, previousAttempts, vectors);
@@ -402,7 +407,7 @@ async function generatePayload(
   ];
 
   const response = await provider.call({
-    model: 'step-3.7-flash',
+    model: model || 'default',
     messages,
     maxTokens: 2048,
     temperature: 0.95,
@@ -440,13 +445,22 @@ function buildScenario(
 
 async function main(): Promise<void> {
   const args = parseArgs();
-  const apiKey = process.env.STEPFUN_API_KEY;
-  if (!apiKey) {
-    console.error('STEPFUN_API_KEY environment variable is required');
+  loadEnvUp();
+  const activeProviderInfo = detectProvider();
+  let provider: LLMProvider;
+  let modelName: string | undefined;
+
+  if (activeProviderInfo) {
+    provider = createProvider(activeProviderInfo.type);
+    modelName = activeProviderInfo.defaultModel;
+  } else if (process.env.STEPFUN_API_KEY) {
+    provider = new StepFunProvider({ apiKey: process.env.STEPFUN_API_KEY });
+    modelName = 'step-3.7-flash';
+  } else {
+    console.error('No LLM provider available. Configure AGNES_API_KEY, STEPFUN_API_KEY, or other provider.');
     process.exit(1);
   }
 
-  const provider = new StepFunProvider({ apiKey });
   const allCats: AttackCategory[] =
     args.category === 'all'
       ? [
@@ -466,7 +480,7 @@ async function main(): Promise<void> {
 
   console.log(`\n${'='.repeat(60)}`);
   console.log(`  HARD ADVERSARIAL RED-BLUE TEAM TEST`);
-  console.log(`  Red team: StepFun step-3.7-flash (temp=0.95)`);
+  console.log(`  Red team: ${provider.name} ${modelName ?? ''} (temp=0.95)`);
   console.log(`  Blue team: Commander multi-layer defense`);
   console.log(`  Attack vectors: ${vectors.length} known weaknesses`);
   console.log(`  Rounds per category: ${args.rounds}`);
@@ -490,6 +504,7 @@ async function main(): Promise<void> {
           round,
           previousAttempts,
           vectors,
+          modelName,
         );
         process.stdout.write(`[${payload.length}c, ${vectorsUsed.join(',')}] testing... `);
 

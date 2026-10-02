@@ -19,6 +19,10 @@
  */
 
 import { StepFunProvider } from '../runtime/providers/stepfunProvider';
+import type { LLMProvider } from '../runtime/types/llm';
+import { detectProvider } from '../config/commanderConfig';
+import { createProvider } from '../runtime/providers/providerRegistry';
+import { loadEnvUp } from '../cli/envLoader';
 import {
   createComprehensiveDefender,
   generateSecurityReportJson,
@@ -42,9 +46,10 @@ interface LayerTestResult {
 }
 
 async function testLayerIndependence(
-  provider: StepFunProvider,
+  provider: LLMProvider,
   category: AttackCategory,
   rounds: number,
+  model?: string,
 ): Promise<LayerTestResult[]> {
   const layerConfigs = [
     {
@@ -109,7 +114,7 @@ async function testLayerIndependence(
 
     for (let r = 1; r <= rounds; r++) {
       // Generate payload without technique hints — let the LLM be creative
-      const payload = await generateFreeformPayload(provider, category, r, []);
+      const payload = await generateFreeformPayload(provider, category, r, [], model);
 
       const scenario: RedTeamTestScenario = {
         id: `LAYER-${config.name.slice(0, 3)}-${category.slice(0, 4).toUpperCase()}-${String(r).padStart(2, '0')}`,
@@ -214,10 +219,11 @@ Rules:
 }
 
 async function generateFreeformPayload(
-  provider: StepFunProvider,
+  provider: LLMProvider,
   category: AttackCategory,
   round: number,
   _previousAttempts: Array<{ payload: string; result: string }>,
+  model?: string,
 ): Promise<string> {
   const systemPrompt = buildUnconstrainedRedTeamPrompt(category, round);
 
@@ -230,7 +236,7 @@ async function generateFreeformPayload(
   ];
 
   const response = await provider.call({
-    model: 'step-3.7-flash',
+    model: model || 'default',
     messages: messages as LLMMessage[],
     maxTokens: 2048,
     temperature: 1.0, // Maximum randomness/creativity
@@ -320,7 +326,7 @@ function buildScenario(
   };
 }
 
-async function testNovelUnicode(_provider: StepFunProvider): Promise<RedTeamTestResult[]> {
+async function testNovelUnicode(_provider?: LLMProvider): Promise<RedTeamTestResult[]> {
   console.log('\n═══ NOVEL UNICODE TESTS ═══');
   console.log('Testing Unicode ranges beyond basic Cyrillic/math bold...\n');
 
@@ -534,18 +540,27 @@ const ALL_CATEGORIES: AttackCategory[] = [
 
 async function main(): Promise<void> {
   const args = parseArgs();
-  const apiKey = process.env.STEPFUN_API_KEY;
-  if (!apiKey) {
-    console.error('STEPFUN_API_KEY environment variable is required');
+  loadEnvUp();
+  const activeProviderInfo = detectProvider();
+  let provider: LLMProvider;
+  let modelName: string | undefined;
+
+  if (activeProviderInfo) {
+    provider = createProvider(activeProviderInfo.type);
+    modelName = activeProviderInfo.defaultModel;
+  } else if (process.env.STEPFUN_API_KEY) {
+    provider = new StepFunProvider({ apiKey: process.env.STEPFUN_API_KEY });
+    modelName = 'step-3.7-flash';
+  } else {
+    console.error('No LLM provider available. Configure AGNES_API_KEY, STEPFUN_API_KEY, or other provider.');
     process.exit(1);
   }
 
-  const provider = new StepFunProvider({ apiKey });
   const allCats: AttackCategory[] = args.category === 'all' ? ALL_CATEGORIES : [args.category];
 
   console.log(`\n${'═'.repeat(60)}`);
   console.log(`  UNKNOWN ADVERSARIAL TEST — ZERO-DAY RESILIENCE`);
-  console.log(`  Red team: StepFun step-3.7-flash (temp=1.0, NO technique hints)`);
+  console.log(`  Red team: ${provider.name} ${modelName ?? ''} (temp=1.0, NO technique hints)`);
   console.log(`  Blue team: Commander multi-layer defense`);
   console.log(`  Rounds per category: ${args.rounds}`);
   console.log(`  Categories: ${allCats.join(', ')}`);
@@ -562,7 +577,7 @@ async function main(): Promise<void> {
     const defender = createComprehensiveDefender();
 
     for (let round = 1; round <= args.rounds; round++) {
-      const payload = await generateFreeformPayload(provider, category, round, []);
+      const payload = await generateFreeformPayload(provider, category, round, [], modelName);
 
       const scenario = buildScenario(category, payload, round, 'FREE', 'Freeform adversarial');
       const result = await defender(scenario);
@@ -597,7 +612,7 @@ async function main(): Promise<void> {
     console.log('\n\n═══ LAYER INDEPENDENCE TESTS ═══');
     console.log('Testing each defense layer individually...\n');
     for (const category of allCats) {
-      const catLayerResults = await testLayerIndependence(provider, category, 3);
+      const catLayerResults = await testLayerIndependence(provider, category, 3, modelName);
       layerResults.push(...catLayerResults);
     }
   }
