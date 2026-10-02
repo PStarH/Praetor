@@ -31,7 +31,7 @@ dependencies = [
 [project.urls]
 Homepage = "https://github.com/PStarH/Commander"
 Repository = "https://github.com/PStarH/Commander"
-Documentation = "https://github.com/PStarH/commander-docs"
+Documentation = "https://pstarh.github.io/commander-docs/"
 
 [project.optional-dependencies]
 dev = [

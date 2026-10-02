@@ -8,7 +8,7 @@ from commander import CommanderClient
 async def main():
     async with CommanderClient(
         api_key="cmd-...",
-        base_url="http://localhost:3001",
+        base_url="http://localhost:4000",
     ) as client:
         # List projects
         projects = await client.list_projects()

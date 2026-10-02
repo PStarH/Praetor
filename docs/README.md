@@ -17,6 +17,7 @@ Product and operator docs that ship with the repository.
 | [deploy.md](./deploy.md) | Deployment |
 | [v2-migration-guide.md](./v2-migration-guide.md) | Architecture V2 migration |
 | [slo.md](./slo.md) | SLO definitions |
+| [content/why-retrying-ai-agent-external-actions-is-unsafe.md](./content/why-retrying-ai-agent-external-actions-is-unsafe.md) | Engineering failure model: why retrying external actions is unsafe |
 | [architecture/](./architecture/) | Canonical architecture ADRs |
 | [runbooks/](./runbooks/) | Ops runbooks |
 | [security/](./security/) | Public security process docs |

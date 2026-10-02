@@ -7,7 +7,7 @@ from commander import CommanderClient
 async def main():
     async with CommanderClient(
         api_key="cmd-...",
-        base_url="http://localhost:3001",
+        base_url="http://localhost:4000",
     ) as client:
         # Execute first to get a session_id
         result = await client.run("analyze this project")

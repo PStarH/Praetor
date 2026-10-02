@@ -327,6 +327,7 @@ GitHub 標準の権限や Actions の承認などのネイティブ制御で十�
 - [docs/deploy.md](docs/deploy.md) — デプロイガイド
 - [docs/v2-migration-guide.md](docs/v2-migration-guide.md) — アーキテクチャ V2 移行ガイド
 - [docs/slo.md](docs/slo.md) — SLO 定義
+- [docs/content/why-retrying-ai-agent-external-actions-is-unsafe.md](docs/content/why-retrying-ai-agent-external-actions-is-unsafe.md) — 障害モデル解説：AI エージェントの外部アクション再試行が危険な理由
 - [SECURITY.md](SECURITY.md) — セキュリティモデル、脅威モデル、コンプライアンス
 - [BENCHMARK.md](BENCHMARK.md) — 完全なベンチマークマトリクスと測定手法
 - [CHANGELOG.md](CHANGELOG.md) — リリース履歴

@@ -387,6 +387,7 @@ Native controls such as GitHub permissions and Actions approvals are often enoug
 - [docs/deploy.md](docs/deploy.md) — Deployment
 - [docs/v2-migration-guide.md](docs/v2-migration-guide.md) — Architecture V2 migration
 - [docs/slo.md](docs/slo.md) — SLO definitions
+- [docs/content/why-retrying-ai-agent-external-actions-is-unsafe.md](docs/content/why-retrying-ai-agent-external-actions-is-unsafe.md) — Failure model: why retrying an AI agent's external action is unsafe
 - [SECURITY.md](SECURITY.md) — Security model, threat model, compliance
 - [BENCHMARK.md](BENCHMARK.md) — Full benchmark matrix and methodology
 - [CHANGELOG.md](CHANGELOG.md) — Release history

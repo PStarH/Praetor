@@ -327,6 +327,7 @@ GitHub 原生权限和 Actions 审批等控制手段通常已足够。Commander 
 - [docs/deploy.md](docs/deploy.md) — 部署指南
 - [docs/v2-migration-guide.md](docs/v2-migration-guide.md) — 架构 V2 迁移指南
 - [docs/slo.md](docs/slo.md) — SLO 指标定义
+- [docs/content/why-retrying-ai-agent-external-actions-is-unsafe.md](docs/content/why-retrying-ai-agent-external-actions-is-unsafe.md) — 故障模型解析：为什么重试 AI Agent 的外部操作是不安全的
 - [SECURITY.md](SECURITY.md) — 安全模型、威胁模型与合规
 - [BENCHMARK.md](BENCHMARK.md) — 完整基准测试矩阵与方法学
 - [CHANGELOG.md](CHANGELOG.md) — 发布历史记录
