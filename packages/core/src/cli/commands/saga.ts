@@ -388,7 +388,7 @@ async function cmdSagaDecide(args: string[], decision: 'approve' | 'reject') {
     );
     process.exit(1);
   }
-  const [, runId, nodeId] = [positional[0], positional[1]!, positional[2]!];
+  const [runId, nodeId] = [positional[0]!, positional[1]!];
   const by = flags.by ?? process.env.USER ?? process.env.USERNAME ?? 'cli-user';
 
   const baseDir = ensureDataDir();

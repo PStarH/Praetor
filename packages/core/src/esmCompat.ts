@@ -31,15 +31,35 @@
  * does not guarantee it.
  */
 import { createRequire } from 'node:module';
-import { dirname } from 'node:path';
+import { dirname, join } from 'node:path';
 import { fileURLToPath } from 'node:url';
 
 /** The directory containing the module identified by `metaUrl`. */
-export function getDirname(metaUrl: string): string {
-  return dirname(fileURLToPath(metaUrl));
+export function getDirname(metaUrl?: string): string {
+  if (typeof metaUrl === 'string' && metaUrl.length > 0) {
+    try {
+      return dirname(fileURLToPath(metaUrl));
+    } catch {
+      // Ignore URL parsing error and fall through
+    }
+  }
+  if (typeof __dirname !== 'undefined' && __dirname) {
+    return __dirname;
+  }
+  return process.cwd();
 }
 
 /** An ESM-safe `require` whose relative specifiers resolve from `metaUrl`. */
-export function getRequire(metaUrl: string) {
-  return createRequire(metaUrl);
+export function getRequire(metaUrl?: string) {
+  if (typeof metaUrl === 'string' && metaUrl.length > 0) {
+    try {
+      return createRequire(metaUrl);
+    } catch {
+      // Ignore URL parsing error and fall through
+    }
+  }
+  if (typeof import.meta !== 'undefined' && import.meta?.url) {
+    return createRequire(import.meta.url);
+  }
+  return createRequire(join(process.cwd(), 'package.json'));
 }

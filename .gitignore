@@ -301,6 +301,7 @@ packages/core/.commander/knowledge-base/
 .commander/skills/
 .commander/scheduler/
 .commander/memory/
+.commander/sagas/
 
 # Vite/React generated type declarations and bundles (apps/web) — recursive (ARCH-4)
 apps/web/src/**/*.d.ts
