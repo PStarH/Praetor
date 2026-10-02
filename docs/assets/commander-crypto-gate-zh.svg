@@ -1,0 +1,155 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1280 680" width="1280" height="680" style="background:#ffffff; font-family:-apple-system, BlinkMacSystemFont, 'SF Pro Display', 'Segoe UI', Roboto, Helvetica, Arial, sans-serif;">
+  <defs>
+    <marker id="arr-blue" viewBox="0 0 10 10" refX="6" refY="5" markerWidth="6" markerHeight="6" orient="auto-start-reverse">
+      <path d="M 0 1.5 L 8 5 L 0 8.5 z" fill="#2563EB"/>
+    </marker>
+    <filter id="shadow-sm" x="-5%" y="-5%" width="110%" height="115%" filterUnits="userSpaceOnUse">
+      <feDropShadow dx="0" dy="2" stdDeviation="4" flood-color="#0F172A" flood-opacity="0.04" />
+    </filter>
+  </defs>
+
+  <rect width="1280" height="680" fill="#FFFFFF"/>
+  <rect x="20" y="20" width="1240" height="640" rx="16" fill="#FFFFFF" stroke="#E2E8F0" stroke-width="1.5"/>
+
+  <!-- Header -->
+  <g transform="translate(60, 48)">
+    <rect x="0" y="0" width="190" height="24" rx="12" fill="#EFF6FF"/>
+    <text x="95" y="16" fill="#2563EB" font-size="11" font-weight="700" letter-spacing="0.8" text-anchor="middle">CRYPTOGRAPHIC SPEC</text>
+    <text x="202" y="17" fill="#0F172A" font-size="20" font-weight="700" letter-spacing="-0.3">两阶段人机密码学签名与 JWS 存证全生命周期</text>
+    <text x="202" y="38" fill="#64748B" font-size="13">将不受信 Agent 推理面与生产执行特权解耦 · RFC 7515 防篡改审计链</text>
+  </g>
+
+  <!-- 4 Stage Columns -->
+  <g transform="translate(60, 115)">
+    <!-- Stage 1 -->
+    <rect width="265" height="420" rx="14" fill="#F8FAFC" stroke="#E2E8F0" stroke-width="1.2" filter="url(#shadow-sm)"/>
+    <rect x="18" y="18" width="32" height="32" rx="8" fill="#F1F5F9"/>
+    <text x="34" y="40" font-size="16" text-anchor="middle">1</text>
+    <text x="60" y="30" fill="#0F172A" font-size="15" font-weight="700">意图提案与摘要</text>
+    <text x="60" y="46" fill="#64748B" font-size="11.5">Intent Canonicalization</text>
+
+    <g transform="translate(16, 75)">
+      <rect width="233" height="90" rx="8" fill="#FFFFFF" stroke="#E2E8F0" stroke-width="1"/>
+      <text x="12" y="22" fill="#0F172A" font-size="12" font-weight="600">RFC 8785 确定性规范化</text>
+      <text x="12" y="40" fill="#64748B" font-size="11">JSON 键排序与浮点正规化</text>
+      <text x="12" y="58" fill="#475569" font-size="11" font-family="monospace">args = { "branch": "fix", ... }</text>
+      <text x="12" y="76" fill="#2563EB" font-size="11" font-weight="600">计算 SHA-256 唯一摘要</text>
+
+      <rect y="105" width="233" height="90" rx="8" fill="#FFFFFF" stroke="#E2E8F0" stroke-width="1"/>
+      <text x="12" y="127" fill="#0F172A" font-size="12" font-weight="600">绑定策略快照版本</text>
+      <text x="12" y="145" fill="#64748B" font-size="11">Policy Snapshot Hash</text>
+      <text x="12" y="163" fill="#475569" font-size="11" font-family="monospace">policy_hash = 0x8a92f...</text>
+      <text x="12" y="181" fill="#16A34A" font-size="11" font-weight="600">杜绝后续策略漂移风险</text>
+
+      <rect y="210" width="233" height="110" rx="8" fill="#EFF6FF" stroke="#BFDBFE" stroke-width="1"/>
+      <text x="12" y="232" fill="#1E40AF" font-size="12" font-weight="700">产出: 待审摘要 Digest</text>
+      <text x="12" y="254" fill="#2563EB" font-size="11" font-family="monospace">digest = H(Intent ∥ Policy)</text>
+      <text x="12" y="274" fill="#64748B" font-size="11">• 零特权泄漏给 Agent</text>
+      <text x="12" y="294" fill="#64748B" font-size="11">• 无人类签名不可执行</text>
+    </g>
+
+    <!-- Arrow 1 -> 2 -->
+    <line x1="265" y1="210" x2="295" y2="210" stroke="#2563EB" stroke-width="2" marker-end="url(#arr-blue)"/>
+
+    <!-- Stage 2 -->
+    <g transform="translate(295, 0)">
+      <rect width="265" height="420" rx="14" fill="#FFFFFF" stroke="#2563EB" stroke-width="2" filter="url(#shadow-sm)"/>
+      <rect x="18" y="18" width="32" height="32" rx="8" fill="#EFF6FF"/>
+      <text x="34" y="40" font-size="16" text-anchor="middle">2</text>
+      <text x="60" y="30" fill="#0F172A" font-size="15" font-weight="700">人类离线私钥签名</text>
+      <text x="60" y="46" fill="#2563EB" font-size="11.5" font-weight="600">Cryptographic Sign-off</text>
+
+      <g transform="translate(16, 75)">
+        <rect width="233" height="90" rx="8" fill="#F8FAFC" stroke="#E2E8F0" stroke-width="1"/>
+        <text x="12" y="22" fill="#0F172A" font-size="12" font-weight="600">人机审阅终端展示</text>
+        <text x="12" y="40" fill="#64748B" font-size="11">查看 Git Diff / 变更意图</text>
+        <text x="12" y="58" fill="#475569" font-size="11">明确批准具体分支与改动</text>
+        <text x="12" y="76" fill="#16A34A" font-size="11" font-weight="600">✓ 杜绝一键无脑通过</text>
+
+        <rect y="105" width="233" height="90" rx="8" fill="#F8FAFC" stroke="#E2E8F0" stroke-width="1"/>
+        <text x="12" y="127" fill="#0F172A" font-size="12" font-weight="600">Ed25519 签名生成</text>
+        <text x="12" y="145" fill="#64748B" font-size="11">私钥仅保存在审阅者设备</text>
+        <text x="12" y="163" fill="#475569" font-size="11" font-family="monospace">sig = Sign_sk(Digest ∥ t)</text>
+        <text x="12" y="181" fill="#2563EB" font-size="11" font-weight="600">数学级防伪防篡改</text>
+
+        <rect y="210" width="233" height="110" rx="8" fill="#EFF6FF" stroke="#BFDBFE" stroke-width="1"/>
+        <text x="12" y="232" fill="#1E40AF" font-size="12" font-weight="700">产出: 签名授权票据</text>
+        <text x="12" y="254" fill="#2563EB" font-size="11" font-family="monospace">Authorization Receipt</text>
+        <text x="12" y="274" fill="#64748B" font-size="11">• 严格绑定审阅者公钥</text>
+        <text x="12" y="294" fill="#64748B" font-size="11">• 带有时间戳过期保护</text>
+      </g>
+    </g>
+
+    <!-- Arrow 2 -> 3 -->
+    <line x1="560" y1="210" x2="590" y2="210" stroke="#2563EB" stroke-width="2" marker-end="url(#arr-blue)"/>
+
+    <!-- Stage 3 -->
+    <g transform="translate(590, 0)">
+      <rect width="265" height="420" rx="14" fill="#F8FAFC" stroke="#E2E8F0" stroke-width="1.2" filter="url(#shadow-sm)"/>
+      <rect x="18" y="18" width="32" height="32" rx="8" fill="#F1F5F9"/>
+      <text x="34" y="40" font-size="16" text-anchor="middle">3</text>
+      <text x="60" y="30" fill="#0F172A" font-size="15" font-weight="700">Effect Broker 准入</text>
+      <text x="60" y="46" fill="#64748B" font-size="11.5">Capability Token Mint</text>
+
+      <g transform="translate(16, 75)">
+        <rect width="233" height="90" rx="8" fill="#FFFFFF" stroke="#E2E8F0" stroke-width="1"/>
+        <text x="12" y="22" fill="#0F172A" font-size="12" font-weight="600">两阶段准入: admit()</text>
+        <text x="12" y="40" fill="#64748B" font-size="11">校验签名公钥与有效性</text>
+        <text x="12" y="58" fill="#475569" font-size="11">确认配额与策略未失效</text>
+        <text x="12" y="76" fill="#16A34A" font-size="11" font-weight="600">✓ 校验通过准予放行</text>
+
+        <rect y="105" width="233" height="90" rx="8" fill="#FFFFFF" stroke="#E2E8F0" stroke-width="1"/>
+        <text x="12" y="127" fill="#0F172A" font-size="12" font-weight="600">短效 Capability Token</text>
+        <text x="12" y="145" fill="#64748B" font-size="11">TTL = 300s · 单次消费失效</text>
+        <text x="12" y="163" fill="#475569" font-size="11">严格限制在隔离 Worker 执行</text>
+        <text x="12" y="181" fill="#2563EB" font-size="11" font-weight="600">无泄露特权到外界风险</text>
+
+        <rect y="210" width="233" height="110" rx="8" fill="#EFF6FF" stroke="#BFDBFE" stroke-width="1"/>
+        <text x="12" y="232" fill="#1E40AF" font-size="12" font-weight="700">下发: executeAdmitted()</text>
+        <text x="12" y="254" fill="#2563EB" font-size="11" font-family="monospace">Disposable Execution</text>
+        <text x="12" y="274" fill="#64748B" font-size="11">• 凭据注入受控沙箱</text>
+        <text x="12" y="294" fill="#64748B" font-size="11">• 完成后凭据立即销毁</text>
+      </g>
+    </g>
+
+    <!-- Arrow 3 -> 4 -->
+    <line x1="855" y1="210" x2="885" y2="210" stroke="#2563EB" stroke-width="2" marker-end="url(#arr-blue)"/>
+
+    <!-- Stage 4 -->
+    <g transform="translate(885, 0)">
+      <rect width="275" height="420" rx="14" fill="#F8FAFC" stroke="#E2E8F0" stroke-width="1.2" filter="url(#shadow-sm)"/>
+      <rect x="18" y="18" width="32" height="32" rx="8" fill="#F1F5F9"/>
+      <text x="34" y="40" font-size="16" text-anchor="middle">4</text>
+      <text x="60" y="30" fill="#0F172A" font-size="15" font-weight="700">RFC 7515 JWS 存证</text>
+      <text x="60" y="46" fill="#64748B" font-size="11.5">Tamper-Evident Audit</text>
+
+      <g transform="translate(16, 75)">
+        <rect width="243" height="90" rx="8" fill="#FFFFFF" stroke="#E2E8F0" stroke-width="1"/>
+        <text x="12" y="22" fill="#0F172A" font-size="12" font-weight="600">不可篡改证据封包</text>
+        <text x="12" y="40" fill="#64748B" font-size="11">包含请求、响应及外部实体 ID</text>
+        <text x="12" y="58" fill="#475569" font-size="11">以 Ed25519 签名封装 JWS 载荷</text>
+        <text x="12" y="76" fill="#16A34A" font-size="11" font-weight="600">✓ 法律/合规级不可否认性</text>
+
+        <rect y="105" width="243" height="90" rx="8" fill="#FFFFFF" stroke="#E2E8F0" stroke-width="1"/>
+        <text x="12" y="127" fill="#0F172A" font-size="12" font-weight="600">追加至审计追溯日志</text>
+        <text x="12" y="145" fill="#64748B" font-size="11">Append-only 证据仓储</text>
+        <text x="12" y="163" fill="#475569" font-size="11">任何二次篡改均会导致验签失败</text>
+        <text x="12" y="181" fill="#2563EB" font-size="11" font-weight="600">支持独立离线安全审计</text>
+
+        <rect y="210" width="243" height="110" rx="8" fill="#F0FDF4" stroke="#BBF7D0" stroke-width="1"/>
+        <text x="12" y="232" fill="#166534" font-size="12" font-weight="700">治理闭环: 补偿凭证绑定</text>
+        <text x="12" y="254" fill="#15803D" font-size="11" font-family="monospace">Compensator Capability</text>
+        <text x="12" y="274" fill="#475569" font-size="11">• 若后续失败，触发反向补偿</text>
+        <text x="12" y="294" fill="#475569" font-size="11">• 补偿同样需独立授权凭据</text>
+      </g>
+    </g>
+  </g>
+
+  <!-- Bottom Bar -->
+  <g transform="translate(60, 560)">
+    <rect width="1160" height="70" rx="10" fill="#F8FAFC" stroke="#E2E8F0" stroke-width="1"/>
+    <text x="24" y="26" fill="#0F172A" font-size="12.5" font-weight="700">图 3 核心密码学保障：</text>
+    <text x="156" y="26" fill="#475569" font-size="12.5">Agent 进程永远无法接触生产环境的真实写 Token，也无法越过人类签名伪造变更。</text>
+    <text x="24" y="48" fill="#475569" font-size="12.5">人类签署的并非简单的“批准按钮”，而是对严格格式化的意图摘要与策略哈希进行密码学签名，全程留存可验证的 RFC 7515 JWS 凭证。</text>
+  </g>
+</svg>

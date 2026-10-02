@@ -1,25 +1,35 @@
 <p align="center">
-  <a href="https://github.com/PStarH/Commander/actions/workflows/ci.yml?query=branch%3Amaster"><img src="https://img.shields.io/github/actions/workflow/status/PStarH/Commander/ci.yml?branch=master&style=flat-square&label=CI&logo=github" /></a>
-  <img src="https://img.shields.io/github/license/PStarH/Commander?style=flat-square&color=EAB308" />
+  <a href="https://github.com/PStarH/Commander/actions/workflows/ci.yml?query=branch%3Amaster"><img src="https://img.shields.io/github/actions/workflow/status/PStarH/Commander/ci.yml?branch=master&style=flat-square&label=CI&logo=github" alt="CI Status" /></a>
+  <a href="https://pstarh.github.io/commander-docs/"><img src="https://img.shields.io/badge/docs-online-blue?style=flat-square&logo=vitepress" alt="Documentation" /></a>
+  <img src="https://img.shields.io/badge/license-MIT-green?style=flat-square" alt="License" />
+  <img src="https://img.shields.io/badge/TypeScript-5.x-3178C6?style=flat-square&logo=typescript&logoColor=white" alt="TypeScript" />
+  <img src="https://img.shields.io/badge/Python%20SDK-3.10+-3776AB?style=flat-square&logo=python&logoColor=white" alt="Python SDK" />
 </p>
 
 <h1 align="center">Commander</h1>
-<p align="center"><strong>Approval and Recovery Plane for Coding & DevOps AI Agents</strong></p>
+<p align="center"><strong>The Secure Approval &amp; Recovery Plane for Autonomous AI Agents</strong></p>
 <p align="center">
-  <em>Prevent duplicate mutations · Recover from dropped network responses · Cryptographically signed evidence</em>
+  <em>Prevent duplicate mutations · Recover from dropped network responses · Enforce cryptographic human approvals</em>
 </p>
 
-> **Status: Alpha.** Commander is an open-source evaluation system and pilot framework. It is not yet production-certified; see the [GitHub pilot boundary](docs/pilot/github/README.md) and [ENTERPRISE_READINESS.md](ENTERPRISE_READINESS.md).
+> **Status: Alpha.** Commander is an open-source distributed execution control plane and pilot framework. It isolates unprivileged AI agent reasoning from production write targets, providing preflight idempotency, two-phase human gates, and PostgreSQL WAL crash resilience. See the [GitHub pilot boundary](docs/pilot/github/README.md) and [ENTERPRISE_READINESS.md](ENTERPRISE_READINESS.md).
 
 <p align="center">
-  <a href="#quick-start"><img src="https://img.shields.io/badge/TRY_NOW-000?style=for-the-badge" /></a>
-  <a href="#the-distributed-systems-problem-for-ai-agents"><img src="https://img.shields.io/badge/WHY_COMMANDER-000?style=for-the-badge" /></a>
-  <a href="https://pstarh.github.io/commander-docs/"><img src="https://img.shields.io/badge/DOCS-000?style=for-the-badge" /></a>
+  <a href="#quick-start"><img src="https://img.shields.io/badge/⚡_TRY_NOW-000?style=for-the-badge" /></a>
+  <a href="#the-distributed-systems-problem-for-ai-agents"><img src="https://img.shields.io/badge/🛡️_WHY_COMMANDER-000?style=for-the-badge" /></a>
+  <a href="https://pstarh.github.io/commander-docs/"><img src="https://img.shields.io/badge/📖_DOCS-000?style=for-the-badge" /></a>
 </p>
 
 ---
 
 ## The Distributed Systems Problem for AI Agents
+
+<p align="center">
+  <img src="docs/assets/commander-overview.png" alt="Commander Architecture Overview — Decoupling Untrusted AI Reasoning from Production Infrastructure" width="100%">
+</p>
+
+<details>
+<summary><b>View Text Architecture Diagram (ASCII)</b></summary>
 
 ```
    ┌────────────────────────────────────────────────────────┐
@@ -46,6 +56,8 @@
    │   GitHub (PRs/Issues) · Kubernetes · Cloud APIs        │
    └────────────────────────────────────────────────────────┘
 ```
+
+</details>
 
 When an AI agent (e.g. Claude Code, OpenAI Agents SDK, or custom coding agent) attempts an external mutation — like creating a GitHub pull request, rolling back a Kubernetes deployment, or modifying infrastructure — **a dropped connection or worker restart leaves the world in an ambiguous state**:
 

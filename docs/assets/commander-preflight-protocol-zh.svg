@@ -1,0 +1,154 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1280 720" width="1280" height="720" style="background:#ffffff; font-family:-apple-system, BlinkMacSystemFont, 'SF Pro Display', 'Segoe UI', Roboto, Helvetica, Arial, sans-serif;">
+  <defs>
+    <marker id="arr-blue" viewBox="0 0 10 10" refX="6" refY="5" markerWidth="6" markerHeight="6" orient="auto-start-reverse">
+      <path d="M 0 1.5 L 8 5 L 0 8.5 z" fill="#2563EB"/>
+    </marker>
+    <marker id="arr-red" viewBox="0 0 10 10" refX="6" refY="5" markerWidth="6" markerHeight="6" orient="auto-start-reverse">
+      <path d="M 0 1.5 L 8 5 L 0 8.5 z" fill="#DC2626"/>
+    </marker>
+    <marker id="arr-slate" viewBox="0 0 10 10" refX="6" refY="5" markerWidth="6" markerHeight="6" orient="auto-start-reverse">
+      <path d="M 0 1.5 L 8 5 L 0 8.5 z" fill="#64748B"/>
+    </marker>
+    <filter id="shadow-sm" x="-5%" y="-5%" width="110%" height="115%" filterUnits="userSpaceOnUse">
+      <feDropShadow dx="0" dy="2" stdDeviation="4" flood-color="#0F172A" flood-opacity="0.04" />
+    </filter>
+  </defs>
+
+  <!-- Background -->
+  <rect width="1280" height="720" fill="#FFFFFF"/>
+  <rect x="20" y="20" width="1240" height="680" rx="16" fill="#FFFFFF" stroke="#E2E8F0" stroke-width="1.5"/>
+
+  <!-- Title Banner -->
+  <g transform="translate(60, 48)">
+    <rect x="0" y="0" width="168" height="24" rx="12" fill="#EFF6FF"/>
+    <text x="84" y="16" fill="#2563EB" font-size="11" font-weight="700" letter-spacing="0.8" text-anchor="middle">DISTRIBUTED PROTOCOL</text>
+    <text x="180" y="17" fill="#0F172A" font-size="20" font-weight="700" letter-spacing="-0.3">Preflight 执行前排重与故障恢复协议</text>
+    <text x="180" y="38" fill="#64748B" font-size="13">对比朴素 Agent 盲目重试风暴与 Commander 基于确定性租约的 Exactly-Once 恢复决策</text>
+  </g>
+
+  <!-- Lane 1: Naive Execution (Top) -->
+  <g transform="translate(60, 115)">
+    <rect width="1160" height="185" rx="14" fill="#FEF2F2" stroke="#FECACA" stroke-width="1.5" filter="url(#shadow-sm)"/>
+    
+    <!-- Lane Header -->
+    <rect x="20" y="16" width="32" height="32" rx="8" fill="#FEE2E2"/>
+    <text x="36" y="38" font-size="16" text-anchor="middle">❌</text>
+    <text x="64" y="28" fill="#991B1B" font-size="15" font-weight="700">常见无治理模式：盲目重试产生重复副作用</text>
+    <text x="64" y="44" fill="#B91C1C" font-size="12">Naive Agent Direct Execution · 面对 504 超时或网络断连时的雪崩缺陷</text>
+
+    <!-- Sequence Flow -->
+    <g transform="translate(24, 70)">
+      <!-- Step 1 -->
+      <rect width="210" height="85" rx="10" fill="#FFFFFF" stroke="#FECACA" stroke-width="1"/>
+      <text x="16" y="24" fill="#991B1B" font-size="12" font-weight="700">步骤 1: Agent 直接发起写入</text>
+      <text x="16" y="44" fill="#475569" font-size="11.5">携带本地真实 Token</text>
+      <text x="16" y="62" fill="#64748B" font-size="11">POST /repos/.../pulls</text>
+
+      <!-- Arrow 1 -> 2 -->
+      <line x1="210" y1="42" x2="250" y2="42" stroke="#DC2626" stroke-width="2" marker-end="url(#arr-red)"/>
+
+      <!-- Step 2 -->
+      <rect x="250" width="220" height="85" rx="10" fill="#FFFFFF" stroke="#FECACA" stroke-width="1"/>
+      <text x="266" y="24" fill="#991B1B" font-size="12" font-weight="700">步骤 2: 响应丢失 / 进程崩溃</text>
+      <text x="266" y="44" fill="#DC2626" font-size="11.5" font-weight="600">💥 504 Gateway Timeout</text>
+      <text x="266" y="62" fill="#64748B" font-size="11">GitHub 已写入但客户端未收到</text>
+
+      <!-- Arrow 2 -> 3 -->
+      <line x1="470" y1="42" x2="510" y2="42" stroke="#DC2626" stroke-width="2" marker-end="url(#arr-red)"/>
+
+      <!-- Step 3 -->
+      <rect x="510" width="240" height="85" rx="10" fill="#FFFFFF" stroke="#FECACA" stroke-width="1"/>
+      <text x="526" y="24" fill="#991B1B" font-size="12" font-weight="700">步骤 3: 客户端盲目重试 (Retry)</text>
+      <text x="526" y="44" fill="#475569" font-size="11.5">重试逻辑无法感知先前状态</text>
+      <text x="526" y="62" fill="#64748B" font-size="11">再次触发 POST 请求</text>
+
+      <!-- Arrow 3 -> Outcome -->
+      <line x1="750" y1="42" x2="790" y2="42" stroke="#DC2626" stroke-width="2" marker-end="url(#arr-red)"/>
+
+      <!-- Outcome -->
+      <rect x="790" width="320" height="85" rx="10" fill="#FEE2E2" stroke="#F87171" stroke-width="1.5"/>
+      <text x="806" y="24" fill="#991B1B" font-size="13" font-weight="700">🚨 严重生产事故：状态污染</text>
+      <text x="806" y="46" fill="#B91C1C" font-size="12">• 产生重复 PR #41 与 PR #42</text>
+      <text x="806" y="66" fill="#B91C1C" font-size="12">• 重复扣款 / 脏分支合并 / 触发多次流水线</text>
+    </g>
+  </g>
+
+  <!-- Lane 2: Commander Governed Execution (Bottom) -->
+  <g transform="translate(60, 320)">
+    <rect width="1160" height="345" rx="14" fill="#F8FAFC" stroke="#BFDBFE" stroke-width="2" filter="url(#shadow-sm)"/>
+    
+    <!-- Lane Header -->
+    <rect x="20" y="16" width="32" height="32" rx="8" fill="#EFF6FF"/>
+    <text x="36" y="38" font-size="16" text-anchor="middle">🛡️</text>
+    <text x="64" y="28" fill="#1E40AF" font-size="15" font-weight="700">Commander 确定性治理流：先查后试 · 状态机租约故障自愈</text>
+    <text x="64" y="44" fill="#2563EB" font-size="12">Governed Execution · PostgreSQL WAL 租赁 + Preflight Query-Before-Retry</text>
+
+    <!-- Detailed 4-Phase Grid -->
+    <g transform="translate(24, 70)">
+      <!-- Phase A: Admission & Lease -->
+      <rect width="250" height="155" rx="10" fill="#FFFFFF" stroke="#E2E8F0" stroke-width="1.2"/>
+      <circle cx="20" cy="22" r="10" fill="#EFF6FF"/>
+      <text x="20" y="26" fill="#2563EB" font-size="11" font-weight="700" text-anchor="middle">A</text>
+      <text x="38" y="26" fill="#0F172A" font-size="13" font-weight="700">意图准入与租约绑定</text>
+      <line x1="12" y1="40" x2="238" y2="40" stroke="#F1F5F9" stroke-width="1"/>
+      <text x="14" y="58" fill="#475569" font-size="11.5">• 计算确定性操作哈希</text>
+      <text x="24" y="76" fill="#64748B" font-size="10.5" font-family="monospace">H(run_id ∥ op_key ∥ branch)</text>
+      <text x="14" y="98" fill="#475569" font-size="11.5">• 写入 PostgreSQL 状态机</text>
+      <text x="14" y="118" fill="#475569" font-size="11.5">• 授予 Worker 租约 Token τ₁</text>
+      <text x="14" y="138" fill="#16A34A" font-size="11" font-weight="600">✓ 真实 Token 隔离注入下发</text>
+
+      <!-- Arrow A -> B -->
+      <line x1="250" y1="78" x2="280" y2="78" stroke="#2563EB" stroke-width="2" marker-end="url(#arr-blue)"/>
+
+      <!-- Phase B: Interruption & Lease Reclamation -->
+      <rect x="280" width="250" height="155" rx="10" fill="#FFFFFF" stroke="#E2E8F0" stroke-width="1.2"/>
+      <circle cx="300" cy="22" r="10" fill="#EFF6FF"/>
+      <text x="300" y="26" fill="#2563EB" font-size="11" font-weight="700" text-anchor="middle">B</text>
+      <text x="318" y="26" fill="#0F172A" font-size="13" font-weight="700">网络中断与租约接管</text>
+      <line x1="292" y1="40" x2="518" y2="40" stroke="#F1F5F9" stroke-width="1"/>
+      <text x="294" y="58" fill="#DC2626" font-size="11.5" font-weight="600">⚡ 504 响应丢失或节点宕机</text>
+      <text x="294" y="78" fill="#475569" font-size="11.5">• Worker 1 心跳终止</text>
+      <text x="294" y="98" fill="#475569" font-size="11.5">• 租约 τ₁ 超时被内核注销</text>
+      <text x="294" y="118" fill="#475569" font-size="11.5">• Worker 2 获取新租约 τ₂</text>
+      <text x="294" y="138" fill="#2563EB" font-size="11" font-weight="600">⚠️ 绝不盲目重新调用 POST</text>
+
+      <!-- Arrow B -> C -->
+      <line x1="530" y1="78" x2="560" y2="78" stroke="#2563EB" stroke-width="2" marker-end="url(#arr-blue)"/>
+
+      <!-- Phase C: Preflight Query -->
+      <rect x="560" width="250" height="155" rx="10" fill="#EFF6FF" stroke="#93C5FD" stroke-width="1.5"/>
+      <circle cx="580" cy="22" r="10" fill="#DBEAFE"/>
+      <text x="580" y="26" fill="#1D4ED8" font-size="11" font-weight="700" text-anchor="middle">C</text>
+      <text x="598" y="26" fill="#1E40AF" font-size="13" font-weight="700">Preflight 外部排重探测</text>
+      <line x1="572" y1="40" x2="798" y2="40" stroke="#DBEAFE" stroke-width="1"/>
+      <text x="574" y="58" fill="#1E40AF" font-size="11.5" font-weight="600">🔍 先查后动 (Query-Before-Retry)</text>
+      <text x="574" y="78" fill="#3B82F6" font-size="11">• 检索 target 仓库已有实体</text>
+      <text x="574" y="98" fill="#3B82F6" font-size="11">• 匹配嵌入式签名标记</text>
+      <text x="584" y="116" fill="#1E40AF" font-size="10.5" font-family="monospace">&lt;!-- commander:action_id --&gt;</text>
+      <text x="574" y="138" fill="#16A34A" font-size="11" font-weight="600">✓ 仅根据探测事实做决策</text>
+
+      <!-- Arrow C -> D -->
+      <line x1="810" y1="78" x2="840" y2="78" stroke="#2563EB" stroke-width="2" marker-end="url(#arr-blue)"/>
+
+      <!-- Phase D: Exactly-Once Decision -->
+      <rect x="840" width="270" height="155" rx="10" fill="#FFFFFF" stroke="#E2E8F0" stroke-width="1.2"/>
+      <circle cx="860" cy="22" r="10" fill="#EFF6FF"/>
+      <text x="860" y="26" fill="#2563EB" font-size="11" font-weight="700" text-anchor="middle">D</text>
+      <text x="878" y="26" fill="#0F172A" font-size="13" font-weight="700">确定性状态收敛决策</text>
+      <line x1="852" y1="40" x2="1098" y2="40" stroke="#F1F5F9" stroke-width="1"/>
+      <text x="854" y="58" fill="#16A34A" font-size="11.5" font-weight="700">情况 1: 发现实体 (PR #41 已在)</text>
+      <text x="864" y="76" fill="#475569" font-size="11">直接绑定结果，放弃重复写入</text>
+      <text x="854" y="96" fill="#2563EB" font-size="11.5" font-weight="700">情况 2: 确未写入</text>
+      <text x="864" y="114" fill="#475569" font-size="11">在租约 τ₂ 保护下安全初次下发</text>
+      <text x="854" y="134" fill="#DC2626" font-size="11.5" font-weight="700">情况 3: 状态存疑 → 进入 UNKNOWN</text>
+    </g>
+
+    <!-- Bottom Caption Bar -->
+    <g transform="translate(24, 245)">
+      <rect width="1112" height="75" rx="8" fill="#FFFFFF" stroke="#E2E8F0" stroke-width="1"/>
+      <text x="20" y="24" fill="#0F172A" font-size="12" font-weight="700">图 2 核心结论：</text>
+      <text x="110" y="24" fill="#475569" font-size="12">Commander 从系统级消除了“重试导致重复写入”的分布式难题。即使极端断网、进程被 kill -9、或者目标服务超时，</text>
+      <text x="20" y="44" fill="#475569" font-size="12">系统也能通过 Preflight 探测和 WAL 状态机准确还原现场，确保生产环境变更的严格 Exactly-Once 语义，不可重现时绝不盲猜。</text>
+    </g>
+  </g>
+</svg>

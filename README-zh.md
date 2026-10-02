@@ -1,25 +1,35 @@
 <p align="center">
-  <a href="https://github.com/PStarH/Commander/actions/workflows/ci.yml?query=branch%3Amaster"><img src="https://img.shields.io/github/actions/workflow/status/PStarH/Commander/ci.yml?branch=master&style=flat-square&label=CI&logo=github" /></a>
-  <img src="https://img.shields.io/github/license/PStarH/Commander?style=flat-square&color=EAB308" />
+  <a href="https://github.com/PStarH/Commander/actions/workflows/ci.yml?query=branch%3Amaster"><img src="https://img.shields.io/github/actions/workflow/status/PStarH/Commander/ci.yml?branch=master&style=flat-square&label=CI&logo=github" alt="CI Status" /></a>
+  <a href="https://pstarh.github.io/commander-docs/zh/"><img src="https://img.shields.io/badge/docs-在线文档-blue?style=flat-square&logo=vitepress" alt="Documentation" /></a>
+  <img src="https://img.shields.io/badge/license-MIT-green?style=flat-square" alt="License" />
+  <img src="https://img.shields.io/badge/TypeScript-5.x-3178C6?style=flat-square&logo=typescript&logoColor=white" alt="TypeScript" />
+  <img src="https://img.shields.io/badge/Python%20SDK-3.10+-3776AB?style=flat-square&logo=python&logoColor=white" alt="Python SDK" />
 </p>
 
 <h1 align="center">Commander</h1>
-<p align="center"><strong>面向 Coding 与 DevOps AI 智能体的审批与状态恢复平面</strong></p>
+<p align="center"><strong>面向 Coding 与 DevOps AI 智能体的安全审批与状态恢复平面</strong></p>
 <p align="center">
   <em>杜绝重复外部变更 · 网络丢包与超时安全恢复 · 密码学签名存证链</em>
 </p>
 
-> **状态：Alpha。** Commander 是一个开源评估系统与试点框架。目前尚未通过生产就绪认证；详见 [GitHub 试点边界](docs/pilot/github/README.md) 与 [ENTERPRISE_READINESS.md](ENTERPRISE_READINESS.md)。
+> **状态：Alpha。** Commander 是一个开源分布式控制面与评估框架。通过三层控制解耦，将不受信的智能体推理与生产写凭据物理隔离，提供 Preflight 执行前排重、双阶段密码学门禁与 PostgreSQL WAL 故障自愈。详见 [GitHub 试点边界](docs/pilot/github/README.md) 与 [ENTERPRISE_READINESS.md](ENTERPRISE_READINESS.md)。
 
 <p align="center">
-  <a href="#快速上手"><img src="https://img.shields.io/badge/TRY_NOW-000?style=for-the-badge" /></a>
-  <a href="#ai-智能体面临的分布式系统挑战"><img src="https://img.shields.io/badge/WHY_COMMANDER-000?style=for-the-badge" /></a>
-  <a href="https://pstarh.github.io/commander-docs/zh/"><img src="https://img.shields.io/badge/DOCS-000?style=for-the-badge" /></a>
+  <a href="#快速上手"><img src="https://img.shields.io/badge/⚡_立即体验-000?style=for-the-badge" /></a>
+  <a href="#ai-智能体面临的分布式系统挑战"><img src="https://img.shields.io/badge/🛡️_为什么需要_COMMANDER-000?style=for-the-badge" /></a>
+  <a href="https://pstarh.github.io/commander-docs/zh/"><img src="https://img.shields.io/badge/📖_中文文档-000?style=for-the-badge" /></a>
 </p>
 
 ---
 
 ## AI 智能体面临的分布式系统挑战
+
+<p align="center">
+  <img src="docs/assets/commander-overview-zh.png" alt="Commander 核心架构与安全治理全景" width="100%">
+</p>
+
+<details>
+<summary><b>查看纯文本架构示意图 (ASCII)</b></summary>
 
 ```
    ┌────────────────────────────────────────────────────────┐
@@ -46,6 +56,8 @@
    │    GitHub (PR/Issue) · Kubernetes · 云端基础资源       │
    └────────────────────────────────────────────────────────┘
 ```
+
+</details>
 
 当 AI 智能体（如 Claude Code、OpenAI Agents SDK 或企业自研编码智能体）尝试执行外部写操作时（如创建 GitHub Pull Request、回滚 Kubernetes 部署或变更云设施），**网络连接中断或工作节点崩溃会使系统陷入不确定状态**：
 

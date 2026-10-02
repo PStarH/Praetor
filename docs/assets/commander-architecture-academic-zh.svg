@@ -1,0 +1,210 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1400 900" width="1400" height="900">
+  <defs>
+    <!-- Arrowhead markers -->
+    <marker id="arrow" markerWidth="8" markerHeight="8" refX="6" refY="3" orient="auto" markerUnits="strokeWidth">
+      <path d="M0,0 L0,6 L7,3 z" fill="#1E293B"/>
+    </marker>
+    <marker id="arrowDashed" markerWidth="8" markerHeight="8" refX="6" refY="3" orient="auto" markerUnits="strokeWidth">
+      <path d="M0,0 L0,6 L7,3 z" fill="#475569"/>
+    </marker>
+  </defs>
+
+  <style>
+    .serif-title { font-family: "Songti SC", "Source Han Serif SC", "Noto Serif CJK SC", SimSun, serif; font-weight: 700; }
+    .serif-body { font-family: "Songti SC", "Source Han Serif SC", "Noto Serif CJK SC", SimSun, serif; }
+    .sans-title { font-family: -apple-system, BlinkMacSystemFont, "PingFang SC", "Hiragino Sans GB", "Microsoft YaHei", sans-serif; font-weight: 700; }
+    .sans-label { font-family: -apple-system, BlinkMacSystemFont, "PingFang SC", "Hiragino Sans GB", sans-serif; font-weight: 600; }
+    .sans-body { font-family: -apple-system, BlinkMacSystemFont, "PingFang SC", "Hiragino Sans GB", sans-serif; font-weight: 400; }
+    .mono { font-family: "SF Mono", Monaco, "Courier New", monospace; }
+  </style>
+
+  <!-- Clean Canvas -->
+  <rect width="1400" height="900" fill="#FFFFFF"/>
+  <rect x="15" y="15" width="1370" height="870" fill="none" stroke="#E2E8F0" stroke-width="1"/>
+
+  <!-- ==================== HEADER ==================== -->
+  <g transform="translate(60, 48)">
+    <text x="0" y="24" fill="#0F172A" font-size="24" class="sans-title" letter-spacing="-0.3">系统架构图：COMMANDER 智能体治理与故障恢复控制面</text>
+    <text x="0" y="46" fill="#64748B" font-size="13" class="sans-body">面向 Coding 与 DevOps 自主智能体的高可靠执行、重试前预检反查与基于租约的崩溃恢复机制</text>
+    <line x1="0" y1="58" x2="1280" y2="58" stroke="#0F172A" stroke-width="1.5"/>
+  </g>
+
+  <!-- ==================== TOP: UNTRUSTED REASONING PLANE ==================== -->
+  <g transform="translate(60, 130)">
+    <!-- Boundary Box -->
+    <rect x="0" y="0" width="1280" height="110" rx="4" fill="#F8FAFC" stroke="#CBD5E1" stroke-width="1.2"/>
+    <rect x="0" y="0" width="1280" height="28" rx="4" fill="#F1F5F9" stroke="#CBD5E1" stroke-width="1.2"/>
+    
+    <text x="16" y="19" fill="#334155" font-size="11.5" class="sans-label" letter-spacing="0.5">平面 1 : 非受信任的智能体推理运行时 (PROMPT LOOPS)</text>
+    <text x="1264" y="19" fill="#DC2626" font-size="11" class="mono" text-anchor="end" font-weight="600">PROMPT 上下文零写权限凭据</text>
+
+    <!-- Agent Node 1 -->
+    <rect x="24" y="42" width="220" height="54" rx="3" fill="#FFFFFF" stroke="#94A3B8" stroke-width="1"/>
+    <text x="36" y="63" fill="#0F172A" font-size="13" class="sans-label">Claude Code / Copilot</text>
+    <text x="36" y="82" fill="#64748B" font-size="11" class="mono">工具调用 · CLI 命令互操作</text>
+
+    <!-- Agent Node 2 -->
+    <rect x="260" y="42" width="230" height="54" rx="3" fill="#FFFFFF" stroke="#94A3B8" stroke-width="1"/>
+    <text x="272" y="63" fill="#0F172A" font-size="13" class="sans-label">OpenAI Agents SDK / Swarm</text>
+    <text x="272" y="82" fill="#64748B" font-size="11" class="mono">结构化函数参数声明</text>
+
+    <!-- Agent Node 3 -->
+    <rect x="506" y="42" width="220" height="54" rx="3" fill="#FFFFFF" stroke="#94A3B8" stroke-width="1"/>
+    <text x="518" y="63" fill="#0F172A" font-size="13" class="sans-label">LangGraph / AutoGen</text>
+    <text x="518" y="82" fill="#64748B" font-size="11" class="mono">多智能体状态图编排</text>
+
+    <!-- Security Boundary Note -->
+    <rect x="750" y="42" width="506" height="54" rx="3" fill="#FEF2F2" stroke="#F87171" stroke-width="1" stroke-dasharray="3,3"/>
+    <text x="764" y="63" fill="#991B1B" font-size="12" class="sans-label">主体权限隔离边界 (不可绕过)</text>
+    <text x="764" y="81" fill="#7F1D1D" font-size="11" class="sans-body">智能体仅具备提议（Propose）权限。写凭据（GitHub PAT / 云 IAM）物理隔离于平面 2 控制面。</text>
+  </g>
+
+  <!-- ==================== DISPATCH ARROW ==================== -->
+  <g transform="translate(700, 240)">
+    <line x1="0" y1="0" x2="0" y2="8" stroke="#1E293B" stroke-width="1.4"/>
+    <rect x="-190" y="8" width="380" height="24" fill="#FFFFFF" stroke="#94A3B8" stroke-width="1" rx="3"/>
+    <text x="0" y="24" fill="#0F172A" font-size="10.5" class="mono" text-anchor="middle" font-weight="600">步骤 1: 提议外部变更 { 动作标识, 参数, 仿真快照 }</text>
+    <line x1="0" y1="32" x2="0" y2="44" stroke="#1E293B" stroke-width="1.4" marker-end="url(#arrow)"/>
+  </g>
+
+  <!-- ==================== MIDDLE: COMMANDER CONTROL PLANE ==================== -->
+  <g transform="translate(60, 285)">
+    <!-- Master Plane 2 Container -->
+    <rect x="0" y="0" width="1280" height="345" rx="4" fill="#FFFFFF" stroke="#0F172A" stroke-width="1.8"/>
+    <rect x="0" y="0" width="1280" height="30" rx="4" fill="#0F172A"/>
+    
+    <text x="16" y="20" fill="#FFFFFF" font-size="12" class="sans-label" letter-spacing="0.5">平面 2 : COMMANDER 治理与恢复控制面 (受信任执行平面)</text>
+    <text x="1264" y="20" fill="#94A3B8" font-size="11" class="mono" text-anchor="end">HTTP REST API :4000 · POSTGRESQL 持久化内核</text>
+
+    <!-- Sub-Module 1: Preflight Idempotency Engine -->
+    <g transform="translate(24, 48)">
+      <rect x="0" y="0" width="290" height="270" fill="#F8FAFC" stroke="#64748B" stroke-width="1" rx="3"/>
+      <rect x="0" y="0" width="290" height="26" fill="#E2E8F0" stroke="#64748B" stroke-width="1" rx="3"/>
+      <text x="12" y="18" fill="#0F172A" font-size="12" class="sans-label">1. 重试前预检反查 (幂等性)</text>
+
+      <text x="12" y="48" fill="#1E293B" font-size="11" class="mono" font-weight="700">QUERY-BEFORE-RETRY</text>
+      <text x="12" y="68" fill="#475569" font-size="11" class="sans-body">彻底规避网络超时 (HTTP 504)</text>
+      <text x="12" y="84" fill="#475569" font-size="11" class="sans-body">与丢包后的盲目重试脏突变。</text>
+
+      <rect x="12" y="98" width="266" height="52" fill="#FFFFFF" stroke="#CBD5E1" stroke-width="1" rx="2"/>
+      <text x="20" y="118" fill="#0F172A" font-size="10" class="mono">动作唯一身份标识:</text>
+      <text x="20" y="136" fill="#2563EB" font-size="9.5" class="mono">H(run_id ∥ op_key ∥ branch)</text>
+
+      <line x1="12" y1="162" x2="278" y2="162" stroke="#E2E8F0" stroke-width="1"/>
+
+      <text x="12" y="182" fill="#334155" font-size="11" class="sans-body">• 注入确定性操作关联 Marker</text>
+      <text x="12" y="202" fill="#334155" font-size="11" class="sans-body">• 写入前主动探查远端实际状态</text>
+      <text x="12" y="222" fill="#334155" font-size="11" class="sans-body">• 证据模糊时安全停机为 <tspan font-family="monospace" font-weight="700">UNKNOWN</tspan></text>
+      <text x="12" y="242" fill="#334155" font-size="11" class="sans-body">• 杜绝重复 PR、重复扣款与脏变更</text>
+    </g>
+
+    <!-- Sub-Module 2: Two-Phase Cryptographic Human Gate -->
+    <g transform="translate(332, 48)">
+      <rect x="0" y="0" width="290" height="270" fill="#F8FAFC" stroke="#64748B" stroke-width="1" rx="3"/>
+      <rect x="0" y="0" width="290" height="26" fill="#E2E8F0" stroke="#64748B" stroke-width="1" rx="3"/>
+      <text x="12" y="18" fill="#0F172A" font-size="12" class="sans-label">2. 双阶段人类密码学审批</text>
+
+      <text x="12" y="48" fill="#1E293B" font-size="11" class="mono" font-weight="700">CRYPTOGRAPHIC BINDING</text>
+      <text x="12" y="68" fill="#475569" font-size="11" class="sans-body">提议与审批彻底解耦，依托不可变</text>
+      <text x="12" y="84" fill="#475569" font-size="11" class="sans-body">仿真摘要杜绝参数暗中窜改。</text>
+
+      <rect x="12" y="98" width="266" height="52" fill="#FFFFFF" stroke="#CBD5E1" stroke-width="1" rx="2"/>
+      <text x="20" y="118" fill="#0F172A" font-size="10" class="mono">仿真快照哈希强锁定:</text>
+      <text x="20" y="136" fill="#D97706" font-size="9.5" class="mono">digest: 0x93905c5f... (不可变)</text>
+
+      <line x1="12" y1="162" x2="278" y2="162" stroke="#E2E8F0" stroke-width="1"/>
+
+      <text x="12" y="182" fill="#334155" font-size="11" class="sans-body">• 仅人类审批人持有独立写权限凭据</text>
+      <text x="12" y="202" fill="#334155" font-size="11" class="sans-body">• 执行参数若遭窜改自动拒绝执行</text>
+      <text x="12" y="222" fill="#334155" font-size="11" class="sans-body">• 支持 Web 控制台 (:5173) 或 CLI 签批</text>
+      <text x="12" y="242" fill="#334155" font-size="11" class="sans-body">• 故障回滚要求独立授权与专属凭据</text>
+    </g>
+
+    <!-- Sub-Module 3: Durable Kernel & Worker Lease -->
+    <g transform="translate(640, 48)">
+      <rect x="0" y="0" width="290" height="270" fill="#F8FAFC" stroke="#64748B" stroke-width="1" rx="3"/>
+      <rect x="0" y="0" width="290" height="26" fill="#E2E8F0" stroke="#64748B" stroke-width="1" rx="3"/>
+      <text x="12" y="18" fill="#0F172A" font-size="12" class="sans-label">3. 持久化内核与租约管理</text>
+
+      <text x="12" y="48" fill="#1E293B" font-size="11" class="mono" font-weight="700">POSTGRES STEP LEASING</text>
+      <text x="12" y="68" fill="#475569" font-size="11" class="sans-body">崩溃安全的事件溯源状态机，</text>
+      <text x="12" y="84" fill="#475569" font-size="11" class="sans-body">提供 At-Least-Once 发件箱投递保证。</text>
+
+      <rect x="12" y="98" width="266" height="52" fill="#FFFFFF" stroke="#CBD5E1" stroke-width="1" rx="2"/>
+      <text x="20" y="118" fill="#0F172A" font-size="10" class="mono">步骤执行租约权限:</text>
+      <text x="20" y="136" fill="#4338CA" font-size="9.5" class="mono">lease_owner: worker_04 (TTL 30s)</text>
+
+      <line x1="12" y1="162" x2="278" y2="162" stroke="#E2E8F0" stroke-width="1"/>
+
+      <text x="12" y="182" fill="#334155" font-size="11" class="sans-body">• 节点中途崩溃？租约超时自动安全回收</text>
+      <text x="12" y="202" fill="#334155" font-size="11" class="sans-body">• 新 Worker 在 5 秒内精准接管并续跑</text>
+      <text x="12" y="222" fill="#334155" font-size="11" class="sans-body">• Outbox 事务模式 + 死信队列 (DLQ)</text>
+      <text x="12" y="242" fill="#334155" font-size="11" class="sans-body">• PostgreSQL RLS 严密多租户隔离</text>
+    </g>
+
+    <!-- Sub-Module 4: Evidence & Governed Compensation -->
+    <g transform="translate(948, 48)">
+      <rect x="0" y="0" width="308" height="270" fill="#F8FAFC" stroke="#64748B" stroke-width="1" rx="3"/>
+      <rect x="0" y="0" width="308" height="26" fill="#E2E8F0" stroke="#64748B" stroke-width="1" rx="3"/>
+      <text x="12" y="18" fill="#0F172A" font-size="12" class="sans-label">4. 签名存证与受控补偿</text>
+
+      <text x="12" y="48" fill="#1E293B" font-size="11" class="mono" font-weight="700">ED25519 SIGNED EVIDENCE</text>
+      <text x="12" y="68" fill="#475569" font-size="11" class="sans-body">不可否认审计收据签发与</text>
+      <text x="12" y="84" fill="#475569" font-size="11" class="sans-body">受治理的分布式 Saga 补偿回滚。</text>
+
+      <rect x="12" y="98" width="284" height="52" fill="#FFFFFF" stroke="#CBD5E1" stroke-width="1" rx="2"/>
+      <text x="20" y="118" fill="#0F172A" font-size="10" class="mono">数字签名凭证:</text>
+      <text x="20" y="136" fill="#059669" font-size="9.5" class="mono">sig: Ed25519_JWS(runId, state, hash)</text>
+
+      <line x1="12" y1="162" x2="296" y2="162" stroke="#E2E8F0" stroke-width="1"/>
+
+      <text x="12" y="182" fill="#334155" font-size="11" class="sans-body">• 支持第三方独立机构审计核验与追溯</text>
+      <text x="12" y="202" fill="#334155" font-size="11" class="sans-body">• 受治理的分布式 Saga 补偿回退编排</text>
+      <text x="12" y="222" fill="#334155" font-size="11" class="sans-body">• 自动化关闭未合并 PR 与异常回滚</text>
+      <text x="12" y="242" fill="#334155" font-size="11" class="sans-body">• 完整企业合规与司法取证支撑</text>
+    </g>
+  </g>
+
+  <!-- ==================== EXECUTE ARROW ==================== -->
+  <g transform="translate(700, 630)">
+    <line x1="0" y1="0" x2="0" y2="8" stroke="#1E293B" stroke-width="1.4"/>
+    <rect x="-240" y="8" width="480" height="24" fill="#FFFFFF" stroke="#94A3B8" stroke-width="1" rx="3"/>
+    <text x="0" y="24" fill="#0F172A" font-size="10.5" class="mono" text-anchor="middle" font-weight="600">步骤 2: 受治理写入执行（注入关联 Marker）+ 签发存证收据</text>
+    <line x1="0" y1="32" x2="0" y2="44" stroke="#1E293B" stroke-width="1.4" marker-end="url(#arrow)"/>
+  </g>
+
+  <!-- ==================== BOTTOM: TARGET INFRASTRUCTURE PLANE ==================== -->
+  <g transform="translate(60, 675)">
+    <!-- Boundary Box -->
+    <rect x="0" y="0" width="1280" height="105" rx="4" fill="#F8FAFC" stroke="#CBD5E1" stroke-width="1.2"/>
+    <rect x="0" y="0" width="1280" height="26" rx="4" fill="#F1F5F9" stroke="#CBD5E1" stroke-width="1.2"/>
+    
+    <text x="16" y="18" fill="#334155" font-size="11.5" class="sans-label" letter-spacing="0.5">平面 3 : 外部生产基础设施与目标系统</text>
+    <text x="1264" y="18" fill="#059669" font-size="11" class="mono" text-anchor="end" font-weight="600">确定性单次生效语义 (EXACTLY-ONCE)</text>
+
+    <!-- Target 1: GitHub -->
+    <rect x="24" y="38" width="380" height="54" rx="3" fill="#FFFFFF" stroke="#94A3B8" stroke-width="1"/>
+    <text x="36" y="58" fill="#0F172A" font-size="13" class="sans-label">GitHub API / Git 代码仓库</text>
+    <text x="36" y="78" fill="#64748B" font-size="11" class="mono">幂等 PR 创建 · 关联 Marker 绑定</text>
+
+    <!-- Target 2: Kubernetes -->
+    <rect x="430" y="38" width="410" height="54" rx="3" fill="#FFFFFF" stroke="#94A3B8" stroke-width="1"/>
+    <text x="442" y="58" fill="#0F172A" font-size="13" class="sans-label">Kubernetes 集群与服务网格</text>
+    <text x="442" y="78" fill="#64748B" font-size="11" class="mono">受治理的部署回滚 · 安全割接</text>
+
+    <!-- Target 3: Databases -->
+    <rect x="866" y="38" width="390" height="54" rx="3" fill="#FFFFFF" stroke="#94A3B8" stroke-width="1"/>
+    <text x="878" y="58" fill="#0F172A" font-size="13" class="sans-label">核心数据库与云端基础设施 API</text>
+    <text x="878" y="78" fill="#64748B" font-size="11" class="mono">Saga 补偿事务写入 · 两阶段提交保护</text>
+  </g>
+
+  <!-- ==================== ACADEMIC CAPTION ==================== -->
+  <g transform="translate(60, 805)">
+    <line x1="0" y1="0" x2="1280" y2="0" stroke="#E2E8F0" stroke-width="1"/>
+    <text x="0" y="20" fill="#0F172A" font-size="12" class="serif-title">图 1:</text>
+    <text x="40" y="20" fill="#334155" font-size="11.5" class="serif-body">Commander 控制面系统架构原理示意图。非受信任智能体推理环境（平面 1）与写权限凭据严格解耦。</text>
+    <text x="0" y="38" fill="#334155" font-size="11.5" class="serif-body">外部副作用必须经由重试前预检反查（Query-Before-Retry）、锁定不可变仿真快照摘要的人类密码学双阶段审批、</text>
+    <text x="0" y="56" fill="#334155" font-size="11.5" class="serif-body">以及基于 PostgreSQL 的崩溃安全步骤租约管理，方可向外部生产系统（平面 3）派发执行，并签发支持独立取证的 Ed25519 数字签名存证收据。</text>
+  </g>
+</svg>

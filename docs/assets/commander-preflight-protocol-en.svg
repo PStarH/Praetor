@@ -1,0 +1,154 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1280 720" width="1280" height="720" style="background:#ffffff; font-family:-apple-system, BlinkMacSystemFont, 'SF Pro Display', 'Segoe UI', Roboto, Helvetica, Arial, sans-serif;">
+  <defs>
+    <marker id="arr-blue" viewBox="0 0 10 10" refX="6" refY="5" markerWidth="6" markerHeight="6" orient="auto-start-reverse">
+      <path d="M 0 1.5 L 8 5 L 0 8.5 z" fill="#2563EB"/>
+    </marker>
+    <marker id="arr-red" viewBox="0 0 10 10" refX="6" refY="5" markerWidth="6" markerHeight="6" orient="auto-start-reverse">
+      <path d="M 0 1.5 L 8 5 L 0 8.5 z" fill="#DC2626"/>
+    </marker>
+    <marker id="arr-slate" viewBox="0 0 10 10" refX="6" refY="5" markerWidth="6" markerHeight="6" orient="auto-start-reverse">
+      <path d="M 0 1.5 L 8 5 L 0 8.5 z" fill="#64748B"/>
+    </marker>
+    <filter id="shadow-sm" x="-5%" y="-5%" width="110%" height="115%" filterUnits="userSpaceOnUse">
+      <feDropShadow dx="0" dy="2" stdDeviation="4" flood-color="#0F172A" flood-opacity="0.04" />
+    </filter>
+  </defs>
+
+  <!-- Background -->
+  <rect width="1280" height="720" fill="#FFFFFF"/>
+  <rect x="20" y="20" width="1240" height="680" rx="16" fill="#FFFFFF" stroke="#E2E8F0" stroke-width="1.5"/>
+
+  <!-- Title Banner -->
+  <g transform="translate(60, 48)">
+    <rect x="0" y="0" width="168" height="24" rx="12" fill="#EFF6FF"/>
+    <text x="84" y="16" fill="#2563EB" font-size="11" font-weight="700" letter-spacing="0.8" text-anchor="middle">DISTRIBUTED PROTOCOL</text>
+    <text x="180" y="17" fill="#0F172A" font-size="20" font-weight="700" letter-spacing="-0.3">Preflight Query-Before-Retry Protocol: Fault Recovery</text>
+    <text x="180" y="38" fill="#64748B" font-size="13">Comparing naive agent retry storms against Commander's lease-driven exactly-once recovery</text>
+  </g>
+
+  <!-- Lane 1: Naive Execution (Top) -->
+  <g transform="translate(60, 115)">
+    <rect width="1160" height="185" rx="14" fill="#FEF2F2" stroke="#FECACA" stroke-width="1.5" filter="url(#shadow-sm)"/>
+    
+    <!-- Lane Header -->
+    <rect x="20" y="16" width="32" height="32" rx="8" fill="#FEE2E2"/>
+    <text x="36" y="38" font-size="16" text-anchor="middle">❌</text>
+    <text x="64" y="28" fill="#991B1B" font-size="15" font-weight="700">Naive Agent Direct Execution: Blind Retry Storm</text>
+    <text x="64" y="44" fill="#B91C1C" font-size="12">Network timeouts or dropped sockets lead directly to catastrophic duplicate side-effects</text>
+
+    <!-- Sequence Flow -->
+    <g transform="translate(24, 70)">
+      <!-- Step 1 -->
+      <rect width="210" height="85" rx="10" fill="#FFFFFF" stroke="#FECACA" stroke-width="1"/>
+      <text x="16" y="24" fill="#991B1B" font-size="12" font-weight="700">Step 1: Direct Agent Write</text>
+      <text x="16" y="44" fill="#475569" font-size="11.5">Holds local write token</text>
+      <text x="16" y="62" fill="#64748B" font-size="11">POST /repos/.../pulls</text>
+
+      <!-- Arrow 1 -> 2 -->
+      <line x1="210" y1="42" x2="250" y2="42" stroke="#DC2626" stroke-width="2" marker-end="url(#arr-red)"/>
+
+      <!-- Step 2 -->
+      <rect x="250" width="220" height="85" rx="10" fill="#FFFFFF" stroke="#FECACA" stroke-width="1"/>
+      <text x="266" y="24" fill="#991B1B" font-size="12" font-weight="700">Step 2: Dropped Response</text>
+      <text x="266" y="44" fill="#DC2626" font-size="11.5" font-weight="600">💥 504 Gateway Timeout</text>
+      <text x="266" y="62" fill="#64748B" font-size="11">GitHub committed PR #41</text>
+
+      <!-- Arrow 2 -> 3 -->
+      <line x1="470" y1="42" x2="510" y2="42" stroke="#DC2626" stroke-width="2" marker-end="url(#arr-red)"/>
+
+      <!-- Step 3 -->
+      <rect x="510" width="240" height="85" rx="10" fill="#FFFFFF" stroke="#FECACA" stroke-width="1"/>
+      <text x="526" y="24" fill="#991B1B" font-size="12" font-weight="700">Step 3: Blind Retry Loop</text>
+      <text x="526" y="44" fill="#475569" font-size="11.5">No remote state awareness</text>
+      <text x="526" y="62" fill="#64748B" font-size="11">Dispatches second POST request</text>
+
+      <!-- Arrow 3 -> Outcome -->
+      <line x1="750" y1="42" x2="790" y2="42" stroke="#DC2626" stroke-width="2" marker-end="url(#arr-red)"/>
+
+      <!-- Outcome -->
+      <rect x="790" width="320" height="85" rx="10" fill="#FEE2E2" stroke="#F87171" stroke-width="1.5"/>
+      <text x="806" y="24" fill="#991B1B" font-size="13" font-weight="700">🚨 Production Outage: State Corruption</text>
+      <text x="806" y="46" fill="#B91C1C" font-size="12">• Duplicate PR #41 and PR #42 created</text>
+      <text x="806" y="66" fill="#B91C1C" font-size="12">• Double billing, dirty rebases &amp; broken CI</text>
+    </g>
+  </g>
+
+  <!-- Lane 2: Commander Governed Execution (Bottom) -->
+  <g transform="translate(60, 320)">
+    <rect width="1160" height="345" rx="14" fill="#F8FAFC" stroke="#BFDBFE" stroke-width="2" filter="url(#shadow-sm)"/>
+    
+    <!-- Lane Header -->
+    <rect x="20" y="16" width="32" height="32" rx="8" fill="#EFF6FF"/>
+    <text x="36" y="38" font-size="16" text-anchor="middle">🛡️</text>
+    <text x="64" y="28" fill="#1E40AF" font-size="15" font-weight="700">Commander Governed Recovery: Query-Before-Retry &amp; State Machine Leases</text>
+    <text x="64" y="44" fill="#2563EB" font-size="12">PostgreSQL WAL Leases + Remote Outcome Verification Guarantee Exactly-Once Dispatch</text>
+
+    <!-- Detailed 4-Phase Grid -->
+    <g transform="translate(24, 70)">
+      <!-- Phase A: Admission & Lease -->
+      <rect width="250" height="155" rx="10" fill="#FFFFFF" stroke="#E2E8F0" stroke-width="1.2"/>
+      <circle cx="20" cy="22" r="10" fill="#EFF6FF"/>
+      <text x="20" y="26" fill="#2563EB" font-size="11" font-weight="700" text-anchor="middle">A</text>
+      <text x="38" y="26" fill="#0F172A" font-size="13" font-weight="700">Admit &amp; Lease Allocation</text>
+      <line x1="12" y1="40" x2="238" y2="40" stroke="#F1F5F9" stroke-width="1"/>
+      <text x="14" y="58" fill="#475569" font-size="11.5">• Compute deterministic action key</text>
+      <text x="24" y="76" fill="#64748B" font-size="10.5" font-family="monospace">H(run_id ∥ op_key ∥ branch)</text>
+      <text x="14" y="98" fill="#475569" font-size="11.5">• Persist state in PostgreSQL WAL</text>
+      <text x="14" y="118" fill="#475569" font-size="11.5">• Grant step lease token τ₁</text>
+      <text x="14" y="138" fill="#16A34A" font-size="11" font-weight="600">✓ Isolated credential injection</text>
+
+      <!-- Arrow A -> B -->
+      <line x1="250" y1="78" x2="280" y2="78" stroke="#2563EB" stroke-width="2" marker-end="url(#arr-blue)"/>
+
+      <!-- Phase B: Interruption & Lease Reclamation -->
+      <rect x="280" width="250" height="155" rx="10" fill="#FFFFFF" stroke="#E2E8F0" stroke-width="1.2"/>
+      <circle cx="300" cy="22" r="10" fill="#EFF6FF"/>
+      <text x="300" y="26" fill="#2563EB" font-size="11" font-weight="700" text-anchor="middle">B</text>
+      <text x="318" y="26" fill="#0F172A" font-size="13" font-weight="700">Drop &amp; Lease Reclaim</text>
+      <line x1="292" y1="40" x2="518" y2="40" stroke="#F1F5F9" stroke-width="1"/>
+      <text x="294" y="58" fill="#DC2626" font-size="11.5" font-weight="600">⚡ 504 Timeout or Worker Killed</text>
+      <text x="294" y="78" fill="#475569" font-size="11.5">• Worker 1 heartbeat halts</text>
+      <text x="294" y="98" fill="#475569" font-size="11.5">• Lease τ₁ expires in kernel</text>
+      <text x="294" y="118" fill="#475569" font-size="11.5">• Worker 2 claims recovery lease τ₂</text>
+      <text x="294" y="138" fill="#2563EB" font-size="11" font-weight="600">⚠️ Halts blind POST invocation</text>
+
+      <!-- Arrow B -> C -->
+      <line x1="530" y1="78" x2="560" y2="78" stroke="#2563EB" stroke-width="2" marker-end="url(#arr-blue)"/>
+
+      <!-- Phase C: Preflight Query -->
+      <rect x="560" width="250" height="155" rx="10" fill="#EFF6FF" stroke="#93C5FD" stroke-width="1.5"/>
+      <circle cx="580" cy="22" r="10" fill="#DBEAFE"/>
+      <text x="580" y="26" fill="#1D4ED8" font-size="11" font-weight="700" text-anchor="middle">C</text>
+      <text x="598" y="26" fill="#1E40AF" font-size="13" font-weight="700">Preflight Remote Query</text>
+      <line x1="572" y1="40" x2="798" y2="40" stroke="#DBEAFE" stroke-width="1"/>
+      <text x="574" y="58" fill="#1E40AF" font-size="11.5" font-weight="600">🔍 Query-Before-Retry Check</text>
+      <text x="574" y="78" fill="#3B82F6" font-size="11">• Query remote target by action key</text>
+      <text x="574" y="98" fill="#3B82F6" font-size="11">• Match embedded marker digest</text>
+      <text x="584" y="116" fill="#1E40AF" font-size="10.5" font-family="monospace">&lt;!-- commander:action_id --&gt;</text>
+      <text x="574" y="138" fill="#16A34A" font-size="11" font-weight="600">✓ Decides strictly on remote truth</text>
+
+      <!-- Arrow C -> D -->
+      <line x1="810" y1="78" x2="840" y2="78" stroke="#2563EB" stroke-width="2" marker-end="url(#arr-blue)"/>
+
+      <!-- Phase D: Exactly-Once Decision -->
+      <rect x="840" width="270" height="155" rx="10" fill="#FFFFFF" stroke="#E2E8F0" stroke-width="1.2"/>
+      <circle cx="860" cy="22" r="10" fill="#EFF6FF"/>
+      <text x="860" y="26" fill="#2563EB" font-size="11" font-weight="700" text-anchor="middle">D</text>
+      <text x="878" y="26" fill="#0F172A" font-size="13" font-weight="700">Deterministic Resolution</text>
+      <line x1="852" y1="40" x2="1098" y2="40" stroke="#F1F5F9" stroke-width="1"/>
+      <text x="854" y="58" fill="#16A34A" font-size="11.5" font-weight="700">Case 1: Entity Found (PR #41 exists)</text>
+      <text x="864" y="76" fill="#475569" font-size="11">Binds existing PR; bypasses retry</text>
+      <text x="854" y="96" fill="#2563EB" font-size="11.5" font-weight="700">Case 2: Entity Absent</text>
+      <text x="864" y="114" fill="#475569" font-size="11">Safely dispatches write under lease τ₂</text>
+      <text x="854" y="134" fill="#DC2626" font-size="11.5" font-weight="700">Case 3: Ambiguous → UNKNOWN state</text>
+    </g>
+
+    <!-- Bottom Caption Bar -->
+    <g transform="translate(24, 245)">
+      <rect width="1112" height="75" rx="8" fill="#FFFFFF" stroke="#E2E8F0" stroke-width="1"/>
+      <text x="20" y="24" fill="#0F172A" font-size="12" font-weight="700">Figure 2 Core Takeaway:</text>
+      <text x="175" y="24" fill="#475569" font-size="12">Commander eliminates the classic distributed consensus vulnerability of AI agents: blind duplicate writes.</text>
+      <text x="20" y="44" fill="#475569" font-size="12">By combining preflight queries with PostgreSQL WAL leases, it guarantees exactly-once mutation semantics even across process kills and network drops.</text>
+    </g>
+  </g>
+</svg>

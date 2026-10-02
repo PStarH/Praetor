@@ -1,0 +1,213 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1400 900" width="1400" height="900">
+  <defs>
+    <!-- Arrowhead markers -->
+    <marker id="arrow" markerWidth="8" markerHeight="8" refX="6" refY="3" orient="auto" markerUnits="strokeWidth">
+      <path d="M0,0 L0,6 L7,3 z" fill="#1E293B"/>
+    </marker>
+    <marker id="arrowDashed" markerWidth="8" markerHeight="8" refX="6" refY="3" orient="auto" markerUnits="strokeWidth">
+      <path d="M0,0 L0,6 L7,3 z" fill="#475569"/>
+    </marker>
+    <marker id="arrowBlue" markerWidth="8" markerHeight="8" refX="6" refY="3" orient="auto" markerUnits="strokeWidth">
+      <path d="M0,0 L0,6 L7,3 z" fill="#2563EB"/>
+    </marker>
+  </defs>
+
+  <style>
+    .serif-title { font-family: "Times New Roman", Times, "Nimbus Roman No9 L", "Songti SC", serif; font-weight: 700; }
+    .serif-body { font-family: "Times New Roman", Times, "Nimbus Roman No9 L", "Songti SC", serif; }
+    .sans-title { font-family: -apple-system, BlinkMacSystemFont, "Helvetica Neue", Arial, sans-serif; font-weight: 700; }
+    .sans-label { font-family: -apple-system, BlinkMacSystemFont, "Helvetica Neue", Arial, sans-serif; font-weight: 600; }
+    .sans-body { font-family: -apple-system, BlinkMacSystemFont, "Helvetica Neue", Arial, sans-serif; font-weight: 400; }
+    .mono { font-family: "SF Mono", Monaco, "Courier New", monospace; }
+  </style>
+
+  <!-- Clean Canvas -->
+  <rect width="1400" height="900" fill="#FFFFFF"/>
+  <rect x="15" y="15" width="1370" height="870" fill="none" stroke="#E2E8F0" stroke-width="1"/>
+
+  <!-- ==================== HEADER ==================== -->
+  <g transform="translate(60, 48)">
+    <text x="0" y="24" fill="#0F172A" font-size="24" class="sans-title" letter-spacing="-0.3">SYSTEM ARCHITECTURE: COMMANDER CONTROL PLANE</text>
+    <text x="0" y="46" fill="#64748B" font-size="13" class="sans-body">High-Assurance Execution, Preflight Idempotency, and Lease-Based Recovery for Autonomous Agents</text>
+    <line x1="0" y1="58" x2="1280" y2="58" stroke="#0F172A" stroke-width="1.5"/>
+  </g>
+
+  <!-- ==================== TOP: UNTRUSTED REASONING PLANE ==================== -->
+  <g transform="translate(60, 130)">
+    <!-- Boundary Box -->
+    <rect x="0" y="0" width="1280" height="110" rx="4" fill="#F8FAFC" stroke="#CBD5E1" stroke-width="1.2"/>
+    <rect x="0" y="0" width="1280" height="28" rx="4" fill="#F1F5F9" stroke="#CBD5E1" stroke-width="1.2"/>
+    
+    <text x="16" y="19" fill="#334155" font-size="11.5" class="sans-label" letter-spacing="0.5">PLANE 1 : UNTRUSTED AGENT RUNTIME (PROMPT LOOPS)</text>
+    <text x="1264" y="19" fill="#DC2626" font-size="11" class="mono" text-anchor="end" font-weight="600">ZERO WRITE SECRETS IN CONTEXT</text>
+
+    <!-- Agent Node 1 -->
+    <rect x="24" y="42" width="220" height="54" rx="3" fill="#FFFFFF" stroke="#94A3B8" stroke-width="1"/>
+    <text x="36" y="63" fill="#0F172A" font-size="13" class="sans-label">Claude Code / Copilot</text>
+    <text x="36" y="82" fill="#64748B" font-size="11" class="mono">Tool Use · CLI Interop</text>
+
+    <!-- Agent Node 2 -->
+    <rect x="260" y="42" width="230" height="54" rx="3" fill="#FFFFFF" stroke="#94A3B8" stroke-width="1"/>
+    <text x="272" y="63" fill="#0F172A" font-size="13" class="sans-label">OpenAI Agents SDK / Swarm</text>
+    <text x="272" y="82" fill="#64748B" font-size="11" class="mono">Function Calling Schema</text>
+
+    <!-- Agent Node 3 -->
+    <rect x="506" y="42" width="220" height="54" rx="3" fill="#FFFFFF" stroke="#94A3B8" stroke-width="1"/>
+    <text x="518" y="63" fill="#0F172A" font-size="13" class="sans-label">LangGraph / AutoGen</text>
+    <text x="518" y="82" fill="#64748B" font-size="11" class="mono">Multi-Actor State Machine</text>
+
+    <!-- Security Boundary Note -->
+    <rect x="750" y="42" width="506" height="54" rx="3" fill="#FEF2F2" stroke="#F87171" stroke-width="1" stroke-dasharray="3,3"/>
+    <text x="764" y="63" fill="#991B1B" font-size="12" class="sans-label">Principal Isolation Boundary (Non-Bypassable)</text>
+    <text x="764" y="81" fill="#7F1D1D" font-size="11" class="sans-body">Agents hold Propose capability only. Write tokens (GitHub PAT / Cloud IAM) remain quarantined in Plane 2.</text>
+  </g>
+
+  <!-- ==================== DISPATCH ARROW ==================== -->
+  <g transform="translate(700, 240)">
+    <line x1="0" y1="0" x2="0" y2="8" stroke="#1E293B" stroke-width="1.4"/>
+    <rect x="-190" y="8" width="380" height="24" fill="#FFFFFF" stroke="#94A3B8" stroke-width="1" rx="3"/>
+    <text x="0" y="24" fill="#0F172A" font-size="10.5" class="mono" text-anchor="middle" font-weight="600">Step 1: Propose Mutation { Action, Args, SimHash }</text>
+    <line x1="0" y1="32" x2="0" y2="44" stroke="#1E293B" stroke-width="1.4" marker-end="url(#arrow)"/>
+  </g>
+
+  <!-- ==================== MIDDLE: COMMANDER CONTROL PLANE ==================== -->
+  <g transform="translate(60, 285)">
+    <!-- Master Plane 2 Container -->
+    <rect x="0" y="0" width="1280" height="345" rx="4" fill="#FFFFFF" stroke="#0F172A" stroke-width="1.8"/>
+    <rect x="0" y="0" width="1280" height="30" rx="4" fill="#0F172A"/>
+    
+    <text x="16" y="20" fill="#FFFFFF" font-size="12" class="sans-label" letter-spacing="0.5">PLANE 2 : COMMANDER GOVERNANCE &amp; RECOVERY CONTROL PLANE (TRUSTED)</text>
+    <text x="1264" y="20" fill="#94A3B8" font-size="11" class="mono" text-anchor="end">HTTP REST API :4000 · POSTGRES DURABLE KERNEL</text>
+
+    <!-- Sub-Module 1: Preflight Idempotency Engine -->
+    <g transform="translate(24, 48)">
+      <rect x="0" y="0" width="290" height="270" fill="#F8FAFC" stroke="#64748B" stroke-width="1" rx="3"/>
+      <rect x="0" y="0" width="290" height="26" fill="#E2E8F0" stroke="#64748B" stroke-width="1" rx="3"/>
+      <text x="12" y="18" fill="#0F172A" font-size="12" class="sans-label">1. Preflight Idempotency</text>
+
+      <text x="12" y="48" fill="#1E293B" font-size="11" class="mono" font-weight="700">QUERY-BEFORE-RETRY</text>
+      <text x="12" y="68" fill="#475569" font-size="11" class="sans-body">Mitigates network timeout (HTTP 504)</text>
+      <text x="12" y="84" fill="#475569" font-size="11" class="sans-body">and dropped response ambiguity.</text>
+
+      <rect x="12" y="98" width="266" height="52" fill="#FFFFFF" stroke="#CBD5E1" stroke-width="1" rx="2"/>
+      <text x="20" y="118" fill="#0F172A" font-size="10" class="mono">Action Identity:</text>
+      <text x="20" y="136" fill="#2563EB" font-size="9.5" class="mono">H(run_id ∥ op_key ∥ branch)</text>
+
+      <line x1="12" y1="162" x2="278" y2="162" stroke="#E2E8F0" stroke-width="1"/>
+
+      <text x="12" y="182" fill="#334155" font-size="11" class="sans-body">• Deterministic correlation marker</text>
+      <text x="12" y="202" fill="#334155" font-size="11" class="sans-body">• Queries remote target prior to write</text>
+      <text x="12" y="222" fill="#334155" font-size="11" class="sans-body">• State set to <tspan font-family="monospace" font-weight="700">UNKNOWN</tspan> on conflict</text>
+      <text x="12" y="242" fill="#334155" font-size="11" class="sans-body">• Eliminates duplicate PRs / records</text>
+    </g>
+
+    <!-- Sub-Module 2: Two-Phase Cryptographic Human Gate -->
+    <g transform="translate(332, 48)">
+      <rect x="0" y="0" width="290" height="270" fill="#F8FAFC" stroke="#64748B" stroke-width="1" rx="3"/>
+      <rect x="0" y="0" width="290" height="26" fill="#E2E8F0" stroke="#64748B" stroke-width="1" rx="3"/>
+      <text x="12" y="18" fill="#0F172A" font-size="12" class="sans-label">2. Two-Phase Human Gate</text>
+
+      <text x="12" y="48" fill="#1E293B" font-size="11" class="mono" font-weight="700">CRYPTOGRAPHIC BINDING</text>
+      <text x="12" y="68" fill="#475569" font-size="11" class="sans-body">Decouples proposal from execution</text>
+      <text x="12" y="84" fill="#475569" font-size="11" class="sans-body">via immutable simulation digests.</text>
+
+      <rect x="12" y="98" width="266" height="52" fill="#FFFFFF" stroke="#CBD5E1" stroke-width="1" rx="2"/>
+      <text x="20" y="118" fill="#0F172A" font-size="10" class="mono">Simulation Hash Lock:</text>
+      <text x="20" y="136" fill="#D97706" font-size="9.5" class="mono">digest: 0x93905c5f... (Fixed)</text>
+
+      <line x1="12" y1="162" x2="278" y2="162" stroke="#E2E8F0" stroke-width="1"/>
+
+      <text x="12" y="182" fill="#334155" font-size="11" class="sans-body">• Approver independently authenticated</text>
+      <text x="12" y="202" fill="#334155" font-size="11" class="sans-body">• Fails execution if payload mutates</text>
+      <text x="12" y="222" fill="#334155" font-size="11" class="sans-body">• Sign-off via Console (:5173) or CLI</text>
+      <text x="12" y="242" fill="#334155" font-size="11" class="sans-body">• Separate authorization for rollback</text>
+    </g>
+
+    <!-- Sub-Module 3: Durable Kernel & Worker Lease -->
+    <g transform="translate(640, 48)">
+      <rect x="0" y="0" width="290" height="270" fill="#F8FAFC" stroke="#64748B" stroke-width="1" rx="3"/>
+      <rect x="0" y="0" width="290" height="26" fill="#E2E8F0" stroke="#64748B" stroke-width="1" rx="3"/>
+      <text x="12" y="18" fill="#0F172A" font-size="12" class="sans-label">3. Durable Kernel &amp; WAL</text>
+
+      <text x="12" y="48" fill="#1E293B" font-size="11" class="mono" font-weight="700">POSTGRES STEP LEASING</text>
+      <text x="12" y="68" fill="#475569" font-size="11" class="sans-body">Crash-safe distributed state machine</text>
+      <text x="12" y="84" fill="#475569" font-size="11" class="sans-body">with at-least-once outbox delivery.</text>
+
+      <rect x="12" y="98" width="266" height="52" fill="#FFFFFF" stroke="#CBD5E1" stroke-width="1" rx="2"/>
+      <text x="20" y="118" fill="#0F172A" font-size="10" class="mono">Step Lease Authority:</text>
+      <text x="20" y="136" fill="#4338CA" font-size="9.5" class="mono">lease_owner: worker_04 (TTL 30s)</text>
+
+      <line x1="12" y1="162" x2="278" y2="162" stroke="#E2E8F0" stroke-width="1"/>
+
+      <text x="12" y="182" fill="#334155" font-size="11" class="sans-body">• Worker failure triggers auto-reclaim</text>
+      <text x="12" y="202" fill="#334155" font-size="11" class="sans-body">• Recovery bootstrap in &lt;5 seconds</text>
+      <text x="12" y="222" fill="#334155" font-size="11" class="sans-body">• Outbox transactional delivery + DLQ</text>
+      <text x="12" y="242" fill="#334155" font-size="11" class="sans-body">• PostgreSQL RLS multi-tenant guard</text>
+    </g>
+
+    <!-- Sub-Module 4: Evidence & Governed Compensation -->
+    <g transform="translate(948, 48)">
+      <rect x="0" y="0" width="308" height="270" fill="#F8FAFC" stroke="#64748B" stroke-width="1" rx="3"/>
+      <rect x="0" y="0" width="308" height="26" fill="#E2E8F0" stroke="#64748B" stroke-width="1" rx="3"/>
+      <text x="12" y="18" fill="#0F172A" font-size="12" class="sans-label">4. Evidence &amp; Compensation</text>
+
+      <text x="12" y="48" fill="#1E293B" font-size="11" class="mono" font-weight="700">ED25519 SIGNED EVIDENCE</text>
+      <text x="12" y="68" fill="#475569" font-size="11" class="sans-body">Non-repudiable receipt generation &amp;</text>
+      <text x="12" y="84" fill="#475569" font-size="11" class="sans-body">governed saga undo orchestration.</text>
+
+      <rect x="12" y="98" width="284" height="52" fill="#FFFFFF" stroke="#CBD5E1" stroke-width="1" rx="2"/>
+      <text x="20" y="118" fill="#0F172A" font-size="10" class="mono">Cryptographic Receipt:</text>
+      <text x="20" y="136" fill="#059669" font-size="9.5" class="mono">sig: Ed25519_JWS(runId, state, hash)</text>
+
+      <line x1="12" y1="162" x2="296" y2="162" stroke="#E2E8F0" stroke-width="1"/>
+
+      <text x="12" y="182" fill="#334155" font-size="11" class="sans-body">• Verifiable by external audit systems</text>
+      <text x="12" y="202" fill="#334155" font-size="11" class="sans-body">• Governed Saga Compensation engine</text>
+      <text x="12" y="222" fill="#334155" font-size="11" class="sans-body">• Governed PR close &amp; K8s rollback</text>
+      <text x="12" y="242" fill="#334155" font-size="11" class="sans-body">• Complete forensic compliance trail</text>
+    </g>
+  </g>
+
+  <!-- ==================== EXECUTE ARROW ==================== -->
+  <g transform="translate(700, 630)">
+    <line x1="0" y1="0" x2="0" y2="8" stroke="#1E293B" stroke-width="1.4"/>
+    <rect x="-240" y="8" width="480" height="24" fill="#FFFFFF" stroke="#94A3B8" stroke-width="1" rx="3"/>
+    <text x="0" y="24" fill="#0F172A" font-size="10.5" class="mono" text-anchor="middle" font-weight="600">Step 2: Governed Mutation with Injected Marker &amp; Signed Receipt</text>
+    <line x1="0" y1="32" x2="0" y2="44" stroke="#1E293B" stroke-width="1.4" marker-end="url(#arrow)"/>
+  </g>
+
+  <!-- ==================== BOTTOM: TARGET INFRASTRUCTURE PLANE ==================== -->
+  <g transform="translate(60, 675)">
+    <!-- Boundary Box -->
+    <rect x="0" y="0" width="1280" height="105" rx="4" fill="#F8FAFC" stroke="#CBD5E1" stroke-width="1.2"/>
+    <rect x="0" y="0" width="1280" height="26" rx="4" fill="#F1F5F9" stroke="#CBD5E1" stroke-width="1.2"/>
+    
+    <text x="16" y="18" fill="#334155" font-size="11.5" class="sans-label" letter-spacing="0.5">PLANE 3 : EXTERNAL INFRASTRUCTURE &amp; REPOSITORIES</text>
+    <text x="1264" y="18" fill="#059669" font-size="11" class="mono" text-anchor="end" font-weight="600">EXACTLY-ONCE MUTATION SEMANTICS</text>
+
+    <!-- Target 1: GitHub -->
+    <rect x="24" y="38" width="380" height="54" rx="3" fill="#FFFFFF" stroke="#94A3B8" stroke-width="1"/>
+    <text x="36" y="58" fill="#0F172A" font-size="13" class="sans-label">GitHub API / Git Repositories</text>
+    <text x="36" y="78" fill="#64748B" font-size="11" class="mono">Idempotent PR Creation · Marker Binding</text>
+
+    <!-- Target 2: Kubernetes -->
+    <rect x="430" y="38" width="410" height="54" rx="3" fill="#FFFFFF" stroke="#94A3B8" stroke-width="1"/>
+    <text x="442" y="58" fill="#0F172A" font-size="13" class="sans-label">Kubernetes Cluster &amp; Service Mesh</text>
+    <text x="442" y="78" fill="#64748B" font-size="11" class="mono">Governed Deployment Rollback · Safe Cutover</text>
+
+    <!-- Target 3: Databases -->
+    <rect x="866" y="38" width="390" height="54" rx="3" fill="#FFFFFF" stroke="#94A3B8" stroke-width="1"/>
+    <text x="878" y="58" fill="#0F172A" font-size="13" class="sans-label">Databases &amp; Cloud Infrastructure</text>
+    <text x="878" y="78" fill="#64748B" font-size="11" class="mono">Compensating Sagas · Two-Phase Commits</text>
+  </g>
+
+  <!-- ==================== ACADEMIC CAPTION ==================== -->
+  <g transform="translate(60, 805)">
+    <line x1="0" y1="0" x2="1280" y2="0" stroke="#E2E8F0" stroke-width="1"/>
+    <text x="0" y="20" fill="#0F172A" font-size="12" class="serif-title">Figure 1:</text>
+    <text x="56" y="20" fill="#334155" font-size="11.5" class="serif-body">Architectural schematic of the Commander Control Plane. Untrusted agent reasoning (Plane 1) is strictly decoupled from write-level credentials.</text>
+    <text x="0" y="38" fill="#334155" font-size="11.5" class="serif-body">External side-effects undergo preflight idempotency queries (query-before-retry), cryptographic human authorization locking immutable simulation digests,</text>
+    <text x="0" y="56" fill="#334155" font-size="11.5" class="serif-body">and durable PostgreSQL-backed step leases before dispatching to target infrastructure (Plane 3) with third-party verifiable Ed25519 signed receipts.</text>
+  </g>
+</svg>

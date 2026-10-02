@@ -1,0 +1,197 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1280 680" width="1280" height="680" style="background:#ffffff; font-family:-apple-system, BlinkMacSystemFont, 'SF Pro Display', 'Segoe UI', Roboto, Helvetica, Arial, sans-serif;">
+  <defs>
+    <!-- Markers for arrows -->
+    <marker id="arrow" viewBox="0 0 10 10" refX="6" refY="5" markerWidth="6" markerHeight="6" orient="auto-start-reverse">
+      <path d="M 0 1.5 L 8 5 L 0 8.5 z" fill="#2563EB"/>
+    </marker>
+
+    <!-- Subtle Drop Shadows -->
+    <filter id="card-shadow" x="-5%" y="-5%" width="110%" height="115%" filterUnits="userSpaceOnUse">
+      <feDropShadow dx="0" dy="4" stdDeviation="8" flood-color="#0F172A" flood-opacity="0.04" />
+      <feDropShadow dx="0" dy="1" stdDeviation="2" flood-color="#0F172A" flood-opacity="0.02" />
+    </filter>
+    <filter id="active-shadow" x="-5%" y="-5%" width="110%" height="115%" filterUnits="userSpaceOnUse">
+      <feDropShadow dx="0" dy="6" stdDeviation="12" flood-color="#2563EB" flood-opacity="0.08" />
+      <feDropShadow dx="0" dy="1" stdDeviation="3" flood-color="#2563EB" flood-opacity="0.04" />
+    </filter>
+  </defs>
+
+  <!-- Canvas Background -->
+  <rect width="1280" height="680" fill="#FFFFFF"/>
+  <rect x="20" y="20" width="1240" height="640" rx="16" fill="#FFFFFF" stroke="#E2E8F0" stroke-width="1.5"/>
+
+  <!-- Top Header Banner -->
+  <g transform="translate(60, 48)">
+    <rect x="0" y="0" width="84" height="24" rx="12" fill="#EFF6FF"/>
+    <text x="42" y="16" fill="#2563EB" font-size="11" font-weight="700" letter-spacing="1" text-anchor="middle">WORKFLOW</text>
+    <text x="96" y="17" fill="#0F172A" font-size="20" font-weight="700" letter-spacing="-0.3">Commander 核心运转架构</text>
+    <text x="96" y="38" fill="#64748B" font-size="13">自主 Agent 与生产环境之间的可信安全治理控制面 · 一览式极简全景</text>
+  </g>
+
+  <!-- 3 MAIN COLUMNS -->
+
+  <!-- ==================== COLUMN 1: UNTRUSTED AGENT ==================== -->
+  <g transform="translate(60, 115)">
+    <!-- Container Card -->
+    <rect width="300" height="400" rx="16" fill="#F8FAFC" stroke="#E2E8F0" stroke-width="1.5" filter="url(#card-shadow)"/>
+    
+    <!-- Header -->
+    <rect x="18" y="18" width="36" height="36" rx="8" fill="#F1F5F9" stroke="#CBD5E1" stroke-width="1"/>
+    <text x="36" y="42" font-size="18" text-anchor="middle">🤖</text>
+    <text x="64" y="34" fill="#0F172A" font-size="16" font-weight="700">自主 Agent 推理面</text>
+    <text x="64" y="50" fill="#64748B" font-size="12">Untrusted Reasoning Plane</text>
+
+    <!-- Subtitle Tag -->
+    <rect x="18" y="70" width="264" height="28" rx="6" fill="#FEF2F2" stroke="#FECACA" stroke-width="1"/>
+    <text x="150" y="88" fill="#DC2626" font-size="11" font-weight="600" text-anchor="middle">⚠️ 不受信环境 · 上下文零特权凭据</text>
+
+    <!-- Content Items -->
+    <g transform="translate(18, 114)">
+      <!-- Item 1 -->
+      <rect width="264" height="64" rx="10" fill="#FFFFFF" stroke="#E2E8F0" stroke-width="1"/>
+      <text x="16" y="26" fill="#0F172A" font-size="13" font-weight="600">模型自主决策与生成</text>
+      <text x="16" y="46" fill="#64748B" font-size="12">Claude / Cursor / 自研 Agent</text>
+      
+      <!-- Item 2 -->
+      <rect y="76" width="264" height="64" rx="10" fill="#FFFFFF" stroke="#E2E8F0" stroke-width="1"/>
+      <text x="16" y="102" fill="#0F172A" font-size="13" font-weight="600">产出不可信 Intent 提案</text>
+      <text x="16" y="122" fill="#64748B" font-size="12">只提供候选分支或参数，无执行权</text>
+
+      <!-- Item 3: Key Safety Feature -->
+      <rect y="152" width="264" height="96" rx="10" fill="#FFFFFF" stroke="#E2E8F0" stroke-width="1"/>
+      <text x="16" y="178" fill="#0F172A" font-size="13" font-weight="600">🔒 为什么安全？</text>
+      <text x="16" y="200" fill="#475569" font-size="12">• Agent 上下文完全接触不到真实 Token</text>
+      <text x="16" y="222" fill="#475569" font-size="12">• 任何幻觉行为都无法直接穿透到线上</text>
+    </g>
+  </g>
+
+  <!-- Flow Connector 1 -> 2 -->
+  <g transform="translate(365, 290)">
+    <line x1="0" y1="0" x2="68" y2="0" stroke="#2563EB" stroke-width="2.5" marker-end="url(#arrow)"/>
+    <rect x="4" y="-22" width="60" height="18" rx="4" fill="#EFF6FF"/>
+    <text x="34" y="-10" fill="#2563EB" font-size="10" font-weight="700" text-anchor="middle">提交意图</text>
+  </g>
+
+  <!-- ==================== COLUMN 2: COMMANDER CONTROL PLANE ==================== -->
+  <g transform="translate(440, 115)">
+    <!-- Container Card (Active / Primary Highlight) -->
+    <rect width="400" height="400" rx="16" fill="#FFFFFF" stroke="#2563EB" stroke-width="2" filter="url(#active-shadow)"/>
+    
+    <!-- Header -->
+    <rect x="20" y="18" width="36" height="36" rx="8" fill="#EFF6FF" stroke="#BFDBFE" stroke-width="1"/>
+    <text x="38" y="42" font-size="18" text-anchor="middle">🛡️</text>
+    <text x="68" y="34" fill="#0F172A" font-size="16" font-weight="700">Commander 安全治理控制面</text>
+    <text x="68" y="50" fill="#2563EB" font-size="12" font-weight="600">Deterministic Control &amp; Recovery Plane</text>
+
+    <!-- Status Pill -->
+    <rect x="20" y="70" width="360" height="28" rx="6" fill="#F0FDF4" stroke="#BBF7D0" stroke-width="1"/>
+    <text x="200" y="88" fill="#16A34A" font-size="11" font-weight="600" text-anchor="middle">三道确定性防线 · 拒绝盲目放行</text>
+
+    <!-- 3 Internal Pillars -->
+    <g transform="translate(20, 112)">
+      <!-- Pillar 1: Preflight -->
+      <rect width="360" height="66" rx="10" fill="#F8FAFC" stroke="#E2E8F0" stroke-width="1.2"/>
+      <circle cx="28" cy="33" r="14" fill="#EFF6FF"/>
+      <text x="28" y="38" fill="#2563EB" font-size="12" font-weight="700" text-anchor="middle">1</text>
+      <text x="52" y="27" fill="#0F172A" font-size="13" font-weight="700">Preflight 执行前幂等排重</text>
+      <text x="52" y="47" fill="#64748B" font-size="11.5">先查后做，阻断 Agent 重复死循环与重试风暴</text>
+
+      <!-- Pillar 2: Human Sign-off -->
+      <rect y="78" width="360" height="66" rx="10" fill="#F8FAFC" stroke="#E2E8F0" stroke-width="1.2"/>
+      <circle cx="28" cy="111" r="14" fill="#EFF6FF"/>
+      <text x="28" y="116" fill="#2563EB" font-size="12" font-weight="700" text-anchor="middle">2</text>
+      <text x="52" y="105" fill="#0F172A" font-size="13" font-weight="700">两阶段人机密码学签名</text>
+      <text x="52" y="125" fill="#64748B" font-size="11.5">高危写操作必须由人类签署 Ed25519 确认票据</text>
+
+      <!-- Pillar 3: Durable Kernel -->
+      <rect y="156" width="360" height="66" rx="10" fill="#F8FAFC" stroke="#E2E8F0" stroke-width="1.2"/>
+      <circle cx="28" cy="189" r="14" fill="#EFF6FF"/>
+      <text x="28" y="194" fill="#2563EB" font-size="12" font-weight="700" text-anchor="middle">3</text>
+      <text x="52" y="183" fill="#0F172A" font-size="13" font-weight="700">事务租赁内核与可信凭据</text>
+      <text x="52" y="203" fill="#64748B" font-size="11.5">真实 Token 隔离注入 · PostgreSQL WAL 故障自愈</text>
+    </g>
+
+    <!-- Bottom summary tag -->
+    <g transform="translate(20, 348)">
+      <rect width="360" height="34" rx="8" fill="#F1F5F9"/>
+      <text x="180" y="21" fill="#475569" font-size="11.5" font-weight="600" text-anchor="middle">全程产出不可篡改 JWS 存证 · 支持失败级联自动补偿</text>
+    </g>
+  </g>
+
+  <!-- Flow Connector 2 -> 3 -->
+  <g transform="translate(845, 290)">
+    <line x1="0" y1="0" x2="68" y2="0" stroke="#2563EB" stroke-width="2.5" marker-end="url(#arrow)"/>
+    <rect x="4" y="-22" width="60" height="18" rx="4" fill="#EFF6FF"/>
+    <text x="34" y="-10" fill="#2563EB" font-size="10" font-weight="700" text-anchor="middle">安全下发</text>
+  </g>
+
+  <!-- ==================== COLUMN 3: TARGET INFRASTRUCTURE ==================== -->
+  <g transform="translate(920, 115)">
+    <!-- Container Card -->
+    <rect width="300" height="400" rx="16" fill="#F8FAFC" stroke="#E2E8F0" stroke-width="1.5" filter="url(#card-shadow)"/>
+    
+    <!-- Header -->
+    <rect x="18" y="18" width="36" height="36" rx="8" fill="#F1F5F9" stroke="#CBD5E1" stroke-width="1"/>
+    <text x="36" y="42" font-size="18" text-anchor="middle">🚀</text>
+    <text x="64" y="34" fill="#0F172A" font-size="16" font-weight="700">生产目标基础设施</text>
+    <text x="64" y="50" fill="#64748B" font-size="12">Production Infrastructure</text>
+
+    <!-- Subtitle Tag -->
+    <rect x="18" y="70" width="264" height="28" rx="6" fill="#F0FDF4" stroke="#BBF7D0" stroke-width="1"/>
+    <text x="150" y="88" fill="#16A34A" font-size="11" font-weight="600" text-anchor="middle">✅ 确定性落地 · Exactly-Once 语义</text>
+
+    <!-- Target Entities -->
+    <g transform="translate(18, 114)">
+      <!-- Entity 1 -->
+      <rect width="264" height="64" rx="10" fill="#FFFFFF" stroke="#E2E8F0" stroke-width="1"/>
+      <text x="16" y="26" fill="#0F172A" font-size="13" font-weight="600">代码仓与发布流</text>
+      <text x="16" y="46" fill="#64748B" font-size="12">GitHub PR / 自动合并 / Release</text>
+
+      <!-- Entity 2 -->
+      <rect y="76" width="264" height="64" rx="10" fill="#FFFFFF" stroke="#E2E8F0" stroke-width="1"/>
+      <text x="16" y="102" fill="#0F172A" font-size="13" font-weight="600">云资源与容器编排</text>
+      <text x="16" y="122" fill="#64748B" font-size="12">AWS / GCP / Kubernetes 部署更新</text>
+
+      <!-- Entity 3 -->
+      <rect y="152" width="264" height="96" rx="10" fill="#FFFFFF" stroke="#E2E8F0" stroke-width="1"/>
+      <text x="16" y="178" fill="#0F172A" font-size="13" font-weight="600">🛡️ 达成的最终效果</text>
+      <text x="16" y="200" fill="#475569" font-size="12">• 杜绝重复下发、误删库与未审变更</text>
+      <text x="16" y="222" fill="#475569" font-size="12">• 单机崩溃时自动挂起，恢复后无缝续跑</text>
+    </g>
+  </g>
+
+  <!-- ==================== BOTTOM FEATURE BAR ==================== -->
+  <g transform="translate(60, 538)">
+    <rect width="1160" height="92" rx="12" fill="#F8FAFC" stroke="#E2E8F0" stroke-width="1"/>
+
+    <!-- Highlight 1 -->
+    <g transform="translate(30, 22)">
+      <circle cx="16" cy="24" r="16" fill="#EFF6FF"/>
+      <text x="16" y="30" font-size="14" text-anchor="middle">⚡</text>
+      <text x="44" y="20" fill="#0F172A" font-size="13" font-weight="700">阻断重试雪崩</text>
+      <text x="44" y="38" fill="#64748B" font-size="11.5">Preflight 先查再动，多次触发只执行一次</text>
+    </g>
+
+    <!-- Divider 1 -->
+    <line x1="395" y1="18" x2="395" y2="74" stroke="#E2E8F0" stroke-width="1"/>
+
+    <!-- Highlight 2 -->
+    <g transform="translate(420, 22)">
+      <circle cx="16" cy="24" r="16" fill="#EFF6FF"/>
+      <text x="16" y="30" font-size="14" text-anchor="middle">🔐</text>
+      <text x="44" y="20" fill="#0F172A" font-size="13" font-weight="700">写凭据物理隔离</text>
+      <text x="44" y="38" fill="#64748B" font-size="11.5">Prompt 零 Token 注入，根除越权篡改面</text>
+    </g>
+
+    <!-- Divider 2 -->
+    <line x1="775" y1="18" x2="775" y2="74" stroke="#E2E8F0" stroke-width="1"/>
+
+    <!-- Highlight 3 -->
+    <g transform="translate(800, 22)">
+      <circle cx="16" cy="24" r="16" fill="#EFF6FF"/>
+      <text x="16" y="30" font-size="14" text-anchor="middle">🔄</text>
+      <text x="44" y="20" fill="#0F172A" font-size="13" font-weight="700">断电无损自愈</text>
+      <text x="44" y="38" fill="#64748B" font-size="11.5">WAL 租赁超时自动重放，拒绝半生脏数据</text>
+    </g>
+  </g>
+</svg>
