@@ -158,7 +158,12 @@ export class SwarmOrchestrator {
   constructor(provider: LLMProvider, config?: Partial<SwarmConfig>, depth = 0) {
     this.provider = provider;
     this.config = { ...DEFAULT_SWARM_CONFIG, ...config };
-    this.model = this.config.model ?? 'gpt-4o-mini';
+    this.model =
+      this.config.model ??
+      (provider as any).defaultModel ??
+      (provider as any).config?.defaultModel ??
+      'gpt-4o-mini';
+    this.config.model = this.model;
     this.fusionEngine = new FusionEngine();
     this.depth = depth;
   }
@@ -247,7 +252,8 @@ export class SwarmOrchestrator {
       for (const node of [...pending]) {
         node.status = 'in_progress';
 
-        const depsBlocked = node.dependencies.some((depId) => {
+        const deps = Array.isArray(node.dependencies) ? node.dependencies : [];
+        const depsBlocked = deps.some((depId) => {
           const dep = swarmFindNodeById(goalTree, depId);
           if (!dep) return true;
           return dep.status !== 'completed';
@@ -257,7 +263,7 @@ export class SwarmOrchestrator {
         // Skip nodes that were fissioned (they have children)
         if (node.children.length > 0) continue;
 
-        const depContext = node.dependencies
+        const depContext = deps
           .map((depId) => {
             const dep = swarmFindNodeById(this.rootNodes, depId);
             return dep
@@ -296,16 +302,19 @@ export class SwarmOrchestrator {
         });
 
         if (criticResult) {
+          const findings = Array.isArray(criticResult.data?.findings)
+            ? criticResult.data.findings
+            : [];
           node.critique = {
-            passed: criticResult.data.passed,
-            findings: criticResult.data.findings.map((f) => ({
-              severity: f.severity,
-              category: f.category as CritiqueResult['findings'][0]['category'],
-              description: f.description,
-              location: f.location,
-              suggestion: f.suggestion,
+            passed: criticResult.data?.passed ?? true,
+            findings: findings.map((f) => ({
+              severity: f?.severity ?? 'medium',
+              category: (f?.category as CritiqueResult['findings'][0]['category']) ?? 'correctness',
+              description: f?.description ?? '',
+              location: f?.location,
+              suggestion: f?.suggestion,
             })),
-            summary: criticResult.data.summary,
+            summary: criticResult.data?.summary ?? '',
           };
           roundTokens += criticResult.tokens;
         } else {
@@ -375,7 +384,10 @@ export class SwarmOrchestrator {
       if (reviewResult) {
         roundTokens += reviewResult.tokens;
         applyReview(goalTree, reviewResult.data);
-        for (const newSub of reviewResult.data.newSubGoals) {
+        const newSubGoals = Array.isArray(reviewResult.data?.newSubGoals)
+          ? reviewResult.data.newSubGoals
+          : [];
+        for (const newSub of newSubGoals) {
           const newNode: SwarmNode = {
             id: generateNodeId('swarm'),
             goal: newSub.goal,
@@ -383,7 +395,7 @@ export class SwarmOrchestrator {
             status: 'pending',
             subNodes: [],
             children: [],
-            dependencies: newSub.dependencies,
+            dependencies: Array.isArray(newSub.dependencies) ? newSub.dependencies : [],
           };
           goalTree.push(newNode);
         }
@@ -393,7 +405,7 @@ export class SwarmOrchestrator {
 
       // === CONTINUATION DECISION ===
       const totalFindings = allNodes.reduce(
-        (sum, n) => sum + (n.critique?.findings.length ?? 0),
+        (sum, n) => sum + (n.critique?.findings?.length ?? 0),
         0,
       );
 
@@ -485,13 +497,13 @@ export class SwarmOrchestrator {
         node.workerOutput = childResult.summary;
 
         // Propagate findings from child tree
-        const childAllNodes = swarmCollectAllNodes(childResult.rootNodes);
+        const childAllNodes = swarmCollectAllNodes(childResult.rootNodes ?? []);
         const childFindings = childAllNodes
-          .filter((n) => n.critique)
-          .flatMap((n) => n.critique!.findings);
+          .filter((n) => n.critique?.findings)
+          .flatMap((n) => n.critique!.findings ?? []);
         if (childFindings.length > 0) {
           node.critique = {
-            passed: !childFindings.some((f) => f.severity === 'critical' || f.severity === 'high'),
+            passed: !childFindings.some((f) => f && (f.severity === 'critical' || f.severity === 'high')),
             findings: childFindings.slice(0, 20),
             summary: `${childFindings.length} finding(s) from child manager`,
           };

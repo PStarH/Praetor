@@ -88,6 +88,10 @@ export class MtlsRuntimeProxy implements AgentRuntimeInterface {
     throw new Error('getProvider is not supported over MtlsRuntimeProxy.');
   }
 
+  getFirstAvailableProvider(_preferredName?: string): LLMProvider | undefined {
+    throw new Error('getFirstAvailableProvider is not supported over MtlsRuntimeProxy.');
+  }
+
   getSmartRouter(): SmartModelRouter | null {
     throw new Error('getSmartRouter is not supported over MtlsRuntimeProxy.');
   }

@@ -209,6 +209,7 @@ export class UltimateOrchestrator {
       // Phase 1: Deliberation (LLM-powered when a provider is registered)
       emit('DELIBERATION', 'Analyzing task requirements...');
       const firstProvider =
+        this.runtime.getFirstAvailableProvider?.() ??
         this.runtime.getProvider('openai') ??
         this.runtime.getProvider('anthropic') ??
         this.runtime.getProvider('openrouter') ??

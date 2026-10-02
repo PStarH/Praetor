@@ -725,6 +725,14 @@ export class AgentRuntime implements AgentRuntimeInterface {
     return this.providers.get(name);
   }
 
+  getFirstAvailableProvider(preferredName?: string): LLMProvider | undefined {
+    if (preferredName) {
+      const p = this.providers.get(preferredName);
+      if (p) return p;
+    }
+    return this.providers.values().next().value;
+  }
+
   getSmartRouter(): SmartModelRouter | null {
     return this.smartRouter;
   }

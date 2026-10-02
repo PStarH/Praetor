@@ -42,6 +42,9 @@ export interface AgentRuntimeInterface {
   /** Retrieve a registered provider. */
   getProvider(name: string): LLMProvider | undefined;
 
+  /** Retrieve the first available provider or preferred one if registered. */
+  getFirstAvailableProvider(preferredName?: string): LLMProvider | undefined;
+
   /** Retrieve the smart model router if enabled. */
   getSmartRouter(): SmartModelRouter | null;
 

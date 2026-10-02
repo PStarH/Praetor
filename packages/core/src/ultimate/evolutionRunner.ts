@@ -150,6 +150,7 @@ export class EvolutionRunner {
     let model: string | undefined = undefined;
     if (mode !== 'light' && this.deps.runtime) {
       provider =
+        this.deps.runtime.getFirstAvailableProvider?.() ??
         this.deps.runtime.getProvider('openai') ??
         this.deps.runtime.getProvider('anthropic') ??
         this.deps.runtime.getProvider('openrouter') ??

@@ -1,4 +1,4 @@
-import { detectProvider } from '../../config/commanderConfig';
+import { detectProvider, type ProviderType } from '../../config/commanderConfig';
 import type { LLMProvider } from '../../runtime/types';
 import type { GoalConfig } from '../../goal/types';
 import { GoalOrchestrator } from '../../goal/goalOrchestrator';
@@ -9,8 +9,9 @@ import type { DriveConfig } from '../../drive/types';
 import { createRuntime, $, section, cmdHeader, startSpinner, fatalError } from './_shared';
 
 export async function cmdGoal(task: string, flags: Record<string, string>) {
-  const provider = detectProvider();
-  const runtime = createRuntime();
+  const forcedProvider = flags.provider?.toLowerCase() as ProviderType | undefined;
+  const provider = detectProvider(forcedProvider);
+  const runtime = createRuntime(forcedProvider);
   if (!runtime || !provider) {
     fatalError(
       'No API key found.',
@@ -22,7 +23,6 @@ export async function cmdGoal(task: string, flags: Record<string, string>) {
 
   // Support --provider flag to force a specific provider
   // Note: parseFlags strips the leading --, so flags.provider not flags['--provider']
-  const forcedProvider = flags.provider?.toLowerCase();
   let llmProvider: LLMProvider | undefined;
 
   if (forcedProvider) {
@@ -35,6 +35,8 @@ export async function cmdGoal(task: string, flags: Record<string, string>) {
     }
   } else {
     llmProvider =
+      runtime.getFirstAvailableProvider(provider.type) ??
+      runtime.getProvider(provider.type) ??
       runtime.getProvider('openai') ??
       runtime.getProvider('anthropic') ??
       runtime.getProvider('openrouter') ??
@@ -51,6 +53,8 @@ export async function cmdGoal(task: string, flags: Record<string, string>) {
   }
 
   const config: Partial<GoalConfig> = {};
+  if (flags.model) config.model = flags.model;
+  else if (provider.defaultModel) config.model = provider.defaultModel;
   if (flags.mode) config.mode = flags.mode as GoalConfig['mode'];
   if (flags.budget) config.budgetTokens = parseInt(flags.budget, 10);
   if (flags['max-rounds']) config.maxRounds = parseInt(flags['max-rounds'], 10);
@@ -113,8 +117,10 @@ export async function cmdGoal(task: string, flags: Record<string, string>) {
 }
 
 export async function cmdSwarm(task: string, flags: Record<string, string>) {
-  const runtime = createRuntime();
-  if (!runtime) {
+  const forcedProvider = flags.provider?.toLowerCase() as ProviderType | undefined;
+  const provider = detectProvider(forcedProvider);
+  const runtime = createRuntime(forcedProvider);
+  if (!runtime || !provider) {
     fatalError(
       'No API key found.',
       'Set OPENAI_API_KEY, ANTHROPIC_API_KEY, or another provider env var. Run: commander quickstart',
@@ -123,7 +129,6 @@ export async function cmdSwarm(task: string, flags: Record<string, string>) {
 
   cmdHeader(task);
 
-  const forcedProvider = flags.provider?.toLowerCase();
   let llmProvider: LLMProvider | undefined;
 
   if (forcedProvider) {
@@ -136,6 +141,8 @@ export async function cmdSwarm(task: string, flags: Record<string, string>) {
     }
   } else {
     llmProvider =
+      runtime.getFirstAvailableProvider(provider.type) ??
+      runtime.getProvider(provider.type) ??
       runtime.getProvider('openai') ??
       runtime.getProvider('anthropic') ??
       runtime.getProvider('openrouter') ??
@@ -152,8 +159,12 @@ export async function cmdSwarm(task: string, flags: Record<string, string>) {
   }
 
   const swarmConfig: Partial<SwarmConfig> = {};
+  if (flags.model) swarmConfig.model = flags.model;
+  else if (provider.defaultModel) swarmConfig.model = provider.defaultModel;
   if (flags.mode)
     swarmConfig.goalConfig = { ...swarmConfig.goalConfig, mode: flags.mode as GoalConfig['mode'] };
+  if (swarmConfig.model)
+    swarmConfig.goalConfig = { ...swarmConfig.goalConfig, model: swarmConfig.model };
   if (flags.budget)
     swarmConfig.goalConfig = {
       ...swarmConfig.goalConfig,
@@ -197,15 +208,16 @@ export async function cmdSwarm(task: string, flags: Record<string, string>) {
   console.log(`  ${$.bold}Tree depth:${$.reset} ${result.topology.depth}`);
   console.log(`  ${$.bold}Managers:${$.reset} ${result.topology.managerCount}`);
   console.log(`  ${$.bold}Total nodes:${$.reset} ${result.topology.totalNodes}`);
+  const fusionReports = result.fusionReports ?? [];
   console.log(
-    `  ${$.bold}Fusion conflicts:${$.reset} ${result.fusionReports.reduce((s, r) => s + r.conflicts.length, 0)}`,
+    `  ${$.bold}Fusion conflicts:${$.reset} ${fusionReports.reduce((s, r) => s + (r.conflicts?.length ?? 0), 0)}`,
   );
   console.log();
 
-  if (result.fusionReports.some((r) => r.conflicts.length > 0)) {
+  if (fusionReports.some((r) => (r.conflicts?.length ?? 0) > 0)) {
     section('FUSION CONFLICTS');
-    for (const report of result.fusionReports) {
-      for (const conflict of report.conflicts) {
+    for (const report of fusionReports) {
+      for (const conflict of report.conflicts ?? []) {
         const severityColor =
           conflict.severity === 'critical'
             ? $.red
@@ -229,8 +241,10 @@ export async function cmdSwarm(task: string, flags: Record<string, string>) {
 }
 
 export async function cmdDrive(task: string, flags: Record<string, string>) {
-  const runtime = createRuntime();
-  if (!runtime) {
+  const forcedProvider = (flags.provider || flags['--provider'])?.toLowerCase() as ProviderType | undefined;
+  const provider = detectProvider(forcedProvider);
+  const runtime = createRuntime(forcedProvider);
+  if (!runtime || !provider) {
     fatalError(
       'No API key found.',
       'Set OPENAI_API_KEY, ANTHROPIC_API_KEY, or another provider env var. Run: commander quickstart',
@@ -240,6 +254,9 @@ export async function cmdDrive(task: string, flags: Record<string, string>) {
   cmdHeader(task);
 
   const llmProvider =
+    (forcedProvider ? runtime.getProvider(forcedProvider) : undefined) ??
+    runtime.getFirstAvailableProvider(provider.type) ??
+    runtime.getProvider(provider.type) ??
     runtime.getProvider('openai') ??
     runtime.getProvider('anthropic') ??
     runtime.getProvider('openrouter') ??
@@ -255,13 +272,17 @@ export async function cmdDrive(task: string, flags: Record<string, string>) {
   }
 
   const driveConfig: Partial<DriveConfig> = {};
-  if (flags['--mode']) driveConfig.mode = flags['--mode'] as DriveConfig['mode'];
-  if (flags['--iterations']) driveConfig.maxIterations = parseInt(flags['--iterations'], 10);
-  if (flags['--verbose']) driveConfig.verbose = true;
+  if (flags.model || flags['--model']) driveConfig.model = flags.model || flags['--model'];
+  else if (provider.defaultModel) driveConfig.model = provider.defaultModel;
+  const modeVal = flags.mode || flags['--mode'];
+  if (modeVal) driveConfig.mode = modeVal as DriveConfig['mode'];
+  const iterVal = flags.iterations || flags['--iterations'];
+  if (iterVal) driveConfig.maxIterations = parseInt(iterVal, 10);
+  if (flags.verbose || flags['--verbose']) driveConfig.verbose = true;
 
   const orch = new DriveOrchestrator(llmProvider, runtime, driveConfig);
 
-  const modeLabel = flags['--mode'] ?? 'auto';
+  const modeLabel = modeVal ?? 'auto';
   console.log(
     `  ${$.dim}Mode:${$.reset} ${$.cyan}${modeLabel}${$.reset}  ${$.dim}Max iterations:${$.reset} ${$.cyan}${driveConfig.maxIterations ?? 20}${$.reset}\n`,
   );

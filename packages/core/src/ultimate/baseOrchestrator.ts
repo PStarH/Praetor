@@ -395,16 +395,18 @@ export function computePlateauThreshold(mode: 'quick' | 'balanced' | 'thorough')
 
 export function hasCriticalFindings<T extends BaseNode>(nodes: T[]): boolean {
   return nodes.some((n) =>
-    n.critique?.findings.some((f) => f.severity === 'critical' || f.severity === 'high'),
+    (n.critique?.findings ?? []).some((f) => f && (f.severity === 'critical' || f.severity === 'high')),
   );
 }
 
 export function computeFindingsFingerprint<T extends BaseNode>(nodes: T[]): Set<string> {
   const set = new Set<string>();
   for (const n of nodes) {
-    if (n.critique) {
+    if (n.critique?.findings) {
       for (const f of n.critique.findings) {
-        set.add(f.description);
+        if (f?.description) {
+          set.add(f.description);
+        }
       }
     }
   }

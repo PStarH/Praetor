@@ -91,6 +91,7 @@ export class CheckpointManager {
 
       // Resolve a provider (use first available, same as deliberation)
       const provider =
+        this.deps.runtime.getFirstAvailableProvider?.() ??
         this.deps.runtime.getProvider('openai') ??
         this.deps.runtime.getProvider('anthropic') ??
         this.deps.runtime.getProvider('openrouter') ??

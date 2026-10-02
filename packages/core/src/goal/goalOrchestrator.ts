@@ -47,7 +47,13 @@ export class GoalOrchestrator {
   constructor(provider: LLMProvider, config?: Partial<GoalConfig>) {
     this.provider = provider;
     this.config = { ...DEFAULT_GOAL_CONFIG, ...config };
-    this.model = this.config.model ?? DEFAULT_GOAL_CONFIG.model!;
+    this.model =
+      config?.model ??
+      (provider as any).defaultModel ??
+      (provider as any).config?.defaultModel ??
+      this.config.model ??
+      DEFAULT_GOAL_CONFIG.model!;
+    this.config.model = this.model;
   }
 
   // --------------------------------------------------------------------------
@@ -217,7 +223,8 @@ export class GoalOrchestrator {
         node.status = 'in_progress';
         node.roundAssigned = node.roundAssigned ?? round;
 
-        const depsBlocked = node.dependencies.some((depId) => {
+        const deps = Array.isArray(node.dependencies) ? node.dependencies : [];
+        const depsBlocked = deps.some((depId) => {
           const dep = findNodeById(goalTree, depId);
           return dep && dep.status !== 'completed';
         });
@@ -225,7 +232,7 @@ export class GoalOrchestrator {
 
         bus.publish('goal.worker_started', 'goal-orch', { goalId: node.id, goal: node.goal });
 
-        const depContext = node.dependencies
+        const depContext = deps
           .map((depId) => {
             const dep = findNodeById(this.rootNodes, depId);
             return dep
@@ -268,16 +275,19 @@ export class GoalOrchestrator {
         });
 
         if (criticResult) {
+          const findings = Array.isArray(criticResult.data?.findings)
+            ? criticResult.data.findings
+            : [];
           node.critique = {
-            passed: criticResult.data.passed,
-            findings: criticResult.data.findings.map((f) => ({
-              severity: f.severity,
-              category: f.category as CritiqueResult['findings'][0]['category'],
-              description: f.description,
-              location: f.location,
-              suggestion: f.suggestion,
+            passed: criticResult.data?.passed ?? true,
+            findings: findings.map((f) => ({
+              severity: f?.severity ?? 'medium',
+              category: (f?.category as CritiqueResult['findings'][0]['category']) ?? 'correctness',
+              description: f?.description ?? '',
+              location: f?.location,
+              suggestion: f?.suggestion,
             })),
-            summary: criticResult.data.summary,
+            summary: criticResult.data?.summary ?? '',
           };
           roundTokens += criticResult.tokens;
         } else {
@@ -321,14 +331,17 @@ export class GoalOrchestrator {
       if (reviewResult) {
         roundTokens += reviewResult.tokens;
         goalTree = applyReview(goalTree, reviewResult.data);
-        for (const newSub of reviewResult.data.newSubGoals) {
+        const newSubGoals = Array.isArray(reviewResult.data?.newSubGoals)
+          ? reviewResult.data.newSubGoals
+          : [];
+        for (const newSub of newSubGoals) {
           const newNode: GoalNode = {
             id: generateNodeId('goal'),
             goal: newSub.goal,
             parentId: null,
             status: 'pending',
             subGoals: [],
-            dependencies: newSub.dependencies,
+            dependencies: Array.isArray(newSub.dependencies) ? newSub.dependencies : [],
           };
           goalTree.push(newNode);
         }

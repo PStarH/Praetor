@@ -955,8 +955,9 @@ async function promptHumanFeedback(_success: boolean, _task: string): Promise<vo
 }
 
 async function cmdGoalInternal(task: string, config: Partial<GoalConfig> & { provider?: string }) {
-  const provider = detectProvider();
-  const runtime = createRuntime();
+  const forcedProvider = config.provider?.toLowerCase() as ProviderType | undefined;
+  const provider = detectProvider(forcedProvider);
+  const runtime = createRuntime(forcedProvider);
   if (!runtime || !provider) {
     fatalError(
       'No API key found.',
@@ -967,7 +968,6 @@ async function cmdGoalInternal(task: string, config: Partial<GoalConfig> & { pro
   cmdHeader(task);
 
   // Support --provider flag to force a specific provider
-  const forcedProvider = config.provider;
   let llmProvider: import('../../runtime/types').LLMProvider | undefined;
 
   if (forcedProvider) {
@@ -980,6 +980,8 @@ async function cmdGoalInternal(task: string, config: Partial<GoalConfig> & { pro
     }
   } else {
     llmProvider =
+      runtime.getFirstAvailableProvider(provider.type) ??
+      runtime.getProvider(provider.type) ??
       runtime.getProvider('openai') ??
       runtime.getProvider('anthropic') ??
       runtime.getProvider('openrouter') ??

@@ -72,7 +72,12 @@ export class DriveOrchestrator {
     this.provider = provider;
     this.runtime = runtime ?? null;
     this.config = { ...DEFAULT_DRIVE_CONFIG, ...config };
-    this.model = this.config.model ?? 'gpt-4o-mini';
+    this.model =
+      this.config.model ??
+      (provider as any).defaultModel ??
+      (provider as any).config?.defaultModel ??
+      'gpt-4o-mini';
+    this.config.model = this.model;
     this.resetState('', 0);
     fs.mkdirSync(this.config.checkpointDir, { recursive: true });
   }
