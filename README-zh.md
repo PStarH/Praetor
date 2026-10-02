@@ -76,6 +76,10 @@
 
 深入阅读工程论文：[为什么智能体的外部写操作不能盲目重试？](docs/content/why-retrying-ai-agent-external-actions-is-unsafe.md)。
 
+<p align="center">
+  <img src="docs/assets/commander-preflight-protocol-zh.svg" alt="Preflight 执行前排重与故障恢复协议" width="100%" />
+</p>
+
 ---
 
 ## 什么是 Commander
@@ -122,20 +126,54 @@ GitHub 试点使用 **Enterprise Gateway**，这是一条仍处于 **alpha** 阶
 | **3. Web 交互式控制台** | `pnpm gui` | 启动浏览器仪表盘 (`:5173`)：实时拓扑流、DLQ 观测与审批队列 |
 | **4. 受治理动作离线契约测试** | `pnpm test:github:offline` | 130 项断言离线验证断网丢失响应后的幂等反查与两阶段签批 |
 
-### 📦 4 行代码无缝接入 (Python SDK)
+### 📦 SDK 与 MCP 快速集成
 
+#### Python SDK (`commander-ai`)
 ```python
-from commander_sdk import CommanderClient
+from commander import CommanderClient
 
-# 连接 Commander 治理控制面
-client = CommanderClient(base_url="http://localhost:4000")
+async with CommanderClient(base_url="http://127.0.0.1:4000", api_key="cmd-...") as client:
+    # 零模型消耗的拓扑智能规划
+    plan = await client.plan("审查代码库安全漏洞并提议修复方案")
+    print(f"推荐拓扑: {plan.topology} ({plan.estimated_steps} 步，预估预算: ${plan.estimate.cost_budget_usd:.2f})")
 
-# 提议一项受重试前预检与人类数字签批保护的外部变更
-run = client.runs.create(
-    task="审查认证模块 diff 并提议修复 PR",
-    require_approval=True
-)
-print(f"任务 {run.run_id} 已发起，等待签批状态: {run.approval_required}")
+    # 执行任务并通过 5 层质量门禁检验
+    result = await client.run("审查认证模块 diff 并提议热修复")
+    print(f"状态: {result.status} — {result.summary}")
+```
+
+#### 受治理动作网关 (Python)
+```python
+from commander import CommanderGatewayClient, ProposeActionInput
+
+async with CommanderGatewayClient(base_url="http://127.0.0.1:4000", api_key="cmd-...") as gateway:
+    # 提议带有幂等排重保障的外部写操作
+    action, replay, accepted = await gateway.propose_action(
+        ProposeActionInput(
+            source="coding-agent",
+            destination="github://octo-org/repo",
+            effect_type="github.pullRequestCreate",
+            args={"title": "fix: prevent token replay", "head": "fix-auth", "base": "main"},
+            idempotency_key="0191ec4d-91b4-7b98-b80c-7b897914e1a0",
+        )
+    )
+    print(f"动作 ID: {action.run_id}, 状态: {action.state}, 审批决策: {action.decision.effect}")
+```
+
+#### 通用 Model Context Protocol (MCP) 集成
+支持任意标准 MCP 客户端（Claude Code、Cursor、Windsurf、LangGraph、OpenAI Agents SDK 等）：
+```json
+{
+  "mcpServers": {
+    "commander": {
+      "command": "commander-mcp-server",
+      "env": {
+        "COMMANDER_ACTION_GATEWAY_URL": "http://127.0.0.1:4000",
+        "COMMANDER_API_KEY": "cmd-..."
+      }
+    }
+  }
+}
 ```
 
 针对全新的 GitHub 操作路径，请遵循 [试点指南](docs/pilot/github/README.md)。该指南将无凭据契约测试、已配置的 Gateway 演示与可选择执行的真实 GitHub 适配器测试清晰分隔。下方的本地运行时演示依然是独立的模拟示例。其动画展示的是本地 CLI，并非 GitHub 审批或响应丢失恢复的录屏。
@@ -304,6 +342,14 @@ AES-256-GCM 加密密钥库。进程内防篡改 HMAC 审计链（外部 WORM/KM
                                    ▼
                                 RESULT
 ```
+
+### 受治理动作执行平面 (Architecture V2)
+
+Commander 将不受信的智能体推理与外部实体变更彻底解耦，通过双阶段密码学门禁与数字签名收据确保确定性：
+
+<p align="center">
+  <img src="docs/assets/commander-crypto-gate-zh.svg" alt="两阶段人机密码学门禁与 JWS 存证全生命周期" width="100%" />
+</p>
 
 ---
 

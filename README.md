@@ -76,6 +76,10 @@ Retrying blindly creates duplicate PRs, double transactions, or corrupted state.
 
 Read the in-depth essay: [Why retrying an AI agent's external action is unsafe](docs/content/why-retrying-ai-agent-external-actions-is-unsafe.md).
 
+<p align="center">
+  <img src="docs/assets/commander-preflight-protocol-en.svg" alt="Preflight Query-Before-Retry Protocol: Fault Recovery" width="100%" />
+</p>
+
 ---
 
 ## What is Commander
@@ -133,20 +137,54 @@ on your machine.
 | **3. Interactive Web Console** | `pnpm gui` | Live control room on `:5173`: agent topology, DLQ inspection, and approval queue |
 | **4. Governed Action Offline Test** | `pnpm test:github:offline` | 130 offline contract assertions for idempotency & response-loss recovery |
 
-### 📦 4-Line Integration (Python SDK)
+### 📦 SDK & MCP Integration
 
+#### Python SDK (`commander-ai`)
 ```python
-from commander_sdk import CommanderClient
+from commander import CommanderClient
 
-# Connect to the Commander execution control plane
-client = CommanderClient(base_url="http://localhost:4000")
+async with CommanderClient(base_url="http://127.0.0.1:4000", api_key="cmd-...") as client:
+    # Deliberation planning without LLM costs
+    plan = await client.plan("Audit repository for security vulnerabilities")
+    print(f"Topology: {plan.topology} ({plan.estimated_steps} steps, est: ${plan.estimate.cost_budget_usd:.2f})")
 
-# Dispatch a mutation with preflight query-before-retry and cryptographic approval
-run = client.runs.create(
-    task="Review auth module diff and propose hotfix PR",
-    require_approval=True
-)
-print(f"Run {run.run_id} initiated; approval required: {run.approval_required}")
+    # Run execution with configured quality gates
+    result = await client.run("List and verify all public exported interfaces")
+    print(f"Status: {result.status} — {result.summary}")
+```
+
+#### Governed Action Gateway (Python)
+```python
+from commander import CommanderGatewayClient, ProposeActionInput
+
+async with CommanderGatewayClient(base_url="http://127.0.0.1:4000", api_key="cmd-...") as gateway:
+    # Propose external mutation with preflight idempotency
+    action, replay, accepted = await gateway.propose_action(
+        ProposeActionInput(
+            source="coding-agent",
+            destination="github://octo-org/repo",
+            effect_type="github.pullRequestCreate",
+            args={"title": "fix: prevent token replay", "head": "fix-auth", "base": "main"},
+            idempotency_key="0191ec4d-91b4-7b98-b80c-7b897914e1a0",
+        )
+    )
+    print(f"Action {action.run_id}: state={action.state}, approval={action.decision.effect}")
+```
+
+#### Universal Model Context Protocol (MCP)
+Integrate with Claude Code, Cursor, Windsurf, LangGraph, or OpenAI Agents SDK:
+```json
+{
+  "mcpServers": {
+    "commander": {
+      "command": "commander-mcp-server",
+      "env": {
+        "COMMANDER_ACTION_GATEWAY_URL": "http://127.0.0.1:4000",
+        "COMMANDER_API_KEY": "cmd-..."
+      }
+    }
+  }
+}
 ```
 
 For the new GitHub action path, follow the [pilot guide](docs/pilot/github/README.md).
@@ -352,6 +390,14 @@ A meta-learner using Thompson Sampling and Reflexion tunes agent configurations 
                                    ▼
                               RESULT
 ```
+
+### Governed Action Execution Plane (Architecture V2)
+
+Commander decouples untrusted agent reasoning from external side-effects using a two-phase cryptographic gate and signed execution receipts:
+
+<p align="center">
+  <img src="docs/assets/commander-crypto-gate-en.svg" alt="Two-Phase Cryptographic Human Gate & JWS Evidence" width="100%" />
+</p>
 
 ---
 

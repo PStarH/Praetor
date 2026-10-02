@@ -64,6 +64,10 @@ AI エージェント（Claude Code、OpenAI Agents SDK、社内独自コーデ�
 
 詳細な技術解説を読む: [なぜ AI エージェントの外部アクション再試行は安全ではないのか](docs/content/why-retrying-ai-agent-external-actions-is-unsafe.md)。
 
+<p align="center">
+  <img src="docs/assets/commander-preflight-protocol-en.svg" alt="Preflight Query-Before-Retry Protocol: Fault Recovery" width="100%" />
+</p>
+
 ---
 
 ## Commander とは
@@ -110,20 +114,54 @@ GitHub パイロットは、現在 **alpha** 段階の永続サーバーパス�
 | **3. Web インタラクティブ管理コンソール** | `pnpm gui` | ブラウザダッシュボード (`:5173`) の起動：ライブトポロジ、DLQ 調査、承認キュー |
 | **4. 統治アクションオフライン契約テスト** | `pnpm test:github:offline` | ネットワーク切断後の冪等性事前照会と2段階承認を検証する130件のオフラインアサーション |
 
-### 📦 4行で簡単統合 (Python SDK)
+### 📦 SDK と MCP の迅速な統合
 
+#### Python SDK (`commander-ai`)
 ```python
-from commander_sdk import CommanderClient
+from commander import CommanderClient
 
-# Commander 統治コントロールプレーンに接続
-client = CommanderClient(base_url="http://localhost:4000")
+async with CommanderClient(base_url="http://127.0.0.1:4000", api_key="cmd-...") as client:
+    # LLM コスト不要の審議プランニング
+    plan = await client.plan("リポジトリのセキュリティ脆弱性を監査する")
+    print(f"推奨トポロジ: {plan.topology} ({plan.estimated_steps} ステップ, 予想予算: ${plan.estimate.cost_budget_usd:.2f})")
 
-# 再試行前事前照会と人間承認で保護された外部変更タスクをディスパッチ
-run = client.runs.create(
-    task="認証モジュールの diff をレビューし修正 PR を提案する",
-    require_approval=True
-)
-print(f"タスク {run.run_id} 開始、承認待ちステータス: {run.approval_required}")
+    # 5層の品質ゲートを通過してタスクを実行
+    result = await client.run("認証モジュールの差分を監査し修正を提案する")
+    print(f"ステータス: {result.status} — {result.summary}")
+```
+
+#### 統治アクションゲートウェイ (Python)
+```python
+from commander import CommanderGatewayClient, ProposeActionInput
+
+async with CommanderGatewayClient(base_url="http://127.0.0.1:4000", api_key="cmd-...") as gateway:
+    # 冪等性事前照会を備えた外部変更アクションを提案
+    action, replay, accepted = await gateway.propose_action(
+        ProposeActionInput(
+            source="coding-agent",
+            destination="github://octo-org/repo",
+            effect_type="github.pullRequestCreate",
+            args={"title": "fix: prevent token replay", "head": "fix-auth", "base": "main"},
+            idempotency_key="0191ec4d-91b4-7b98-b80c-7b897914e1a0",
+        )
+    )
+    print(f"アクション ID: {action.run_id}: state={action.state}, approval={action.decision.effect}")
+```
+
+#### 汎用 Model Context Protocol (MCP) 統合
+Claude Code、Cursor、Windsurf、LangGraph、OpenAI Agents SDK などの標準 MCP クライアントに対応：
+```json
+{
+  "mcpServers": {
+    "commander": {
+      "command": "commander-mcp-server",
+      "env": {
+        "COMMANDER_ACTION_GATEWAY_URL": "http://127.0.0.1:4000",
+        "COMMANDER_API_KEY": "cmd-..."
+      }
+    }
+  }
+}
 ```
 
 新しい GitHub アクションパスについては、[パイロットガイド](docs/pilot/github/README.md) を参照してください。認証情報不要の契約テスト、設定済み Gateway デモ、オプトインの実 GitHub アダプターテストが明確に分かれています。以下のローカルランタイムデモは独立したシミュレーション例です。そのアニメーションはローカル CLI の表示であり、GitHub の承認やレスポンス喪失復旧の録画ではありません。
@@ -292,6 +330,14 @@ Thompson Sampling と Reflexion を用いたメタ学習器が、実行をまた
                                    ▼
                                 RESULT
 ```
+
+### 統治アクション実行プレーン (Architecture V2)
+
+Commander は、信頼されていないエージェントの推論と外部の副作用を完全に分離し、2段階の暗号ゲートと電子署名付きレシートを通じて決定論的動作を保証します：
+
+<p align="center">
+  <img src="docs/assets/commander-crypto-gate-en.svg" alt="Two-Phase Cryptographic Human Gate & JWS Evidence" width="100%" />
+</p>
 
 ---
 
