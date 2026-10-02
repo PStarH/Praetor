@@ -282,6 +282,30 @@ export class CommanderAgentLoop {
         );
       });
     }
+    if (process.env.AGNES_API_KEY) {
+      const apiKey = process.env.AGNES_API_KEY;
+      const baseUrl = process.env.AGNES_BASE_URL;
+      const defaultModel = process.env.AGNES_MODEL || 'agnes-2.5-flash';
+      registrations.push(async () => {
+        const { AgnesProvider } = await import('./runtime/providers/agnesProvider');
+        this.runtime.registerProvider(
+          'agnes',
+          new AgnesProvider({ apiKey, baseUrl, defaultModel }),
+        );
+      });
+    }
+    if (process.env.STEPFUN_API_KEY) {
+      const apiKey = process.env.STEPFUN_API_KEY;
+      const baseUrl = process.env.STEPFUN_BASE_URL;
+      const defaultModel = process.env.STEPFUN_MODEL || 'step-2-16k';
+      registrations.push(async () => {
+        const { StepFunProvider } = await import('./runtime/providers/stepfunProvider');
+        this.runtime.registerProvider(
+          'stepfun',
+          new StepFunProvider({ apiKey, baseUrl, defaultModel }),
+        );
+      });
+    }
     await Promise.all(registrations.map((fn) => fn()));
     this.logger.info(
       'AgentLoop',

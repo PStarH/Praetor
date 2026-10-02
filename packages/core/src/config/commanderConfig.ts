@@ -114,7 +114,19 @@ export function resolveApiKey(type: ProviderType, primaryKey: string): string {
 }
 
 export function detectProvider(preferredType?: ProviderType): ProviderInfo | null {
-  const candidates = preferredType ? [preferredType] : PROVIDER_ORDER;
+  const configured =
+    preferredType ||
+    (process.env.COMMANDER_PROVIDER?.toLowerCase() as ProviderType | undefined) ||
+    (getSettings().provider?.toLowerCase() as ProviderType | undefined);
+
+  let candidates: ProviderType[];
+  if (preferredType) {
+    candidates = [preferredType];
+  } else if (configured && (PROVIDER_ORDER as string[]).includes(configured)) {
+    candidates = [configured, ...PROVIDER_ORDER.filter((p) => p !== configured)];
+  } else {
+    candidates = PROVIDER_ORDER;
+  }
   for (const type of candidates) {
     const env = ENV_MAP[type];
     const apiKey = resolveApiKey(type, env.key);
@@ -195,6 +207,7 @@ export function detectProvider(preferredType?: ProviderType): ProviderInfo | nul
 
 export interface CommanderSettings {
   model?: string;
+  provider?: string;
   enableMetaTools?: boolean;
   toolRetrieval?: boolean;
   entropyGating?: boolean;
@@ -208,6 +221,7 @@ const CONFIG_PATHS = [
 
 const SETTING_ALIASES: Record<string, keyof CommanderSettings> = {
   model: 'model',
+  provider: 'provider',
   'meta-tools': 'enableMetaTools',
   meta_tools: 'enableMetaTools',
   enableMetaTools: 'enableMetaTools',
@@ -257,8 +271,13 @@ export function getModelOverride(): string | undefined {
   return getSettings().model;
 }
 
-export function getEffectiveModel(): string {
-  const provider = detectProvider();
+export function getProviderOverride(): string | undefined {
+  return process.env.COMMANDER_PROVIDER || getSettings().provider;
+}
+
+export function getEffectiveModel(preferredModel?: string, preferredProvider?: ProviderType): string {
+  if (preferredModel) return preferredModel;
+  const provider = detectProvider(preferredProvider);
   const override = getModelOverride();
   return override || provider?.defaultModel || 'gpt-4o';
 }
@@ -268,11 +287,13 @@ export function setConfig(key: string, value: string): void {
   const normalizedKey = SETTING_ALIASES[key];
   if (!normalizedKey) {
     throw new Error(
-      `Unknown setting: ${key}. Try: model, meta-tools, toolRetrieval, entropyGating, speculativeExecution`,
+      `Unknown setting: ${key}. Try: model, provider, meta-tools, toolRetrieval, entropyGating, speculativeExecution`,
     );
   }
   if (normalizedKey === 'model') {
     settings.model = value;
+  } else if (normalizedKey === 'provider') {
+    settings.provider = value;
   } else {
     (settings as Record<string, unknown>)[normalizedKey] =
       value === 'true' || value === '1' || value === 'on';

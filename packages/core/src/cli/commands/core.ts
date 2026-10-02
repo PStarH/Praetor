@@ -10,7 +10,7 @@ import { classifyEffortLevel } from '../../ultimate/effortScaler';
 import { normalizeTopology, type OrchestrationTopology } from '../../ultimate/types';
 import { getGlobalLogger } from '../../logging';
 import { createCompanyEngine } from '../../ultimate/companyEngine';
-import { detectProvider } from '../../config/commanderConfig';
+import { detectProvider, type ProviderType } from '../../config/commanderConfig';
 import { GoalOrchestrator } from '../../goal/goalOrchestrator';
 import type { GoalConfig } from '../../goal/types';
 import {
@@ -36,6 +36,7 @@ const __dirname = getDirname(import.meta.url);
 // hoists before the first reference (cmdRun / cmdRunInternal / cmdWatchInternal).
 interface RoutingFlags {
   model?: string;
+  provider?: ProviderType;
   tier?: 'speed' | 'balanced' | 'power';
   topology?:
     // Canonical (Anthropic-aligned 5) — preferred.
@@ -164,6 +165,7 @@ function parseRoutingFlags(flags: Record<string, string>): RoutingFlags {
   }
   return {
     model: flags.model,
+    provider: flags.provider?.toLowerCase() as ProviderType | undefined,
     tier,
     topology,
     effort,
@@ -530,8 +532,8 @@ async function cmdPlanInternal(task: string) {
 }
 
 async function cmdRunInternal(task: string, routingFlags: RoutingFlags = {}) {
-  const provider = detectProvider();
-  const runtime = createRuntime();
+  const provider = detectProvider(routingFlags.provider);
+  const runtime = createRuntime(routingFlags.provider, routingFlags.model);
   if (!runtime || !provider) {
     fatalError(t('error.no.apikey'), t('plan.fail.no_runtime'));
   }
@@ -665,7 +667,7 @@ async function cmdRunInternal(task: string, routingFlags: RoutingFlags = {}) {
 }
 
 async function cmdWatchInternal(task: string, routingFlags: RoutingFlags = {}) {
-  const runtime = createRuntime();
+  const runtime = createRuntime(routingFlags.provider, routingFlags.model);
   if (!runtime) {
     fatalError(t('error.no.apikey'), t('plan.fail.no_runtime'));
   }
@@ -881,7 +883,7 @@ async function cmdWatchInternal(task: string, routingFlags: RoutingFlags = {}) {
 
 async function promptHumanFeedback(_success: boolean, _task: string): Promise<void> {
   // Only prompt in interactive TTY mode
-  if (!process.stdin.isTTY) return;
+  if (!process.stdin.isTTY || process.env.CI || process.env.COMMANDER_NON_INTERACTIVE) return;
 
   console.log(
     `  ${$.dim}${t('run.feedback.prompt')}${$.reset} ${$.green}${t('run.feedback.good_option')}${$.reset} ${$.red}${t('run.feedback.bad_option')}${$.reset} ${$.dim}${t('run.feedback.skip_option')}${$.reset}`,

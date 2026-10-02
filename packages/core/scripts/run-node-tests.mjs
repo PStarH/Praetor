@@ -184,6 +184,12 @@ console.error(
 // child's summary is verified below.
 const childEnv = { ...process.env };
 delete childEnv.NODE_TEST_CONTEXT;
+if (childEnv.COMMANDER_EVENT_SOURCING_WAL === undefined) {
+  childEnv.COMMANDER_EVENT_SOURCING_WAL = '';
+}
+if (childEnv.COMMANDER_OTEL_ENABLED === undefined) {
+  childEnv.COMMANDER_OTEL_ENABLED = 'false';
+}
 
 const child = spawn(
   process.execPath,

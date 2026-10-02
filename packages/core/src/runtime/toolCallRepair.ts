@@ -41,9 +41,13 @@ export function parseTextToolCalls(content: string): TextToolCall[] {
   while ((blockMatch = blockPattern.exec(content)) !== null) {
     const block = blockMatch[1];
     const functionMatch = block.match(
-      /<function(?:=|_)([^>]+)>|<function\s+name=["']([^"']+)["'][^>]*>/i,
+      /<(?:function|tool)(?:=|_)([^>]+)>|<(?:function|tool)\s+name=["']([^"']+)["'][^>]*>/i,
     );
-    const name = (functionMatch?.[1] ?? functionMatch?.[2] ?? '').trim();
+    let name = (functionMatch?.[1] ?? functionMatch?.[2] ?? '').trim();
+    if (!name) {
+      const jsonNameMatch = block.match(/"name"\s*:\s*["']([^"']+)["']/i);
+      if (jsonNameMatch) name = jsonNameMatch[1].trim();
+    }
     if (!name) continue;
 
     const args: Record<string, unknown> = {};
@@ -52,6 +56,20 @@ export function parseTextToolCalls(content: string): TextToolCall[] {
     let parameterMatch: RegExpExecArray | null;
     while ((parameterMatch = parameterPattern.exec(block)) !== null) {
       args[parameterMatch[1].trim()] = parseTextToolArgument(parameterMatch[2].trim());
+    }
+
+    if (Object.keys(args).length === 0) {
+      const headerMatch = block.match(/<tool_call_header>([\s\S]*?)<\/tool_call_header>/i);
+      if (headerMatch) {
+        try {
+          const parsed = JSON.parse(headerMatch[1].trim());
+          if (parsed && typeof parsed === 'object' && !Array.isArray(parsed)) {
+            Object.assign(args, parsed);
+          }
+        } catch {
+          /* ignore */
+        }
+      }
     }
 
     if (Object.keys(args).length === 0) {
@@ -66,6 +84,27 @@ export function parseTextToolCalls(content: string): TextToolCall[] {
           getGlobalLogger().debug('ToolCallRepair', 'Text tool arguments were not JSON', {
             error: (err as Error)?.message,
           });
+        }
+      }
+    }
+
+    if (Object.keys(args).length === 0) {
+      const jsonCandidate = block.replace(/<\/?[^>]+>/g, '').trim();
+      if (jsonCandidate.startsWith('{') && jsonCandidate.endsWith('}')) {
+        try {
+          const parsed = JSON.parse(jsonCandidate);
+          if (parsed && typeof parsed === 'object' && !Array.isArray(parsed)) {
+            if (parsed.arguments && typeof parsed.arguments === 'object') {
+              Object.assign(args, parsed.arguments);
+            } else if (parsed.parameters && typeof parsed.parameters === 'object') {
+              Object.assign(args, parsed.parameters);
+            } else {
+              Object.assign(args, parsed);
+              delete args.name;
+            }
+          }
+        } catch {
+          /* ignore */
         }
       }
     }

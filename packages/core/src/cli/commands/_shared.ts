@@ -40,7 +40,7 @@ import { TELOSOrchestrator } from '../../telos/telosOrchestrator';
 import { CompanyEngine } from '../../ultimate/companyEngine';
 import { SSEStream } from '../../runtime/sseStream';
 import { getMetaLearner } from '../../selfEvolution/metaLearner';
-import { detectProvider, getEffectiveModel } from '../../config/commanderConfig';
+import { detectProvider, getEffectiveModel, type ProviderType } from '../../config/commanderConfig';
 import { getApprovalSystem } from '../../sandbox';
 import { getGlobalLogger } from '../../logging';
 import { StateCheckpointer } from '../../runtime/stateCheckpointer';
@@ -79,11 +79,14 @@ export function loadTools(): string[] {
   return (process.env.COMMANDER_TOOLS || DEFAULT_TOOLS).split(',').map((s) => s.trim());
 }
 
-export function createRuntime(): AgentRuntime | null {
-  const provider = detectProvider();
+export function createRuntime(
+  preferredProvider?: ProviderType,
+  preferredModel?: string,
+): AgentRuntime | null {
+  const provider = detectProvider(preferredProvider);
   if (!provider) return null;
 
-  const modelId = getEffectiveModel();
+  const modelId = getEffectiveModel(preferredModel, preferredProvider);
   const runtime = new AgentRuntime({
     budgetHardCapTokens: 200000,
     smartModelRouter: { enabled: true },

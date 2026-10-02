@@ -12,6 +12,7 @@ import {
   MAX_TOKENS_PER_REFLEXION,
   TOOL_ORCHESTRATOR_MAX_RETRIES,
   TOOL_ORCHESTRATOR_CIRCUIT_THRESHOLD,
+  DEFAULT_LLM_TIMEOUT_MS,
 } from './runtimeConstants';
 
 import type { AgentRuntimeConfig } from './types';
@@ -336,6 +337,7 @@ export function initializeServices(
   const resolvedTraceStore = new PersistentTraceStore();
   const stepTimeout = new StepTimeoutManager();
   const fallbackChain = new ProviderFallbackChain<import('./types').LLMResponse>({
+    totalTimeoutMs: config.llmTimeoutMs ?? DEFAULT_LLM_TIMEOUT_MS,
     // Buyer-visible failover signal: the golden-path demo-qa suite (and the
     // viral demo) assert the `[Fallback] <from> 切换至 <to>` marker on stdout.
     onProviderSkipped: (from, to) => {
