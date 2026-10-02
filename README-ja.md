@@ -4,21 +4,39 @@
 </p>
 
 <h1 align="center">Commander</h1>
-<p align="center"><strong>Coding / DevOps エージェント向けの承認と復旧 — GitHub パイロット · alpha</strong></p>
-
-> **Alpha 注意:** Commander は現在 alpha であり、プロダクション対応ではありません。出力、ベンチマーク、POC
-> シナリオ、ダッシュボード値は開発またはデモ用の信号です。独自の確認なしに、無人の本番ワークロードや機密データに使用しないでください。
-
+<p align="center"><strong>Coding / DevOps AI エージェントのための承認と状態復旧プレーン</strong></p>
 <p align="center">
-  <code>pnpm demo:github --help</code><br>
-  <sub>実際の Gateway を使用した段階的な GitHub アクションパイロット。外部書き込みにはデプロイ設定が必要です。</sub>
+  <em>重複変更の防止 · ネットワーク切断・タイムアウトからの安全復旧 · 電子署名付き監査証跡</em>
 </p>
+
+> **ステータス: Alpha。** Commander はオープンソースの評価システムおよびパイロットフレームワークです。現時点では本番稼働認証を受けていません。[GitHub パイロット境界](docs/pilot/github/README.md) および [ENTERPRISE_READINESS.md](ENTERPRISE_READINESS.md) を参照してください。
 
 <p align="center">
   <a href="#クイックスタート"><img src="https://img.shields.io/badge/TRY_NOW-000?style=for-the-badge" /></a>
-  <a href="https://github.com/PStarH/Commander/stargazers"><img src="https://img.shields.io/github/stars/PStarH/Commander?style=social" /></a>
-  <a href="https://github.com/PStarH/commander-docs"><img src="https://img.shields.io/badge/DOCS-000?style=for-the-badge" /></a>
+  <a href="#ai-エージェントが直面する分散システムの課題"><img src="https://img.shields.io/badge/WHY_COMMANDER-000?style=for-the-badge" /></a>
+  <a href="https://pstarh.github.io/commander-docs/ja/"><img src="https://img.shields.io/badge/DOCS-000?style=for-the-badge" /></a>
 </p>
+
+---
+
+## AI エージェントが直面する分散システムの課題
+
+AI エージェント（Claude Code、OpenAI Agents SDK、社内独自コーディングエージェントなど）が外部変更（GitHub Pull Request の作成、Kubernetes デプロイのロールバック、インフラの変更など）を試みる際、**接続の切断や Worker の再起動によって世界は曖昧な状態に陥ります**：
+
+書き込みは実際に行われたのか？ 何回実行されたのか？ 実際に何がコミットされたのか？
+
+盲目的な再試行は、PR の重複作成、二重トランザクション、状態の破損を引き起こします。諦めて停止すれば、孤立した外部副作用が放置されます。
+
+| 課題 | ナイーブなエージェント実行 | Commander による統治されたアクション |
+| --- | --- | --- |
+| **レスポンス喪失**（PR 作成時の 504 タイムアウト等） | 再計画または盲目的再試行 → **重複 PR や不正変更の発生** | **再試行前事前照会（Query-Before-Retry）**: 再試行前にアクション識別子でリモート結果を確認 |
+| **実行中の Worker クラッシュ** | 状態喪失または最初から再実行され、外部副作用が孤立 | **永続 PostgreSQL Kernel**: ステップリースを安全に回収し、新しい Worker が安全に再開 |
+| **クレデンシャル露出リスク** | エージェントプロセスが書き込み API キー / トークンを直接保持 | **厳格な権限境界**: エージェントには提案（Propose）権限のみを付与、書き込みトークンは Worker 側に隔離 |
+| **人間による承認サインオフ** | テキストプロンプトまたは検証不能なボタン | **暗号結合**: 承認時に不変の要求ダイジェストとポリシーのスナップショットをロック |
+| **監査とフォレンジック** | 揮発性のコンソールログ | **Ed25519 署名証跡**: 独立検証可能な JWS 署名付きレシートを発行 |
+| **ロールバック / 取り消し** | その場しのぎのスクリプトまたは復旧不能 | **統治された補償**: 別途承認された権限バインディングと専用レシートが必要 |
+
+詳細な技術解説を読む: [なぜ AI エージェントの外部アクション再試行は安全ではないのか](docs/content/why-retrying-ai-agent-external-actions-is-unsafe.md)。
 
 ---
 

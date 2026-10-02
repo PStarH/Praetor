@@ -4,21 +4,39 @@
 </p>
 
 <h1 align="center">Commander</h1>
-<p align="center"><strong>面向 Coding / DevOps 智能体的审批与恢复 — GitHub 试点 · alpha</strong></p>
-
-> **Alpha 提示：** Commander 目前是 alpha，尚未达到生产就绪标准。输出、基准、POC
-> 场景和仪表盘数据都可能是开发或演示信号；未经自行审查，不要用于无人值守的生产工作负载或敏感数据。
-
+<p align="center"><strong>面向 Coding 与 DevOps AI 智能体的审批与状态恢复平面</strong></p>
 <p align="center">
-  <code>pnpm demo:github --help</code><br>
-  <sub>使用真实 Gateway 的分步 GitHub 操作试点。外部写入需要已配置的部署。</sub>
+  <em>杜绝重复外部变更 · 网络丢包与超时安全恢复 · 密码学签名存证链</em>
 </p>
+
+> **状态：Alpha。** Commander 是一个开源评估系统与试点框架。目前尚未通过生产就绪认证；详见 [GitHub 试点边界](docs/pilot/github/README.md) 与 [ENTERPRISE_READINESS.md](ENTERPRISE_READINESS.md)。
 
 <p align="center">
   <a href="#快速上手"><img src="https://img.shields.io/badge/TRY_NOW-000?style=for-the-badge" /></a>
-  <a href="https://github.com/PStarH/Commander/stargazers"><img src="https://img.shields.io/github/stars/PStarH/Commander?style=social" /></a>
-  <a href="https://github.com/PStarH/commander-docs"><img src="https://img.shields.io/badge/DOCS-000?style=for-the-badge" /></a>
+  <a href="#ai-智能体面临的分布式系统挑战"><img src="https://img.shields.io/badge/WHY_COMMANDER-000?style=for-the-badge" /></a>
+  <a href="https://pstarh.github.io/commander-docs/zh/"><img src="https://img.shields.io/badge/DOCS-000?style=for-the-badge" /></a>
 </p>
+
+---
+
+## AI 智能体面临的分布式系统挑战
+
+当 AI 智能体（如 Claude Code、OpenAI Agents SDK 或企业自研编码智能体）尝试执行外部写操作时（如创建 GitHub Pull Request、回滚 Kubernetes 部署或变更云设施），**网络连接中断或工作节点崩溃会使系统陷入不确定状态**：
+
+外部写操作究竟成功了吗？写入了几次？实际提交的内容是什么？
+
+盲目重试会导致重复 PR、重复交易或状态污染；直接放弃又会留下孤立的外部副作用。
+
+| 核心挑战 | 传统智能体朴素执行 | Commander 受治理执行 |
+| --- | --- | --- |
+| **响应丢失**（如创建 PR 时遭遇 504 超时） | 重新规划或盲目重试 → **产生重复 PR 与脏变更** | **重试前预检（Query-Before-Retry）**：基于操作身份查询远端结果，避免重复执行 |
+| **节点中途崩溃** | 状态丢失或归零重跑，产生不可控的悬空变更 | **持久化 PostgreSQL Kernel**：租约安全回收，新 Worker 无缝接管与恢复 |
+| **凭据暴露风险** | 智能体进程直接持有写权限 API Token / GitHub 密钥 | **严格职责边界**：智能体仅具备提议（Propose）权限，写凭据严格隔离在 Worker 平面 |
+| **人类审批确认** | 纯文本确认或无约束的确认按钮 | **密码学参数绑定**：审批不可变锁定请求摘要与策略快照 |
+| **审计与存证归因** | 终端易失日志 | **Ed25519 签名存证**：JWS 签名收据，支持第三方独立验证 |
+| **回滚与撤销** | 临时补丁脚本或无法安全回滚 | **受治理的补偿机制**：要求独立的人类授权绑定与专属收据 |
+
+深入阅读工程论文：[为什么智能体的外部写操作不能盲目重试？](docs/content/why-retrying-ai-agent-external-actions-is-unsafe.md)。
 
 ---
 

@@ -13,7 +13,7 @@ By submitting a contribution (pull request, issue comment, code, documentation, 
 ## How to Contribute
 
 - Open an issue to discuss significant changes before writing code.
-- Use GitHub Discussions for questions and proposals; use the bug or feature templates for actionable reports.
+- Open a GitHub issue for questions and proposals; use the bug or feature templates for actionable reports.
 - Redact prompts, logs, PII, credentials, API keys, tokens, and customer data from every public submission.
 - Report security vulnerabilities privately via [SECURITY.md](SECURITY.md), never through a public issue.
 - Follow the existing TypeScript style and lint rules.
@@ -22,4 +22,4 @@ By submitting a contribution (pull request, issue comment, code, documentation, 
 
 ## Questions
 
-For strategic, acquisition, or licensing inquiries, open a GitHub Discussion on this repository.
+For strategic, acquisition, or licensing inquiries, open a GitHub issue on this repository.

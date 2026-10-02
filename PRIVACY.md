@@ -78,7 +78,7 @@ or unredacted traces in GitHub issues, discussions, pull requests, or screenshot
 Redact logs and configuration before filing a normal bug. Report suspected
 security vulnerabilities privately as described in [`SECURITY.md`](SECURITY.md).
 
-Questions about this boundary can be opened as a GitHub Discussion on this repository.
+Questions about this boundary can be opened as a [GitHub issue](https://github.com/PStarH/Commander/issues) on this repository.
 
 ## Shadow Pilot Phase A
 

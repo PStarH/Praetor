@@ -4,39 +4,47 @@
 </p>
 
 <h1 align="center">Commander</h1>
-<p align="center"><strong>Approval and recovery for Coding / DevOps agents — GitHub pilot · alpha</strong></p>
-
-> **Alpha notice:** Commander is not production-ready. Treat outputs, benchmarks,
-> POC scenarios, and dashboard values as development or demo signals. Do not use
-> it for unattended production workloads or sensitive data without your own review.
-
+<p align="center"><strong>Approval and Recovery Plane for Coding & DevOps AI Agents</strong></p>
 <p align="center">
-  <code>pnpm demo:github --help</code><br>
-  <sub>A step-by-step GitHub action pilot using the real Gateway. Requires a configured deployment for external writes.</sub>
+  <em>Prevent duplicate mutations · Recover from dropped network responses · Cryptographically signed evidence</em>
 </p>
+
+> **Status: Alpha.** Commander is an open-source evaluation system and pilot framework. It is not yet production-certified; see the [GitHub pilot boundary](docs/pilot/github/README.md) and [ENTERPRISE_READINESS.md](ENTERPRISE_READINESS.md).
 
 <p align="center">
   <a href="#quick-start"><img src="https://img.shields.io/badge/TRY_NOW-000?style=for-the-badge" /></a>
-  <a href="https://github.com/PStarH/Commander/stargazers"><img src="https://img.shields.io/github/stars/PStarH/Commander?style=social" /></a>
-  <a href="https://github.com/PStarH/commander-docs"><img src="https://img.shields.io/badge/DOCS-000?style=for-the-badge" /></a>
+  <a href="#the-distributed-systems-problem-for-ai-agents"><img src="https://img.shields.io/badge/WHY_COMMANDER-000?style=for-the-badge" /></a>
+  <a href="https://pstarh.github.io/commander-docs/"><img src="https://img.shields.io/badge/DOCS-000?style=for-the-badge" /></a>
 </p>
+
+---
+
+## The Distributed Systems Problem for AI Agents
+
+When an AI agent (e.g. Claude Code, OpenAI Agents SDK, or custom coding agent) attempts an external mutation — like creating a GitHub pull request, rolling back a Kubernetes deployment, or modifying infrastructure — **a dropped connection or worker restart leaves the world in an ambiguous state**:
+
+Did the write happen? How many times? What was actually committed?
+
+Retrying blindly creates duplicate PRs, double transactions, or corrupted state. Giving up leaves orphaned mutations.
+
+| Challenge | Naive Agent Execution | Commander Governed Action |
+| --- | --- | --- |
+| **Response Loss** (e.g. 504 Gateway Timeout during PR creation) | Re-plans or retries blindly → **Duplicate PRs & mutations** | **Preflight Query-Before-Retry**: Checks remote outcome by action identity before retry |
+| **Worker Crash Mid-Task** | State lost or restarted from zero with orphaned external side effects | **Durable PostgreSQL Kernel**: Step lease reclaims; new worker resumes safely |
+| **Credential Exposure** | Agent process directly holds write API keys / GitHub tokens | **Strict Boundary**: Agent only has *propose* authority; write tokens stay in worker plane |
+| **Human Sign-Off** | Text-based prompt or unverified button | **Cryptographic Binding**: Approval locks immutable request digest & policy snapshot |
+| **Audit & Forensics** | Ephemeral console text | **Ed25519 Evidence**: JWS signed receipts for independent verification |
+| **Rollback / Undo** | Ad-hoc scripts or impossible | **Governed Compensation**: Requires separate authorization binding and dedicated receipt |
+
+Read the in-depth essay: [Why retrying an AI agent's external action is unsafe](docs/content/why-retrying-ai-agent-external-actions-is-unsafe.md).
 
 ---
 
 ## What is Commander
 
-An agent asks to open a pull request. A human approves it. GitHub accepts the
-write—but the worker loses the response. Did it happen, and what should the
-next worker do?
+Commander sits between your Coding / DevOps agents and external write targets.
 
-Commander keeps the approved request and its execution state together. Its
-GitHub adapter can query for a matching result after response loss, preserve an
-unresolved outcome when the evidence is ambiguous, and close an unmerged PR
-only through a separately authorized compensation action.
-
-The first pilot is intentionally narrow: **same-repository PR creation from
-existing branches**. It does not generate or push code, merge PRs, or deploy to
-production. Branch contents still need GitHub review and checks.
+The first pilot is intentionally narrow: **same-repository PR creation from existing branches**. An agent proposes the action; a separately authenticated human approves the exact request. When a response is lost, the recovery path queries GitHub using persisted action identity and approved parameters before ever retrying.
 
 - [Run the GitHub pilot](docs/pilot/github/README.md): propose → approve → inspect → separately authorize close.
 - [Why not just GitHub permissions and Actions approval?](docs/pilot/github/native-controls.md): native controls are often enough; use Commander when shared action identity, recovery and evidence justify the integration.

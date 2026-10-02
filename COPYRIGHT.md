@@ -20,4 +20,4 @@ This project depends on third-party open-source packages governed by their own l
 
 ## Strategic Inquiries
 
-For acquisition, strategic partnership, or licensing inquiries, open a GitHub Discussion on this repository.
+For acquisition, strategic partnership, or licensing inquiries, open a GitHub issue on this repository.
