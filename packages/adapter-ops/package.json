@@ -34,7 +34,7 @@
     "@commander/kernel": "workspace:*"
   },
   "devDependencies": {
-    "tsx": "^4.23.1",
+    "tsx": "^4.23.15",
     "typescript": "^5.0.0"
   }
 }
