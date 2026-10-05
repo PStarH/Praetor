@@ -29,7 +29,7 @@
   "dependencies": {
     "@commander/contracts": "workspace:*",
     "@commander/postgres-runtime": "workspace:*",
-    "json-canonicalize": "3.0.0",
+    "json-canonicalize": "3.0.1",
     "pg": "^8.15.0"
   },
   "devDependencies": {

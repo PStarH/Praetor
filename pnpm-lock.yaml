@@ -458,8 +458,8 @@ importers:
         specifier: workspace:*
         version: link:../postgres-runtime
       json-canonicalize:
-        specifier: 3.0.0
-        version: 3.0.0
+        specifier: 3.0.1
+        version: 3.0.1
       pg:
         specifier: ^8.15.0
         version: 8.22.0
@@ -2130,8 +2130,8 @@ packages:
   json-buffer@3.0.1:
     resolution: {integrity: sha512-4bV5BfR2mqfQTJm+V5tPPdf+ZpuhiIvTuAB5g8kcrXOZpTT/QwwVRWBywX1ozr6lEuPdbHxwaJlm9G6mI2sfSQ==}
 
-  json-canonicalize@3.0.0:
-    resolution: {integrity: sha512-PW21BtLiKRV7gJcT8jf2X4UNN2AF4c1TYEVug1wAWRQSGBJj7fL+v4NgOkIo54SCBPFDyqzMcOJNhjwywCIBuw==}
+  json-canonicalize@3.0.1:
+    resolution: {integrity: sha512-xEzkTucfHhDooWOSMOvrlll9oTk6/mXZIerF2DFWA2chHZsnc2zrmAKjVOyDbSYHr0e3Djx9F89nZ3U2Bn+lSw==}
     engines: {node: '>=8.5'}
 
   json-schema-traverse@0.4.1:
@@ -4969,7 +4969,7 @@ snapshots:
 
   json-buffer@3.0.1: {}
 
-  json-canonicalize@3.0.0: {}
+  json-canonicalize@3.0.1: {}
 
   json-schema-traverse@0.4.1: {}
 
