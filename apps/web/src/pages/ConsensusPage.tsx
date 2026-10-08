@@ -81,7 +81,7 @@ export function ConsensusPage() {
         <h1>
           <Network size={20} /> Consensus
         </h1>
-        <p>Commander-BFT-C3: SAC, CourtEval, BPD, topology state machine, adaptive stopping.</p>
+        <p>Praetor-BFT-C3: SAC, CourtEval, BPD, topology state machine, adaptive stopping.</p>
       </div>
 
       <div className="card" style={{ marginBottom: 16 }}>
@@ -130,7 +130,7 @@ export function ConsensusPage() {
       <div className="card">
         <h3>About</h3>
         <p style={{ color: 'var(--text-dim)', fontSize: '0.85rem' }}>
-          This plugin provides the Commander-BFT-C3 consensus and fault tolerance stack: SAC
+          This plugin provides the Praetor-BFT-C3 consensus and fault tolerance stack: SAC
           protocol (receiver-side evaluation), CourtEval (adversarial court evaluation), BPD
           detector (backward propagation detection), topology state machine (4-state dynamic
           switching), and adaptive stopping (Beta-Binomial + KS test). It is heavy-weight — enable

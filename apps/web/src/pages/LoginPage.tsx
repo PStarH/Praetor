@@ -278,7 +278,7 @@ export function LoginPage() {
                 <ChevronRight size={20} />
               </div>
               <div>
-                <div className="sidebar-title">Commander</div>
+                <div className="sidebar-title">Praetor</div>
                 <div className="sidebar-ver">v0.2 · alpha · not production-ready</div>
               </div>
             </div>
@@ -462,7 +462,7 @@ export function LoginPage() {
               Alpha preview, not production-ready. Prompts may be sent to your selected LLM provider
               and traces may be persisted. Do not enter sensitive data; see{' '}
               <a
-                href="https://github.com/PStarH/Commander/blob/main/PRIVACY.md"
+                href="https://github.com/PStarH/Praetor/blob/main/PRIVACY.md"
                 target="_blank"
                 rel="noreferrer"
               >

@@ -58,7 +58,7 @@ const TRANSLATIONS: Record<Locale, Record<string, string>> = {
     'poc.sectionLabel': 'Enterprise Scenarios',
     'poc.title': 'Proof-of-Value Center',
     'poc.desc':
-      'Illustrative reference scenarios for Commander pilots across finance, manufacturing, and healthcare. These are demo scenarios, not real customer pilots.',
+      'Illustrative reference scenarios for Praetor pilots across finance, manufacturing, and healthcare. These are demo scenarios, not real customer pilots.',
     'poc.disclaimer':
       'These are illustrative reference scenarios, not real customer pilots. Figures are representative demo data, not customer-reported results. Real, attributable pilot case studies will be published here as they become available.',
     'poc.source': 'Source: synthetic demo data; no customer pilot evidence',
@@ -115,13 +115,13 @@ const TRANSLATIONS: Record<Locale, Record<string, string>> = {
     'research.sectionLabel': 'Research Preview',
     'research.title': 'Research Participation',
     'research.desc':
-      'How Commander handles research participation, consent, and data boundaries while the project is in alpha.',
+      'How Praetor handles research participation, consent, and data boundaries while the project is in alpha.',
     'research.consent.title': 'Consent',
     'research.consent.body':
       'Participating in a research or evaluation task means you consent to your prompts, configuration, and locally generated traces being used to improve the product. This is not an option in the repository today — any opt-in flow will ask for consent separately and never silently enroll you.',
     'research.used.title': 'What is used',
     'research.used.body':
-      'Only data you choose to enter and the local traces the evaluation itself produces. Commander does not phone home, does not upload results to a vendor backend, and has no telemetry by default.',
+      'Only data you choose to enter and the local traces the evaluation itself produces. Praetor does not phone home, does not upload results to a vendor backend, and has no telemetry by default.',
     'research.withdraw.title': 'Withdrawal',
     'research.withdraw.body':
       'You can stop participating at any time by closing the evaluation, deleting the local state, and removing any data you already sent to an LLM provider you configured.',
@@ -155,7 +155,7 @@ const TRANSLATIONS: Record<Locale, Record<string, string>> = {
     'poc.sectionLabel': '企业示例场景',
     'poc.title': '价值验证中心',
     'poc.desc':
-      '金融、制造和医疗三个行业 Commander 试点的示例参考场景。这些是演示场景，并非真实客户试点。',
+      '金融、制造和医疗三个行业 Praetor 试点的示例参考场景。这些是演示场景，并非真实客户试点。',
     'poc.disclaimer':
       '这些是示例参考场景，并非真实客户试点。数据为代表性演示数据，不是客户报告的真实结果。真实、可归属的试点案例将在可用后在此发布。',
     'poc.source': '数据来源：合成演示数据；没有客户试点证据',
@@ -207,13 +207,13 @@ const TRANSLATIONS: Record<Locale, Record<string, string>> = {
     'poc.detail.audit': '示例审计覆盖目标，不是已验证结果',
     'research.sectionLabel': '研究预览',
     'research.title': '研究参与',
-    'research.desc': '说明 Commander 在 alpha 阶段如何处理研究参与、同意与数据边界。',
+    'research.desc': '说明 Praetor 在 alpha 阶段如何处理研究参与、同意与数据边界。',
     'research.consent.title': '知情同意',
     'research.consent.body':
       '参与研究或评估任务，即表示你同意将提示词、配置与本地生成的轨迹用于改进产品。当前仓库中并非默认选项——任何加入流程都会单独征得同意，绝不静默登记。',
     'research.used.title': '使用范围',
     'research.used.body':
-      '仅使用你主动输入的数据以及评估本身产生的本地轨迹。Commander 默认不联网回传、不向厂商后端上传结果、无遥测。',
+      '仅使用你主动输入的数据以及评估本身产生的本地轨迹。Praetor 默认不联网回传、不向厂商后端上传结果、无遥测。',
     'research.withdraw.title': '退出',
     'research.withdraw.body':
       '可随时停止参与：关闭评估、删除本地状态，并删除已发送至所配置 LLM 提供商的任何数据。',

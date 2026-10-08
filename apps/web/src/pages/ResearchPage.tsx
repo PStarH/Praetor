@@ -1,7 +1,7 @@
 /**
  * ResearchPage — 研究参与边界说明页。
  *
- * 展示 Commander 在 alpha 研究预览阶段如何处理研究参与、同意与数据边界，
+ * 展示 Praetor 在 alpha 研究预览阶段如何处理研究参与、同意与数据边界，
  * 内容与根目录 PRIVACY.md 的 "Research participation" 一节保持一致。
  */
 import { ClipboardCheck } from 'lucide-react';
@@ -39,7 +39,7 @@ export function ResearchPage() {
       <div className="card">
         <p style={{ color: 'var(--text-dim)', fontSize: '0.85rem' }}>
           <a
-            href="https://github.com/PStarH/Commander/blob/master/PRIVACY.md"
+            href="https://github.com/PStarH/Praetor/blob/master/PRIVACY.md"
             target="_blank"
             rel="noopener noreferrer"
           >

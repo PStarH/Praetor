@@ -394,7 +394,7 @@ function NewCapabilitiesSection() {
     {
       icon: '◉',
       title: 'Supply Chain Attestor',
-      desc: 'SPDX 2.3 SBOM generation + Sigstore keyless signing + in-toto DSSE attestation. Cryptographic provenance proof for all Commander components (US EO 14028).',
+      desc: 'SPDX 2.3 SBOM generation + Sigstore keyless signing + in-toto DSSE attestation. Cryptographic provenance proof for all Praetor components (US EO 14028).',
       color: 'var(--accent-purple)',
       tag: 'supply_chain',
     },
