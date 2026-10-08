@@ -301,14 +301,14 @@ export async function cmdReview(args: string[]) {
 export function cmdHelp(showAll = false) {
   console.log(`
   ${$.bold}${$.blue}╭──────────────────────────────────────────────────╮${$.reset}
-  ${$.bold}${$.blue}│${$.reset}  ${$.bold}Commander${$.reset} — multi-agent orchestration          ${$.bold}${$.blue}│${$.reset}
+  ${$.bold}${$.blue}│${$.reset}  ${$.bold}Praetor${$.reset} — multi-agent orchestration            ${$.bold}${$.blue}│${$.reset}
   ${$.bold}${$.blue}│${$.reset}  ${$.dim}one command · 5 topologies · 25 providers${$.reset}       ${$.bold}${$.blue}│${$.reset}
   ${$.bold}${$.blue}╰──────────────────────────────────────────────────╯${$.reset}
 
   ${$.bold}GETTING STARTED${$.reset}
-    ${$.gray}$ commander init${$.reset}                      ${$.dim}Zero-config setup + provider scan${$.reset}
-    ${$.gray}$ commander run "Hello, world!"${$.reset}        ${$.dim}Your first task${$.reset}
-    ${$.gray}$ commander run showcase${$.reset}               ${$.dim}3-agent code audit demo${$.reset}
+    ${$.gray}$ praetor init${$.reset}                        ${$.dim}Zero-config setup + provider scan${$.reset}
+    ${$.gray}$ praetor run "Hello, world!"${$.reset}         ${$.dim}Your first task${$.reset}
+    ${$.gray}$ praetor run showcase${$.reset}                ${$.dim}3-agent code audit demo${$.reset}
 
   ${$.bold}CORE COMMANDS${$.reset}
     ${$.cyan}run <task> [flags]${$.reset}           Execute with full multi-agent pipeline
@@ -351,7 +351,7 @@ export function cmdHelp(showAll = false) {
 
   ${$.bold}MISC${$.reset}
     ${$.cyan}completion [shell]${$.reset}      Shell autocompletion (bash, zsh, fish)
-    ${$.cyan}feedback [--rating|--bug]${$.reset} Submit feedback to improve Commander`
+    ${$.cyan}feedback [--rating|--bug]${$.reset} Submit feedback to improve Praetor`
         : ''
     }
 
@@ -365,6 +365,6 @@ export function cmdHelp(showAll = false) {
     ${$.cyan}--help${$.reset}                  Show this help
     ${$.cyan}--help --all${$.reset}            Show all commands
 
-  ${$.dim}Run ${$.cyan}commander <command> --help${$.reset}${$.dim} for command-specific help.${$.reset}
+  ${$.dim}Run ${$.cyan}praetor <command> --help${$.reset}${$.dim} for command-specific help.${$.reset}
   `);
 }

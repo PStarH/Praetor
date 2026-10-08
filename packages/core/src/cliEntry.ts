@@ -24,8 +24,9 @@ import { reportSilentFailure } from './silentFailureReporter';
 import { $, parseFlags, setTheme } from './cli/util';
 
 // Initialize theme from env var before any output
-if (process.env.COMMANDER_THEME) {
-  setTheme(process.env.COMMANDER_THEME);
+const theme = process.env.PRAETOR_THEME || process.env.COMMANDER_THEME;
+if (theme) {
+  setTheme(theme);
 }
 import {
   cmdRun,
