@@ -281,7 +281,7 @@ The SDK is a thin `httpx` client — no Python-side runtime porting.
 ## Development
 
 ```bash
-git clone https://github.com/PStarH/Commander.git
+git clone https://github.com/PStarH/Praetor.git
 cd packages/python-sdk
 python -m venv .venv
 source .venv/bin/activate

@@ -48,7 +48,7 @@ function v1AgentCard(): A2AAgentCard {
         tags: ['research', 'subagent'],
       },
     ],
-    provider: { organization: 'TELOS', url: 'https://github.com/PStarH/Commander' },
+    provider: { organization: 'TELOS', url: 'https://github.com/PStarH/Praetor' },
   };
 }
 

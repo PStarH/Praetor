@@ -7,7 +7,7 @@ labels:
     color: 7057ff
     comment: |
       This issue is a great starting point for new contributors!
-      See [CONTRIBUTING.md](https://github.com/PStarH/Commander/blob/main/CONTRIBUTING.md) for setup instructions.
+      See [CONTRIBUTING.md](https://github.com/PStarH/Praetor/blob/main/CONTRIBUTING.md) for setup instructions.
 
   - name: help wanted
     description: Extra attention is needed

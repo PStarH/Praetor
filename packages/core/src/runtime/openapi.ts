@@ -3,12 +3,12 @@
 export const openApiSpec: Record<string, unknown> = {
   openapi: '3.0.3',
   info: {
-    title: 'Commander HTTP API',
+    title: 'Praetor HTTP API',
     version: '0.2.0',
     description:
       'Multi-agent orchestration system — REST API for runtime management, execution, and monitoring.',
-    license: { name: 'MIT', url: 'https://github.com/PStarH/Commander/blob/master/LICENSE' },
-    contact: { url: 'https://github.com/PStarH/Commander' },
+    license: { name: 'MIT', url: 'https://github.com/PStarH/Praetor/blob/master/LICENSE' },
+    contact: { url: 'https://github.com/PStarH/Praetor' },
   },
   servers: [
     {

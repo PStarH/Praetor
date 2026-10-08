@@ -5,8 +5,8 @@ Runnable examples to help you get started with Commander.
 ## Prerequisites
 
 ```bash
-git clone https://github.com/PStarH/Commander.git
-cd Commander
+git clone https://github.com/PStarH/Praetor.git
+cd Praetor
 pnpm install
 # Set at least one API key
 export OPENAI_API_KEY=sk-...

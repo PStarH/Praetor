@@ -1,6 +1,6 @@
 {
   "$schema": "https://json-schema.org/draft/2020-12/schema",
-  "$id": "https://github.com/PStarH/Commander/scripts/architecture-gate.schema.json",
+  "$id": "https://github.com/PStarH/Praetor/scripts/architecture-gate.schema.json",
   "title": "Architecture V2 gate configuration",
   "description": "Shape of scripts/architecture-gate.config.json. The gate validates its configuration against the same rules at startup (see scripts/architecture-gate-config.ts) and fails closed on any unknown key or wrong type: a typo used to disable a whole gate family silently, because the config was only cast to its TypeScript interface and never checked at runtime.",
   "type": "object",

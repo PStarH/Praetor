@@ -29,9 +29,9 @@ dependencies = [
 ]
 
 [project.urls]
-Homepage = "https://github.com/PStarH/Commander"
-Repository = "https://github.com/PStarH/Commander"
-Documentation = "https://pstarh.github.io/commander-docs/"
+Homepage = "https://github.com/PStarH/Praetor"
+Repository = "https://github.com/PStarH/Praetor"
+Documentation = "https://pstarh.github.io/praetor-docs/"
 
 [project.optional-dependencies]
 dev = [

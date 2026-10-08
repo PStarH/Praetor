@@ -341,8 +341,7 @@ export class WebFetchTool implements Tool {
     try {
       const { body: html, truncated } = await safeFetch(url, {
         headers: {
-          'User-Agent':
-            'Mozilla/5.0 (compatible; CommanderBot; +https://github.com/PStarH/Commander)',
+          'User-Agent': 'Mozilla/5.0 (compatible; PraetorBot; +https://github.com/PStarH/Praetor)',
         },
       });
 

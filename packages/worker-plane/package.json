@@ -45,13 +45,13 @@
   "license": "MIT",
   "repository": {
     "type": "git",
-    "url": "https://github.com/PStarH/Commander",
+    "url": "https://github.com/PStarH/Praetor",
     "directory": "packages/worker-plane"
   },
   "bugs": {
-    "url": "https://github.com/PStarH/Commander/issues"
+    "url": "https://github.com/PStarH/Praetor/issues"
   },
-  "homepage": "https://github.com/PStarH/Commander#readme",
+  "homepage": "https://github.com/PStarH/Praetor#readme",
   "publishConfig": {
     "access": "public"
   },

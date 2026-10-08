@@ -1,6 +1,6 @@
 {
   "$schema": "http://json-schema.org/draft-07/schema#",
-  "$id": "https://github.com/PStarH/Commander/commander.schema.json",
+  "$id": "https://github.com/PStarH/Praetor/commander.schema.json",
   "title": "Commander Configuration",
   "description": "Configuration schema for Commander multi-agent orchestration system. API keys are never stored here — they remain in environment variables or system keychain.",
   "type": "object",

@@ -7,12 +7,12 @@
   "license": "MIT",
   "repository": {
     "type": "git",
-    "url": "https://github.com/PStarH/Commander"
+    "url": "https://github.com/PStarH/Praetor"
   },
   "bugs": {
-    "url": "https://github.com/PStarH/Commander/issues"
+    "url": "https://github.com/PStarH/Praetor/issues"
   },
-  "homepage": "https://github.com/PStarH/Commander#readme",
+  "homepage": "https://github.com/PStarH/Praetor#readme",
   "packageManager": "pnpm@9.15.4",
   "engines": {
     "node": ">=22.9.0 <23.0.0",

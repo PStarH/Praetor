@@ -8,13 +8,13 @@
 
 ## Reporting a Vulnerability
 
-We take the security of Commander seriously. If you believe you have found a
+We take the security of Praetor seriously. If you believe you have found a
 security vulnerability, please report it to us as described below.
 
 **Please do not report security vulnerabilities through public GitHub issues.**
 
 Instead, report them privately through
-[GitHub Security Advisories](https://github.com/PStarH/Commander/security/advisories/new).
+[GitHub Security Advisories](https://github.com/PStarH/Praetor/security/advisories/new).
 
 You should receive a response within 48 hours. If for some reason you do not,
 open a follow-up advisory so we can see the original report.

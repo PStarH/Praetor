@@ -1,8 +1,8 @@
 blank_issues_enabled: false
 contact_links:
   - name: 📖 Documentation
-    url: https://github.com/PStarH/Commander/blob/master/docs/README.md
+    url: https://github.com/PStarH/Praetor/blob/master/docs/README.md
     about: Read the public documentation before reporting issues
   - name: 🔒 Security Vulnerability
-    url: https://github.com/PStarH/Commander/blob/master/SECURITY.md
+    url: https://github.com/PStarH/Praetor/blob/master/SECURITY.md
     about: Report security vulnerabilities privately through GitHub Security Advisories (do NOT open a public issue)

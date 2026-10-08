@@ -52,8 +52,8 @@ export class OpenRouterProvider extends BaseOpenAICompatibleProvider {
     // tier. These are sent with every request via the base class fetch.
     return {
       extraHeaders: {
-        'HTTP-Referer': 'https://github.com/PStarH/Commander',
-        'X-Title': 'Commander',
+        'HTTP-Referer': 'https://github.com/PStarH/Praetor',
+        'X-Title': 'Praetor',
       },
     };
   }

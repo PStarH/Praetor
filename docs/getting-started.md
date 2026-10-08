@@ -26,8 +26,8 @@ Console。
 ## 1. 克隆与安装
 
 ```bash
-git clone https://github.com/PStarH/Commander.git
-cd Commander
+git clone https://github.com/PStarH/Praetor.git
+cd Praetor
 corepack enable
 pnpm install --frozen-lockfile
 ```
