@@ -8,7 +8,7 @@
  *   export OPENAI_API_KEY=sk-...
  *   npx tsx examples/streaming.ts
  */
-import { executeTask } from '@commander/core';
+import { executeTask } from '@praetor/core';
 
 async function main() {
   const task = 'List 5 best practices for writing secure API endpoints.';

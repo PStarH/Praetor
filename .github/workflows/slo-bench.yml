@@ -9,7 +9,7 @@ name: SLO Bench Regression
 # measurements (recovery / failover / compensation / dlq) failed or threw.
 #
 # This is the cron-bound companion to ENTERPRISE_READINESS.md SLO-1.
-# Replaces the previous ci.yml `pnpm --filter @commander/core test:slo`
+# Replaces the previous ci.yml `pnpm --filter @praetor/core test:slo`
 # which ran a try/catch-silencing version of bench-slo-baseline.ts that
 # assigned `actualMs: 0, passed: true` on throw and never surfaced
 # RunRecovery / RunCompensation wiring regressions to CI. The new

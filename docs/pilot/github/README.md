@@ -17,8 +17,8 @@ From this source checkout, using Node 22 and the pinned pnpm version:
 ```sh
 corepack enable
 pnpm install --frozen-lockfile
-pnpm --filter @commander/contracts build
-pnpm --filter @commander/effect-broker build
+pnpm --filter @praetor/contracts build
+pnpm --filter @praetor/effect-broker build
 pnpm test:github:offline
 pnpm demo:github --help
 ```

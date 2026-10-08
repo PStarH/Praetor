@@ -10,7 +10,7 @@
  * 关键 API: DeadLetterQueue, enqueue, listUnrecoveredEntries, replay, getStats
  * 运行方式: npx tsx examples/dlq-replay.ts
  */
-import { DeadLetterQueue } from '@commander/core/runtime';
+import { DeadLetterQueue } from '@praetor/core/runtime';
 import * as os from 'node:os';
 import * as path from 'node:path';
 

@@ -13,14 +13,14 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 - Dependabot configuration for automated dependency updates
 - Pull request template for consistent PR descriptions
 - npm audit and test coverage checks in CI pipeline
-- Architecture V2 packages: `@commander/contracts`, `@commander/kernel`, `@commander/worker-plane`, `@commander/effect-broker`, and `@commander/adapter-ops`
+- Architecture V2 packages: `@praetor/contracts`, `@praetor/kernel`, `@praetor/worker-plane`, `@praetor/effect-broker`, and `@praetor/adapter-ops`
 - `docs/getting-started.md` quick-start guide
 
 ### Changed
 
 - All publishable packages now declare `main`, `module`, `types`, `exports`, `files`, `publishConfig`, and `prepublishOnly`
-- `@commander/sdk` and `@commander/plugin-sdk` versioned to `0.2.0` to align with the rest of the monorepo
-- `@commander/contracts` versioned to `0.2.0` to stay consistent with sibling V2 packages
+- `@praetor/sdk` and `@praetor/plugin-sdk` versioned to `0.2.0` to align with the rest of the monorepo
+- `@praetor/contracts` versioned to `0.2.0` to stay consistent with sibling V2 packages
 
 ### Security
 

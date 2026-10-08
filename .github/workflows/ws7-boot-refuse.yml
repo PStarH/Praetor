@@ -39,19 +39,19 @@ jobs:
 
       - name: Build packages for worker boot-refuse
         run: |
-          pnpm --filter @commander/contracts build
-          pnpm --filter @commander/plugin-sdk build
-          pnpm --filter @commander/effect-broker build
-          pnpm --filter @commander/kernel build
-          pnpm --filter @commander/core build
-          pnpm --filter @commander/action-adapters build
-          pnpm --filter @commander/worker-plane build
+          pnpm --filter @praetor/contracts build
+          pnpm --filter @praetor/plugin-sdk build
+          pnpm --filter @praetor/effect-broker build
+          pnpm --filter @praetor/kernel build
+          pnpm --filter @praetor/core build
+          pnpm --filter @praetor/action-adapters build
+          pnpm --filter @praetor/worker-plane build
 
       - name: Production sandbox static gate
-        run: pnpm --filter @commander/core build:production
+        run: pnpm --filter @praetor/core build:production
 
       - name: Core production sandbox boot-refuse
-        run: pnpm --filter @commander/core exec node --import tsx --test tests/sandbox/boot-refuse.test.ts
+        run: pnpm --filter @praetor/core exec node --import tsx --test tests/sandbox/boot-refuse.test.ts
 
       - name: Worker production sandbox boot-refuse
         run: pnpm exec node --import tsx --test packages/worker-plane/src/boot-refuse.test.ts

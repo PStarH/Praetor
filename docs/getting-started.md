@@ -132,7 +132,7 @@ Gateway 不属于该首用户路径，目前不能宣称只读或生产就绪。
 ## 6. 额外验证
 
 ```bash
-pnpm --filter @commander/core test:quick
+pnpm --filter @praetor/core test:quick
 ```
 
 这会运行核心单元测试的安全子集（约 30 秒）。

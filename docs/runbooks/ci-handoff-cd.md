@@ -200,7 +200,7 @@ export COMMANDER_KUBERNETES_PROOF_TENANT_ID='cell-smoke-tenant'
 export COMMANDER_API_KEY='<ci-api-key>'
 export COMMANDER_EVIDENCE_JWKS_FILE="$EVIDENCE_ROOT/g5/jwks.json"
 
-pnpm --filter @commander/action-adapters test
+pnpm --filter @praetor/action-adapters test
 pnpm exec tsx scripts/kubernetes-rollback-kind.ts --mode kind \
   --jwks "$COMMANDER_EVIDENCE_JWKS_FILE" 2>&1 | tee "$EVIDENCE_ROOT/logs/g5-kind.log"
 KIND_ARTIFACT="$(find artifacts -type f -name 'kubernetes-rollback-kind-*.json' | sort | tail -1)"

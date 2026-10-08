@@ -12,8 +12,8 @@ the child process environment and are never emitted by the consumer.
 Run the boundary checks with:
 
 ```bash
-pnpm --filter @commander/openai-agents-mcp typecheck
-pnpm --filter @commander/openai-agents-mcp test
+pnpm --filter @praetor/openai-agents-mcp typecheck
+pnpm --filter @praetor/openai-agents-mcp test
 ```
 
 The CLI reads one JSON invocation from stdin and writes one sanitized invocation

@@ -4,7 +4,7 @@
     {
       "id": "api-onboarding-fetch",
       "path": "apps/api/src/onboardingEndpoints.ts",
-      "owner": "@commander/api",
+      "owner": "@praetor/api",
       "reason": "Onboarding provider HTTP — migrate to action-adapters",
       "replacement": "packages/action-adapters/llm/* (future)",
       "expiresAt": "2026-12-31",
@@ -15,7 +15,7 @@
     {
       "id": "core-atr-adapters-github",
       "path": "packages/core/src/atr/adapters/github.ts",
-      "owner": "@commander/core",
+      "owner": "@praetor/core",
       "reason": "ATR git/GitHub integration — migrate to action-adapters",
       "replacement": "packages/action-adapters/* (future)",
       "expiresAt": "2026-12-31",
@@ -26,7 +26,7 @@
     {
       "id": "core-atr-gitSnapshot",
       "path": "packages/core/src/atr/gitSnapshot.ts",
-      "owner": "@commander/core",
+      "owner": "@praetor/core",
       "reason": "ATR git/GitHub integration — migrate to action-adapters",
       "replacement": "packages/action-adapters/* (future)",
       "expiresAt": "2026-12-31",
@@ -37,7 +37,7 @@
     {
       "id": "core-cli-commands--shared",
       "path": "packages/core/src/cli/commands/_shared.ts",
-      "owner": "@commander/core",
+      "owner": "@praetor/core",
       "reason": "CLI subprocess/HTTP — migrate to action-adapters",
       "replacement": "packages/action-adapters/* (future)",
       "expiresAt": "2026-12-31",
@@ -48,7 +48,7 @@
     {
       "id": "core-cli-commands-convenience",
       "path": "packages/core/src/cli/commands/convenience.ts",
-      "owner": "@commander/core",
+      "owner": "@praetor/core",
       "reason": "CLI subprocess/HTTP — migrate to action-adapters",
       "replacement": "packages/action-adapters/* (future)",
       "expiresAt": "2026-12-31",
@@ -59,7 +59,7 @@
     {
       "id": "core-cli-commands-core",
       "path": "packages/core/src/cli/commands/core.ts",
-      "owner": "@commander/core",
+      "owner": "@praetor/core",
       "reason": "CLI subprocess/HTTP — migrate to action-adapters",
       "replacement": "packages/action-adapters/* (future)",
       "expiresAt": "2026-12-31",
@@ -70,7 +70,7 @@
     {
       "id": "core-cli-commands-manage",
       "path": "packages/core/src/cli/commands/manage.ts",
-      "owner": "@commander/core",
+      "owner": "@praetor/core",
       "reason": "CLI subprocess/HTTP — migrate to action-adapters",
       "replacement": "packages/action-adapters/* (future)",
       "expiresAt": "2026-12-31",
@@ -82,7 +82,7 @@
     {
       "id": "core-cli-commands-misc",
       "path": "packages/core/src/cli/commands/misc.ts",
-      "owner": "@commander/core",
+      "owner": "@praetor/core",
       "reason": "CLI subprocess/HTTP — migrate to action-adapters",
       "replacement": "packages/action-adapters/* (future)",
       "expiresAt": "2026-12-31",
@@ -93,7 +93,7 @@
     {
       "id": "core-cli-commands-quickstart",
       "path": "packages/core/src/cli/commands/quickstart.ts",
-      "owner": "@commander/core",
+      "owner": "@praetor/core",
       "reason": "CLI subprocess/HTTP — migrate to action-adapters",
       "replacement": "packages/action-adapters/* (future)",
       "expiresAt": "2026-12-31",
@@ -104,7 +104,7 @@
     {
       "id": "core-cli-commands-security",
       "path": "packages/core/src/cli/commands/security.ts",
-      "owner": "@commander/core",
+      "owner": "@praetor/core",
       "reason": "CLI subprocess/HTTP — migrate to action-adapters",
       "replacement": "packages/action-adapters/* (future)",
       "expiresAt": "2026-12-31",
@@ -115,7 +115,7 @@
     {
       "id": "core-cli-commands-small-features",
       "path": "packages/core/src/cli/commands/small-features.ts",
-      "owner": "@commander/core",
+      "owner": "@praetor/core",
       "reason": "CLI subprocess/HTTP — migrate to action-adapters",
       "replacement": "packages/action-adapters/* (future)",
       "expiresAt": "2026-12-31",
@@ -126,7 +126,7 @@
     {
       "id": "core-cli-commands-up",
       "path": "packages/core/src/cli/commands/up.ts",
-      "owner": "@commander/core",
+      "owner": "@praetor/core",
       "reason": "CLI subprocess/HTTP — migrate to action-adapters",
       "replacement": "packages/action-adapters/* (future)",
       "expiresAt": "2026-12-31",
@@ -138,7 +138,7 @@
     {
       "id": "core-cliEntry",
       "path": "packages/core/src/cliEntry.ts",
-      "owner": "@commander/core",
+      "owner": "@praetor/core",
       "reason": "CLI subprocess/HTTP — migrate to action-adapters",
       "replacement": "packages/action-adapters/* (future)",
       "expiresAt": "2026-12-31",
@@ -149,7 +149,7 @@
     {
       "id": "core-commander-probe",
       "path": "packages/core/src/commander/probe.ts",
-      "owner": "@commander/core",
+      "owner": "@praetor/core",
       "reason": "Legacy packages/core external I/O — migrate to action-adapters",
       "replacement": "packages/action-adapters/* (future)",
       "expiresAt": "2026-12-31",
@@ -160,7 +160,7 @@
     {
       "id": "core-infrastructure-background",
       "path": "packages/core/src/infrastructure/background.ts",
-      "owner": "@commander/core",
+      "owner": "@praetor/core",
       "reason": "Legacy packages/core external I/O — migrate to action-adapters",
       "replacement": "packages/action-adapters/* (future)",
       "expiresAt": "2026-12-31",
@@ -171,7 +171,7 @@
     {
       "id": "core-infrastructure-notifications",
       "path": "packages/core/src/infrastructure/notifications.ts",
-      "owner": "@commander/core",
+      "owner": "@praetor/core",
       "reason": "Legacy packages/core external I/O — migrate to action-adapters",
       "replacement": "packages/action-adapters/* (future)",
       "expiresAt": "2026-12-31",
@@ -183,7 +183,7 @@
     {
       "id": "core-lsp-lspClient",
       "path": "packages/core/src/lsp/lspClient.ts",
-      "owner": "@commander/core",
+      "owner": "@praetor/core",
       "reason": "LSP subprocess client",
       "replacement": "packages/action-adapters/* (future)",
       "expiresAt": "2026-12-31",
@@ -194,7 +194,7 @@
     {
       "id": "core-lsp-lspManager",
       "path": "packages/core/src/lsp/lspManager.ts",
-      "owner": "@commander/core",
+      "owner": "@praetor/core",
       "reason": "LSP subprocess client",
       "replacement": "packages/action-adapters/* (future)",
       "expiresAt": "2026-12-31",
@@ -205,7 +205,7 @@
     {
       "id": "core-mcp-client",
       "path": "packages/core/src/mcp/client.ts",
-      "owner": "@commander/core",
+      "owner": "@praetor/core",
       "reason": "MCP/A2A protocol I/O — core protocol surface",
       "replacement": "packages/action-adapters/* (future)",
       "expiresAt": "2026-12-31",
@@ -216,7 +216,7 @@
     {
       "id": "core-observability-datadogExporter",
       "path": "packages/core/src/observability/datadogExporter.ts",
-      "owner": "@commander/core",
+      "owner": "@praetor/core",
       "reason": "Observability export HTTP — OTel/Datadog/PagerDuty",
       "replacement": "packages/action-adapters/* (future)",
       "expiresAt": "2026-12-31",
@@ -227,7 +227,7 @@
     {
       "id": "core-observability-otelExporter",
       "path": "packages/core/src/observability/otelExporter.ts",
-      "owner": "@commander/core",
+      "owner": "@praetor/core",
       "reason": "Observability export HTTP — OTel/Datadog/PagerDuty",
       "replacement": "packages/action-adapters/* (future)",
       "expiresAt": "2026-12-31",
@@ -238,7 +238,7 @@
     {
       "id": "core-observability-pagerDutyAlerting",
       "path": "packages/core/src/observability/pagerDutyAlerting.ts",
-      "owner": "@commander/core",
+      "owner": "@praetor/core",
       "reason": "Observability export HTTP — OTel/Datadog/PagerDuty",
       "replacement": "packages/action-adapters/* (future)",
       "expiresAt": "2026-12-31",
@@ -249,7 +249,7 @@
     {
       "id": "core-pluginLoader",
       "path": "packages/core/src/pluginLoader.ts",
-      "owner": "@commander/core",
+      "owner": "@praetor/core",
       "reason": "Legacy packages/core external I/O — migrate to action-adapters",
       "replacement": "packages/action-adapters/* (future)",
       "expiresAt": "2026-12-31",
@@ -260,7 +260,7 @@
     {
       "id": "core-plugins-builtin-gap-issueAutoCreate",
       "path": "packages/core/src/plugins/builtin/gap/issueAutoCreate.ts",
-      "owner": "@commander/core",
+      "owner": "@praetor/core",
       "reason": "IM/plugin HTTP integrations — migrate to action-adapters",
       "replacement": "packages/action-adapters/* (future)",
       "expiresAt": "2026-12-31",
@@ -271,7 +271,7 @@
     {
       "id": "core-plugins-im-discord-index",
       "path": "packages/core/src/plugins/im/discord/index.ts",
-      "owner": "@commander/core",
+      "owner": "@praetor/core",
       "reason": "IM/plugin HTTP integrations — migrate to action-adapters",
       "replacement": "packages/action-adapters/* (future)",
       "expiresAt": "2026-12-31",
@@ -282,7 +282,7 @@
     {
       "id": "core-plugins-im-slack-index",
       "path": "packages/core/src/plugins/im/slack/index.ts",
-      "owner": "@commander/core",
+      "owner": "@praetor/core",
       "reason": "IM/plugin HTTP integrations — migrate to action-adapters",
       "replacement": "packages/action-adapters/* (future)",
       "expiresAt": "2026-12-31",
@@ -293,7 +293,7 @@
     {
       "id": "core-plugins-im-teams-index",
       "path": "packages/core/src/plugins/im/teams/index.ts",
-      "owner": "@commander/core",
+      "owner": "@praetor/core",
       "reason": "IM/plugin HTTP integrations — migrate to action-adapters",
       "replacement": "packages/action-adapters/* (future)",
       "expiresAt": "2026-12-31",
@@ -304,7 +304,7 @@
     {
       "id": "core-reviewAgent",
       "path": "packages/core/src/reviewAgent.ts",
-      "owner": "@commander/core",
+      "owner": "@praetor/core",
       "reason": "Legacy packages/core external I/O — migrate to action-adapters",
       "replacement": "packages/action-adapters/* (future)",
       "expiresAt": "2026-12-31",
@@ -315,7 +315,7 @@
     {
       "id": "core-runtime-adapters-telegramAdapter",
       "path": "packages/core/src/runtime/adapters/telegramAdapter.ts",
-      "owner": "@commander/core",
+      "owner": "@praetor/core",
       "reason": "Runtime HTTP/subprocess — telemetry, OIDC, or local integration",
       "replacement": "packages/action-adapters/* (future)",
       "expiresAt": "2026-12-31",
@@ -326,7 +326,7 @@
     {
       "id": "core-runtime-batchApiClient",
       "path": "packages/core/src/runtime/batchApiClient.ts",
-      "owner": "@commander/core",
+      "owner": "@praetor/core",
       "reason": "Runtime HTTP/subprocess — telemetry, OIDC, or local integration",
       "replacement": "packages/action-adapters/* (future)",
       "expiresAt": "2026-12-31",
@@ -337,7 +337,7 @@
     {
       "id": "core-runtime-embedding",
       "path": "packages/core/src/runtime/embedding.ts",
-      "owner": "@commander/core",
+      "owner": "@praetor/core",
       "reason": "Runtime HTTP/subprocess — telemetry, OIDC, or local integration",
       "replacement": "packages/action-adapters/* (future)",
       "expiresAt": "2026-12-31",
@@ -348,7 +348,7 @@
     {
       "id": "core-runtime-geminiCacheManager",
       "path": "packages/core/src/runtime/geminiCacheManager.ts",
-      "owner": "@commander/core",
+      "owner": "@praetor/core",
       "reason": "Runtime HTTP/subprocess — telemetry, OIDC, or local integration",
       "replacement": "packages/action-adapters/* (future)",
       "expiresAt": "2026-12-31",
@@ -359,7 +359,7 @@
     {
       "id": "core-runtime-keychain",
       "path": "packages/core/src/runtime/keychain.ts",
-      "owner": "@commander/core",
+      "owner": "@praetor/core",
       "reason": "Runtime HTTP/subprocess — telemetry, OIDC, or local integration",
       "replacement": "packages/action-adapters/* (future)",
       "expiresAt": "2026-12-31",
@@ -370,7 +370,7 @@
     {
       "id": "core-runtime-lspIntegration",
       "path": "packages/core/src/runtime/lspIntegration.ts",
-      "owner": "@commander/core",
+      "owner": "@praetor/core",
       "reason": "Runtime HTTP/subprocess — telemetry, OIDC, or local integration",
       "replacement": "packages/action-adapters/* (future)",
       "expiresAt": "2026-12-31",
@@ -381,7 +381,7 @@
     {
       "id": "core-runtime-mtlsRuntimeProxy",
       "path": "packages/core/src/runtime/mtlsRuntimeProxy.ts",
-      "owner": "@commander/core",
+      "owner": "@praetor/core",
       "reason": "Runtime HTTP/subprocess — telemetry, OIDC, or local integration",
       "replacement": "packages/action-adapters/* (future)",
       "expiresAt": "2026-12-31",
@@ -392,7 +392,7 @@
     {
       "id": "core-runtime-oidcAuthPlugin",
       "path": "packages/core/src/runtime/oidcAuthPlugin.ts",
-      "owner": "@commander/core",
+      "owner": "@praetor/core",
       "reason": "Runtime HTTP/subprocess — telemetry, OIDC, or local integration",
       "replacement": "packages/action-adapters/* (future)",
       "expiresAt": "2026-12-31",
@@ -403,7 +403,7 @@
     {
       "id": "core-runtime-pluginSandboxContext",
       "path": "packages/core/src/runtime/pluginSandboxContext.ts",
-      "owner": "@commander/core",
+      "owner": "@praetor/core",
       "reason": "Runtime HTTP/subprocess — telemetry, OIDC, or local integration",
       "replacement": "packages/action-adapters/* (future)",
       "expiresAt": "2026-12-31",
@@ -414,7 +414,7 @@
     {
       "id": "core-runtime-provenance",
       "path": "packages/core/src/runtime/provenance.ts",
-      "owner": "@commander/core",
+      "owner": "@praetor/core",
       "reason": "Runtime HTTP/subprocess — telemetry, OIDC, or local integration",
       "replacement": "packages/action-adapters/* (future)",
       "expiresAt": "2026-12-31",
@@ -425,7 +425,7 @@
     {
       "id": "core-runtime-providers-anthropicProvider",
       "path": "packages/core/src/runtime/providers/anthropicProvider.ts",
-      "owner": "@commander/core",
+      "owner": "@praetor/core",
       "reason": "Legacy LLM provider HTTP in core — migrate to worker-plane EffectBroker",
       "replacement": "packages/action-adapters/* (future)",
       "expiresAt": "2026-12-31",
@@ -436,7 +436,7 @@
     {
       "id": "core-runtime-providers-baseOpenAICompatible",
       "path": "packages/core/src/runtime/providers/baseOpenAICompatible.ts",
-      "owner": "@commander/core",
+      "owner": "@praetor/core",
       "reason": "Legacy LLM provider HTTP in core — migrate to worker-plane EffectBroker",
       "replacement": "packages/action-adapters/* (future)",
       "expiresAt": "2026-12-31",
@@ -447,7 +447,7 @@
     {
       "id": "core-runtime-providers-cohereProvider",
       "path": "packages/core/src/runtime/providers/cohereProvider.ts",
-      "owner": "@commander/core",
+      "owner": "@praetor/core",
       "reason": "Legacy LLM provider HTTP in core — migrate to worker-plane EffectBroker",
       "replacement": "packages/action-adapters/* (future)",
       "expiresAt": "2026-12-31",
@@ -458,7 +458,7 @@
     {
       "id": "core-runtime-providers-deepseekProvider",
       "path": "packages/core/src/runtime/providers/deepseekProvider.ts",
-      "owner": "@commander/core",
+      "owner": "@praetor/core",
       "reason": "Legacy LLM provider HTTP in core — migrate to worker-plane EffectBroker",
       "replacement": "packages/action-adapters/* (future)",
       "expiresAt": "2026-12-31",
@@ -469,7 +469,7 @@
     {
       "id": "core-runtime-providers-glmProvider",
       "path": "packages/core/src/runtime/providers/glmProvider.ts",
-      "owner": "@commander/core",
+      "owner": "@praetor/core",
       "reason": "Legacy LLM provider HTTP in core — migrate to worker-plane EffectBroker",
       "replacement": "packages/action-adapters/* (future)",
       "expiresAt": "2026-12-31",
@@ -480,7 +480,7 @@
     {
       "id": "core-runtime-providers-googleProvider",
       "path": "packages/core/src/runtime/providers/googleProvider.ts",
-      "owner": "@commander/core",
+      "owner": "@praetor/core",
       "reason": "Legacy LLM provider HTTP in core — migrate to worker-plane EffectBroker",
       "replacement": "packages/action-adapters/* (future)",
       "expiresAt": "2026-12-31",
@@ -491,7 +491,7 @@
     {
       "id": "core-runtime-providers-mimoProvider",
       "path": "packages/core/src/runtime/providers/mimoProvider.ts",
-      "owner": "@commander/core",
+      "owner": "@praetor/core",
       "reason": "Legacy LLM provider HTTP in core — migrate to worker-plane EffectBroker",
       "replacement": "packages/action-adapters/* (future)",
       "expiresAt": "2026-12-31",
@@ -502,7 +502,7 @@
     {
       "id": "core-runtime-providers-ollamaProvider",
       "path": "packages/core/src/runtime/providers/ollamaProvider.ts",
-      "owner": "@commander/core",
+      "owner": "@praetor/core",
       "reason": "Legacy LLM provider HTTP in core — migrate to worker-plane EffectBroker",
       "replacement": "packages/action-adapters/* (future)",
       "expiresAt": "2026-12-31",
@@ -513,7 +513,7 @@
     {
       "id": "core-runtime-providers-openaiProvider",
       "path": "packages/core/src/runtime/providers/openaiProvider.ts",
-      "owner": "@commander/core",
+      "owner": "@praetor/core",
       "reason": "Legacy LLM provider HTTP in core — migrate to worker-plane EffectBroker",
       "replacement": "packages/action-adapters/* (future)",
       "expiresAt": "2026-12-31",
@@ -524,7 +524,7 @@
     {
       "id": "core-runtime-providers-replicateProvider",
       "path": "packages/core/src/runtime/providers/replicateProvider.ts",
-      "owner": "@commander/core",
+      "owner": "@praetor/core",
       "reason": "Legacy LLM provider HTTP in core — migrate to worker-plane EffectBroker",
       "replacement": "packages/action-adapters/* (future)",
       "expiresAt": "2026-12-31",
@@ -535,7 +535,7 @@
     {
       "id": "core-runtime-providers-vllmProvider",
       "path": "packages/core/src/runtime/providers/vllmProvider.ts",
-      "owner": "@commander/core",
+      "owner": "@praetor/core",
       "reason": "Legacy LLM provider HTTP in core — migrate to worker-plane EffectBroker",
       "replacement": "packages/action-adapters/* (future)",
       "expiresAt": "2026-12-31",
@@ -546,7 +546,7 @@
     {
       "id": "core-runtime-providers-xiaomiProvider",
       "path": "packages/core/src/runtime/providers/xiaomiProvider.ts",
-      "owner": "@commander/core",
+      "owner": "@praetor/core",
       "reason": "Legacy LLM provider HTTP in core — migrate to worker-plane EffectBroker",
       "replacement": "packages/action-adapters/* (future)",
       "expiresAt": "2026-12-31",
@@ -557,7 +557,7 @@
     {
       "id": "core-sandbox-appContainer",
       "path": "packages/core/src/sandbox/appContainer.ts",
-      "owner": "@commander/core",
+      "owner": "@praetor/core",
       "reason": "Sandbox execution subprocess — bounded local/docker/ssh backends",
       "replacement": "packages/action-adapters/* (future)",
       "expiresAt": "2026-12-31",
@@ -568,7 +568,7 @@
     {
       "id": "core-sandbox-backends-dockerExecBackend",
       "path": "packages/core/src/sandbox/backends/dockerExecBackend.ts",
-      "owner": "@commander/core",
+      "owner": "@praetor/core",
       "reason": "Sandbox execution subprocess — bounded local/docker/ssh backends",
       "replacement": "packages/action-adapters/* (future)",
       "expiresAt": "2026-12-31",
@@ -579,7 +579,7 @@
     {
       "id": "core-sandbox-backends-localBackend",
       "path": "packages/core/src/sandbox/backends/localBackend.ts",
-      "owner": "@commander/core",
+      "owner": "@praetor/core",
       "reason": "Sandbox execution subprocess — bounded local/docker/ssh backends",
       "replacement": "packages/action-adapters/* (future)",
       "expiresAt": "2026-12-31",
@@ -590,7 +590,7 @@
     {
       "id": "core-sandbox-backends-sshBackend",
       "path": "packages/core/src/sandbox/backends/sshBackend.ts",
-      "owner": "@commander/core",
+      "owner": "@praetor/core",
       "reason": "Sandbox execution subprocess — bounded local/docker/ssh backends",
       "replacement": "packages/action-adapters/* (future)",
       "expiresAt": "2026-12-31",
@@ -601,7 +601,7 @@
     {
       "id": "core-sandbox-platforms",
       "path": "packages/core/src/sandbox/platforms.ts",
-      "owner": "@commander/core",
+      "owner": "@praetor/core",
       "reason": "Sandbox execution subprocess — bounded local/docker/ssh backends",
       "replacement": "packages/action-adapters/* (future)",
       "expiresAt": "2026-12-31",
@@ -612,7 +612,7 @@
     {
       "id": "core-sandbox-teeEnclave",
       "path": "packages/core/src/sandbox/teeEnclave.ts",
-      "owner": "@commander/core",
+      "owner": "@praetor/core",
       "reason": "Sandbox execution subprocess — bounded local/docker/ssh backends",
       "replacement": "packages/action-adapters/* (future)",
       "expiresAt": "2026-12-31",
@@ -623,7 +623,7 @@
     {
       "id": "core-security-adversarialAttacker",
       "path": "packages/core/src/security/adversarialAttacker.ts",
-      "owner": "@commander/core",
+      "owner": "@praetor/core",
       "reason": "Security tooling network/subprocess — gateway-scoped; migrate adapters",
       "replacement": "packages/action-adapters/* (future)",
       "expiresAt": "2026-12-31",
@@ -634,7 +634,7 @@
     {
       "id": "core-security-cveDatabase",
       "path": "packages/core/src/security/cveDatabase.ts",
-      "owner": "@commander/core",
+      "owner": "@praetor/core",
       "reason": "Security tooling network/subprocess — gateway-scoped; migrate adapters",
       "replacement": "packages/action-adapters/* (future)",
       "expiresAt": "2026-12-31",
@@ -645,7 +645,7 @@
     {
       "id": "core-security-edgeSecurityProfile",
       "path": "packages/core/src/security/edgeSecurityProfile.ts",
-      "owner": "@commander/core",
+      "owner": "@praetor/core",
       "reason": "Security tooling network/subprocess — gateway-scoped; migrate adapters",
       "replacement": "packages/action-adapters/* (future)",
       "expiresAt": "2026-12-31",
@@ -656,7 +656,7 @@
     {
       "id": "core-security-litellmPricing",
       "path": "packages/core/src/security/litellmPricing.ts",
-      "owner": "@commander/core",
+      "owner": "@praetor/core",
       "reason": "Security tooling network/subprocess — gateway-scoped; migrate adapters",
       "replacement": "packages/action-adapters/* (future)",
       "expiresAt": "2026-12-31",
@@ -667,7 +667,7 @@
     {
       "id": "core-security-memoryPoisoningDefenseEngine",
       "path": "packages/core/src/security/memoryPoisoningDefenseEngine.ts",
-      "owner": "@commander/core",
+      "owner": "@praetor/core",
       "reason": "Security tooling network/subprocess — gateway-scoped; migrate adapters",
       "replacement": "packages/action-adapters/* (future)",
       "expiresAt": "2026-12-31",
@@ -678,7 +678,7 @@
     {
       "id": "core-security-rotationSignoffVerifier",
       "path": "packages/core/src/security/rotationSignoffVerifier.ts",
-      "owner": "@commander/core",
+      "owner": "@praetor/core",
       "reason": "Security tooling network/subprocess — gateway-scoped; migrate adapters",
       "replacement": "packages/action-adapters/* (future)",
       "expiresAt": "2026-12-31",
@@ -689,7 +689,7 @@
     {
       "id": "core-security-runtimeDependencyGuard",
       "path": "packages/core/src/security/runtimeDependencyGuard.ts",
-      "owner": "@commander/core",
+      "owner": "@praetor/core",
       "reason": "Security tooling network/subprocess — gateway-scoped; migrate adapters",
       "replacement": "packages/action-adapters/* (future)",
       "expiresAt": "2026-12-31",
@@ -702,7 +702,7 @@
     {
       "id": "core-skills-skillCurator",
       "path": "packages/core/src/skills/skillCurator.ts",
-      "owner": "@commander/core",
+      "owner": "@praetor/core",
       "reason": "Skill install/scan subprocess",
       "replacement": "packages/action-adapters/* (future)",
       "expiresAt": "2026-12-31",
@@ -713,7 +713,7 @@
     {
       "id": "core-skills-skillInstaller",
       "path": "packages/core/src/skills/skillInstaller.ts",
-      "owner": "@commander/core",
+      "owner": "@praetor/core",
       "reason": "Skill install/scan subprocess",
       "replacement": "packages/action-adapters/* (future)",
       "expiresAt": "2026-12-31",
@@ -724,7 +724,7 @@
     {
       "id": "core-tools--utils-httpClient",
       "path": "packages/core/src/tools/_utils/httpClient.ts",
-      "owner": "@commander/core",
+      "owner": "@praetor/core",
       "reason": "Agent tools subprocess/HTTP — migrate to registered tool adapters",
       "replacement": "packages/action-adapters/* (future)",
       "expiresAt": "2026-12-31",
@@ -735,7 +735,7 @@
     {
       "id": "core-tools-codeSearchTool",
       "path": "packages/core/src/tools/codeSearchTool.ts",
-      "owner": "@commander/core",
+      "owner": "@praetor/core",
       "reason": "Agent tools subprocess/HTTP — migrate to registered tool adapters",
       "replacement": "packages/action-adapters/* (future)",
       "expiresAt": "2026-12-31",
@@ -746,7 +746,7 @@
     {
       "id": "core-tools-gitTool",
       "path": "packages/core/src/tools/gitTool.ts",
-      "owner": "@commander/core",
+      "owner": "@praetor/core",
       "reason": "Agent tools subprocess/HTTP — migrate to registered tool adapters",
       "replacement": "packages/action-adapters/* (future)",
       "expiresAt": "2026-12-31",
@@ -757,7 +757,7 @@
     {
       "id": "core-tools-multimodal-screenshotTool",
       "path": "packages/core/src/tools/multimodal/screenshotTool.ts",
-      "owner": "@commander/core",
+      "owner": "@praetor/core",
       "reason": "Agent tools subprocess/HTTP — migrate to registered tool adapters",
       "replacement": "packages/action-adapters/* (future)",
       "expiresAt": "2026-12-31",
@@ -768,7 +768,7 @@
     {
       "id": "core-tools-multimodal-visionTool",
       "path": "packages/core/src/tools/multimodal/visionTool.ts",
-      "owner": "@commander/core",
+      "owner": "@praetor/core",
       "reason": "Agent tools subprocess/HTTP — migrate to registered tool adapters",
       "replacement": "packages/action-adapters/* (future)",
       "expiresAt": "2026-12-31",
@@ -779,7 +779,7 @@
     {
       "id": "core-tools-patchTool",
       "path": "packages/core/src/tools/patchTool.ts",
-      "owner": "@commander/core",
+      "owner": "@praetor/core",
       "reason": "Agent tools subprocess/HTTP — migrate to registered tool adapters",
       "replacement": "packages/action-adapters/* (future)",
       "expiresAt": "2026-12-31",

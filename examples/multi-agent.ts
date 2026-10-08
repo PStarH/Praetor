@@ -9,7 +9,7 @@
  *   export OPENAI_API_KEY=sk-...
  *   npx tsx examples/multi-agent.ts
  */
-import { executeTask } from '@commander/core';
+import { executeTask } from '@praetor/core';
 
 async function main() {
   // Commander's deliberation engine will classify this as a DEBATE task

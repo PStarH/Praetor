@@ -137,15 +137,15 @@ jobs:
           pnpm exec tsx scripts/ci-bootstrap-deploy-gates.ts full
       - name: Build packages
         run: |
-          pnpm --filter @commander/contracts build
-          pnpm --filter @commander/plugin-sdk build
-          pnpm --filter @commander/postgres-runtime build
-          pnpm --filter @commander/effect-broker build
-          pnpm --filter @commander/kernel build
-          pnpm --filter @commander/core build
-          pnpm --filter @commander/action-adapters build
-          pnpm --filter @commander/worker-plane build
-          pnpm --filter @commander/api build
+          pnpm --filter @praetor/contracts build
+          pnpm --filter @praetor/plugin-sdk build
+          pnpm --filter @praetor/postgres-runtime build
+          pnpm --filter @praetor/effect-broker build
+          pnpm --filter @praetor/kernel build
+          pnpm --filter @praetor/core build
+          pnpm --filter @praetor/action-adapters build
+          pnpm --filter @praetor/worker-plane build
+          pnpm --filter @praetor/api build
       - name: Kernel PG integration
         run: pnpm exec node --import tsx --test packages/kernel/src/postgres.integration.test.ts
       - name: Worker e2e + reclaim

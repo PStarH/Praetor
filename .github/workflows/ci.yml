@@ -51,8 +51,8 @@ jobs:
       - run: pnpm install --frozen-lockfile
       - name: Build the adapter contract dependencies
         run: |
-          pnpm --filter @commander/contracts build
-          pnpm --filter @commander/effect-broker build
+          pnpm --filter @praetor/contracts build
+          pnpm --filter @praetor/effect-broker build
       - run: pnpm test:github:offline
       - run: pnpm demo:github --help
       - run: pnpm typecheck:github
@@ -77,8 +77,8 @@ jobs:
       - run: pnpm install --frozen-lockfile
       - name: Build adapter dependencies
         run: |
-          pnpm --filter @commander/contracts build
-          pnpm --filter @commander/effect-broker build
+          pnpm --filter @praetor/contracts build
+          pnpm --filter @praetor/effect-broker build
       - name: Validate exact sandbox configuration before minting a token
         env:
           SANDBOX_OWNER: ${{ vars.COMMANDER_SANDBOX_OWNER }}
@@ -373,14 +373,14 @@ jobs:
 
       - name: TypeScript check (core and all packages, source and tests)
         run: |
-          # tsc --noEmit resolves @commander/plugin-sdk types from dist; clean CI has none
-          pnpm --filter @commander/contracts build
-          pnpm --filter @commander/plugin-sdk build
-          pnpm --filter @commander/postgres-runtime build
-          pnpm --filter @commander/effect-broker build
-          pnpm --filter @commander/action-adapters build
-          pnpm --filter @commander/kernel build
-          pnpm --filter @commander/core build
+          # tsc --noEmit resolves @praetor/plugin-sdk types from dist; clean CI has none
+          pnpm --filter @praetor/contracts build
+          pnpm --filter @praetor/plugin-sdk build
+          pnpm --filter @praetor/postgres-runtime build
+          pnpm --filter @praetor/effect-broker build
+          pnpm --filter @praetor/action-adapters build
+          pnpm --filter @praetor/kernel build
+          pnpm --filter @praetor/core build
           # `typecheck` chains the core and kernel source builds plus every other
           # package's `typecheck:test` (tsconfig.test.json), which typechecks the
           # in-src `*.test.ts` files the package builds exclude. Those configs
@@ -398,9 +398,9 @@ jobs:
 
       - name: TypeScript check (SDK)
         run: |
-          # SDK imports @commander/core types from dist; build core after plugin-sdk above
-          pnpm --filter @commander/core build
-          pnpm --filter @commander/sdk typecheck
+          # SDK imports @praetor/core types from dist; build core after plugin-sdk above
+          pnpm --filter @praetor/core build
+          pnpm --filter @praetor/sdk typecheck
 
       - name: Generate dependency SBOM
         if: matrix.canonical
@@ -416,7 +416,7 @@ jobs:
           if-no-files-found: error
 
       - name: Verify core test inventory
-        run: pnpm --filter @commander/core test:inventory
+        run: pnpm --filter @praetor/core test:inventory
 
       - name: Audit reversibility wiring
         run: pnpm audit:wiring
@@ -434,13 +434,13 @@ jobs:
         run: pnpm contract:check
 
       - name: Contracts package tests (controlPlane + baseline + OpenAPI)
-        run: pnpm --filter @commander/contracts test
+        run: pnpm --filter @praetor/contracts test
 
       - name: Kernel unit tests (compensation DLQ + WS2)
         # L2-12: claimOutbox(+ByTopic) DLQ/max_attempts filter + poison→DLQ proofs.
         shell: bash
         run: |
-          pnpm --filter @commander/kernel run pretest
+          pnpm --filter @praetor/kernel run pretest
           node --test scripts/kernel-test-reporter.test.mjs
           node scripts/run-kernel-tests-ci.mjs
 
@@ -454,20 +454,20 @@ jobs:
 
       - name: Effect-broker unit tests (approval binding ENFORCED)
         # L2-11: exact request-hash / policy / audience binding proofs.
-        run: pnpm --filter @commander/effect-broker test
+        run: pnpm --filter @praetor/effect-broker test
 
       - name: WS6/WS7 node:test gates (audit query + host-exec static + memory HTTP)
         # Use bash so multiline `\` continuations work on Windows (pwsh treats them as args).
         shell: bash
         run: |
           # API + worker-plane tests import workspace packages from dist.
-          pnpm --filter @commander/contracts build
-          pnpm --filter @commander/plugin-sdk build
-          pnpm --filter @commander/effect-broker build
-          pnpm --filter @commander/kernel build
-          pnpm --filter @commander/action-adapters build
-          pnpm --filter @commander/core build
-          pnpm --filter @commander/core exec node --import tsx --test \
+          pnpm --filter @praetor/contracts build
+          pnpm --filter @praetor/plugin-sdk build
+          pnpm --filter @praetor/effect-broker build
+          pnpm --filter @praetor/kernel build
+          pnpm --filter @praetor/action-adapters build
+          pnpm --filter @praetor/core build
+          pnpm --filter @praetor/core exec node --import tsx --test \
             tests/sandbox/productionPolicy.test.ts \
             tests/memory/memoryAuditQuery.test.ts \
             tests/security/exec-policy-resource-tool.test.ts
@@ -514,7 +514,7 @@ jobs:
             echo "::warning::better-sqlite3 native binding unavailable on this runner — running vitest with SQLite-dependent suites excluded."
             bash packages/core/scripts/run-vitest-sqlite-fallback.sh
           else
-            pnpm --filter @commander/core test
+            pnpm --filter @praetor/core test
           fi
 
       # The `node:test` half of the core suite (197 files) was executed by NO
@@ -536,7 +536,7 @@ jobs:
         env:
           # Dev/test bypass only — CI runners lack real sandbox runtimes.
           COMMANDER_ALLOW_NO_SANDBOX: true
-        run: pnpm --filter @commander/core test:node
+        run: pnpm --filter @praetor/core test:node
 
       - name: Run SLO measurements
         if: matrix.canonical
@@ -544,7 +544,7 @@ jobs:
         env:
           # Dev/test bypass only — CI runners lack real sandbox runtimes.
           COMMANDER_ALLOW_NO_SANDBOX: true
-        run: pnpm --filter @commander/core test:slo
+        run: pnpm --filter @praetor/core test:slo
 
       - name: Upload SLO report
         uses: actions/upload-artifact@ea165f8d65b6e75b540449e92b4886f43607fa02 # v4
@@ -568,7 +568,7 @@ jobs:
         env:
           # Dev/test bypass only — CI runners lack real sandbox runtimes.
           COMMANDER_ALLOW_NO_SANDBOX: true
-        run: pnpm --filter @commander/core test:node:pathsec
+        run: pnpm --filter @praetor/core test:node:pathsec
 
       - name: CLI check
         shell: bash
@@ -760,15 +760,15 @@ jobs:
           pnpm exec tsx scripts/ci-bootstrap-deploy-gates.ts full
       - name: Build kernel / worker-plane / core / api
         run: |
-          pnpm --filter @commander/contracts build
-          pnpm --filter @commander/plugin-sdk build
-          pnpm --filter @commander/postgres-runtime build
-          pnpm --filter @commander/effect-broker build
-          pnpm --filter @commander/kernel build
-          pnpm --filter @commander/action-adapters build
-          pnpm --filter @commander/core build
-          pnpm --filter @commander/worker-plane build
-          pnpm --filter @commander/api build
+          pnpm --filter @praetor/contracts build
+          pnpm --filter @praetor/plugin-sdk build
+          pnpm --filter @praetor/postgres-runtime build
+          pnpm --filter @praetor/effect-broker build
+          pnpm --filter @praetor/kernel build
+          pnpm --filter @praetor/action-adapters build
+          pnpm --filter @praetor/core build
+          pnpm --filter @praetor/worker-plane build
+          pnpm --filter @praetor/api build
       - name: Kernel PostgreSQL integration (fencing + tenant isolation)
         run: pnpm exec node --import tsx --test packages/kernel/src/postgres.integration.test.ts
       - name: Kernel PostgreSQL ops + compensation race (C4/C5/C2 PG)
@@ -879,12 +879,12 @@ jobs:
 
       - name: Build packages needed by deploy-gates (kernelEnabled + adapter-ops)
         run: |
-          pnpm --filter @commander/contracts build
-          pnpm --filter @commander/plugin-sdk build
-          pnpm --filter @commander/effect-broker build
-          pnpm --filter @commander/kernel build
-          pnpm --filter @commander/action-adapters build
-          pnpm --filter @commander/core build
+          pnpm --filter @praetor/contracts build
+          pnpm --filter @praetor/plugin-sdk build
+          pnpm --filter @praetor/effect-broker build
+          pnpm --filter @praetor/kernel build
+          pnpm --filter @praetor/action-adapters build
+          pnpm --filter @praetor/core build
 
       - name: Install Helm
         uses: azure/setup-helm@1a275c3b69536ee54be43f2070a358922e12c8d4 # v4
@@ -997,9 +997,9 @@ jobs:
 
       - name: Build the packages the drill imports
         run: |
-          pnpm --filter @commander/contracts build
-          pnpm --filter @commander/postgres-runtime build
-          pnpm --filter @commander/effect-broker build
+          pnpm --filter @praetor/contracts build
+          pnpm --filter @praetor/postgres-runtime build
+          pnpm --filter @praetor/effect-broker build
 
       - name: Materialize protected DR inputs
         env:
@@ -1149,7 +1149,7 @@ jobs:
       # a red run. It needs only the DSN and role bootstrap this job already
       # provides.
       - name: PostgreSQL RLS live-fire
-        run: pnpm --filter @commander/kernel test:rls-live-fire
+        run: pnpm --filter @praetor/kernel test:rls-live-fire
 
       # Raw pg_dump data is intentionally excluded. Retention belongs to the
       # protected backup system; this artifact contains only the sanitized log,
@@ -1190,11 +1190,11 @@ jobs:
 
       - name: Build host packages for cell scripts
         run: |
-          pnpm --filter @commander/contracts build
-          pnpm --filter @commander/plugin-sdk build
-          pnpm --filter @commander/effect-broker build
-          pnpm --filter @commander/kernel build
-          pnpm --filter @commander/action-adapters build
+          pnpm --filter @praetor/contracts build
+          pnpm --filter @praetor/plugin-sdk build
+          pnpm --filter @praetor/effect-broker build
+          pnpm --filter @praetor/kernel build
+          pnpm --filter @praetor/action-adapters build
 
       - name: Validate exact sandbox configuration before minting a token
         env:
@@ -1322,11 +1322,11 @@ jobs:
 
       - name: Build host packages for cell scripts (C3 imports action-adapters)
         run: |
-          pnpm --filter @commander/contracts build
-          pnpm --filter @commander/plugin-sdk build
-          pnpm --filter @commander/effect-broker build
-          pnpm --filter @commander/kernel build
-          pnpm --filter @commander/action-adapters build
+          pnpm --filter @praetor/contracts build
+          pnpm --filter @praetor/plugin-sdk build
+          pnpm --filter @praetor/effect-broker build
+          pnpm --filter @praetor/kernel build
+          pnpm --filter @praetor/action-adapters build
 
       - name: Generate cell compose secrets
         run: |

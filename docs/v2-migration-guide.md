@@ -22,7 +22,7 @@ Architecture V2 enforces a strict separation between the **control plane**
 | `COMMANDER_LEGACY_EXECUTION`       | `0`                          | Set to `1` to re-enable legacy routes in V2 mode (temporary bridge).                                                                                                                                                                 |
 | `DATABASE_URL`                     | —                            | PostgreSQL connection string (required for V2 kernel).                                                                                                                                                                               |
 | `COMMANDER_KERNEL_DATABASE_URL`    | falls back to `DATABASE_URL` | Preferred DSN for the shared execution kernel.                                                                                                                                                                                       |
-| `COMMANDER_WORKER_BOOTSTRAP`       | —                            | Path to worker bootstrap module (default: `@commander/worker-plane/bootstrap`).                                                                                                                                                      |
+| `COMMANDER_WORKER_BOOTSTRAP`       | —                            | Path to worker bootstrap module (default: `@praetor/worker-plane/bootstrap`).                                                                                                                                                      |
 | `COMMANDER_WORKER_KIND`            | `agent`                      | Worker type: `agent`, `tool`, `evaluator`.                                                                                                                                                                                           |
 | `COMMANDER_WORKER_CAPABILITIES`    | `agent`                      | Comma-separated capability list.                                                                                                                                                                                                     |
 | `COMMANDER_WORKER_MAX_CONCURRENCY` | `10`                         | Maximum concurrent steps per worker.                                                                                                                                                                                                 |
@@ -110,7 +110,7 @@ export COMMANDER_WORKER_TENANTS="tenant-a,tenant-b"
 # createWorkerService(). There is no permissive default.
 export COMMANDER_WORKER_BOOTSTRAP=/path/to/your/worker-bootstrap.js
 
-# Start the worker (binary from @commander/worker-plane)
+# Start the worker (binary from @praetor/worker-plane)
 commander-worker
 ```
 

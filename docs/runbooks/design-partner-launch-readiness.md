@@ -86,7 +86,7 @@ Treat this list as the initial queue. Re-check it at the start of the freeze.
 
 - The default-branch and scheduled GitHub Actions are not consistently green.
 - `pnpm arch:guard` currently reports an API-to-core boundary violation.
-- `@commander/core` is not published and there is no tagged GitHub release.
+- `@praetor/core` is not published and there is no tagged GitHub release.
 - The scheduled GAIA job currently fails before meaningful scoring because the
   SQLite native binding is unavailable on the runner.
 - `scripts/action-operations-proof.ts` has no wired production campaign driver.

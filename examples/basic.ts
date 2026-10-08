@@ -8,7 +8,7 @@
  *   export OPENAI_API_KEY=sk-...
  *   npx tsx examples/basic.ts
  */
-import { executeTask } from '@commander/core';
+import { executeTask } from '@praetor/core';
 
 async function main() {
   const task = 'Explain what Commander is in one paragraph.';

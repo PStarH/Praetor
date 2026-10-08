@@ -4,7 +4,7 @@
       "id": "kernel-task1-readiness-challenge-client",
       "path": "packages/kernel/src/task1ReadinessChallengeClient.ts",
       "sourceSha256": "b9c99e3f74c57336f78e5ebd79ccb151be4d0a195cb51bceba0bd0ca4bb5c7aa",
-      "owner": "@commander/kernel",
+      "owner": "@praetor/kernel",
       "reason": "TLS-pinned challenged readiness proof client; no effect execution",
       "expiresAt": "2027-07-29",
       "patterns": ["node:https"]
@@ -13,7 +13,7 @@
       "id": "kernel-task1-compose-proof-relay-client",
       "path": "packages/kernel/src/task1ComposeProofRuntime.ts",
       "sourceSha256": "db529a3cd2729d5dbeaa973989bfa0f068098260f180b8bbaeb223b0bcf43dca",
-      "owner": "@commander/kernel",
+      "owner": "@praetor/kernel",
       "reason": "Attempt-authenticated local Unix relay client for closed Compose topology DTOs",
       "expiresAt": "2027-07-29",
       "patterns": ["node:http"]
@@ -22,7 +22,7 @@
       "id": "kernel-task1-kubernetes-proof-api-client",
       "path": "packages/kernel/src/task1KubernetesProofRuntime.ts",
       "sourceSha256": "66849995def940df60238db567a6b835adc99dd1b795dfa0ec4fc1ebb988b544",
-      "owner": "@commander/kernel",
+      "owner": "@praetor/kernel",
       "reason": "Projected-token and cluster-CA client for the proof-reader Kubernetes API allowlist",
       "expiresAt": "2027-07-29",
       "patterns": ["node:https"]
@@ -31,7 +31,7 @@
       "id": "core-sandbox-network-proxy",
       "path": "packages/core/src/sandbox/networkProxy.ts",
       "sourceSha256": "f04a069add19d13157a0c772bd4f1eb66fa44298e2842e73ac82f7af8cefb8c6",
-      "owner": "@commander/core/sandbox-security",
+      "owner": "@praetor/core/sandbox-security",
       "reason": "Sandbox security infrastructure CONNECT proxy enforcing the container egress domain allowlist",
       "expiresAt": "2027-07-29",
       "patterns": ["net"]

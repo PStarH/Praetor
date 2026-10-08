@@ -10,8 +10,8 @@
  * 关键 API: StateCheckpointer, checkpoint, resume, loadCheckpoint, CheckpointState
  * 运行方式: npx tsx examples/interrupt-resume.ts
  */
-import { StateCheckpointer } from '@commander/core/runtime';
-import type { CheckpointState } from '@commander/core/runtime';
+import { StateCheckpointer } from '@praetor/core/runtime';
+import type { CheckpointState } from '@praetor/core/runtime';
 import * as os from 'node:os';
 import * as path from 'node:path';
 

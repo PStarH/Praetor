@@ -36,8 +36,8 @@ jobs:
           mkdir -p "$report_dir"
           : > "$events"
 
-          pnpm --filter @commander/contracts build
-          pnpm --filter @commander/effect-broker build
+          pnpm --filter @praetor/contracts build
+          pnpm --filter @praetor/effect-broker build
           node -e '
             const test = require("./packages/kernel/package.json").scripts.test;
             const prefix = "node --import tsx --test ";
@@ -54,7 +54,7 @@ jobs:
 
             set +e
             timeout --signal=TERM --kill-after=10s 120s \
-              pnpm --filter @commander/kernel exec node --import tsx --test "$test_file" > "$log" 2>&1
+              pnpm --filter @praetor/kernel exec node --import tsx --test "$test_file" > "$log" 2>&1
             exit_code=$?
             set -e
 

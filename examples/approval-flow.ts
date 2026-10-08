@@ -17,8 +17,8 @@
  * 运行方式:
  *   npx tsx examples/approval-flow.ts
  */
-import { ToolApproval, DEFAULT_APPROVAL_POLICIES } from '@commander/core';
-import type { ApprovalRequest, ApprovalResult } from '@commander/core';
+import { ToolApproval, DEFAULT_APPROVAL_POLICIES } from '@praetor/core';
+import type { ApprovalRequest, ApprovalResult } from '@praetor/core';
 
 async function main() {
   console.log('=== 审批流端到端示例 ===\n');

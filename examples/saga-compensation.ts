@@ -18,8 +18,8 @@ import {
   InMemorySagaStore,
   ApprovalManager,
   InMemoryApprovalStore,
-} from '@commander/core';
-import type { SagaContext, SagaResult } from '@commander/core';
+} from '@praetor/core';
+import type { SagaContext, SagaResult } from '@praetor/core';
 
 async function main() {
   console.log('=== Saga 补偿事务端到端示例 ===\n');

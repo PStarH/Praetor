@@ -1,5 +1,5 @@
 {
-  "name": "@commander/openai-agents-mcp",
+  "name": "@praetor/openai-agents-mcp",
   "version": "0.1.0",
   "private": true,
   "type": "module",

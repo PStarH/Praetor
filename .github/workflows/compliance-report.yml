@@ -68,7 +68,7 @@ jobs:
         run: pnpm install
 
       - name: Build core package
-        run: pnpm --filter '@commander/core...' build
+        run: pnpm --filter '@praetor/core...' build
 
       - name: Restore previous snapshot history
         id: restore

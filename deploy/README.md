@@ -205,7 +205,7 @@ envsubst < deploy/k8s/tenant-namespace.yaml | kubectl apply -f -
 bash deploy/scripts/__tests__/create-tenant.test.sh
 
 # TypeScript 测试（vitest）
-pnpm --filter @commander/core test tests/deployment/tenantDeployment.test.ts
+pnpm --filter @praetor/core test tests/deployment/tenantDeployment.test.ts
 ```
 
 测试会：

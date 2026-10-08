@@ -39,7 +39,7 @@ jobs:
         with:
           version: v3.17.3
       - run: pnpm install --frozen-lockfile
-      - run: pnpm --filter @commander/postgres-runtime build
+      - run: pnpm --filter @praetor/postgres-runtime build
       - run: pnpm exec node --import tsx --test packages/kernel/src/migrationGate.test.ts scripts/chart-content-digest.test.ts scripts/helm-cell-assert.test.ts scripts/helm-post-render-projection.test.ts scripts/helm-release-projection-claim-directory.test.ts scripts/helm-lifecycle-static.test.ts scripts/helm-lifecycle-kind.test.ts
       - run: pnpm exec tsx scripts/chart-content-digest.ts verify deploy/helm/commander
       - run: helm lint deploy/helm/commander -f deploy/helm/commander/values-demo.yaml
@@ -61,14 +61,14 @@ jobs:
       - run: pnpm install --frozen-lockfile
       - name: Build Kind lifecycle runtime packages
         run: |
-          pnpm --filter @commander/postgres-runtime build
-          pnpm --filter @commander/contracts build
-          pnpm --filter @commander/plugin-sdk build
-          pnpm --filter @commander/effect-broker build
-          pnpm --filter @commander/kernel build
-          pnpm --filter @commander/action-adapters build
-          pnpm --filter @commander/core build
-          pnpm --filter @commander/worker-plane build
+          pnpm --filter @praetor/postgres-runtime build
+          pnpm --filter @praetor/contracts build
+          pnpm --filter @praetor/plugin-sdk build
+          pnpm --filter @praetor/effect-broker build
+          pnpm --filter @praetor/kernel build
+          pnpm --filter @praetor/action-adapters build
+          pnpm --filter @praetor/core build
+          pnpm --filter @praetor/worker-plane build
       - name: Seed Kind bootstrap evidence
         run: pnpm exec tsx scripts/helm-lifecycle-kind.ts bootstrap-evidence
       - id: provision-kind

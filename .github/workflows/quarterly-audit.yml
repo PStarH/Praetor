@@ -35,7 +35,7 @@ jobs:
         run: pnpm install
 
       - name: Build
-        run: pnpm --filter @commander/core... build
+        run: pnpm --filter @praetor/core... build
 
       - name: Run quarterly audit
         run: pnpm exec tsx packages/core/src/cli/commands/audit-quarterly.ts

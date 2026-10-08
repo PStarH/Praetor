@@ -22,8 +22,8 @@ install with local overrides so workspace packages do not require a registry:
 ```sh
 corepack enable
 pnpm init
-npm pkg set 'pnpm.overrides.@commander/contracts=file:./commander-contracts-0.2.0.tgz'
-npm pkg set 'pnpm.overrides.@commander/postgres-runtime=file:./commander-postgres-runtime-0.2.0.tgz'
+npm pkg set 'pnpm.overrides.@praetor/contracts=file:./commander-contracts-0.2.0.tgz'
+npm pkg set 'pnpm.overrides.@praetor/postgres-runtime=file:./commander-postgres-runtime-0.2.0.tgz'
 pnpm add ./commander-shadow-plane-0.1.0.tgz ./commander-postgres-runtime-0.2.0.tgz pg@8.22.0
 ```
 
@@ -68,7 +68,7 @@ There is no migration or unauthenticated legacy write API.
 ```sh
 node --input-type=module <<'JS'
 import { writeFileSync } from 'node:fs';
-import { SHADOW_SCHEMA_SQL } from '@commander/shadow-plane';
+import { SHADOW_SCHEMA_SQL } from '@praetor/shadow-plane';
 writeFileSync('shadow-schema.sql', SHADOW_SCHEMA_SQL, { mode: 0o600 });
 JS
 psql "$SHADOW_INSTALLER_URL" -v ON_ERROR_STOP=1 -f shadow-schema.sql
@@ -96,7 +96,7 @@ grant runtime roles access to the key table or installer credentials.
 ```sh
 node --input-type=module <<'JS'
 import { Pool } from 'pg';
-import { buildVerifiedPostgresPoolConfig } from '@commander/postgres-runtime';
+import { buildVerifiedPostgresPoolConfig } from '@praetor/postgres-runtime';
 const hex = process.env.COMMANDER_SHADOW_INGESTION_ATTESTATION_KEY_HEX;
 if (!/^[0-9a-f]{64}$/.test(hex ?? '')) throw new Error('Invalid ingestion key');
 const pool = new Pool(buildVerifiedPostgresPoolConfig({ connectionString: process.env.SHADOW_INSTALLER_URL }));
@@ -195,7 +195,7 @@ record both in the approved charter:
 
 ```sh
 node --input-type=module <<'JS'
-import { actionGatewayPolicySnapshot } from '@commander/shadow-plane';
+import { actionGatewayPolicySnapshot } from '@praetor/shadow-plane';
 process.stdout.write(`${JSON.stringify(actionGatewayPolicySnapshot(), null, 2)}\n`);
 JS
 ```
@@ -221,7 +221,7 @@ import {
   canonicalBytes,
   observationDigest,
   parseShadowObservation,
-} from '@commander/shadow-plane';
+} from '@praetor/shadow-plane';
 
 const observations = readFileSync('observations.ndjson', 'utf8')
   .trimEnd()

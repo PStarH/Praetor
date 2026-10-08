@@ -13,10 +13,10 @@ suites below instead.
 # These are opt-in: they are deliberately absent from vitest.config.ts's
 # `include`, so a bare `vitest run tests/chaos` finds nothing and the suite is
 # reached through its own config.
-pnpm --filter @commander/core test:chaos:layers
+pnpm --filter @praetor/core test:chaos:layers
 
 # End-to-end failure-injection suite (provider fallback, SQLite failure, OOM)
-pnpm --filter @commander/core test:chaos
+pnpm --filter @praetor/core test:chaos
 
 # Benchmark harness (simulated fault campaigns, scored)
 pnpm benchmark:chaos

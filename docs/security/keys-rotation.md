@@ -70,7 +70,7 @@ Runbook (5 steps):
 1. **Stop the bleed** — revoke the live key in the upstream provider's console within **4 hours** of confirmed compromise. Latency target applies to _revoke_-not-_rotate_.
 2. **Generate replacement** — produce a fresh key in the provider's UI/API. Document the generation timestamp.
 3. **Deploy rotation** — update production env-var store (Vault / AWS Secrets Manager / GitHub Actions secret). Deploy to all environments simultaneously to prevent drift.
-4. **Verify** — run `pnpm --filter @commander/core benchmark:verify` (week-2 hardening; the script is defined in `packages/core/package.json`, so a bare `pnpm benchmark:verify` from the repo root will not resolve) and spot-check a representative fleet run using the new key.
+4. **Verify** — run `pnpm --filter @praetor/core benchmark:verify` (week-2 hardening; the script is defined in `packages/core/package.json`, so a bare `pnpm benchmark:verify` from the repo root will not resolve) and spot-check a representative fleet run using the new key.
 5. **Audit + notify** — append a dated section to this file (or its successor) with: incident ID, rotation timestamp, revocation confirmation timestamp, downstream-key-cascade (e.g., audit-chain-key also rotated because it absorbed the old env-var). Ping Head of Security + CISO within **24 hours**.
 
 ### §3.1 — Rotation receipt contract
