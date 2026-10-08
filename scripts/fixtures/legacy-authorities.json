@@ -292,8 +292,8 @@
       "disposition": "migrate-and-delete"
     },
     {
-      "path": "packages/python-sdk/src/commander/_client.py",
-      "sourceSha256": "92c365628a61c068b9019e4c2f439a05393a809de6720ac547cb2df90fc554d5",
+      "path": "packages/python-sdk/src/praetor/_client.py",
+      "sourceSha256": "f62bab652c5a25d23778150c26f8b27b82a41f28d53fabfd43ffc1d0c9c02854",
       "callersSha256": "4f53cda18c2baa0c0354bb5f9a3ecbe5ed12ab4d8e11ba873c2f11161202b945",
       "owner": "@praetor/python-sdk",
       "reason": "Python SDK still exposes legacy write clients pending generated Action Gateway conformance",
