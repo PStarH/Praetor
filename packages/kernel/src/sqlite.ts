@@ -43,7 +43,7 @@ import type {
 } from './types.js';
 import { OPERATIONS_HEARTBEAT_TTL_MS } from './types.js';
 import { assertRunTransition, assertStepTransition } from './transitionValidation.js';
-import { deriveEffectIdempotencyKey } from '@commander/effect-broker';
+import { deriveEffectIdempotencyKey } from '@praetor/effect-broker';
 import {
   SQLITE_KERNEL_17_TO_18_MIGRATION_SQL,
   SQLITE_KERNEL_PREVIOUS_SCHEMA_VERSION,

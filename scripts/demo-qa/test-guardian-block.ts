@@ -14,8 +14,8 @@
  * removed. The genuine Guardian layer still emits GUARDIAN_BLOCKED.
  */
 
-import { AgentRuntime, getMessageBus } from '@commander/core';
-import type { LLMProvider, LLMRequest, LLMResponse, Tool } from '@commander/core';
+import { AgentRuntime, getMessageBus } from '@praetor/core';
+import type { LLMProvider, LLMRequest, LLMResponse, Tool } from '@praetor/core';
 
 let executed = false;
 

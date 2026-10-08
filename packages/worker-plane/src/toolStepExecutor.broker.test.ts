@@ -1,6 +1,6 @@
 import assert from 'node:assert/strict';
 import { describe, it } from 'node:test';
-import { EffectBrokerError } from '@commander/effect-broker';
+import { EffectBrokerError } from '@praetor/effect-broker';
 import { ToolStepExecutor } from './toolStepExecutor.js';
 import { ConnectorStepExecutor } from './connectorStepExecutor.js';
 import type { ClaimedStep } from './types.js';

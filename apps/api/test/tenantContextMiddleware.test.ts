@@ -1,7 +1,7 @@
 import { test } from 'node:test';
 import * as assert from 'node:assert/strict';
 import express, { type Request, type Response, type Application } from 'express';
-import { getCurrentTenantId } from '@commander/core/runtime/tenantContext';
+import { getCurrentTenantId } from '@praetor/core/runtime/tenantContext';
 import { tenantContextMiddleware } from '../src/tenantContextMiddleware';
 import type { Server } from 'node:net';
 

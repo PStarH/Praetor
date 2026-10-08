@@ -5,7 +5,7 @@
  * an optional output format — many users consume JSON or logs and never need
  * rendered HTML. The plugin exposes the renderer as a tool and keeps the
  * public API contract (getHTMLReportRenderer / createWarRoomHTMLReport) stable
- * so apps/api/runtimeEndpoints.ts can continue importing them from @commander/core.
+ * so apps/api/runtimeEndpoints.ts can continue importing them from @praetor/core.
  *
  * No hooks installed — reporting is explicitly invoked via the
  * POST /api/runtime/render-report endpoint or the render_report tool.
@@ -15,8 +15,8 @@ import { getHTMLReportRenderer, createWarRoomHTMLReport } from './reporting';
 import type { HTMLReportRenderer } from './reporting';
 import { getGlobalLogger } from '../../logging';
 
-// Re-export the public API so @commander/core consumers see no change.
-// apps/api/src/runtimeEndpoints.ts imports these from '@commander/core'.
+// Re-export the public API so @praetor/core consumers see no change.
+// apps/api/src/runtimeEndpoints.ts imports these from '@praetor/core'.
 export { getHTMLReportRenderer, createWarRoomHTMLReport };
 
 // ============================================================================

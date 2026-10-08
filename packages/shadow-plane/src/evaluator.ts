@@ -2,7 +2,7 @@ import {
   ACTION_GATEWAY_POLICY_ID,
   actionGatewayPolicySnapshot,
   evaluateActionGatewayPolicy,
-} from '@commander/contracts';
+} from '@praetor/contracts';
 import { canonicalBytes, sha256Hex } from './canonical.js';
 import type { ShadowObservationV1 } from './contracts.js';
 

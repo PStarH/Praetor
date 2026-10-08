@@ -1,5 +1,5 @@
 /**
- * @commander/plugin-sdk — Type-safe Hook Handlers
+ * @praetor/plugin-sdk — Type-safe Hook Handlers
  *
  * Provides strongly-typed handler functions for all 19 Commander hook points.
  * Plugin authors get full IntelliSense without needing to know internal types.

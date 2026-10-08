@@ -1,7 +1,7 @@
 import assert from 'node:assert/strict';
 import { describe, it } from 'node:test';
-import { servicenowCorrelationId } from '@commander/contracts';
-import { AdapterExecutionError } from '@commander/effect-broker';
+import { servicenowCorrelationId } from '@praetor/contracts';
+import { AdapterExecutionError } from '@praetor/effect-broker';
 import { createServiceNowIncidentCreateAdapter } from './incidentCreate.js';
 import { ActionAdapterRegistry } from '../registry.js';
 import type { AdapterCredentialProvider } from '../types.js';

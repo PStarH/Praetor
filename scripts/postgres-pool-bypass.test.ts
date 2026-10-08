@@ -28,7 +28,7 @@ describe('PostgreSQL pool bypass AST gate', () => {
     write(
       root,
       'packages/d/src/safe.ts',
-      "import { createVerifiedPostgresPool } from '@commander/postgres-runtime'; createVerifiedPostgresPool({ connectionString: 'x' });\n",
+      "import { createVerifiedPostgresPool } from '@praetor/postgres-runtime'; createVerifiedPostgresPool({ connectionString: 'x' });\n",
     );
 
     assert.deepEqual(

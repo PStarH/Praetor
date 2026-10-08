@@ -12,10 +12,10 @@ describe('Task 1 deployment closure', () => {
     const pkg = JSON.parse(read('packages/effect-broker/package.json')) as {
       dependencies?: Record<string, string>;
     };
-    assert.equal(pkg.dependencies?.['@commander/contracts'], 'workspace:*');
+    assert.equal(pkg.dependencies?.['@praetor/contracts'], 'workspace:*');
     assert.match(
       read('pnpm-lock.yaml'),
-      /packages\/effect-broker:[\s\S]*?dependencies:[\s\S]*?'@commander\/contracts':[\s\S]*?link:\.\.\/contracts/,
+      /packages\/effect-broker:[\s\S]*?dependencies:[\s\S]*?'@(commander|praetor)\/contracts':[\s\S]*?link:\.\.\/contracts/,
     );
   });
 

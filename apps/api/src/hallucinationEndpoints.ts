@@ -12,11 +12,11 @@
  * in the trace file; if none is found it returns an empty array — closing GAP-04
  * from the UX audit report without modifying Core.
  */
-import { reportSilentFailure } from '@commander/core';
+import { reportSilentFailure } from '@praetor/core';
 import { Router } from 'express';
 import * as fsp from 'fs/promises';
 import * as path from 'path';
-import { resolveConfiguredTraceBase, resolveTraceDir } from '@commander/core/runtime/traceStore';
+import { resolveConfiguredTraceBase, resolveTraceDir } from '@praetor/core/runtime/traceStore';
 import { toErrorMessage } from './routeHelpers';
 
 // ── Types ─────────────────────────────────────────────────────────────────

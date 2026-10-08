@@ -13,7 +13,7 @@
  * run together. Forwarding-only mocks cannot prove this boundary.
  */
 import * as assert from 'node:assert/strict';
-import { hashSecret } from '@commander/core/runtime';
+import { hashSecret } from '@praetor/core/runtime';
 import { createServer, type Server } from 'node:http';
 import type { AddressInfo } from 'node:net';
 import { after, afterEach, before, beforeEach, describe, test } from 'node:test';

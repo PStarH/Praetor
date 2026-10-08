@@ -5,7 +5,7 @@ import {
   SimpleTenantProvider,
   NullTenantProvider,
   type TenantConfig,
-} from '@commander/core/runtime';
+} from '@praetor/core/runtime';
 
 /** Tenant ID format: alphanumeric, hyphen, underscore, dot, colon. Must not be empty. */
 const TENANT_ID_RE = /^[a-zA-Z0-9._:-]{1,128}$/;

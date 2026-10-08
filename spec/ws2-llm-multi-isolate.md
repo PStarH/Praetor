@@ -189,7 +189,7 @@ interface LlmInvokeEntry {
 }
 ```
 
-- Registry **模块私有** + 测试 hook；禁止从 `@commander/worker-plane` 公开导出可变 Map。
+- Registry **模块私有** + 测试 hook；禁止从 `@praetor/worker-plane` 公开导出可变 Map。
 - `tenantId` **只**来自 `admission.grant`（经 optional `executionContext`），禁止从 `request` 读取。
 - **One-shot：** `dispatchLlmEffect` 在 invoke **前** delete entry；wrap 的 `finally` 仅作泄漏清理。
 - `expiresAt` ≤ capability TTL；定期 sweep 防 prompt 闭包常驻。

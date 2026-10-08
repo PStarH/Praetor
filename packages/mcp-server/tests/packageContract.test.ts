@@ -9,7 +9,7 @@ const manifest = JSON.parse(readFileSync(join(packageRoot, 'package.json'), 'utf
   unknown
 >;
 
-describe('@commander/mcp-server publication contract', () => {
+describe('@praetor/mcp-server publication contract', () => {
   it('publishes its generated JavaScript as ESM', () => {
     expect(manifest.type).toBe('module');
   });

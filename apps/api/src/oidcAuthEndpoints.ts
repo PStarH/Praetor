@@ -9,7 +9,7 @@ import {
   createOIDCPluginFromEnv,
   type AuthPluginResult,
   type AuthRole,
-} from '@commander/core';
+} from '@praetor/core';
 import {
   findUserByEmail,
   findUserByOidcIdentity,
@@ -23,7 +23,7 @@ import {
 } from './userStore';
 import { signAccessToken, signRefreshToken } from './jwtMiddleware';
 import { atomicWriteFileSync, readJsonFileSafe, isPlainObjectJson } from './atomicWrite';
-import { isMultiTenantEnabled, validateTenantId } from '@commander/core/runtime/tenantContext';
+import { isMultiTenantEnabled, validateTenantId } from '@praetor/core/runtime/tenantContext';
 
 function requireAuth(req: Request, res: Response, next: NextFunction): void {
   if (!req.user) {

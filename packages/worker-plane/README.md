@@ -1,4 +1,4 @@
-# @commander/worker-plane
+# @praetor/worker-plane
 
 The worker plane is the only location that executes a leased step. It is
 separate from the Gateway and communicates with the shared execution kernel

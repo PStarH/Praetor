@@ -29,7 +29,7 @@ import {
   resolveConfiguredTraceBase,
   resolveTraceDir,
   TraceConfigError,
-} from '@commander/core/runtime/traceStore';
+} from '@praetor/core/runtime/traceStore';
 
 interface TraceEventShape {
   id: string;

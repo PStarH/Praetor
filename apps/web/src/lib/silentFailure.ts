@@ -1,7 +1,7 @@
 /**
  * Browser-safe silent-failure reporter.
  *
- * The server-side canonical implementation lives in `@commander/core`.
+ * The server-side canonical implementation lives in `@praetor/core`.
  * That version depends on Node-only modules (async_hooks, blessed logging,
  * playwright-backed tools, etc.) and cannot be bundled for the web GUI.
  * This thin browser twin preserves the same call signature and logs the

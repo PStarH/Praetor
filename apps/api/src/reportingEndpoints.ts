@@ -11,14 +11,14 @@
  *
  * Note: the existing POST /api/runtime/render-report endpoint in
  * runtimeEndpoints.ts remains the primary rendering entry point and
- * imports directly from @commander/core. This router adds plugin
+ * imports directly from @praetor/core. This router adds plugin
  * lifecycle control + a convenience render endpoint.
  */
 import { Router, type NextFunction, type Request, type Response } from 'express';
 import { z } from 'zod';
 import { toErrorMessage } from './routeHelpers';
 import { validateBody } from './validationMiddleware';
-import { getHookManager, getHTMLReportRenderer, createWarRoomHTMLReport } from '@commander/core';
+import { getHookManager, getHTMLReportRenderer, createWarRoomHTMLReport } from '@praetor/core';
 import { hasRole } from './userStore';
 
 const REPORTING_PLUGIN_NAME = 'builtin-reporting';

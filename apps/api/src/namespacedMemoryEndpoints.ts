@@ -1,5 +1,5 @@
 import { Router } from 'express';
-import { writeProductMemory, type MemoryStore } from '@commander/core';
+import { writeProductMemory, type MemoryStore } from '@praetor/core';
 import type { AuthUser } from './jwtMiddleware';
 import type { UserRole } from './userStore';
 

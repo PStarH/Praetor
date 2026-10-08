@@ -3,7 +3,7 @@
  * Inspired by LangGraph's state machine model
  *
  * @legacy This is a legacy state machine implementation with its own state
- * model. The V2 canonical state machine is defined in `@commander/contracts`
+ * model. The V2 canonical state machine is defined in `@praetor/contracts`
  * (`RUN_STATES` / `STEP_STATES` / `RUN_TRANSITIONS` / `STEP_TRANSITIONS`).
  * New code must use the V2 contracts. This module will be deleted during WP7
  * migration. Do NOT add new features here.

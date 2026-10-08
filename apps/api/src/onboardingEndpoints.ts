@@ -21,7 +21,7 @@
  *   - .commander.json 读写均处理文件不存在的情况
  *   - API key 仅从环境变量或部署平台的密钥管理器读取
  */
-import { reportSilentFailure } from '@commander/core';
+import { reportSilentFailure } from '@praetor/core';
 import { Router, type NextFunction, type Request, type Response } from 'express';
 import * as fsp from 'fs/promises';
 import * as fsSync from 'fs';
@@ -46,7 +46,7 @@ const PROVIDER_TEST_TIMEOUT_MS = 10_000;
 // ── Provider 检测 ──────────────────────────────────────────────────────────
 //
 // 此处复刻 packages/core/src/config/commanderConfig.ts 中的关键逻辑，但保持
-// 自包含——因为 detectProvider 未从 @commander/core 顶层导出，且本路由需要
+// 自包含——因为 detectProvider 未从 @praetor/core 顶层导出，且本路由需要
 // 额外的灵活性（例如使用 Web 端保存的 provider / model 偏好）。
 
 type ProviderId = 'openai' | 'anthropic' | 'google' | 'deepseek' | 'ollama' | 'openrouter';

@@ -33,7 +33,7 @@
  * Three layers, all exposed:
  *   • Library (this file): pure functions, no I/O at import time, no
  *     `process.exit`, no `require.main` machinations. Importable from any
- *     `@commander/core` consumer.
+ *     `@praetor/core` consumer.
  *   • CLI wrapper: `scripts/verify-rotation-signoff.ts` — thin async adapter
  *     that awaits `runVerifierAsync` and routes the result to JSON / human
  *     report based on the parsed CLI flags. (D3.2: CLI now uses async.)
@@ -56,7 +56,7 @@
  *   type VerifyResult,
  *   type VerifyShaResult,
  *   type RunVerifierAsyncOptions,
- * } from '@commander/core';
+ * } from '@praetor/core';
  *
  * // 1. CI gate — drive the policy evaluator directly on synthetic rows:
  * const result: VerifyResult = await evaluateSignoffAsync([
@@ -124,9 +124,9 @@
  * ─────────────────────────────────────────────────────────
  * Most canonical type names (`SignoffRow`, `CliArgs`, `RunVerifierOptions`,
  * `VerifyShaResult`, `RunVerifierAsyncOptions`) resolve from
- * `@commander/core/security` (security barrel) without any rename.
+ * `@praetor/core/security` (security barrel) without any rename.
  * `VerifyResult` is intentionally NOT re-exported from the security barrel
- * because `@commander/core/security` already exports a same-named (unrelated)
+ * because `@praetor/core/security` already exports a same-named (unrelated)
  * `VerifyResult` from the `capabilityToken` module — duplicate types are a
  * TypeScript error at the barrel surface, not just a runtime concern.
  *
@@ -135,23 +135,23 @@
  *
  *   ```ts
  *   // Approach 1 — type-inference brings it for free:
- *   import { evaluateSignoffAsync } from '@commander/core/security';
+ *   import { evaluateSignoffAsync } from '@praetor/core/security';
  *   const r = await evaluateSignoffAsync(rows); // r: VerifyResult (inferred)
  *
  *   // Approach 2 — direct from the verifier file path:
  *   import type { VerifyResult } from
- *     '@commander/core/security/rotationSignoffVerifier';
+ *     '@praetor/core/security/rotationSignoffVerifier';
  *
  *   // Approach 3 — main-barrel alias (always resolves correctly):
- *   import type { RotationSignoffResult } from '@commander/core';
+ *   import type { RotationSignoffResult } from '@praetor/core';
  *   ```
  *
- * The MAIN barrel (`@commander/core`) re-exports the async verifier VALUES
+ * The MAIN barrel (`@praetor/core`) re-exports the async verifier VALUES
  * plus type-aliased forms (`RotationSignoffResult`, `RotationSignoffRow`,
  * `RotationSignoffCliArgs`, `RotationVerifyShaResult`,
  * `RotationRunVerifierAsyncOptions`). The rotate-prefixed names are the
  * bleed-free default for any consumer that wants a single unbroken type
- * chain from `@commander/core`.
+ * chain from `@praetor/core`.
  */
 
 // Removed `#!/usr/bin/env tsx` — this is now a library module, not a CLI.

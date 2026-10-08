@@ -18,7 +18,7 @@
  *
  * Why this exists
  * ---------------
- * Every package in this repo except `@commander/contracts` declares
+ * Every package in this repo except `@praetor/contracts` declares
  * `"type": "module"`. In an ES module the CommonJS `require` binding does not
  * exist, so a bare `require('x')` raises `ReferenceError: require is not
  * defined` — it never resolves a module.

@@ -68,14 +68,14 @@ describe('Module A CI workflow', () => {
     assert.ok(typecheck, 'Quality workflow must define the core TypeScript check step');
     assert.match(
       typecheck.run ?? '',
-      /@commander\/postgres-runtime build[\s\S]*core exec tsc --noEmit/,
+      /@(commander|praetor)\/postgres-runtime build[\s\S]*core exec tsc --noEmit/,
       'clean core typecheck must build postgres-runtime declarations first',
     );
-    // The kernel sources import @commander/effect-broker, so its build must also
+    // The kernel sources import @praetor/effect-broker, so its build must also
     // precede the kernel typechecks, and the test-tsconfig check must actually run.
     assert.match(
       typecheck.run ?? '',
-      /@commander\/effect-broker build[\s\S]*kernel exec tsc --noEmit/,
+      /@(commander|praetor)\/effect-broker build[\s\S]*kernel exec tsc --noEmit/,
       'kernel source typecheck must build effect-broker declarations first',
     );
     assert.match(

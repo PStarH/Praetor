@@ -5,7 +5,7 @@ import {
   getGlobalLogger,
   getGlobalMetrics,
   resetControlPlane,
-} from '@commander/core';
+} from '@praetor/core';
 
 function localToolToken(toolName: string): string {
   return getCapabilityTokenIssuer().issue({

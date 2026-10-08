@@ -6,8 +6,8 @@
  * tenant-scoped canonical MemoryService. This keeps the API's domain-oriented
  * endpoints without retaining a second JSON-file persistence owner.
  */
-import type { ProjectMemoryKind } from '@commander/core';
-import type { ProjectMemoryItem } from '@commander/core';
+import type { ProjectMemoryKind } from '@praetor/core';
+import type { ProjectMemoryItem } from '@praetor/core';
 import { ProjectMemoryStoreAdapter } from './memoryStoreAdapter';
 
 export interface MemoryPointer {

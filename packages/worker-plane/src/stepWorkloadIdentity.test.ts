@@ -5,7 +5,7 @@ import {
   CapabilityTokenVerifier,
   EffectBroker,
   canonicalRequestHash,
-} from '@commander/effect-broker';
+} from '@praetor/effect-broker';
 import type { ClaimedStep, WorkerRecord } from './types.js';
 import {
   getStepWorkloadBinding,

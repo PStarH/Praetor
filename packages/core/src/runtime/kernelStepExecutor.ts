@@ -143,7 +143,7 @@ export interface KernelStepExecutorConfig {
  * Concrete StepExecutor that bridges kernel steps to AgentRuntime executions.
  *
  * Implements the worker-plane `StepExecutor` interface via structural typing.
- * No import from @commander/worker-plane is needed — TypeScript accepts any
+ * No import from @praetor/worker-plane is needed — TypeScript accepts any
  * object with a compatible `execute` method.
  */
 export class KernelStepExecutor {

@@ -1,5 +1,5 @@
 {
-  "name": "@commander/api",
+  "name": "@praetor/api",
   "version": "0.1.0",
   "private": true,
   "type": "module",
@@ -7,7 +7,7 @@
     "dev": "node --env-file-if-exists=.././../.env --import tsx --watch src/index.ts",
     "build": "tsc -p tsconfig.json && node .././../scripts/fix-esm-imports.mjs dist",
     "typecheck": "tsc -p tsconfig.json --noEmit",
-    "pretest": "pnpm --filter @commander/postgres-runtime --filter @commander/plugin-sdk build && pnpm --filter @commander/effect-broker --filter @commander/core --filter @commander/kernel build && pnpm build",
+    "pretest": "pnpm --filter @praetor/postgres-runtime --filter @praetor/plugin-sdk build && pnpm --filter @praetor/effect-broker --filter @praetor/core --filter @praetor/kernel build && pnpm build",
     "test": "node --import tsx --test test/*.test.cjs test/*.test.ts test/ws9/*.test.ts",
     "test:integration": "node --import tsx scripts/run-integration-tests.ts"
   },
@@ -25,11 +25,11 @@
     "node": ">=22.9.0 <23.0.0"
   },
   "dependencies": {
-    "@commander/contracts": "workspace:*",
-    "@commander/core": "workspace:*",
-    "@commander/effect-broker": "workspace:*",
-    "@commander/kernel": "workspace:*",
-    "@commander/postgres-runtime": "workspace:*",
+    "@praetor/contracts": "workspace:*",
+    "@praetor/core": "workspace:*",
+    "@praetor/effect-broker": "workspace:*",
+    "@praetor/kernel": "workspace:*",
+    "@praetor/postgres-runtime": "workspace:*",
     "bcryptjs": "^3.0.3",
     "express": "^5.2.1",
     "jsonwebtoken": "^9.0.3",

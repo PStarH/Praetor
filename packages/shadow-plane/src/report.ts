@@ -1,5 +1,5 @@
 import { sign, type KeyObject } from 'node:crypto';
-import { actionGatewayPolicySnapshot } from '@commander/contracts';
+import { actionGatewayPolicySnapshot } from '@praetor/contracts';
 import { canonicalBytes, sha256Hex, verifyEd25519 } from './canonical.js';
 import {
   parseShadowManifest,

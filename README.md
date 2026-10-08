@@ -1,23 +1,23 @@
 <p align="center">
-  <a href="https://github.com/PStarH/Commander/actions/workflows/ci.yml?query=branch%3Amaster"><img src="https://img.shields.io/github/actions/workflow/status/PStarH/Commander/ci.yml?branch=master&style=flat-square&label=CI&logo=github" alt="CI Status" /></a>
-  <a href="https://pstarh.github.io/commander-docs/"><img src="https://img.shields.io/badge/docs-online-blue?style=flat-square&logo=vitepress" alt="Documentation" /></a>
+  <a href="https://github.com/PStarH/Praetor/actions/workflows/ci.yml?query=branch%3Amaster"><img src="https://img.shields.io/github/actions/workflow/status/PStarH/Praetor/ci.yml?branch=master&style=flat-square&label=CI&logo=github" alt="CI Status" /></a>
+  <a href="https://pstarh.github.io/praetor-docs/"><img src="https://img.shields.io/badge/docs-online-blue?style=flat-square&logo=vitepress" alt="Documentation" /></a>
   <img src="https://img.shields.io/badge/license-MIT-green?style=flat-square" alt="License" />
   <img src="https://img.shields.io/badge/TypeScript-5.x-3178C6?style=flat-square&logo=typescript&logoColor=white" alt="TypeScript" />
   <img src="https://img.shields.io/badge/Python%20SDK-3.10+-3776AB?style=flat-square&logo=python&logoColor=white" alt="Python SDK" />
 </p>
 
-<h1 align="center">Commander</h1>
+<h1 align="center">Praetor</h1>
 <p align="center"><strong>The Secure Approval &amp; Recovery Plane for Autonomous AI Agents</strong></p>
 <p align="center">
   <em>Prevent duplicate mutations · Recover from dropped network responses · Enforce cryptographic human approvals</em>
 </p>
 
-> **Status: Alpha.** Commander is an open-source distributed execution control plane and pilot framework. It isolates unprivileged AI agent reasoning from production write targets, providing preflight idempotency, two-phase human gates, and PostgreSQL WAL crash resilience. See the [GitHub pilot boundary](docs/pilot/github/README.md) and [ENTERPRISE_READINESS.md](ENTERPRISE_READINESS.md).
+> **Status: Alpha.** Praetor is an open-source distributed execution control plane and pilot framework. It isolates unprivileged AI agent reasoning from production write targets, providing preflight idempotency, two-phase human gates, and PostgreSQL WAL crash resilience. See the [GitHub pilot boundary](docs/pilot/github/README.md) and [ENTERPRISE_READINESS.md](ENTERPRISE_READINESS.md).
 
 <p align="center">
   <a href="#quick-start"><img src="https://img.shields.io/badge/⚡_TRY_NOW-000?style=for-the-badge" /></a>
-  <a href="#the-distributed-systems-problem-for-ai-agents"><img src="https://img.shields.io/badge/🛡️_WHY_COMMANDER-000?style=for-the-badge" /></a>
-  <a href="https://pstarh.github.io/commander-docs/"><img src="https://img.shields.io/badge/📖_DOCS-000?style=for-the-badge" /></a>
+  <a href="#the-distributed-systems-problem-for-ai-agents"><img src="https://img.shields.io/badge/🛡️_WHY_PRAETOR-000?style=for-the-badge" /></a>
+  <a href="https://pstarh.github.io/praetor-docs/"><img src="https://img.shields.io/badge/📖_DOCS-000?style=for-the-badge" /></a>
 </p>
 
 ---
@@ -39,7 +39,7 @@
                               │ 1. Propose Mutation (No direct write tokens)
                               ▼
    ┌────────────────────────────────────────────────────────┐
-   │            Commander Control Plane                     │
+   │            Praetor Control Plane                     │
    │  ┌─────────────────────────┐ ┌──────────────────────┐  │
    │  │ Preflight Idempotency   │ │ Two-Phase Human Gate │  │
    │  │ (Query-Before-Retry)    │ │ (Cryptographic Hash) │  │
@@ -65,7 +65,7 @@ Did the write happen? How many times? What was actually committed?
 
 Retrying blindly creates duplicate PRs, double transactions, or corrupted state. Giving up leaves orphaned mutations.
 
-| Challenge | Naive Agent Execution | Commander Governed Action |
+| Challenge | Naive Agent Execution | Praetor Governed Action |
 | --- | --- | --- |
 | **Response Loss** (e.g. 504 Gateway Timeout during PR creation) | Re-plans or retries blindly → **Duplicate PRs & mutations** | **Preflight Query-Before-Retry**: Checks remote outcome by action identity before retry |
 | **Worker Crash Mid-Task** | State lost or restarted from zero with orphaned external side effects | **Durable PostgreSQL Kernel**: Step lease reclaims; new worker resumes safely |
@@ -82,9 +82,9 @@ Read the in-depth essay: [Why retrying an AI agent's external action is unsafe](
 
 ---
 
-## What is Commander
+## What is Praetor
 
-Commander sits between your Coding / DevOps agents and external write targets.
+Praetor sits between your Coding / DevOps agents and external write targets.
 
 The first pilot is intentionally narrow: **same-repository PR creation from existing branches**. An agent proposes the action; a separately authenticated human approves the exact request. When a response is lost, the recovery path queries GitHub using persisted action identity and approved parameters before ever retrying.
 
@@ -207,7 +207,7 @@ registry. The `--offline` flag means no provider request, not a network-free
 installation.
 
 ```bash
-git clone https://github.com/PStarH/Commander.git
+git clone https://github.com/PStarH/Praetor.git
 cd Commander
 corepack enable
 pnpm install --frozen-lockfile
@@ -516,9 +516,9 @@ Native controls such as GitHub permissions and Actions approvals are often enoug
 - **Privacy:** prompts may be sent to the selected LLM provider, and local traces,
   memory, audit data, and optional OpenTelemetry exports may be persisted. See
   [PRIVACY.md](PRIVACY.md) before entering sensitive data.
-- **Bugs:** open a [GitHub issue](https://github.com/PStarH/Commander/issues) and
+- **Bugs:** open a [GitHub issue](https://github.com/PStarH/Praetor/issues) and
   redact prompts, logs, configuration, PII, and secrets first.
-- **Questions and proposals:** open a [GitHub issue](https://github.com/PStarH/Commander/issues).
+- **Questions and proposals:** open a [GitHub issue](https://github.com/PStarH/Praetor/issues).
 - **Security vulnerabilities:** follow [SECURITY.md](SECURITY.md); do not open a public issue.
 
 ---

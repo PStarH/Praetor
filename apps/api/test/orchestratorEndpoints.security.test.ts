@@ -1,7 +1,7 @@
 /**
  * P0.1 — legacy orchestrator / pipeline execute admin gate.
  *
- * Full router import pulls @commander/core (ESM type-reexport friction under tsx).
+ * Full router import pulls @praetor/core (ESM type-reexport friction under tsx).
  * Cover the security contract via source assertions + isomorphic middleware behavior
  * against the real legacyExecutionGuard.
  */

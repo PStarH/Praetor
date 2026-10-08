@@ -14,7 +14,7 @@
  * - BERTScore methodology (Zhang et al., 2020)
  */
 
-import { reportSilentFailure } from '@commander/core';
+import { reportSilentFailure } from '@praetor/core';
 import * as fs from 'fs';
 import * as path from 'path';
 

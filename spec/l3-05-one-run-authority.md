@@ -76,7 +76,7 @@
 
 - Gateway `apps/api` **不得** import `runLedger` / `RunLedger`。
 - 模块头注释声明：非 `/v1` durable run authority；权威在 kernel Postgres。
-- ATR `RunState` 与 `@commander/contracts` `RunState` 并存视为 **已知双轨**（§4），不得新增 Gateway 路由读取 ATR ledger 作为 run 历史。
+- ATR `RunState` 与 `@praetor/contracts` `RunState` 并存视为 **已知双轨**（§4），不得新增 Gateway 路由读取 ATR ledger 作为 run 历史。
 
 ---
 

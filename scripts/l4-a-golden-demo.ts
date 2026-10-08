@@ -12,7 +12,7 @@ import assert from 'node:assert/strict';
 import { createHash, generateKeyPairSync } from 'node:crypto';
 import { createServer, type Server } from 'node:http';
 import express from 'express';
-import { verifyEvidenceBundle } from '@commander/effect-broker';
+import { verifyEvidenceBundle } from '@praetor/effect-broker';
 import {
   CapabilityTokenIssuer,
   CapabilityTokenVerifier,
@@ -20,8 +20,8 @@ import {
   buildTerminalEvidenceRecordFromKernel,
   canonicalRequestHash,
   createEvidenceSigner,
-} from '@commander/effect-broker';
-import { InMemoryKernelRepository } from '@commander/kernel/testing/inMemoryRepository';
+} from '@praetor/effect-broker';
+import { InMemoryKernelRepository } from '@praetor/kernel/testing/inMemoryRepository';
 import {
   ApiKeyWorkerAuthenticator,
   ToolStepExecutor,

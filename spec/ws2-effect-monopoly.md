@@ -13,7 +13,7 @@
 本 spec 的上游约束来自以下一手文档与代码合约（仓库内已存在）：
 
 - `docs/architecture/005-policy-and-effect-broker.md`（ADR 005，Approved）——确立 `EffectBroker` 作为外部副作用唯一授权路径，PDP/PEP 分离，"无 policy decision id 不得执行外部写"。
-- `PRINCIPLES.md` §3「Single decision points」Policy decision point 行（`PRINCIPLES.md:109`）：明确"`@commander/effect-broker` PEP for external effects"为 canonical，并记录"当前无单一 authz choke point"为待收敛债务。
+- `PRINCIPLES.md` §3「Single decision points」Policy decision point 行（`PRINCIPLES.md:109`）：明确"`@praetor/effect-broker` PEP for external effects"为 canonical，并记录"当前无单一 authz choke point"为待收敛债务。
 - `PRINCIPLES.md:284-288`「effect admission force」iteration：worker 默认 deny-all，`COMMANDER_WORKER_EFFECT_POLICY=permit` 仅 dev 旁路。
 - `spec/ws7-sandbox-failclosed.md`——执行隔离的公开技术规格；历史内部审计不作为当前验收证据。
 - WS1 outbox 合约：`packages/kernel/src/schema.ts:130-146`（`commander_outbox` 表）、`packages/kernel/src/repository.ts:67-68`（`claimOutbox`/`markOutboxPublished`）、`packages/operations/src/outboxPublisherMain.ts`（发布主循环）。补偿事件作为 outbox 消息的 topic 之一，经 EffectBroker 执行。
@@ -382,7 +382,7 @@ WS1 `commander_outbox`（`schema.ts:130`）的 `payload` 是 JSONB。补偿事�
 
 | 旧路径 | 位置 | 删除/重定向动作 |
 |---|---|---|
-| compat shim | `packages/core/src/security/effectBroker.ts` 整文件 | **删除**；`setEffectBroker`/`getEffectBroker`/`isEffectBrokerCompatEnabled`/`requireEffectBrokerCompatAudit` 全部移除；调用方重定向至 `@commander/effect-broker` |
+| compat shim | `packages/core/src/security/effectBroker.ts` 整文件 | **删除**；`setEffectBroker`/`getEffectBroker`/`isEffectBrokerCompatEnabled`/`requireEffectBrokerCompatAudit` 全部移除；调用方重定向至 `@praetor/effect-broker` |
 | SideEffectGate | `packages/core/src/runtime/sideEffectGate.ts` | 收敛为 `EffectBroker` 的薄适配（保留 `SideEffectGate` 类名作为别名，内部委托 `EffectBroker.admit/execute`）；`COMMANDER_ATR_SOFT_BYPASS` 与 `softBypassAllowed` 删除 |
 | bootstrap 旁路 | `packages/worker-plane/src/bootstrap.ts:144-168` `createWorkerPolicyEvaluator` | 删除 `permit`/`allow`/`1` 分支；保留 deny-default；生产 PolicyEvaluator 必须由真实策略引擎注入 |
 | bootstrap request-binding 关闭 | `packages/worker-plane/src/bootstrap.ts:194-197` `requireRequestBinding: false` | 改为 `true`；移除该选项从 EffectBrokerOptions 的 `false` 取值路径 |

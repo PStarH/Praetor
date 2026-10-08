@@ -15,7 +15,7 @@ import {
   getTenantFairnessMonitor,
   runWithTenant,
   type TenantConfig,
-} from '@commander/core/runtime';
+} from '@praetor/core/runtime';
 import { getTenantMetricStats, getTenantRunDurations } from './tenantMetricsStore';
 
 const ACTIVE_WINDOW_MS = 24 * 60 * 60 * 1000;

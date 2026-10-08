@@ -1,9 +1,9 @@
-import type { KernelEffect, KernelEvidenceRecord } from '@commander/kernel';
+import type { KernelEffect, KernelEvidenceRecord } from '@praetor/kernel';
 import {
   buildTerminalEvidenceRecordFromKernel,
   type EffectOutcomeQuerier,
   type EvidenceSigner,
-} from '@commander/effect-broker';
+} from '@praetor/effect-broker';
 
 export interface OpsLoopHealth {
   mode: 'draining';
@@ -210,7 +210,7 @@ export function opsLoopErrorMessage(error: unknown): string | undefined {
 export interface ReconciliationDaemonOptions {
   repository: ReconciliationRepository;
   terminalEvidenceContext?: Pick<
-    import('@commander/effect-broker').EffectKernelPort,
+    import('@praetor/effect-broker').EffectKernelPort,
     'getTerminalEvidenceContext'
   >;
   brokerFactory: (querier: EffectOutcomeQuerier) => ReconciliationBroker;

@@ -1,10 +1,10 @@
-import type { EffectExecutor } from '@commander/effect-broker';
+import type { EffectExecutor } from '@praetor/effect-broker';
 import {
   ActionAdapterRegistry,
   EnvAdapterCredentialProvider,
   type AdapterCredentialProvider,
   type KubernetesCredentialProvider,
-} from '@commander/action-adapters';
+} from '@praetor/action-adapters';
 
 export function createActionAdapterEffectExecutor(registry: ActionAdapterRegistry): EffectExecutor {
   return {

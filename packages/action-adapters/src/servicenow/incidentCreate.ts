@@ -1,9 +1,9 @@
 import {
   servicenowCorrelationId,
   SERVICENOW_INCIDENT_CREATE_DESCRIPTOR,
-} from '@commander/contracts';
-import { AdapterExecutionError } from '@commander/effect-broker';
-import type { EffectRemoteOutcome } from '@commander/effect-broker';
+} from '@praetor/contracts';
+import { AdapterExecutionError } from '@praetor/effect-broker';
+import type { EffectRemoteOutcome } from '@praetor/effect-broker';
 import {
   assertOkResponse,
   adapterFetch,

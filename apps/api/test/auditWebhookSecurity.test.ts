@@ -14,7 +14,7 @@ process.chdir(tmpDir);
 const { createAuditLogRouter } = await import('../src/auditLogEndpoints');
 const { createApprovalConfigRouter } = await import('../src/approvalConfigEndpoints');
 const { createWebhookRouter } = await import('../src/webhookEndpoints');
-const { resetUnifiedAuditLog } = await import('@commander/core/security');
+const { resetUnifiedAuditLog } = await import('@praetor/core/security');
 
 const webhookFile = path.join(tmpDir, '.commander', 'webhooks.json');
 const userActionsFile = path.join(tmpDir, '.commander', 'audit', 'user-actions.ndjson');

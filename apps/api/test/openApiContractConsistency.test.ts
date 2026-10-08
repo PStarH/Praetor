@@ -4,7 +4,7 @@
  * Commander ships TWO independently maintained descriptions of the same HTTP
  * surface:
  *
- *   1. `@commander/contracts` → `OPENAPI_V1_SPEC`
+ *   1. `@praetor/contracts` → `OPENAPI_V1_SPEC`
  *      (packages/contracts/src/openapi.ts). Its header claims to be "the
  *      canonical API contract — `apps/api` must implement every path defined
  *      here, and SDK code generators consume this spec".
@@ -32,7 +32,7 @@
 import assert from 'node:assert/strict';
 import { describe, it, beforeEach } from 'node:test';
 import express, { type Application } from 'express';
-import { OPENAPI_V1_SPEC } from '@commander/contracts';
+import { OPENAPI_V1_SPEC } from '@praetor/contracts';
 import {
   registerRouter,
   listRegisteredRouters,

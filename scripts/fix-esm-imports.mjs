@@ -33,7 +33,7 @@ async function* walk(dir) {
 
 async function resolveSpecifier(specifier, sourceDir) {
   // Only touch relative specifiers and workspace package specifiers
-  if (!specifier.startsWith('.') && !specifier.startsWith('..') && !specifier.startsWith('@commander/')) {
+  if (!specifier.startsWith('.') && !specifier.startsWith('..') && !specifier.startsWith('@praetor/')) {
     return specifier;
   }
 
@@ -43,7 +43,7 @@ async function resolveSpecifier(specifier, sourceDir) {
     return specifier;
   }
 
-  if (specifier.startsWith('@commander/')) {
+  if (specifier.startsWith('@praetor/')) {
     return resolveWorkspaceSpecifier(specifier, sourceDir);
   }
 
@@ -81,7 +81,7 @@ async function resolveSpecifier(specifier, sourceDir) {
 async function resolveWorkspaceSpecifier(specifier, sourceDir) {
   // Only rewrite deep imports that point to a real file/directory inside a
   // workspace package. Export subpaths defined in package.json (e.g.
-  // `@commander/core/runtime`) are left untouched so Node resolves them
+  // `@praetor/core/runtime`) are left untouched so Node resolves them
   // through the "exports" map.
   const parts = specifier.split('/');
   const packageName = parts[0] + '/' + parts[1];

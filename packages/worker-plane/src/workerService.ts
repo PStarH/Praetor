@@ -1,4 +1,4 @@
-import { getGlobalLogger, getGlobalMetrics } from '@commander/core';
+import { getGlobalLogger, getGlobalMetrics } from '@praetor/core';
 import type {
   ClaimedStep,
   KernelWorkerPort,

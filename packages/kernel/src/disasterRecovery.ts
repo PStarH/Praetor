@@ -5,7 +5,7 @@
  * kernel data is present or absent after PITR/failover.
  */
 
-import { createVerifiedPostgresPool } from '@commander/postgres-runtime';
+import { createVerifiedPostgresPool } from '@praetor/postgres-runtime';
 import { PostgresKernelRepository } from './postgres.js';
 
 export interface DrilledRun {

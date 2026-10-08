@@ -6,7 +6,7 @@
  * to advertise their capabilities, protocols, and request types.
  */
 
-import { getCurrentTenantId, TenantIsolationError } from '@commander/core/runtime/tenantContext';
+import { getCurrentTenantId, TenantIsolationError } from '@praetor/core/runtime/tenantContext';
 
 export const DEFAULT_AGENT_CARD_TENANT_ID = '__default__';
 

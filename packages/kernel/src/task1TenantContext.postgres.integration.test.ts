@@ -1,6 +1,6 @@
 import assert from 'node:assert/strict';
 import { after, before, describe, it, test } from 'node:test';
-import { createVerifiedPostgresPool } from '@commander/postgres-runtime';
+import { createVerifiedPostgresPool } from '@praetor/postgres-runtime';
 import { seedTenantAuthorityAllowedTenants } from './seedWorkerClaimSecret.js';
 
 const appUrl = process.env.COMMANDER_TASK1_APP_DATABASE_URL;

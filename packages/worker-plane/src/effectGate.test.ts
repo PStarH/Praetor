@@ -1,6 +1,6 @@
 import assert from 'node:assert/strict';
 import { describe, it } from 'node:test';
-import { EffectBrokerError } from '@commander/effect-broker';
+import { EffectBrokerError } from '@praetor/effect-broker';
 import { WorkerExecutionError } from './types.js';
 import { workerExecutionErrorFromEffectFailure } from './effectGate.js';
 

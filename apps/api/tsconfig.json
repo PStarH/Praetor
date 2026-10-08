@@ -4,8 +4,8 @@
     "rootDir": "src",
     "outDir": "dist",
     "paths": {
-      "@commander/core": ["../../packages/core/dist"],
-      "@commander/core/*": ["../../packages/core/dist/*"]
+      "@praetor/core": ["../../packages/core/dist"],
+      "@praetor/core/*": ["../../packages/core/dist/*"]
     }
   },
   "include": ["src"]

@@ -20,7 +20,7 @@ import {
   type UnifiedAuditLog,
   type UnifiedAuditSeverity,
   SENSITIVE_BODY_KEYS,
-} from '@commander/core/security';
+} from '@praetor/core/security';
 
 /** Maximum number of characters of the sanitized body retained in the log. */
 const MAX_BODY_CHARS = 8_000;

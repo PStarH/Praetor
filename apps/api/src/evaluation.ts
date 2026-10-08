@@ -13,7 +13,7 @@
  */
 
 import { v4 as uuidv4 } from 'uuid';
-import { getCurrentTenantId } from '@commander/core/runtime/tenantContext';
+import { getCurrentTenantId } from '@praetor/core/runtime/tenantContext';
 
 // ============================================================================
 // Tenant scoping of the in-memory state

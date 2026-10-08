@@ -7,8 +7,8 @@ import {
   verifyEvidenceSignature,
   type EvidenceBundle,
   type EvidenceSignature,
-} from '@commander/effect-broker';
-import { consumeCompensationBatch, type CompensationOutboxPort } from '@commander/kernel';
+} from '@praetor/effect-broker';
+import { consumeCompensationBatch, type CompensationOutboxPort } from '@praetor/kernel';
 import {
   canonicalCompensationHash,
   sealGovernedCompensationAuthorization,

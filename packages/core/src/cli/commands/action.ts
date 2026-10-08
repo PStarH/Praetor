@@ -11,7 +11,7 @@ import {
   ACTION_KILL_SWITCH_SCOPES_V1,
   validateResource,
   type ContractSchemaName,
-} from '@commander/contracts';
+} from '@praetor/contracts';
 
 export interface ActionApiConfig {
   baseUrl: string;

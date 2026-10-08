@@ -62,13 +62,13 @@ test('a module-local require resolves a relative specifier from a nested directo
 
 test('nodeRequire throws for a missing module, like CommonJS require', () => {
   assert.throws(
-    () => nodeRequire('@commander/definitely-not-a-real-module'),
+    () => nodeRequire('@praetor/definitely-not-a-real-module'),
     (err) => err instanceof Error,
   );
 });
 
 test('optionalRequire returns null instead of throwing for a missing module', () => {
-  assert.equal(optionalRequire('@commander/definitely-not-a-real-module'), null);
+  assert.equal(optionalRequire('@praetor/definitely-not-a-real-module'), null);
 });
 
 test('optionalRequire resolves a bare specifier', () => {

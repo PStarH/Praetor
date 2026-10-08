@@ -6,9 +6,9 @@ import { generateKeyPairSync } from 'node:crypto';
 import { mkdir, writeFile } from 'node:fs/promises';
 import { join, resolve } from 'node:path';
 import { fileURLToPath } from 'node:url';
-import { createEvidenceSigner } from '@commander/effect-broker';
-import type { KernelRepository } from '@commander/kernel';
-import { InMemoryKernelRepository } from '@commander/kernel/testing/inMemoryRepository';
+import { createEvidenceSigner } from '@praetor/effect-broker';
+import type { KernelRepository } from '@praetor/kernel';
+import { InMemoryKernelRepository } from '@praetor/kernel/testing/inMemoryRepository';
 import {
   ReconciliationDaemon,
   type ReconciliationDaemonOptions,

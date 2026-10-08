@@ -1,10 +1,10 @@
 import { afterEach, beforeEach, describe, it } from 'node:test';
 import assert from 'node:assert/strict';
 import express, { type Request, type Response as ExpressResponse } from 'express';
-import { getHookManager, getTopologyStateMachine, type CommanderPlugin } from '@commander/core';
+import { getHookManager, getTopologyStateMachine, type CommanderPlugin } from '@praetor/core';
 import { createConsensusRouter } from '../src/consensusEndpoints';
 import { tenantContextMiddleware } from '../src/tenantContextMiddleware';
-import { createConsensusPlugin } from '@commander/core';
+import { createConsensusPlugin } from '@praetor/core';
 import type { AuthUser } from '../src/jwtMiddleware';
 import '../src/authMiddleware';
 

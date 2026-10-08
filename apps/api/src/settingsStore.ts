@@ -1,4 +1,4 @@
-import { reportSilentFailure } from '@commander/core';
+import { reportSilentFailure } from '@praetor/core';
 import * as path from 'node:path';
 import { atomicWriteFileSync, readJsonFileSafe, isPlainObjectJson } from './atomicWrite';
 

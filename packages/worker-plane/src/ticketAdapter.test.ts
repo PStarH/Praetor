@@ -10,7 +10,7 @@ import {
   EffectBrokerError,
   canonicalRequestHash,
   type EffectKernelPort,
-} from '@commander/effect-broker';
+} from '@praetor/effect-broker';
 import { InMemoryTicketAdapter } from './ticketAdapter.js';
 
 const grantBase = {

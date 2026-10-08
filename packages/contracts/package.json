@@ -1,5 +1,5 @@
 {
-  "name": "@commander/contracts",
+  "name": "@praetor/contracts",
   "version": "0.2.0",
   "description": "Commander Architecture V2 — versioned shared contracts (types, error codes, state machine, event envelope).",
   "main": "dist/index.js",

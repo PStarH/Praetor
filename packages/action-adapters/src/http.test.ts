@@ -1,6 +1,6 @@
 import assert from 'node:assert/strict';
 import { describe, it } from 'node:test';
-import { AdapterExecutionError } from '@commander/effect-broker';
+import { AdapterExecutionError } from '@praetor/effect-broker';
 import {
   adapterFetch,
   readJsonResponse,

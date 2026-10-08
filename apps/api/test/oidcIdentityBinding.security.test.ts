@@ -5,7 +5,7 @@ import fs from 'node:fs';
 import os from 'node:os';
 import path from 'node:path';
 import express from 'express';
-import type { AuthPluginResult } from '@commander/core';
+import type { AuthPluginResult } from '@praetor/core';
 
 const originalCwd = process.cwd();
 const originalEnv = {
@@ -40,7 +40,7 @@ const { _resetRefreshTokenStoreForTests, setRefreshTokenRepository } =
   await import('../src/refreshTokenStore');
 const { verifyToken } = await import('../src/jwtMiddleware');
 const { SimpleTenantProvider, setGlobalTenantProvider, resetGlobalTenantProvider } =
-  await import('@commander/core/runtime');
+  await import('@praetor/core/runtime');
 const { TestRefreshTokenRepository, TestUserRepository } = await import('./authRepositories');
 
 const localPassword = ['local', 'password'].join('-');

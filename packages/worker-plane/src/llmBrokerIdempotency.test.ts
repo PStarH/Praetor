@@ -16,8 +16,8 @@ import {
   deriveEffectIdempotencyKey,
   type EffectExecutor,
   type EffectKernelPort,
-} from '@commander/effect-broker';
-import type { LLMProvider, LLMRequest, LLMResponse } from '@commander/core';
+} from '@praetor/effect-broker';
+import type { LLMProvider, LLMRequest, LLMResponse } from '@praetor/core';
 import {
   createLlmEffectAuth,
   dispatchLlmEffect,

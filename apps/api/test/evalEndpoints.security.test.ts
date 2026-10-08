@@ -4,7 +4,7 @@ import { mkdtempSync, rmSync } from 'node:fs';
 import { tmpdir } from 'node:os';
 import path from 'node:path';
 import express, { type Request, type Response as ExpressResponse } from 'express';
-import { createEvalPlugin, getHookManager } from '@commander/core';
+import { createEvalPlugin, getHookManager } from '@praetor/core';
 import { createEvalRouter } from '../src/evalEndpoints';
 import { tenantContextMiddleware } from '../src/tenantContextMiddleware';
 import type { AuthUser } from '../src/jwtMiddleware';

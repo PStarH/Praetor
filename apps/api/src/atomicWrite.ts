@@ -9,7 +9,7 @@
  *
  * NOTE: kept in sync with `packages/core/src/runtime/atomicWrite.ts`; the two
  * copies avoid a cross-package build-order dependency. Dedupe when a shared
- * `@commander/*` fs utility exists.
+ * `@praetor/*` fs utility exists.
  */
 import * as crypto from 'node:crypto';
 import * as fs from 'node:fs';

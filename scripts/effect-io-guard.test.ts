@@ -52,7 +52,7 @@ describe('effect-io-guard', () => {
     const path = 'packages/core/src/sandbox/networkProxy.ts';
     const entry = config.paths.find((candidate) => candidate.path === path);
     assert.ok(entry, `${path} must have an exact allowlist entry`);
-    assert.equal(entry.owner, '@commander/core/sandbox-security');
+    assert.equal(entry.owner, '@praetor/core/sandbox-security');
     assert.match(String(entry.reason), /sandbox security infrastructure/i);
     assert.deepEqual(entry.patterns, ['net']);
     assert.equal(entry.sourceSha256, sha256(readFileSync(join(process.cwd(), path), 'utf-8')));
@@ -290,7 +290,7 @@ describe('effect-io-guard', () => {
               id: 'readiness-proof-client',
               path: 'packages/kernel/src/task1ReadinessChallengeClient.ts',
               sourceSha256: sha256(httpsSource),
-              owner: '@commander/kernel',
+              owner: '@praetor/kernel',
               reason: 'TLS-pinned challenged readiness proof client',
               expiresAt: '2099-12-31',
               patterns: ['node:https'],
@@ -299,7 +299,7 @@ describe('effect-io-guard', () => {
               id: 'compose-proof-client',
               path: 'packages/kernel/src/task1ComposeProofRuntime.ts',
               sourceSha256: sha256(httpSource),
-              owner: '@commander/kernel',
+              owner: '@praetor/kernel',
               reason: 'Authenticated local Compose proof relay client',
               expiresAt: '2099-12-31',
               patterns: ['node:http'],
@@ -308,7 +308,7 @@ describe('effect-io-guard', () => {
               id: 'kubernetes-proof-client',
               path: 'packages/kernel/src/task1KubernetesProofRuntime.ts',
               sourceSha256: sha256(httpsSource),
-              owner: '@commander/kernel',
+              owner: '@praetor/kernel',
               reason: 'Projected-token Kubernetes proof API client',
               expiresAt: '2099-12-31',
               patterns: ['node:https'],
@@ -363,7 +363,7 @@ describe('effect-io-guard', () => {
         id: 'proof-client',
         path,
         sourceSha256: sha256(source),
-        owner: '@commander/kernel',
+        owner: '@praetor/kernel',
         reason: 'Challenged proof transport with no effect execution',
         expiresAt: '2099-12-31',
         patterns: ['fetch('],
@@ -394,7 +394,7 @@ describe('effect-io-guard', () => {
           {
             id: 'deleted-bypass',
             path: 'packages/core/src/deleted.ts',
-            owner: '@commander/core',
+            owner: '@praetor/core',
             reason: 'Legacy subprocess authority pending removal',
             replacement: 'packages/action-adapters/src/process',
             expiresAt: '2099-12-31',
@@ -425,7 +425,7 @@ describe('effect-io-guard', () => {
           {
             id: 'removed-fetch',
             path,
-            owner: '@commander/core',
+            owner: '@praetor/core',
             reason: 'Legacy HTTP authority pending removal',
             replacement: 'packages/action-adapters/src/http',
             expiresAt: '2099-12-31',
@@ -458,7 +458,7 @@ describe('effect-io-guard', () => {
           {
             id: 'expired',
             path: 'packages/core/src/expired.ts',
-            owner: '@commander/core',
+            owner: '@praetor/core',
             reason: 'Legacy HTTP authority pending removal',
             replacement: 'packages/action-adapters/src/http',
             expiresAt: '2020-01-01',

@@ -61,7 +61,7 @@ import type {
   OperationsReadiness,
 } from './types.js';
 import { KernelInvariantError, OPERATIONS_HEARTBEAT_TTL_MS } from './types.js';
-import { isClassAEffectType } from '@commander/contracts';
+import { isClassAEffectType } from '@praetor/contracts';
 import {
   KERNEL_COMPENSATION_TOPIC,
   LEGACY_COMPENSATION_TOPIC,

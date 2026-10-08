@@ -4,7 +4,7 @@
  * Every failure is recorded with a single atomic upsert so concurrent login
  * attempts across API replicas cannot race the lockout decision.
  */
-import type { SqlPool } from '@commander/kernel';
+import type { SqlPool } from '@praetor/kernel';
 import { createAuthPool, withClient, type VerifiedPoolFactory } from './authDb';
 
 export interface AuthFailureEntry {

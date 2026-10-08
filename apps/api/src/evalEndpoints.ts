@@ -31,7 +31,7 @@ import {
   getGlobalABComparator,
   type JudgeTarget,
   type JudgeProvider,
-} from '@commander/core';
+} from '@praetor/core';
 
 const EVAL_PLUGIN_NAME = 'builtin-eval';
 

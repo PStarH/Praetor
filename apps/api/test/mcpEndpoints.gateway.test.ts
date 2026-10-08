@@ -2,7 +2,7 @@ import assert from 'node:assert/strict';
 import { createServer } from 'node:http';
 import { describe, it } from 'node:test';
 import express from 'express';
-import { resetGuardianAgent } from '@commander/core';
+import { resetGuardianAgent } from '@praetor/core';
 import { createMCPRouter, type McpActionGatewayExecutor } from '../src/mcpEndpoints.js';
 
 async function withMcpRouter(

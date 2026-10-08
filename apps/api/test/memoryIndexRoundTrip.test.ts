@@ -17,7 +17,7 @@
 import { describe, it } from 'node:test';
 import assert from 'node:assert/strict';
 import express from 'express';
-import { InMemoryMemoryService, MemoryStoreFacade, type MemoryStore } from '@commander/core';
+import { InMemoryMemoryService, MemoryStoreFacade, type MemoryStore } from '@praetor/core';
 import { ProjectMemoryStoreAdapter } from '../src/memoryStoreAdapter';
 import { MemoryIndexManager, isEntryType } from '../src/memoryIndexManager';
 import { createMemoryIndexRouter } from '../src/memoryIndexEndpoints';

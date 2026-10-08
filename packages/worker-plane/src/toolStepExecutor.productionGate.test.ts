@@ -10,7 +10,7 @@ import { describe, it } from 'node:test';
 import { ToolStepExecutor } from './toolStepExecutor.js';
 import type { ClaimedStep } from './types.js';
 import { WorkerExecutionError } from './types.js';
-import { deriveEffectIdempotencyKey } from '@commander/effect-broker';
+import { deriveEffectIdempotencyKey } from '@praetor/effect-broker';
 
 const GATE_ENV_KEYS = [
   'NODE_ENV',

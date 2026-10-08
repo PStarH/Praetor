@@ -8,6 +8,18 @@
     "packages/contracts"
   ],
   "forbiddenCoreImports": [
+    "@praetor/core",
+    "@praetor/core/runtime",
+    "@praetor/core/runtime/tenantContext",
+    "@praetor/core/observability",
+    "@praetor/core/saga",
+    "@praetor/core/security",
+    "@praetor/core/plugins/im/dingtalk",
+    "@praetor/core/plugins/im/feishu",
+    "@praetor/core/plugins/im/wecom",
+    "@praetor/core/plugins/im/slack",
+    "@praetor/core/plugins/im/teams",
+    "@praetor/core/plugins/im/discord",
     "@commander/core",
     "@commander/core/runtime",
     "@commander/core/runtime/tenantContext",

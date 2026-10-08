@@ -65,7 +65,7 @@
  *     (a nested `node --test` inherits NODE_TEST_CONTEXT and skips silently with
  *     exit 0, so the summary — not the exit code — is the evidence)
  */
-import { reportSilentFailure } from '@commander/core';
+import { reportSilentFailure } from '@praetor/core';
 import { spawn, type ChildProcess } from 'node:child_process';
 import { existsSync, readdirSync } from 'node:fs';
 import { createRequire } from 'node:module';
@@ -294,14 +294,14 @@ async function main(): Promise<void> {
   const tsxLoaderUrl = resolveTsxLoaderUrl();
   const files = discoverTestFiles();
 
-  console.log('Building @commander/core...');
-  let code = await run('pnpm', ['--filter', '@commander/core', 'build']);
+  console.log('Building @praetor/core...');
+  let code = await run('pnpm', ['--filter', '@praetor/core', 'build']);
   if (code !== 0) {
     fail('core build failed — see output above');
   }
 
-  console.log('Building @commander/api...');
-  code = await run('pnpm', ['--filter', '@commander/api', 'build']);
+  console.log('Building @praetor/api...');
+  code = await run('pnpm', ['--filter', '@praetor/api', 'build']);
   if (code !== 0) {
     fail('API build failed — see output above');
   }

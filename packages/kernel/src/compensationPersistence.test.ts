@@ -10,7 +10,7 @@ import type {
 } from './types.js';
 import type { KernelEvidenceRecord } from './evidenceRepository.js';
 import { canonicalCompensationHash } from './ops/compensationAuthority.js';
-import { deriveEffectIdempotencyKey } from '@commander/effect-broker';
+import { deriveEffectIdempotencyKey } from '@praetor/effect-broker';
 import { InMemoryKernelRepository } from './testing/inMemoryRepository.js';
 import { SqliteKernelRepository } from './sqlite.js';
 import {

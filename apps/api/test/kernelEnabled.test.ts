@@ -10,7 +10,7 @@ import {
   isCommanderKernelEnabled,
   isCommanderKernelExplicitlyDisabled,
 } from '../src/v1GatewayKernel';
-import { InMemoryKernelRepository } from '@commander/kernel/testing/inMemoryRepository';
+import { InMemoryKernelRepository } from '@praetor/kernel/testing/inMemoryRepository';
 
 describe('isCommanderKernelEnabled', () => {
   it('defaults OFF without DSN outside production', () => {
@@ -37,6 +37,16 @@ describe('isCommanderKernelEnabled', () => {
       isCommanderKernelEnabled({
         NODE_ENV: 'development',
         COMMANDER_KERNEL_DATABASE_URL: 'postgres://kernel@127.0.0.1:5432/kernel',
+      } as NodeJS.ProcessEnv),
+      true,
+    );
+  });
+
+  it('defaults ON when PRAETOR_KERNEL_DATABASE_URL is set', () => {
+    assert.equal(
+      isCommanderKernelEnabled({
+        NODE_ENV: 'development',
+        PRAETOR_KERNEL_DATABASE_URL: 'postgres://kernel@127.0.0.1:5432/kernel',
       } as NodeJS.ProcessEnv),
       true,
     );

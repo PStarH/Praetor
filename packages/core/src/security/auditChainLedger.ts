@@ -37,14 +37,14 @@
  * └────────────────────────────────────────────────────────────────────┘
  *
  * Usage:
- *   import { getAuditChainLedger } from '@commander/core';
+ *   import { getAuditChainLedger } from '@praetor/core';
  *   getAuditChainLedger().logEvent({
  *     type: 'content_threat', severity: 'high', source: 'MyTool',
  *     message: 'prompt injection detected',
  *     details: { toolName: 'web_fetch', matched: 'ignore previous' },
  *   });
  *
- *   import { getAuditChainLedger, AuditChainLedger } from '@commander/core';
+ *   import { getAuditChainLedger, AuditChainLedger } from '@praetor/core';
  *   const report = AuditChainLedger.verify(getAuditChainLedger());
  *   if (!report.ok) alert(report.brokenChain);
  */

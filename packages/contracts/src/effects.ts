@@ -3,11 +3,11 @@
  * admitted by the EffectBroker.
  *
  * This module is the single cross-plane contract type for effects. It is
- * imported by @commander/effect-broker (PEP), @commander/kernel (durable
- * ledger + `ops/compensationConsumer` library), and @commander/worker-plane
- * (callers). The former `@commander/operations` plane was folded into
+ * imported by @praetor/effect-broker (PEP), @praetor/kernel (durable
+ * ledger + `ops/compensationConsumer` library), and @praetor/worker-plane
+ * (callers). The former `@praetor/operations` plane was folded into
  * kernel-ops (WS1) and must not reappear. An L4-B follow-up may add deploy
- * unit `@commander/adapter-ops` for production compensation drain (absent on
+ * unit `@praetor/adapter-ops` for production compensation drain (absent on
  * master). No ad-hoc effect shape may cross a plane boundary.
  *
  * Invariants (enforced by the broker at admit time):

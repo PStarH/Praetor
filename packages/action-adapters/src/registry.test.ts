@@ -1,8 +1,8 @@
 import assert from 'node:assert/strict';
 import { describe, it } from 'node:test';
-import { GITHUB_PULL_REQUEST_CREATE_DESCRIPTOR } from '@commander/contracts';
+import { GITHUB_PULL_REQUEST_CREATE_DESCRIPTOR } from '@praetor/contracts';
 import { ActionAdapterRegistry } from './registry.js';
-import { FIXED_ACTION_ADAPTER_MANIFESTS } from '@commander/contracts';
+import { FIXED_ACTION_ADAPTER_MANIFESTS } from '@praetor/contracts';
 import type { ActionAdapter } from './types.js';
 
 function stubAdapter(effectType: string): ActionAdapter {

@@ -1,4 +1,4 @@
-import { createVerifiedPostgresPool } from '@commander/postgres-runtime';
+import { createVerifiedPostgresPool } from '@praetor/postgres-runtime';
 import { PostgresKernelRepository } from '../postgres.js';
 import { KernelOutboxPublisher } from './outbox/kernelOutboxPublisher.js';
 import { PostgresOutboxDeliveryPort } from './outbox/postgresOutboxDeliveryPort.js';

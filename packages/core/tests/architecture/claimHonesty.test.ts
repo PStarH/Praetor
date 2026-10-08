@@ -69,12 +69,12 @@ describe('claim honesty', () => {
     assert.match(
       maps,
       /ban(?:s|ned)?[\s*`]*@commander\/operations|ban(?:s|ned)?[\s*`]*resurrect/i,
-      'maps must state arch-guard bans resurrecting @commander/operations',
+      'maps must state arch-guard bans resurrecting @praetor/operations',
     );
     assert.doesNotMatch(
       maps,
       /reintroduce\s+`?@commander\/operations`?\s+as/i,
-      'must not invite resurrecting @commander/operations under another name',
+      'must not invite resurrecting @praetor/operations under another name',
     );
     // After L4-B land (#105), adapter-ops is the live PARTIAL deploy unit for
     // compensation/reconcile drain — not a deferred follow-up, not a fifth plane.

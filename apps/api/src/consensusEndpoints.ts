@@ -28,7 +28,7 @@ import {
   getSharedAdaptiveStopping,
   getSharedCourtEval,
   type TopologyState,
-} from '@commander/core';
+} from '@praetor/core';
 
 const CONSENSUS_PLUGIN_NAME = 'builtin-consensus';
 

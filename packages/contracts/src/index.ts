@@ -1,9 +1,9 @@
 /**
- * @commander/contracts — Architecture V2 shared public contracts.
+ * @praetor/contracts — Architecture V2 shared public contracts.
  *
  * This package contains ONLY types, constants, and pure validation helpers.
- * It must never import runtime implementation code from @commander/core,
- * @commander/kernel, or any provider/tool package.
+ * It must never import runtime implementation code from @praetor/core,
+ * @praetor/kernel, or any provider/tool package.
  */
 
 export { CONTRACTS_VERSION } from './resources.js';

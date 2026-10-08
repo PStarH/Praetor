@@ -308,3 +308,7 @@ export class CommanderGatewayError extends Error {
     this.details = detail?.details;
   }
 }
+
+export const PraetorGatewayClient = CommanderGatewayClient;
+export const PraetorGatewayError = CommanderGatewayError;
+

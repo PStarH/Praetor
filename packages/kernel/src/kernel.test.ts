@@ -1,6 +1,6 @@
 import assert from 'node:assert/strict';
 import { describe, it } from 'node:test';
-import { validateRunTransition } from '@commander/contracts';
+import { validateRunTransition } from '@praetor/contracts';
 import { InMemoryKernelRepository } from './testing/inMemoryRepository.js';
 import { KERNEL_COMPENSATION_TOPIC } from './ops/compensationConsumer.js';
 import type { KernelRun, NewKernelStep } from './types.js';
@@ -496,7 +496,7 @@ describe('execution kernel semantics', () => {
     assert.equal(await kernel.cancelRun('run-1', 'tenant-a', 'control-plane'), null);
   });
 
-  it('only performs run state transitions that are valid in @commander/contracts', async () => {
+  it('only performs run state transitions that are valid in @praetor/contracts', async () => {
     const kernel = new InMemoryKernelRepository();
     await kernel.createRun(createRun(), 'gateway');
     let run: KernelRun | null = await kernel.getRun('run-1', 'tenant-a');

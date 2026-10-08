@@ -1,6 +1,6 @@
 /**
  * Compatibility re-export — canonical factory lives in ./gap/gapPlugin.
- * Prefer: import { createGapPlugin } from './gap/gapPlugin' or '@commander/core'.
+ * Prefer: import { createGapPlugin } from './gap/gapPlugin' or '@praetor/core'.
  */
 export {
   createGapPlugin,

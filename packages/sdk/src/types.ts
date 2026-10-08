@@ -280,12 +280,12 @@ export interface SDKReliabilityStats {
 // ============================================================================
 
 /**
- * `SentryRow` mirrors `@commander/core`'s canonical `SyntheticErrorRow`
+ * `SentryRow` mirrors `@praetor/core`'s canonical `SyntheticErrorRow`
  * so downstream SDK users can type their hook responses, gate results,
  * and recovery recorders against the runtime's exact contract — without
- * taking on a direct runtime dependency on `@commander/core`.
+ * taking on a direct runtime dependency on `@praetor/core`.
  *
- * The alias is type-only (`import('@commander/core').SyntheticErrorRow`);
+ * The alias is type-only (`import('@praetor/core').SyntheticErrorRow`);
  * the import is erased at compile time and ships zero runtime code from
  * `core` through the SDK.
  *
@@ -299,4 +299,4 @@ export interface SDKReliabilityStats {
  *
  * @see packages/core/src/runtime/toolResultShape.ts
  */
-export type SentryRow = import('@commander/core').SyntheticErrorRow;
+export type SentryRow = import('@praetor/core').SyntheticErrorRow;

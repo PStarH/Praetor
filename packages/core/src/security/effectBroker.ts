@@ -7,7 +7,7 @@
  * escape hatch remains.
  *
  * Note: this module is the process-local registry (get/set). The full
- * admit/execute monopoly lives in @commander/effect-broker (worker-plane).
+ * admit/execute monopoly lives in @praetor/effect-broker (worker-plane).
  * Wiring setEffectBroker() here does NOT claim LLM outlet monopoly.
  */
 

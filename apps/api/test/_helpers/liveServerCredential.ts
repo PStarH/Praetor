@@ -24,9 +24,9 @@
  * weakens the routes.
  */
 import { randomBytes, randomUUID } from 'node:crypto';
-import { hashSecret } from '@commander/core/runtime';
-import { createVerifiedPostgresPool } from '@commander/postgres-runtime';
-import type { SqlClient, SqlPool } from '@commander/kernel';
+import { hashSecret } from '@praetor/core/runtime';
+import { createVerifiedPostgresPool } from '@praetor/postgres-runtime';
+import type { SqlClient, SqlPool } from '@praetor/kernel';
 import { withTenantScopedClient } from '../../src/authDb.js';
 import { signAccessToken } from '../../src/jwtMiddleware.js';
 import { requireLiveServer } from './requireLiveServer.mjs';

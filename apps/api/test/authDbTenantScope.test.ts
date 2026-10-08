@@ -1,6 +1,6 @@
 import assert from 'node:assert/strict';
 import { test } from 'node:test';
-import type { SqlClient, SqlPool, SqlQueryResult } from '@commander/kernel';
+import type { SqlClient, SqlPool, SqlQueryResult } from '@praetor/kernel';
 import { withTenantScopedClient } from '../src/authDb.js';
 
 class RecordingClient implements SqlClient {

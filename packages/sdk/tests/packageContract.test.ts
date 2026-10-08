@@ -10,7 +10,7 @@ const manifest = JSON.parse(readFileSync(join(packageRoot, 'package.json'), 'utf
   unknown
 >;
 
-void describe('@commander/sdk publication contract', () => {
+void describe('@praetor/sdk publication contract', () => {
   void it('publishes its generated JavaScript as ESM', () => {
     assert.equal(manifest.type, 'module');
   });

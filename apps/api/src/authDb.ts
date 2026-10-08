@@ -6,8 +6,8 @@
  * Redis / JSON-file / SQLite / in-memory fallback: production fails closed
  * when `DATABASE_URL` is missing or does not authenticate as `commander_app`.
  */
-import { createVerifiedPostgresPool } from '@commander/postgres-runtime';
-import type { SqlClient, SqlPool } from '@commander/kernel';
+import { createVerifiedPostgresPool } from '@praetor/postgres-runtime';
+import type { SqlClient, SqlPool } from '@praetor/kernel';
 
 export type VerifiedPoolFactory = (
   input: { connectionString: string },

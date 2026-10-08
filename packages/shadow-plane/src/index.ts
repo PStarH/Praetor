@@ -17,7 +17,7 @@ export type {
   ShadowProductionReasonCode,
 } from './contracts.js';
 export { canonicalBytes, sha256Hex, verifyEd25519 } from './canonical.js';
-export { actionGatewayPolicySnapshot } from '@commander/contracts';
+export { actionGatewayPolicySnapshot } from '@praetor/contracts';
 export { evaluateShadowObservation, observationDigest } from './evaluator.js';
 export type { ShadowEvaluation, ShadowHypotheticalDecision, ShadowPolicyPin } from './evaluator.js';
 export { compareShadowDecision } from './comparison.js';

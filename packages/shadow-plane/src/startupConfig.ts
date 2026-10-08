@@ -2,7 +2,7 @@ import { createPrivateKey, createPublicKey, type KeyObject } from 'node:crypto';
 import {
   buildVerifiedPostgresPoolConfig,
   type VerifiedPostgresPoolInput,
-} from '@commander/postgres-runtime';
+} from '@praetor/postgres-runtime';
 import type { ShadowManifestTrust } from './report.js';
 
 import type { ShadowDatabaseOperation } from './repository.js';

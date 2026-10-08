@@ -8,7 +8,7 @@ import {
   verifyActionEvidence,
 } from '../src/v1/client';
 
-void describe('@commander/sdk — types', () => {
+void describe('@praetor/sdk — types', () => {
   void it('types are valid — CommanderClientConfig', () => {
     const config: import('../src/types').CommanderClientConfig = {
       provider: 'openai',
@@ -68,7 +68,7 @@ void describe('@commander/sdk — types', () => {
   });
 });
 
-void describe('@commander/sdk — CommanderClient', () => {
+void describe('@praetor/sdk — CommanderClient', () => {
   void it('can be instantiated with default config', () => {
     const client = new CommanderClient();
     assert.ok(client);
@@ -167,7 +167,7 @@ const actionFixtures = {
   },
 };
 
-void describe('@commander/sdk — Gateway V1 client', () => {
+void describe('@praetor/sdk — Gateway V1 client', () => {
   void it('submits a durable run with idempotency and preserves 202 semantics', async () => {
     let captured: RequestInit | undefined;
     const client = new CommanderGatewayClient({

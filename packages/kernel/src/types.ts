@@ -1,8 +1,8 @@
 /** Canonical, versioned execution-kernel domain types. */
 
-import type { KernelErrorDetails, KernelEvent, RunState, StepState } from '@commander/contracts';
+import type { KernelErrorDetails, KernelEvent, RunState, StepState } from '@praetor/contracts';
 import type { KernelEvidenceRecord } from './evidenceRepository.js';
-export type { KernelErrorDetails, KernelEvent } from '@commander/contracts';
+export type { KernelErrorDetails, KernelEvent } from '@praetor/contracts';
 
 export const KERNEL_API_VERSION = 'v2' as const;
 export const OPERATIONS_HEARTBEAT_TTL_MS = 30_000;
@@ -25,9 +25,9 @@ export interface KernelCompensationAdmissionBinding {
   outboxClaimToken?: string;
 }
 
-/** Re-exported from @commander/contracts; kept for source compatibility. */
+/** Re-exported from @praetor/contracts; kept for source compatibility. */
 export type KernelRunState = RunState;
-/** Re-exported from @commander/contracts; kept for source compatibility. */
+/** Re-exported from @praetor/contracts; kept for source compatibility. */
 export type KernelStepState = StepState;
 
 export interface KernelRunHandle {

@@ -23,7 +23,7 @@ import express from 'express';
 import jwt from 'jsonwebtoken';
 import { createWarRoomStore } from '../src/store.js';
 import { ProjectMemoryStoreAdapter } from '../src/memoryStoreAdapter.js';
-import { InMemoryMemoryService, MemoryStoreFacade } from '@commander/core';
+import { InMemoryMemoryService, MemoryStoreFacade } from '@praetor/core';
 import { AgentStateStore } from '../src/agentStateStore.js';
 import { createProjectRouter } from '../src/projectEndpoints.js';
 import { enterpriseRouteFreeze, legacyHeader } from '../src/enterpriseGateway.js';

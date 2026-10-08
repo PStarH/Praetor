@@ -9,7 +9,7 @@
  *   GET /api/cost/dashboard?timeRange=today|7d|30d|all
  *
  * Data source: the configured trace directory (see
- * `@commander/core/runtime/traceStore#resolveConfiguredTraceBase`) —
+ * `@praetor/core/runtime/traceStore#resolveConfiguredTraceBase`) —
  * `<base>/tenant_<tenantId>/*.ndjson` when a tenant context is present,
  * `<base>/*.ndjson` otherwise. Each trace event of type
  * `llm_call` carries `data.modelInfo` (provider, model, tier) and
@@ -17,9 +17,9 @@
  * calculated from token usage using a built-in pricing table. If no cost data
  * is found in traces, an empty structure is returned.
  */
-import { reportSilentFailure } from '@commander/core';
-import { getCurrentTenantId } from '@commander/core/runtime/tenantContext';
-import { resolveConfiguredTraceBase, resolveTraceDir } from '@commander/core/runtime/traceStore';
+import { reportSilentFailure } from '@praetor/core';
+import { getCurrentTenantId } from '@praetor/core/runtime/tenantContext';
+import { resolveConfiguredTraceBase, resolveTraceDir } from '@praetor/core/runtime/traceStore';
 import { Router, type Request, type Response } from 'express';
 import * as fsp from 'fs/promises';
 import * as path from 'path';
@@ -87,7 +87,7 @@ interface CostDashboardResponse {
   trend: TrendPoint[];
 }
 
-// ── Pricing table (mirrors @commander/core costModel defaults) ───
+// ── Pricing table (mirrors @praetor/core costModel defaults) ───
 
 const PRICING_TABLE: Record<string, ModelPricing> = {
   'openai:gpt-4o': { inputPer1k: 0.0025, outputPer1k: 0.01, cachedInputPer1k: 0.00125 },

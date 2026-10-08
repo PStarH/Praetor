@@ -539,7 +539,7 @@ const DEFAULT_METRICS_CONFIG: MetricsConfig = {
  *
  * Renamed from `MetricsCollector` to `LegacyMetricsAdapter` to resolve the
  * naming collision with `runtime/metricsCollector.MetricsCollector`. The
- * public `@commander/core` package now re-exports the runtime version under
+ * public `@praetor/core` package now re-exports the runtime version under
  * the `MetricsCollector` name; this class is internal-only and surfaced
  * solely through `getGlobalMetrics()` for the 70+ existing call sites that
  * use the `(name, value, labels)` signature.

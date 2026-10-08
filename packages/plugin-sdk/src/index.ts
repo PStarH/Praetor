@@ -1,11 +1,11 @@
 /**
- * @commander/plugin-sdk
+ * @praetor/plugin-sdk
  *
  * Build tools, skills, and hooks for the Commander agent platform.
  *
  * @example
  * ```typescript
- * import { createPlugin, defineTool, createHookSubscriptions } from '@commander/plugin-sdk';
+ * import { createPlugin, defineTool, createHookSubscriptions } from '@praetor/plugin-sdk';
  *
  * export default createPlugin({
  *   id: 'my-plugin',

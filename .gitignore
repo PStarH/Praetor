@@ -57,28 +57,38 @@ temp/
 .worktrees
 .worktrees/
 
-# Commander state
+# Commander & Praetor state
 .commander_*
 .commander_state
 .commander_memory
+.praetor_*
+.praetor_state
+.praetor_memory
 
-# Commander root-state runtime data (config files inside .commander/ ARE tracked)
+# Commander & Praetor root-state runtime data
 /.commander/*.db
 /.commander/*.db-shm
 /.commander/*.db-wal
 /.commander/scheduler/
 /.commander/webhooks/
+/.praetor/*.db
+/.praetor/*.db-shm
+/.praetor/*.db-wal
+/.praetor/scheduler/
+/.praetor/webhooks/
 # Tenant API key store written by deploy/scripts/create-tenant.sh
-# (TENANT_KEYS_PATH defaults to .commander/tenant-api-keys.json). This file holds
-# live per-tenant credentials and must never be committed.
 /.commander/tenant-api-keys.json
 /.commander/tenant-api-keys*.json
+/.praetor/tenant-api-keys.json
+/.praetor/tenant-api-keys*.json
 # Local PostgreSQL data directories created by the QA / integration suites.
-# These contain database contents, role definitions and cluster config.
 /.commander/qa-pg/
 /.commander/pg-data/
+/.praetor/qa-pg/
+/.praetor/pg-data/
 # Scratch markdown written into .commander/ by the d26/d29/d30 gate tests.
 /.commander/*-test-*.md
+/.praetor/*-test-*.md
 
 # Assistant workspace (agent memory, skills, session state). Local tooling only —
 # never part of the product, and must not be published with the repository.

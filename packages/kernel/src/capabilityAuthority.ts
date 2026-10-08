@@ -17,7 +17,7 @@ import {
   type CapabilityGrant,
   type CapabilityTokenPort,
   type KeyLike,
-} from '@commander/effect-broker';
+} from '@praetor/effect-broker';
 import type { KernelRepository } from './repository.js';
 import {
   KernelCapabilityReplayStore,

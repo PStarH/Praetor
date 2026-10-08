@@ -1,7 +1,7 @@
 import assert from 'node:assert/strict';
 import { createHash, createHmac, generateKeyPairSync, sign } from 'node:crypto';
 import { describe, it } from 'node:test';
-import { actionGatewayPolicySnapshot } from '@commander/contracts';
+import { actionGatewayPolicySnapshot } from '@praetor/contracts';
 import { canonicalBytes } from './canonical.js';
 import { parseShadowManifest, parseShadowObservation } from './contracts.js';
 import { observationDigest } from './evaluator.js';

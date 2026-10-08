@@ -7,9 +7,9 @@ import { mkdir, readFile, rm, writeFile } from 'node:fs/promises';
 import { createServer } from 'node:net';
 import { resolve } from 'node:path';
 import { setTimeout as sleep } from 'node:timers/promises';
-import { runKernelMigrations, seedWorkerAllowedTenants } from '@commander/kernel';
-import { createVerifiedPostgresPool } from '@commander/postgres-runtime';
-import { PostgresWorkerRegistry } from '@commander/worker-plane';
+import { runKernelMigrations, seedWorkerAllowedTenants } from '@praetor/kernel';
+import { createVerifiedPostgresPool } from '@praetor/postgres-runtime';
+import { PostgresWorkerRegistry } from '@praetor/worker-plane';
 import type { Pool } from 'pg';
 import { runTask1ClosureMigrations } from '../packages/kernel/src/migrations.js';
 import {
@@ -578,7 +578,7 @@ async function main(): Promise<void> {
       headers: { 'content-type': 'application/json', 'idempotency-key': idempotencyKey },
       body: JSON.stringify({
         source: 'external-openai-agents-sdk',
-        package: '@commander/action-adapters',
+        package: '@praetor/action-adapters',
         model: liveProposal?.model ?? 'deterministic-test-model',
         tool: 'kubernetes.deployment.rollback',
         destination: 'k8s://fake/commander/deployments/api',

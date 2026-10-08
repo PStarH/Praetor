@@ -233,7 +233,7 @@ describe('CLI .env bootstrap', () => {
     {
       skip: existsSync(BOOTSTRAP_DIST)
         ? false
-        : 'packages/core/dist/cli/bootstrapEnv.js not built — run pnpm --filter @commander/core build',
+        : 'packages/core/dist/cli/bootstrapEnv.js not built — run pnpm --filter @praetor/core build',
     },
     () => {
       assert.ok(existsSync(CLI_DIST), 'dist/cliEntry.js must exist when dist is built');

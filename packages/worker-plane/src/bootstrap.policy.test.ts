@@ -1,6 +1,6 @@
 import assert from 'node:assert/strict';
 import { describe, it } from 'node:test';
-import { InMemoryKernelRepository } from '@commander/kernel/testing/inMemoryRepository';
+import { InMemoryKernelRepository } from '@praetor/kernel/testing/inMemoryRepository';
 import {
   createWorkerPolicyEvaluator,
   resolveWorkerTenantScope,

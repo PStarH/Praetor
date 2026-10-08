@@ -14,7 +14,7 @@ import type {
   ActionSimulationV1,
   ActionStateV1,
   GovernedActionV1,
-} from '@commander/contracts';
+} from '@praetor/contracts';
 import { resolveApiBase } from '../lib/apiOrigin';
 
 /**

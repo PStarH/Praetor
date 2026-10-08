@@ -3,7 +3,7 @@
  *
  * Identity, tenancy, policy PDP, and audit sink entry points.
  * Implementations currently delegate to existing core modules; shared values
- * crossing a package boundary belong to @commander/contracts.
+ * crossing a package boundary belong to @praetor/contracts.
  */
 
 import { getSideEffectGate, type SideEffectGate } from '../runtime/sideEffectGate';
@@ -12,8 +12,8 @@ import { getGlobalTenantProvider } from '../runtime/tenantProvider';
 import { getSecurityAuditLogger } from '../security/securityAuditLogger';
 import { createHash, randomUUID } from 'node:crypto';
 
-import type { WorkloadIdentity } from '@commander/contracts';
-export type { WorkloadIdentity } from '@commander/contracts';
+import type { WorkloadIdentity } from '@praetor/contracts';
+export type { WorkloadIdentity } from '@praetor/contracts';
 
 export interface ControlPlaneConfig {
   defaultScopes?: string[];

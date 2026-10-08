@@ -5,7 +5,7 @@ import { createServer } from 'node:http';
 import { createRequire } from 'node:module';
 import { fileURLToPath } from 'node:url';
 import { after, before, describe, it } from 'node:test';
-import { type EvidenceSigner } from '@commander/effect-broker';
+import { type EvidenceSigner } from '@praetor/effect-broker';
 import {
   PostgresKernelRepository,
   runKernelMigrations,

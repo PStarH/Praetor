@@ -11,8 +11,8 @@ import {
   InMemoryMemoryService,
   MemoryStoreFacade,
   resetWorkCoordinator,
-} from '@commander/core';
-import { runWithTenant } from '@commander/core/runtime/tenantContext';
+} from '@praetor/core';
+import { runWithTenant } from '@praetor/core/runtime/tenantContext';
 import { createDlqRouter } from '../src/dlqEndpoints.js';
 import { AgentStateStore } from '../src/agentStateStore.js';
 import { ProjectMemoryStoreAdapter } from '../src/memoryStoreAdapter.js';

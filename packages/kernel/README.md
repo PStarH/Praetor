@@ -1,4 +1,4 @@
-# @commander/kernel
+# @praetor/kernel
 
 The Commander execution kernel is the sole authority for durable run and step
 lifecycle state. It is deliberately separate from HTTP, CLI, LLM providers,
@@ -15,7 +15,7 @@ tools, plugins, and planning.
 
 ```ts
 import { Pool } from 'pg';
-import { PostgresKernelRepository } from '@commander/kernel';
+import { PostgresKernelRepository } from '@praetor/kernel';
 
 const kernel = new PostgresKernelRepository(new Pool({ connectionString: process.env.DATABASE_URL }));
 await kernel.initialize();

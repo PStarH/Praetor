@@ -1,5 +1,5 @@
 {
-  "name": "@commander/effect-broker",
+  "name": "@praetor/effect-broker",
   "version": "0.2.0",
   "description": "Commander zero-trust external effect broker",
   "type": "module",
@@ -42,7 +42,7 @@
     "access": "public"
   },
   "dependencies": {
-    "@commander/contracts": "workspace:*"
+    "@praetor/contracts": "workspace:*"
   },
   "devDependencies": {
     "typescript": "^5.0.0"

@@ -1,19 +1,19 @@
 import express, { Router } from 'express';
 import type { Request, Response, NextFunction } from 'express';
-import { hashSecret } from '@commander/core/runtime';
-import { MCPServer, getModelRouter, createMCPClient, reportSilentFailure } from '@commander/core';
+import { hashSecret } from '@praetor/core/runtime';
+import { MCPServer, getModelRouter, createMCPClient, reportSilentFailure } from '@praetor/core';
 import type {
   MCPTool,
   MCPToolResult,
   MCPContentItem,
   ModelTier,
   MCPClientConfig,
-} from '@commander/core';
+} from '@praetor/core';
 import { URL } from 'node:url';
 import * as path from 'node:path';
 import { hasRole, type UserRole } from './userStore';
 import { getApiKeyStore } from './apiKeyStore';
-import { getCurrentTenantId } from '@commander/core/runtime/tenantContext';
+import { getCurrentTenantId } from '@praetor/core/runtime/tenantContext';
 
 // ── Security: SSRF prevention ────────────────────────────────────────────────
 // Block requests to private/internal IP ranges and cloud metadata endpoints.

@@ -14,7 +14,7 @@ import {
   EffectBrokerError,
   canonicalRequestHash,
   type EffectKernelPort,
-} from '@commander/effect-broker';
+} from '@praetor/effect-broker';
 import { issueLocalToolCapabilityToken } from './stepWorkloadIdentity.js';
 import { createWorkerPolicyEvaluator } from './bootstrap.js';
 import { ConnectorStepExecutor } from './connectorStepExecutor.js';

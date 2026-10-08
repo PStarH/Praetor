@@ -1,7 +1,7 @@
 import { Router } from 'express';
 import type { Request, Response, NextFunction } from 'express';
-import { getWebhookDispatcher, type WebhookConfig } from '@commander/core';
-import { runWithTenant } from '@commander/core/runtime/tenantContext';
+import { getWebhookDispatcher, type WebhookConfig } from '@praetor/core';
+import { runWithTenant } from '@praetor/core/runtime/tenantContext';
 import { toErrorMessage } from './routeHelpers';
 import { hasRole, type UserRole } from './userStore';
 

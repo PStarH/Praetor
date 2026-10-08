@@ -2,7 +2,7 @@ import { pathToFileURL } from 'node:url';
 import {
   createVerifiedPostgresPool,
   type VerifiedPostgresPoolInput,
-} from '@commander/postgres-runtime';
+} from '@praetor/postgres-runtime';
 
 export type MigrationGateMode = 'preflight' | 'await';
 export type MigrationGateTarget = {

@@ -44,7 +44,7 @@ import {
   getSharedKnowledgeBaseStore,
   type KbDocumentMeta,
   type KbSearchResult,
-} from '@commander/core';
+} from '@praetor/core';
 
 // ── Validation schemas ───────────────────────────────────────────────────
 

@@ -313,7 +313,7 @@ describe(
 
     before(async () => {
       if (!databaseUrl || !workerDatabaseUrl) return;
-      const { runKernelMigrations, seedWorkerAllowedTenants } = await import('@commander/kernel');
+      const { runKernelMigrations, seedWorkerAllowedTenants } = await import('@praetor/kernel');
       ownerPool = new Pool({ connectionString: databaseUrl, max: 2 });
       await runKernelMigrations(ownerPool);
       await seedWorkerAllowedTenants(ownerPool, [

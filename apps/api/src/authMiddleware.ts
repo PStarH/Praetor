@@ -1,6 +1,6 @@
 import type { Request, Response, NextFunction } from 'express';
-import { getGlobalLogger } from '@commander/core';
-import { hashSecret } from '@commander/core/runtime';
+import { getGlobalLogger } from '@praetor/core';
+import { hashSecret } from '@praetor/core/runtime';
 import { isProductionEnv, describeProdSignal } from './envSignal';
 import { getApiKeyStore } from './apiKeyStore';
 import { getAuthFailureStore } from './authFailureStore';

@@ -10,13 +10,13 @@
  * always fail REQUEST_HASH_MISMATCH under requireRequestBinding.
  */
 import { AsyncLocalStorage } from 'node:async_hooks';
-import type { EffectBroker } from '@commander/effect-broker';
+import type { EffectBroker } from '@praetor/effect-broker';
 import {
   canonicalRequestHash,
   deriveEffectIdempotencyKey,
   type CapabilityTokenIssuer,
-} from '@commander/effect-broker';
-import type { LLMProvider, LLMRequest, LLMResponse } from '@commander/core';
+} from '@praetor/effect-broker';
+import type { LLMProvider, LLMRequest, LLMResponse } from '@praetor/core';
 import { mintStepCapabilityToken, requireStepWorkloadBinding } from './stepWorkloadIdentity.js';
 
 type LlmInvokeKey = `${string}:${string}`;

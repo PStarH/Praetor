@@ -1,6 +1,6 @@
 import assert from 'node:assert/strict';
 import { describe, it } from 'node:test';
-import { consumeCompensationBatch, type CompensationOutboxPort } from '@commander/kernel';
+import { consumeCompensationBatch, type CompensationOutboxPort } from '@praetor/kernel';
 import {
   canonicalCompensationHash,
   sealGovernedCompensationAuthorization,

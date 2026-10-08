@@ -1,7 +1,7 @@
 import assert from 'node:assert/strict';
 import { readFileSync } from 'node:fs';
 import { describe, it } from 'node:test';
-import { RUN_STATES } from '@commander/contracts';
+import { RUN_STATES } from '@praetor/contracts';
 import { createServer } from 'node:http';
 import express from 'express';
 import { createV1GatewayRouter } from '../src/v1GatewayEndpoints.js';

@@ -6,7 +6,7 @@
  */
 
 import { v4 as uuidv4 } from 'uuid';
-import { getCurrentTenantId, TenantIsolationError } from '@commander/core/runtime/tenantContext';
+import { getCurrentTenantId, TenantIsolationError } from '@praetor/core/runtime/tenantContext';
 
 export const DEFAULT_A2A_TENANT_ID = '__default__';
 

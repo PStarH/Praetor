@@ -2,7 +2,7 @@ import { describe, it } from 'node:test';
 import assert from 'node:assert/strict';
 import express from 'express';
 import type { AddressInfo } from 'node:net';
-import { runWithTenant } from '@commander/core/runtime/tenantContext';
+import { runWithTenant } from '@praetor/core/runtime/tenantContext';
 import { AgentCardRegistry, type AgentCard } from '../src/agentCard';
 import { createAgentCardRouter } from '../src/agentCardEndpoints';
 import { tenantContextMiddleware } from '../src/tenantContextMiddleware';

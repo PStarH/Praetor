@@ -107,8 +107,8 @@ interface SpecifierScan {
  * LM-18 / MOD-02: the previous implementation was a single regex,
  * `\bfrom\s+['"]<imp>['"]`, which had two defects:
  *   1. It required the specifier to be *exactly* the forbidden string, so
- *      `import '@commander/core/runtime/agentRuntime'` — a real subpath — passed
- *      the gate even though `@commander/core/runtime` is on the forbidden list.
+ *      `import '@praetor/core/runtime/agentRuntime'` — a real subpath — passed
+ *      the gate even though `@praetor/core/runtime` is on the forbidden list.
  *   2. It matched text in comments and ordinary string literals, so a comment
  *      mentioning a forbidden import was reported as a violation.
  *
@@ -152,7 +152,7 @@ function collectModuleSpecifiers(path: string, content: string): SpecifierScan {
 /**
  * A specifier is forbidden when it *is* the forbidden module or a true
  * subpath of it. A bare string prefix must not match, so that
- * `@commander/core-extra` is not treated as `@commander/core`.
+ * `@praetor/core-extra` is not treated as `@praetor/core`.
  */
 function isForbiddenSpecifier(specifier: string, forbidden: string): boolean {
   return specifier === forbidden || specifier.startsWith(`${forbidden}/`);
@@ -191,7 +191,7 @@ for (const relativePath of legacyExecutionFiles) {
   }
 }
 
-// 1. V2 packages must not import @commander/core at all.
+// 1. V2 packages must not import @praetor/core at all.
 for (const pkg of config.v2Packages) {
   const pkgDir = join(ROOT, pkg, 'src');
   for (const file of scanDirectory(pkgDir, `v2 package ${pkg}`)) {
@@ -199,7 +199,7 @@ for (const pkg of config.v2Packages) {
     if (config.v2ImportExceptions.some((ex) => rel === ex || rel.endsWith(`/${ex}`))) continue;
     const bad = checkFile(file, config.forbiddenCoreImports);
     if (bad.length > 0) {
-      failures.push(`${rel} imports forbidden @commander/core modules: ${bad.join(', ')}`);
+      failures.push(`${rel} imports forbidden @praetor/core modules: ${bad.join(', ')}`);
     }
   }
 }
@@ -220,7 +220,7 @@ for (const file of apiFiles) {
   const bad = checkFile(file, config.forbiddenCoreImports);
   if (bad.length > 0) {
     failures.push(
-      `apps/api new file ${base} imports forbidden @commander/core modules: ${bad.join(', ')}`,
+      `apps/api new file ${base} imports forbidden @praetor/core modules: ${bad.join(', ')}`,
     );
   }
 }

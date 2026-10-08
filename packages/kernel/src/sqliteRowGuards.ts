@@ -169,7 +169,7 @@ export function reqEnum<T extends string>(
 }
 
 /** Canonical enum allow-lists shared between adapters and guard callers. */
-// Mirrors the canonical `STEP_STATES` in @commander/contracts and the SQLite
+// Mirrors the canonical `STEP_STATES` in @praetor/contracts and the SQLite
 // `commander_steps.state` CHECK constraint. Keep in sync with both.
 export const STEP_STATES = [
   'PENDING',

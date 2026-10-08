@@ -4,7 +4,7 @@
  *
  * @legacy This module uses lowercase state names and a parallel state model
  * that is NOT compatible with the V2 canonical state machine defined in
- * `@commander/contracts` (see `RUN_STATES` / `STEP_STATES`). All new code must
+ * `@praetor/contracts` (see `RUN_STATES` / `STEP_STATES`). All new code must
  * use the V2 contracts state machine. This module will be deleted during WP7
  * migration. Do NOT add new features here.
  *

@@ -35,19 +35,19 @@ importers:
 
   .:
     dependencies:
-      '@commander/core':
+      '@praetor/core':
         specifier: workspace:*
         version: link:packages/core
-      '@commander/effect-broker':
+      '@praetor/effect-broker':
         specifier: workspace:*
         version: link:packages/effect-broker
-      '@commander/kernel':
+      '@praetor/kernel':
         specifier: workspace:*
         version: link:packages/kernel
-      '@commander/postgres-runtime':
+      '@praetor/postgres-runtime':
         specifier: workspace:*
         version: link:packages/postgres-runtime
-      '@commander/worker-plane':
+      '@praetor/worker-plane':
         specifier: workspace:*
         version: link:packages/worker-plane
       js-yaml:
@@ -93,19 +93,19 @@ importers:
 
   apps/api:
     dependencies:
-      '@commander/contracts':
+      '@praetor/contracts':
         specifier: workspace:*
         version: link:../../packages/contracts
-      '@commander/core':
+      '@praetor/core':
         specifier: workspace:*
         version: link:../../packages/core
-      '@commander/effect-broker':
+      '@praetor/effect-broker':
         specifier: workspace:*
         version: link:../../packages/effect-broker
-      '@commander/kernel':
+      '@praetor/kernel':
         specifier: workspace:*
         version: link:../../packages/kernel
-      '@commander/postgres-runtime':
+      '@praetor/postgres-runtime':
         specifier: workspace:*
         version: link:../../packages/postgres-runtime
       bcryptjs:
@@ -158,7 +158,7 @@ importers:
 
   apps/web:
     dependencies:
-      '@commander/contracts':
+      '@praetor/contracts':
         specifier: workspace:*
         version: link:../../packages/contracts
       '@dnd-kit/core':
@@ -232,10 +232,10 @@ importers:
 
   packages/action-adapters:
     dependencies:
-      '@commander/contracts':
+      '@praetor/contracts':
         specifier: workspace:*
         version: link:../contracts
-      '@commander/effect-broker':
+      '@praetor/effect-broker':
         specifier: workspace:*
         version: link:../effect-broker
     devDependencies:
@@ -248,16 +248,16 @@ importers:
 
   packages/adapter-ops:
     dependencies:
-      '@commander/action-adapters':
+      '@praetor/action-adapters':
         specifier: workspace:*
         version: link:../action-adapters
-      '@commander/contracts':
+      '@praetor/contracts':
         specifier: workspace:*
         version: link:../contracts
-      '@commander/effect-broker':
+      '@praetor/effect-broker':
         specifier: workspace:*
         version: link:../effect-broker
-      '@commander/kernel':
+      '@praetor/kernel':
         specifier: workspace:*
         version: link:../kernel
     devDependencies:
@@ -279,13 +279,13 @@ importers:
 
   packages/core:
     dependencies:
-      '@commander/contracts':
+      '@praetor/contracts':
         specifier: workspace:*
         version: link:../contracts
-      '@commander/plugin-sdk':
+      '@praetor/plugin-sdk':
         specifier: workspace:*
         version: link:../plugin-sdk
-      '@commander/postgres-runtime':
+      '@praetor/postgres-runtime':
         specifier: workspace:*
         version: link:../postgres-runtime
       better-sqlite3:
@@ -350,7 +350,7 @@ importers:
 
   packages/effect-broker:
     dependencies:
-      '@commander/contracts':
+      '@praetor/contracts':
         specifier: workspace:*
         version: link:../contracts
     devDependencies:
@@ -360,13 +360,13 @@ importers:
 
   packages/kernel:
     dependencies:
-      '@commander/contracts':
+      '@praetor/contracts':
         specifier: workspace:*
         version: link:../contracts
-      '@commander/effect-broker':
+      '@praetor/effect-broker':
         specifier: workspace:*
         version: link:../effect-broker
-      '@commander/postgres-runtime':
+      '@praetor/postgres-runtime':
         specifier: workspace:*
         version: link:../postgres-runtime
       better-sqlite3:
@@ -391,7 +391,7 @@ importers:
 
   packages/mcp-server:
     dependencies:
-      '@commander/core':
+      '@praetor/core':
         specifier: workspace:*
         version: link:../core
     devDependencies:
@@ -429,11 +429,11 @@ importers:
 
   packages/sdk:
     dependencies:
-      '@commander/contracts':
+      '@praetor/contracts':
         specifier: workspace:*
         version: link:../contracts
     devDependencies:
-      '@commander/core':
+      '@praetor/core':
         specifier: workspace:*
         version: link:../core
       '@types/better-sqlite3':
@@ -451,10 +451,10 @@ importers:
 
   packages/shadow-plane:
     dependencies:
-      '@commander/contracts':
+      '@praetor/contracts':
         specifier: workspace:*
         version: link:../contracts
-      '@commander/postgres-runtime':
+      '@praetor/postgres-runtime':
         specifier: workspace:*
         version: link:../postgres-runtime
       json-canonicalize:
@@ -479,22 +479,22 @@ importers:
 
   packages/worker-plane:
     dependencies:
-      '@commander/action-adapters':
+      '@praetor/action-adapters':
         specifier: workspace:*
         version: link:../action-adapters
-      '@commander/contracts':
+      '@praetor/contracts':
         specifier: workspace:*
         version: link:../contracts
-      '@commander/core':
+      '@praetor/core':
         specifier: workspace:*
         version: link:../core
-      '@commander/effect-broker':
+      '@praetor/effect-broker':
         specifier: workspace:*
         version: link:../effect-broker
-      '@commander/kernel':
+      '@praetor/kernel':
         specifier: workspace:*
         version: link:../kernel
-      '@commander/postgres-runtime':
+      '@praetor/postgres-runtime':
         specifier: workspace:*
         version: link:../postgres-runtime
       pg:

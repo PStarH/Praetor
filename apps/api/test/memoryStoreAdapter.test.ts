@@ -10,7 +10,7 @@ import {
   getProjectWarRoomSnapshot,
   InMemoryMemoryService,
   MemoryStoreFacade,
-} from '@commander/core';
+} from '@praetor/core';
 import { ProjectMemoryStoreAdapter } from '../src/memoryStoreAdapter';
 import type { IWarRoomStore } from '../src/store';
 

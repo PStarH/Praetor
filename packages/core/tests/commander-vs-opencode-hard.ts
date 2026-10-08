@@ -60,7 +60,7 @@ Write a comprehensive error handling audit with specific code references and imp
 - packages/core/src/tools/ — tool system
 - packages/core/src/telos/ — goal management
 
-Create a detailed refactoring plan to extract the tool system into a standalone package (@commander/tools). Include:
+Create a detailed refactoring plan to extract the tool system into a standalone package (@praetor/tools). Include:
 1. Dependency analysis: what each tool file imports from core
 2. Interface boundary: what types need to be shared vs duplicated
 3. Migration steps with specific file moves and import rewrites

@@ -12,7 +12,7 @@ import {
   type GovernedCompensationAuthorizationInput,
 } from './compensationAuthority.js';
 import type { ClaimedCompensationRequest, CompensationAuthorizationRecord } from '../types.js';
-import { deriveEffectIdempotencyKey } from '@commander/effect-broker';
+import { deriveEffectIdempotencyKey } from '@praetor/effect-broker';
 
 const WORKER = {
   workerId: 'compensation:pod-a',

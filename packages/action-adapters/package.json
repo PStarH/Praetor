@@ -1,5 +1,5 @@
 {
-  "name": "@commander/action-adapters",
+  "name": "@praetor/action-adapters",
   "version": "0.2.0",
   "description": "Commander L4-02 action adapter implementations with conformance tests (GitHub PR, ServiceNow Incident)",
   "type": "module",
@@ -21,14 +21,14 @@
     "build": "tsc -p tsconfig.json && node ../../scripts/fix-esm-imports.mjs dist",
     "typecheck": "tsc --noEmit",
     "typecheck:test": "tsc -p tsconfig.test.json",
-    "pretest": "pnpm --filter @commander/contracts build && pnpm --filter @commander/effect-broker build",
+    "pretest": "pnpm --filter @praetor/contracts build && pnpm --filter @praetor/effect-broker build",
     "test": "pnpm --workspace-root exec node --import tsx --test packages/action-adapters/src/registry.test.ts packages/action-adapters/src/credentialProvider.test.ts packages/action-adapters/src/http.test.ts packages/action-adapters/src/github/pullRequestCreate.test.ts packages/action-adapters/src/servicenow/incidentCreate.test.ts packages/action-adapters/src/kubernetes/deploymentRollback.test.ts packages/action-adapters/src/conformance/suite.test.ts packages/action-adapters/src/conformance/grant.fixture.test.ts packages/action-adapters/src/live/github.live.test.ts packages/action-adapters/src/live/githubResponseCut.test.ts packages/action-adapters/src/live/servicenow.live.test.ts",
     "prepublishOnly": "tsc -p tsconfig.json"
   },
   "license": "MIT",
   "dependencies": {
-    "@commander/contracts": "workspace:*",
-    "@commander/effect-broker": "workspace:*"
+    "@praetor/contracts": "workspace:*",
+    "@praetor/effect-broker": "workspace:*"
   },
   "devDependencies": {
     "@types/node": "^26.1.1",

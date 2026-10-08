@@ -1,14 +1,14 @@
 import assert from 'node:assert/strict';
 import { createHash } from 'node:crypto';
 import { describe, it } from 'node:test';
-import { ActionAdapterRegistry, type ActionAdapter } from '@commander/action-adapters';
+import { ActionAdapterRegistry, type ActionAdapter } from '@praetor/action-adapters';
 import {
   GITHUB_PULL_REQUEST_CREATE_DESCRIPTOR,
   SERVICENOW_INCIDENT_CREATE_DESCRIPTOR,
   evaluateActionGatewayPolicy,
   KUBERNETES_DEPLOYMENT_ROLLBACK_DESCRIPTOR,
-} from '@commander/contracts';
-import { InMemoryKernelRepository } from '@commander/kernel/testing/inMemoryRepository';
+} from '@praetor/contracts';
+import { InMemoryKernelRepository } from '@praetor/kernel/testing/inMemoryRepository';
 import { createWorkerPolicyEvaluator, evaluateActionGatewayMvpV1 } from './bootstrap.js';
 
 const canonical = (value: unknown): string => {

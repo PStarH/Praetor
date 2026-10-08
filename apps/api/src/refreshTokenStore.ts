@@ -5,8 +5,8 @@
  * consumed by exactly one replica/request — concurrent refreshes of the same
  * token cannot both succeed (single-use rotation).
  */
-import type { SqlPool } from '@commander/kernel';
-import { createVerifiedPostgresPool } from '@commander/postgres-runtime';
+import type { SqlPool } from '@praetor/kernel';
+import { createVerifiedPostgresPool } from '@praetor/postgres-runtime';
 import { createAuthPool, withClient, withTransaction, type VerifiedPoolFactory } from './authDb';
 
 export interface RefreshTokenRecord {

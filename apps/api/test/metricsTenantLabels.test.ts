@@ -3,7 +3,7 @@ import assert from 'node:assert/strict';
 import express from 'express';
 import type { AddressInfo } from 'node:net';
 
-import { getMetricsCollector } from '@commander/core';
+import { getMetricsCollector } from '@praetor/core';
 import {
   runWithTenant,
   getTokenGovernor,
@@ -12,7 +12,7 @@ import {
   resetTokenGovernor,
   resetTenantFairnessMonitor,
   resetTenantManager,
-} from '@commander/core/runtime';
+} from '@praetor/core/runtime';
 import { recordTenantMetricUsage, resetTenantMetricsStore } from '../src/tenantMetricsStore';
 import { exportTenantMetrics } from '../src/tenantMetricsExporter';
 

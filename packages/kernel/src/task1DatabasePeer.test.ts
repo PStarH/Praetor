@@ -115,7 +115,7 @@ const peerOptions = (
       overrides.databaseOidFor?.(login) ?? '42',
       overrides.encrypted ?? true,
     ) as unknown as Pool;
-  }) as typeof import('@commander/postgres-runtime').createVerifiedPostgresPool,
+  }) as typeof import('@praetor/postgres-runtime').createVerifiedPostgresPool,
 });
 
 describe('Task 1 six-role database peer observation', () => {

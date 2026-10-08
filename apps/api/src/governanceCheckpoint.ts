@@ -5,7 +5,7 @@
  * Implements mandatory and conditional checkpoints based on governance mode
  */
 
-import { MissionGovernanceMode, MissionRiskLevel } from '@commander/core';
+import { MissionGovernanceMode, MissionRiskLevel } from '@praetor/core';
 
 /**
  * Checkpoint types

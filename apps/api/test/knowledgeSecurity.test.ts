@@ -6,7 +6,7 @@ import * as fs from 'node:fs';
 import * as os from 'node:os';
 import * as path from 'node:path';
 import * as crypto from 'node:crypto';
-import { getHookManager, resetHookManager, setSharedKnowledgeBaseStore } from '@commander/core';
+import { getHookManager, resetHookManager, setSharedKnowledgeBaseStore } from '@praetor/core';
 
 import { createKnowledgeBaseRouter } from '../src/knowledgeBaseEndpoints';
 import { _resetKnowledgeStoreSingletonForTests } from '../src/knowledgeStore';

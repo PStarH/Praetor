@@ -59,10 +59,10 @@ describe('kernel Node 20 hang diagnostics workflow', () => {
 
     const diagnose = steps.find((step) => step.name === 'Capture per-file kernel test boundaries');
     const diagnosticScript = diagnose?.run ?? '';
-    const contractsBuild = 'pnpm --filter @commander/contracts build';
-    const effectBrokerBuild = 'pnpm --filter @commander/effect-broker build';
-    assert.match(diagnosticScript, /pnpm --filter @commander\/contracts build/);
-    assert.match(diagnosticScript, /pnpm --filter @commander\/effect-broker build/);
+    const contractsBuild = 'pnpm --filter @praetor/contracts build';
+    const effectBrokerBuild = 'pnpm --filter @praetor/effect-broker build';
+    assert.match(diagnosticScript, /pnpm --filter @(commander|praetor)\/contracts build/);
+    assert.match(diagnosticScript, /pnpm --filter @(commander|praetor)\/effect-broker build/);
     assert.ok(
       diagnosticScript.indexOf(contractsBuild) < diagnosticScript.indexOf(effectBrokerBuild),
       'contracts must be built before effect-broker and individual kernel tests',

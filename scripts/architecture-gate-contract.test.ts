@@ -3,8 +3,8 @@
  *
  * The gate's import check used to be a single regex requiring the specifier to
  * be *exactly* a forbidden string, so a real subpath import —
- * `import '@commander/core/runtime/agentRuntime'` — passed even though
- * `@commander/core/runtime` is on the forbidden list. It also matched prose in
+ * `import '@praetor/core/runtime/agentRuntime'` — passed even though
+ * `@praetor/core/runtime` is on the forbidden list. It also matched prose in
  * comments, reporting a violation for a comment that merely *mentioned* an
  * import.
  *
@@ -25,7 +25,7 @@ const gateScript = path.join(repoRoot, 'scripts/architecture-gate.ts');
 
 const CONFIG = {
   v2Packages: ['packages/kernel'],
-  forbiddenCoreImports: ['@commander/core', '@commander/core/runtime', '@commander/core/security'],
+  forbiddenCoreImports: ['@praetor/core', '@praetor/core/runtime', '@praetor/core/security'],
   v2ImportExceptions: [],
   api: { path: 'apps/api/src', legacyImportExceptions: [], unversionedRouteExceptions: [] },
   authorityExceptions: [],
@@ -72,62 +72,62 @@ function runGate(source: string): { status: number; output: string } {
 describe('LM-18: architecture gate resolves real module specifiers', () => {
   it('fails on an exact forbidden import', () => {
     const { status, output } = runGate(
-      `import { x } from '@commander/core';\nexport const y = x;\n`,
+      `import { x } from '@praetor/core';\nexport const y = x;\n`,
     );
     assert.equal(status, 1, output);
-    assert.match(output, /imports forbidden @commander\/core modules/);
+    assert.match(output, /imports forbidden @(commander|praetor)\/core modules/);
   });
 
   it('fails on a DEEP subpath of a forbidden module (previously missed)', () => {
     const { status, output } = runGate(
-      `import { AgentRuntime } from '@commander/core/runtime/agentRuntime';\nexport const r = AgentRuntime;\n`,
+      `import { AgentRuntime } from '@praetor/core/runtime/agentRuntime';\nexport const r = AgentRuntime;\n`,
     );
     assert.equal(status, 1, `deep subpath import must be rejected\n${output}`);
-    assert.match(output, /@commander\/core\/runtime/);
+    assert.match(output, /@(commander|praetor)\/core\/runtime/);
   });
 
   it('fails on a re-export from a forbidden module', () => {
     const { status, output } = runGate(
-      `export { redact } from '@commander/core/security/secrets';\n`,
+      `export { redact } from '@praetor/core/security/secrets';\n`,
     );
     assert.equal(status, 1, `re-export must be rejected\n${output}`);
-    assert.match(output, /@commander\/core\/security/);
+    assert.match(output, /@(commander|praetor)\/core\/security/);
   });
 
   it('fails on a literal require() of a forbidden module', () => {
     const { status, output } = runGate(
-      `const core = require('@commander/core/runtime/tenantContext');\nexport const t = core;\n`,
+      `const core = require('@praetor/core/runtime/tenantContext');\nexport const t = core;\n`,
     );
     assert.equal(status, 1, `literal require must be rejected\n${output}`);
-    assert.match(output, /@commander\/core\/runtime/);
+    assert.match(output, /@(commander|praetor)\/core\/runtime/);
   });
 
   it('fails on a literal dynamic import() of a forbidden module', () => {
     const { status, output } = runGate(
-      `export async function load() {\n  return await import('@commander/core/observability');\n}\n`,
+      `export async function load() {\n  return await import('@praetor/core/observability');\n}\n`,
     );
     assert.equal(status, 1, `literal dynamic import must be rejected\n${output}`);
-    assert.match(output, /@commander\/core/);
+    assert.match(output, /@(commander|praetor)\/core/);
   });
 
   it('passes on a near-miss package name (no bare string prefix matching)', () => {
     const { status, output } = runGate(
-      `import { x } from '@commander/core-extra';\nexport const y = x;\n`,
+      `import { x } from '@praetor/core-extra';\nexport const y = x;\n`,
     );
-    assert.equal(status, 0, `@commander/core-extra must NOT match @commander/core\n${output}`);
+    assert.equal(status, 0, `@praetor/core-extra must NOT match @praetor/core\n${output}`);
   });
 
   it('passes when a forbidden import appears only in a comment', () => {
     const { status, output } = runGate(
-      `// Historically this file did: import { AgentRuntime } from '@commander/core/runtime/agentRuntime';\n` +
-        `/** And the doc block also mentions from '@commander/core' */\nexport const y = 1;\n`,
+      `// Historically this file did: import { AgentRuntime } from '@praetor/core/runtime/agentRuntime';\n` +
+        `/** And the doc block also mentions from '@praetor/core' */\nexport const y = 1;\n`,
     );
     assert.equal(status, 0, `prose mentioning an import is not a violation\n${output}`);
   });
 
   it('passes when a forbidden specifier appears only in a string literal', () => {
     const { status, output } = runGate(
-      `export const DOC = "import { x } from '@commander/core'";\nexport const y = 1;\n`,
+      `export const DOC = "import { x } from '@praetor/core'";\nexport const y = 1;\n`,
     );
     assert.equal(status, 0, `a string literal is not an import\n${output}`);
   });

@@ -1,9 +1,10 @@
 {
-  "name": "@commander/core",
+  "name": "@praetor/core",
   "version": "0.2.0",
   "type": "module",
   "description": "Multi-agent orchestration system. Dynamic topology, quality gates, 18 built-in tools, 25 LLM providers.",
   "bin": {
+    "praetor": "./dist/cliEntry.js",
     "commander": "./dist/cliEntry.js"
   },
   "main": "dist/index.js",
@@ -104,10 +105,10 @@
     "access": "public"
   },
   "scripts": {
-    "prebuild": "pnpm --filter @commander/postgres-runtime build",
+    "prebuild": "pnpm --filter @praetor/postgres-runtime build",
     "build": "tsc -p tsconfig.json && node ../../scripts/fix-esm-imports.mjs dist",
     "build:production": "tsx ../../scripts/check-production-sandbox.ts && tsc -p tsconfig.json && node ../../scripts/fix-esm-imports.mjs dist",
-    "pretest": "pnpm --filter @commander/postgres-runtime build && node scripts/test-inventory.mjs --verify",
+    "pretest": "pnpm --filter @praetor/postgres-runtime build && node scripts/test-inventory.mjs --verify",
     "test": "vitest run --no-cache",
     "test:quick": "vitest run --no-cache tests/ultimate/deliberation.test.ts tests/tools/pathSecurity.test.ts tests/security/",
     "test:algorithmic": "vitest run --no-cache tests/benchmarks/algorithmicEffectiveness",
@@ -148,9 +149,9 @@
     "vitest": "^4.1.10"
   },
   "dependencies": {
-    "@commander/contracts": "workspace:*",
-    "@commander/plugin-sdk": "workspace:*",
-    "@commander/postgres-runtime": "workspace:*",
+    "@praetor/contracts": "workspace:*",
+    "@praetor/plugin-sdk": "workspace:*",
+    "@praetor/postgres-runtime": "workspace:*",
     "better-sqlite3": "^12.11.1",
     "blessed": "^0.1.81",
     "safe-regex": "^2.1.1"

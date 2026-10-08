@@ -1,12 +1,12 @@
 <p align="center">
-  <a href="https://github.com/PStarH/Commander/actions/workflows/ci.yml?query=branch%3Amaster"><img src="https://img.shields.io/github/actions/workflow/status/PStarH/Commander/ci.yml?branch=master&style=flat-square&label=CI&logo=github" alt="CI Status" /></a>
-  <a href="https://pstarh.github.io/commander-docs/zh/"><img src="https://img.shields.io/badge/docs-在线文档-blue?style=flat-square&logo=vitepress" alt="Documentation" /></a>
+  <a href="https://github.com/PStarH/Praetor/actions/workflows/ci.yml?query=branch%3Amaster"><img src="https://img.shields.io/github/actions/workflow/status/PStarH/Praetor/ci.yml?branch=master&style=flat-square&label=CI&logo=github" alt="CI Status" /></a>
+  <a href="https://pstarh.github.io/praetor-docs/zh/"><img src="https://img.shields.io/badge/docs-在线文档-blue?style=flat-square&logo=vitepress" alt="Documentation" /></a>
   <img src="https://img.shields.io/badge/license-MIT-green?style=flat-square" alt="License" />
   <img src="https://img.shields.io/badge/TypeScript-5.x-3178C6?style=flat-square&logo=typescript&logoColor=white" alt="TypeScript" />
   <img src="https://img.shields.io/badge/Python%20SDK-3.10+-3776AB?style=flat-square&logo=python&logoColor=white" alt="Python SDK" />
 </p>
 
-<h1 align="center">Commander</h1>
+<h1 align="center">Praetor</h1>
 <p align="center"><strong>面向 Coding 与 DevOps AI 智能体的安全审批与状态恢复平面</strong></p>
 <p align="center">
   <em>杜绝重复外部变更 · 网络丢包与超时安全恢复 · 密码学签名存证链</em>
@@ -16,8 +16,8 @@
 
 <p align="center">
   <a href="#快速上手"><img src="https://img.shields.io/badge/⚡_立即体验-000?style=for-the-badge" /></a>
-  <a href="#ai-智能体面临的分布式系统挑战"><img src="https://img.shields.io/badge/🛡️_为什么需要_COMMANDER-000?style=for-the-badge" /></a>
-  <a href="https://pstarh.github.io/commander-docs/zh/"><img src="https://img.shields.io/badge/📖_中文文档-000?style=for-the-badge" /></a>
+  <a href="#ai-智能体面临的分布式系统挑战"><img src="https://img.shields.io/badge/🛡️_为什么需要_PRAETOR-000?style=for-the-badge" /></a>
+  <a href="https://pstarh.github.io/praetor-docs/zh/"><img src="https://img.shields.io/badge/📖_中文文档-000?style=for-the-badge" /></a>
 </p>
 
 ---
@@ -39,7 +39,7 @@
                               │ 1. 提议变更（智能体不直接持有写权限凭据）
                               ▼
    ┌────────────────────────────────────────────────────────┐
-   │             Commander 治理与恢复控制面                 │
+   │             Praetor 治理与恢复控制面                 │
    │  ┌─────────────────────────┐ ┌──────────────────────┐  │
    │  │ 重试前预检 (幂等性保证) │ │ 人类双阶段密码学审批 │  │
    │  │ (Query-Before-Retry)    │ │ (Cryptographic Hash) │  │
@@ -65,7 +65,7 @@
 
 盲目重试会导致重复 PR、重复交易或状态污染；直接放弃又会留下孤立的外部副作用。
 
-| 核心挑战 | 传统智能体朴素执行 | Commander 受治理执行 |
+| 核心挑战 | 传统智能体朴素执行 | Praetor 受治理执行 |
 | --- | --- | --- |
 | **响应丢失**（如创建 PR 时遭遇 504 超时） | 重新规划或盲目重试 → **产生重复 PR 与脏变更** | **重试前预检（Query-Before-Retry）**：基于操作身份查询远端结果，避免重复执行 |
 | **节点中途崩溃** | 状态丢失或归零重跑，产生不可控的悬空变更 | **持久化 PostgreSQL Kernel**：租约安全回收，新 Worker 无缝接管与恢复 |
@@ -189,7 +189,7 @@ async with CommanderGatewayClient(base_url="http://127.0.0.1:4000", api_key="cmd
 克隆和全新安装仍需要正常访问 GitHub 和 npm 注册表。`--offline` 标志表示不向提供商发起请求，并不代表完全无网络的安装过程。
 
 ```bash
-git clone https://github.com/PStarH/Commander.git
+git clone https://github.com/PStarH/Praetor.git
 cd Commander
 corepack enable
 pnpm install --frozen-lockfile
@@ -463,8 +463,8 @@ GitHub 原生权限和 Actions 审批等控制手段通常已足够。Commander 
 
 - **真实 vs 模拟：** 新手引导任务结果仅在 UI/API 报告 `source=real` 时为真实执行；回退与 POC 均为模拟/演示数据。
 - **隐私：** 提示词可能会发送给所选 LLM 提供商，本地追踪、记忆、审计数据及可选的 OpenTelemetry 导出可能被持久化。录入敏感数据前请参阅 [PRIVACY.md](PRIVACY.md)。
-- **Bug 报告：** 请提交 [GitHub issue](https://github.com/PStarH/Commander/issues)，并提前脱敏提示词、日志、配置、PII 和密钥。
-- **问题与建议：** 请提交 [GitHub issue](https://github.com/PStarH/Commander/issues)。
+- **Bug 报告：** 请提交 [GitHub issue](https://github.com/PStarH/Praetor/issues)，并提前脱敏提示词、日志、配置、PII 和密钥。
+- **问题与建议：** 请提交 [GitHub issue](https://github.com/PStarH/Praetor/issues)。
 - **安全漏洞：** 请遵循 [SECURITY.md](SECURITY.md) 流程私下披露；请勿提交公开 issue。
 
 ---

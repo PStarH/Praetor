@@ -15,7 +15,7 @@ import assert from 'node:assert/strict';
 import { createServer } from 'node:http';
 import { describe, it } from 'node:test';
 import express from 'express';
-import { getCurrentTenantId } from '@commander/core/runtime/tenantContext';
+import { getCurrentTenantId } from '@praetor/core/runtime/tenantContext';
 import { enterpriseRouteFreeze } from '../src/enterpriseGateway.js';
 import { createPipelineRouter } from '../src/pipelineEndpoints.js';
 import { createOrchestratorRouter } from '../src/orchestratorEndpoints.js';

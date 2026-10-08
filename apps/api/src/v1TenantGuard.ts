@@ -28,7 +28,7 @@
  */
 
 import type { Request, Response, NextFunction, RequestHandler } from 'express';
-import { getGlobalTenantProvider } from '@commander/core/runtime';
+import { getGlobalTenantProvider } from '@praetor/core/runtime';
 import { isEnterpriseProfile } from './profileSignal';
 
 /** Tenant id format — mirrors tenantContextMiddleware (AUTH-8). */

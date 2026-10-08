@@ -1,5 +1,5 @@
 {
-  "name": "@commander/shadow-plane",
+  "name": "@praetor/shadow-plane",
   "version": "0.1.0",
   "description": "Read-only historical policy evaluation for Commander Shadow pilots.",
   "type": "module",
@@ -7,6 +7,7 @@
   "module": "dist/index.js",
   "types": "dist/index.d.ts",
   "bin": {
+    "praetor-shadow": "./dist/cli.js",
     "commander-shadow": "./dist/cli.js"
   },
   "exports": {
@@ -27,8 +28,8 @@
   },
   "license": "MIT",
   "dependencies": {
-    "@commander/contracts": "workspace:*",
-    "@commander/postgres-runtime": "workspace:*",
+    "@praetor/contracts": "workspace:*",
+    "@praetor/postgres-runtime": "workspace:*",
     "json-canonicalize": "3.0.0",
     "pg": "^8.15.0"
   },

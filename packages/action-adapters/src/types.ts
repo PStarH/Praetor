@@ -1,5 +1,5 @@
-import type { EffectRemoteOutcome } from '@commander/effect-broker';
-import type { ActionAdapterDescriptorV1 } from '@commander/contracts';
+import type { EffectRemoteOutcome } from '@praetor/effect-broker';
+import type { ActionAdapterDescriptorV1 } from '@praetor/contracts';
 
 export interface AdapterExecuteInput {
   tenantId: string;

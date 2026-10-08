@@ -18,7 +18,7 @@
 import type { StepExecutor, ClaimedStep, WorkerRecord } from './types.js';
 import { WorkerExecutionError } from './types.js';
 import type { ExternalEffectBroker } from './toolStepExecutor.js';
-import { deriveEffectIdempotencyKey, type CapabilityTokenIssuer } from '@commander/effect-broker';
+import { deriveEffectIdempotencyKey, type CapabilityTokenIssuer } from '@praetor/effect-broker';
 import {
   assertEffectBrokerForProduction,
   isProductionEffectGate,

@@ -6,13 +6,13 @@
  */
 import { AsyncLocalStorage } from 'node:async_hooks';
 import { randomUUID } from 'node:crypto';
-import { getCapabilityTokenIssuer, getCapabilityTokenVerifier } from '@commander/core/security';
+import { getCapabilityTokenIssuer, getCapabilityTokenVerifier } from '@praetor/core/security';
 import {
   canonicalRequestHash,
   isClassAEffectType,
   type CapabilityTokenIssuer,
   type WorkloadBinding,
-} from '@commander/effect-broker';
+} from '@praetor/effect-broker';
 import type { ClaimedStep, WorkerRecord } from './types.js';
 
 export interface StepWorkloadBinding extends WorkloadBinding {

@@ -1,5 +1,5 @@
 /**
- * @commander/plugin-sdk — Type definitions for Commander plugins
+ * @praetor/plugin-sdk — Type definitions for Commander plugins
  *
  * Plugins extend Commander with tools, hooks, skills, and CLI commands.
  * A plugin exports a default object implementing CommanderPluginDef.

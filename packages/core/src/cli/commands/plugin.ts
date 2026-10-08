@@ -187,7 +187,7 @@ export async function cmdPlugin(subargs: string[]) {
     ${$.cyan}commander plugin info <name>${$.reset}        Show plugin details
 
   ${$.dim}Examples:${$.reset}
-    ${$.cyan}commander plugin install @commander/web-scraper${$.reset}
+    ${$.cyan}commander plugin install @praetor/web-scraper${$.reset}
     ${$.cyan}commander plugin install github:user/repo${$.reset}
     ${$.cyan}commander plugin install ./my-plugin${$.reset}
     ${$.cyan}commander plugin disable my-plugin${$.reset}

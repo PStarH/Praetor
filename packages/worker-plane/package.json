@@ -1,5 +1,5 @@
 {
-  "name": "@commander/worker-plane",
+  "name": "@praetor/worker-plane",
   "version": "0.2.0",
   "description": "Commander distributed worker plane — workload identity, registration, capability-aware leasing, and execution loops",
   "type": "module",
@@ -7,6 +7,7 @@
   "module": "dist/index.js",
   "types": "dist/index.d.ts",
   "bin": {
+    "praetor-worker": "./dist/main.js",
     "commander-worker": "./dist/main.js"
   },
   "exports": {
@@ -22,11 +23,11 @@
     "LICENSE"
   ],
   "scripts": {
-    "prebuild": "pnpm --filter @commander/postgres-runtime build",
+    "prebuild": "pnpm --filter @praetor/postgres-runtime build",
     "build": "tsc -p tsconfig.json && node .././../scripts/fix-esm-imports.mjs dist",
     "typecheck": "tsc --noEmit",
     "typecheck:test": "tsc -p tsconfig.test.json",
-    "pretest": "pnpm --filter @commander/postgres-runtime build",
+    "pretest": "pnpm --filter @praetor/postgres-runtime build",
     "test": "pnpm --workspace-root exec node --import tsx --test packages/worker-plane/src/workerService.test.ts packages/worker-plane/src/registry.rls.test.ts packages/worker-plane/src/stepWorkloadIdentity.test.ts packages/worker-plane/src/llmBrokerBridge.test.ts packages/worker-plane/src/llmBrokerIdempotency.test.ts packages/worker-plane/src/m3-worker-plane.test.ts packages/worker-plane/src/l3-03b-gateway-localonly.test.ts packages/worker-plane/src/l3-03a-effect-tool-monopoly.test.ts packages/worker-plane/src/ticketAdapter.test.ts packages/worker-plane/src/actionGatewayPolicy.test.ts packages/worker-plane/src/bootstrap.policy.test.ts packages/worker-plane/src/bootstrap.authority.test.ts packages/worker-plane/src/healthServer.test.ts packages/worker-plane/src/main.health.test.ts packages/worker-plane/src/actionAdapterExecutor.test.ts packages/worker-plane/src/boot-refuse.test.ts packages/worker-plane/src/effectGate.test.ts packages/worker-plane/src/toolStepExecutor.broker.test.ts packages/worker-plane/src/workerRuntimeAdapter.test.ts packages/worker-plane/src/apiKeyAuthenticator.capabilityCeiling.test.ts packages/worker-plane/src/toolStepExecutor.productionGate.test.ts packages/worker-plane/src/connectorStepExecutor.productionGate.test.ts packages/worker-plane/src/evaluatorStepExecutor.failClosed.test.ts packages/worker-plane/src/main.readiness.test.ts packages/worker-plane/src/inMemoryWorkerRegistry.exposure.test.ts",
     "test:e2e:in-memory": "pnpm --workspace-root exec node --import tsx --test --test-force-exit packages/worker-plane/src/e2e/gateway-kernel-worker.e2e.test.ts",
     "test:e2e:pg": "COMMANDER_E2E_REQUIRE_PG=1 pnpm --workspace-root exec node --import tsx --test --test-force-exit packages/worker-plane/src/e2e/gateway-kernel-worker.e2e.test.ts",
@@ -55,12 +56,12 @@
     "access": "public"
   },
   "dependencies": {
-    "@commander/action-adapters": "workspace:*",
-    "@commander/contracts": "workspace:*",
-    "@commander/core": "workspace:*",
-    "@commander/kernel": "workspace:*",
-    "@commander/postgres-runtime": "workspace:*",
-    "@commander/effect-broker": "workspace:*",
+    "@praetor/action-adapters": "workspace:*",
+    "@praetor/contracts": "workspace:*",
+    "@praetor/core": "workspace:*",
+    "@praetor/kernel": "workspace:*",
+    "@praetor/postgres-runtime": "workspace:*",
+    "@praetor/effect-broker": "workspace:*",
     "pg": "^8.15.0"
   },
   "devDependencies": {

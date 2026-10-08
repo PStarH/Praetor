@@ -87,7 +87,7 @@ export interface ClaimedStep {
   lease: WorkerLease;
 }
 
-/** Structural boundary implemented by @commander/kernel; no legacy runtime imports allowed. */
+/** Structural boundary implemented by @praetor/kernel; no legacy runtime imports allowed. */
 export interface KernelWorkerPort {
   claimNextStep(request: {
     workerId: string;

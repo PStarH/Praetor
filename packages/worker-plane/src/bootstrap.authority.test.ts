@@ -10,8 +10,8 @@ import {
   CAPABILITY_JWKS_JSON_ENV,
   CAPABILITY_KEY_ID_ENV,
   CAPABILITY_PRIVATE_KEY_PEM_ENV,
-} from '@commander/kernel';
-import { InMemoryKernelRepository } from '@commander/kernel/testing/inMemoryRepository';
+} from '@praetor/kernel';
+import { InMemoryKernelRepository } from '@praetor/kernel/testing/inMemoryRepository';
 import { Pool } from 'pg';
 import {
   assertDurableCapabilityStores,

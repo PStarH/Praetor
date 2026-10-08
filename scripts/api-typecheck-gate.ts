@@ -4,7 +4,7 @@ import { fileURLToPath } from 'node:url';
 import { dirname, resolve } from 'node:path';
 
 const EXPECTED_TYPECHECK = 'tsc -p tsconfig.json --noEmit';
-const CHILD_COMMAND = 'pnpm --filter @commander/api run typecheck';
+const CHILD_COMMAND = 'pnpm --filter @praetor/api run typecheck';
 
 interface ApiTypecheckGatePorts {
   readApiManifest(): string;
@@ -35,7 +35,7 @@ function main(): void {
   runApiTypecheckGate({
     readApiManifest: () => readFileSync(resolve(root, 'apps/api/package.json'), 'utf8'),
     runTypecheck: () => {
-      const result = spawnSync('pnpm', ['--filter', '@commander/api', 'run', 'typecheck'], {
+      const result = spawnSync('pnpm', ['--filter', '@praetor/api', 'run', 'typecheck'], {
         cwd: root,
         encoding: 'utf8',
       });

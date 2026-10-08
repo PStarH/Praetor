@@ -1,7 +1,7 @@
 import assert from 'node:assert/strict';
 import { readFileSync } from 'node:fs';
 import { describe, it } from 'node:test';
-import { KERNEL_COMPENSATION_TOPIC, type RequestCompensationResult } from '@commander/kernel';
+import { KERNEL_COMPENSATION_TOPIC, type RequestCompensationResult } from '@praetor/kernel';
 import {
   adapterOpsCompensationMockPassed,
   notReadyControlledChangeEvidence,

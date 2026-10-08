@@ -1,5 +1,5 @@
 import * as assert from 'node:assert/strict';
-import { hashSecret } from '@commander/core/runtime';
+import { hashSecret } from '@praetor/core/runtime';
 import { after, afterEach, before, beforeEach, test } from 'node:test';
 import express, { type Request, type Response } from 'express';
 import { authMiddleware } from '../src/authMiddleware';

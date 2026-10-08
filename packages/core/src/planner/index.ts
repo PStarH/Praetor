@@ -1,5 +1,5 @@
 /**
- * @commander/core planner — WorkGraph (Architecture V2).
+ * @praetor/core planner — WorkGraph (Architecture V2).
  */
 export {
   planWorkGraph,

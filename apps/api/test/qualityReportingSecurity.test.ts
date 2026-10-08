@@ -1,7 +1,7 @@
 import assert from 'node:assert/strict';
 import { afterEach, beforeEach, describe, it } from 'node:test';
 import express, { type Request, type Response as ExpressResponse } from 'express';
-import { getHookManager, type CommanderPlugin } from '@commander/core';
+import { getHookManager, type CommanderPlugin } from '@praetor/core';
 import { resetConsistencyMonitorManager } from '../src/consistencyMonitor';
 import { createQualityRouter } from '../src/qualityEndpoints';
 import { createReportingRouter } from '../src/reportingEndpoints';

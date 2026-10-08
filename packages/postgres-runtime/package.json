@@ -1,5 +1,5 @@
 {
-  "name": "@commander/postgres-runtime",
+  "name": "@praetor/postgres-runtime",
   "version": "0.2.0",
   "description": "Verified PostgreSQL TLS and SPKI-pinned runtime pool factory.",
   "type": "module",

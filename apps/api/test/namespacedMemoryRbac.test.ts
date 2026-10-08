@@ -5,7 +5,7 @@ import assert from 'node:assert/strict';
 import { createServer } from 'node:http';
 import { describe, it } from 'node:test';
 import express from 'express';
-import { InMemoryMemoryService, MemoryStoreFacade } from '@commander/core';
+import { InMemoryMemoryService, MemoryStoreFacade } from '@praetor/core';
 import { createNamespacedMemoryRouter } from '../src/namespacedMemoryEndpoints.js';
 import type { AuthUser } from '../src/jwtMiddleware.js';
 import type { UserRole } from '../src/userStore.js';

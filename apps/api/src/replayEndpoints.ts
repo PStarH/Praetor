@@ -1,9 +1,9 @@
-import { reportSilentFailure } from '@commander/core';
+import { reportSilentFailure } from '@praetor/core';
 import {
   assertSameTenant,
   getCurrentTenantId,
   tenantPathSegment,
-} from '@commander/core/runtime/tenantContext';
+} from '@praetor/core/runtime/tenantContext';
 import { Router, type Request } from 'express';
 import * as fs from 'fs';
 import * as fsp from 'fs/promises';

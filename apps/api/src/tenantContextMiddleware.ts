@@ -1,5 +1,5 @@
 import type { Request, Response, NextFunction } from 'express';
-import { runWithTenant, TenantIsolationError } from '@commander/core/runtime/tenantContext';
+import { runWithTenant, TenantIsolationError } from '@praetor/core/runtime/tenantContext';
 import { isProductionEnv } from './envSignal';
 import { isEnterpriseProfile } from './profileSignal';
 

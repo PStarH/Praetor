@@ -6,16 +6,16 @@
  * below loses every in-flight task on API process restart. The migration to a
  * PersistentDriver-backed table (ess-001 Phase-1 storage) was attempted but
  * blocked by the workspace package-build boundary: apps/api resolves
- * `@commander/core` from packages/core/dist/ (the precompiled declarations)
+ * `@praetor/core` from packages/core/dist/ (the precompiled declarations)
  * rather than packages/core/src/, so new methods added to the in-package
  * StateMachine class don't propagate until the package is rebuilt AND the
  * new PersistentDriver symbols are re-exported from src/index.ts.
  *
  * Until that rebuild lands, this endpoint keeps the original Map semantics.
  * Restart-safety item is tracked separately; ship path requires either
- *   (a) `pnpm --filter @commander/core build` to regenerate dist,
+ *   (a) `pnpm --filter @praetor/core build` to regenerate dist,
  *   (b) flip apps/api/tsconfig `paths` to point at source, or
- *   (c) declare module '@commander/core' augmentation in apps/api.
+ *   (c) declare module '@praetor/core' augmentation in apps/api.
  */
 
 import express, { type Request, type Response } from 'express';

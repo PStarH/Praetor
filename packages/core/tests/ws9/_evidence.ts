@@ -69,7 +69,7 @@ export function requireRunRoot(): string {
 }
 
 /**
- * A bare runner (e.g. `pnpm --filter @commander/core test`) must not write into
+ * A bare runner (e.g. `pnpm --filter @praetor/core test`) must not write into
  * the shared published `docs/baselines/ws9` tree, but it also must not crash on
  * import. Such an execution gets its own private, owned run directory, left
  * unsealed (`status='running'`): the evidence it produces can never be consumed

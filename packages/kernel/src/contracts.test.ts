@@ -1,11 +1,11 @@
 import assert from 'node:assert/strict';
 import { test } from 'node:test';
-import { CONTRACT_SCHEMAS, KERNEL_ERROR_CODES } from '@commander/contracts';
+import { CONTRACT_SCHEMAS, KERNEL_ERROR_CODES } from '@praetor/contracts';
 import type { KernelErrorDetails, KernelEvent } from './index.js';
 
 // F-K1-1: this file previously constructed the event/error literals and then
 // asserted on those same literals — a tautology that survived deleting every
-// contract in `@commander/contracts`. It now checks the literals against the
+// contract in `@praetor/contracts`. It now checks the literals against the
 // canonical runtime schemas, so canonical contract drift fails the test.
 
 const event: KernelEvent = {

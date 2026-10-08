@@ -13,7 +13,7 @@
  * of downstream failures — and it is a hard failure, never a silent skip.
  */
 export const LIVE_SERVER_PRECONDITION =
-  'TEST_API_URL is not set: apps/api/tests/*.test.ts is a live-server integration suite and must be run through apps/api/scripts/run-integration-tests.ts (pnpm --filter @commander/api test:integration), which builds and starts the API and exports TEST_API_URL.';
+  'TEST_API_URL is not set: apps/api/tests/*.test.ts is a live-server integration suite and must be run through apps/api/scripts/run-integration-tests.ts (pnpm --filter @praetor/api test:integration), which builds and starts the API and exports TEST_API_URL.';
 
 export function requireLiveServer() {
   const baseUrl = process.env.TEST_API_URL;

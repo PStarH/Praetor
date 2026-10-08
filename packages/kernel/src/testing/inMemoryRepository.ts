@@ -1,6 +1,6 @@
 /** Test-only model of the kernel repository. Never export from the package root. */
 import { randomUUID } from 'node:crypto';
-import { deriveEffectIdempotencyKey } from '@commander/effect-broker';
+import { deriveEffectIdempotencyKey } from '@praetor/effect-broker';
 import type { KernelRepository } from '../repository.js';
 import type {
   AdmitEffectRequest,
@@ -53,7 +53,7 @@ import type {
   OperationsReadiness,
 } from '../types.js';
 import { OPERATIONS_HEARTBEAT_TTL_MS } from '../types.js';
-import { isClassAEffectType } from '@commander/contracts';
+import { isClassAEffectType } from '@praetor/contracts';
 import { findMatchingKillSwitchWithLookup } from '../killSwitchMatching.js';
 import {
   KERNEL_COMPENSATION_TOPIC,

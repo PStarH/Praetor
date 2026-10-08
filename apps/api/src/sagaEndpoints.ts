@@ -3,8 +3,8 @@ import {
   SSEStream,
   getMessageBus,
   type MessageBusTopic,
-} from '@commander/core';
-import { assertSameTenant, getCurrentTenantId } from '@commander/core/runtime/tenantContext';
+} from '@praetor/core';
+import { assertSameTenant, getCurrentTenantId } from '@praetor/core/runtime/tenantContext';
 import { Router, type Request, type Response } from 'express';
 import { isAbsolute, join, relative, resolve } from 'path';
 import { existsSync, readdirSync, readFileSync } from 'fs';
@@ -13,7 +13,7 @@ import {
   FileSagaStore,
   type SagaStateSnapshot,
   type SagaEvent,
-} from '@commander/core/saga';
+} from '@praetor/core/saga';
 import { hasRole } from './userStore';
 
 const DATA_DIR = process.env.COMMANDER_SAGA_DATA ?? join(process.cwd(), '.commander', 'sagas');

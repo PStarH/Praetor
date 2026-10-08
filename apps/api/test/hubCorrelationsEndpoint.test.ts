@@ -4,7 +4,7 @@
  * Mirrors apps/api/test/store-normalization.test.ts conventions: ESM
  * imports + tsx loader so this `.ts` source can resolve `../src/hub-
  * CorrelationsEndpoints` (also `.ts`) at test time without requiring a
- * fresh apps/api/dist build. Note that `@commander/core/runtime` is
+ * fresh apps/api/dist build. Note that `@praetor/core/runtime` is
  * resolved through Node's normal package resolution, which hits the
  * packages/core dist (NOT src) — see README on packages/core dist
  * freshness for env-related test prerequisites.
@@ -25,7 +25,7 @@
 import { test, describe } from 'node:test';
 import * as assert from 'node:assert/strict';
 import express, { type Express, type Request, type Response, type NextFunction } from 'express';
-import { getMessageBus, resetMessageBus, type MessageBus } from '@commander/core/runtime';
+import { getMessageBus, resetMessageBus, type MessageBus } from '@praetor/core/runtime';
 import {
   createHubCorrelationsRouter,
   _resetHubCorrelationsForTests,

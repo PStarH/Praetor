@@ -19,15 +19,15 @@ import {
   EffectBrokerError,
   canonicalRequestHash,
   createEvidenceSigner,
-} from '@commander/effect-broker';
+} from '@praetor/effect-broker';
 import {
   InMemoryKernelRepository,
   seedFreshOperationsDrains,
-} from '@commander/kernel/testing/inMemoryRepository';
+} from '@praetor/kernel/testing/inMemoryRepository';
 import {
   ActionAdapterRegistry,
   createGitHubPullRequestCreateAdapter,
-} from '@commander/action-adapters';
+} from '@praetor/action-adapters';
 import { createActionAdapterEffectExecutor } from '../packages/worker-plane/src/actionAdapterExecutor.js';
 import { ReconciliationDaemon } from '../packages/adapter-ops/src/reconciliationDaemon.js';
 

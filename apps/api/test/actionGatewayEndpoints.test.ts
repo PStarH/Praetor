@@ -7,18 +7,18 @@ import {
   ACTION_STATES_V1,
   evaluateActionGatewayPolicy,
   type ActionStateV1,
-} from '@commander/contracts';
+} from '@praetor/contracts';
 import {
   buildRunEvidenceBundle,
   canonicalEvidenceBody,
   createEvidenceSigner,
   verifyEvidenceBundle,
-} from '@commander/effect-broker';
+} from '@praetor/effect-broker';
 import {
   InMemoryKernelRepository,
   seedFreshOperationsDrains,
-} from '@commander/kernel/testing/inMemoryRepository';
-import type { KillSwitchScope } from '@commander/kernel';
+} from '@praetor/kernel/testing/inMemoryRepository';
+import type { KillSwitchScope } from '@praetor/kernel';
 import type {
   ActionReconcileRequestResult,
   GatewayEvidenceRecord,

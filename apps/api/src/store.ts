@@ -1,4 +1,4 @@
-import { reportSilentFailure } from '@commander/core';
+import { reportSilentFailure } from '@praetor/core';
 import fs from 'fs';
 import path from 'path';
 import { createApiStore } from './stores';
@@ -19,7 +19,7 @@ import {
   WarRoomData,
   createSeedWarRoomData,
   getProjectWarRoomSnapshot,
-} from '@commander/core';
+} from '@praetor/core';
 
 /** Override `COMMANDER_WARROOM_FILE` to relocate the JSON-backed war-room store. Default keeps the original `__dirname/../data/war-room.json` path so production runs are untouched. Env var MUST be set before this module is required (module-load capture). */
 const DATA_FILE =
@@ -878,7 +878,7 @@ export class SqliteWarRoomStore implements IWarRoomStore {
 
   /**
    * Materialise a WarRoomData snapshot scoped to a single project so that the
-   * existing `getProjectWarRoomSnapshot` helper from @commander/core can be
+   * existing `getProjectWarRoomSnapshot` helper from @praetor/core can be
    * reused without modification.
    */
   private toWarRoomDataForProject(projectId: string): WarRoomData {

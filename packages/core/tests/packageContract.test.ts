@@ -10,7 +10,7 @@ const manifest = JSON.parse(readFileSync(join(packageRoot, 'package.json'), 'utf
   unknown
 >;
 
-void describe('@commander/core publication contract', () => {
+void describe('@praetor/core publication contract', () => {
   void it('runs the canonical ESM build before packing and publishing', () => {
     const scripts = manifest.scripts as Record<string, string>;
     assert.equal(scripts.prepack, 'pnpm run build');

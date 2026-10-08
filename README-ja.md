@@ -1,9 +1,9 @@
 <p align="center">
-  <a href="https://github.com/PStarH/Commander/actions/workflows/ci.yml?query=branch%3Amaster"><img src="https://img.shields.io/github/actions/workflow/status/PStarH/Commander/ci.yml?branch=master&style=flat-square&label=CI&logo=github" /></a>
-  <img src="https://img.shields.io/github/license/PStarH/Commander?style=flat-square&color=EAB308" />
+  <a href="https://github.com/PStarH/Praetor/actions/workflows/ci.yml?query=branch%3Amaster"><img src="https://img.shields.io/github/actions/workflow/status/PStarH/Praetor/ci.yml?branch=master&style=flat-square&label=CI&logo=github" /></a>
+  <img src="https://img.shields.io/github/license/PStarH/Praetor?style=flat-square&color=EAB308" />
 </p>
 
-<h1 align="center">Commander</h1>
+<h1 align="center">Praetor</h1>
 <p align="center"><strong>Coding / DevOps AI エージェントのための承認と状態復旧プレーン</strong></p>
 <p align="center">
   <em>重複変更の防止 · ネットワーク切断・タイムアウトからの安全復旧 · 電子署名付き監査証跡</em>
@@ -14,7 +14,7 @@
 <p align="center">
   <a href="#クイックスタート"><img src="https://img.shields.io/badge/TRY_NOW-000?style=for-the-badge" /></a>
   <a href="#ai-エージェントが直面する分散システムの課題"><img src="https://img.shields.io/badge/WHY_COMMANDER-000?style=for-the-badge" /></a>
-  <a href="https://pstarh.github.io/commander-docs/ja/"><img src="https://img.shields.io/badge/DOCS-000?style=for-the-badge" /></a>
+  <a href="https://pstarh.github.io/praetor-docs/ja/"><img src="https://img.shields.io/badge/DOCS-000?style=for-the-badge" /></a>
 </p>
 
 ---
@@ -74,7 +74,7 @@ AI エージェント（Claude Code、OpenAI Agents SDK、社内独自コーデ�
 
 エージェントが Pull Request の作成を要求します。人間がそれを承認します。GitHub は書き込みを受け付けましたが、Worker がレスポンスを受信する前に切断されました。操作は本当に成功したのか？ 次の Worker は何をすべきか？
 
-Commander は、承認された要求とその実行状態をエージェントの外部に一元管理します。GitHub アダプターはレスポンス喪失後も一致する結果を照会し、証拠が曖昧な場合は未解決状態を安全に保持し、マージされていない PR を閉じる場合も別途承認された補償アクションを通じてのみ実行します。
+Praetor は、承認された要求とその実行状態をエージェントの外部に一元管理します。GitHub アダプターはレスポンス喪失後も一致する結果を照会し、証拠が曖昧な場合は未解決状態を安全に保持し、マージされていない PR を閉じる場合も別途承認された補償アクションを通じてのみ実行します。
 
 最初のパイロットは意図的に限定されています：**同一リポジトリ内の既存ブランチからの PR 作成**。コードの生成や push、PR の自動マージ、本番環境へのデプロイは行いません。ブランチの内容は引き続き GitHub 上でのレビューとチェックが必要です。
 
@@ -177,7 +177,7 @@ Node.js 22.x と pnpm 9 を使用します（Corepack が固定バージョン�
 クローンと初期インストールには、GitHub およびパッケージレジストリへの通常のアクセスが必要です。`--offline` フラグはプロバイダーへのリクエストを行わないことを意味し、完全なオフラインインストールを意味するものではありません。
 
 ```bash
-git clone https://github.com/PStarH/Commander.git
+git clone https://github.com/PStarH/Praetor.git
 cd Commander
 corepack enable
 pnpm install --frozen-lockfile
@@ -333,7 +333,7 @@ Thompson Sampling と Reflexion を用いたメタ学習器が、実行をまた
 
 ### 統治アクション実行プレーン (Architecture V2)
 
-Commander は、信頼されていないエージェントの推論と外部の副作用を完全に分離し、2段階の暗号ゲートと電子署名付きレシートを通じて決定論的動作を保証します：
+Praetor は、信頼されていないエージェントの推論と外部の副作用を完全に分離し、2段階の暗号ゲートと電子署名付きレシートを通じて決定論的動作を保証します：
 
 <p align="center">
   <img src="docs/assets/commander-crypto-gate-en.svg" alt="Two-Phase Cryptographic Human Gate & JWS Evidence" width="100%" />
@@ -429,9 +429,9 @@ curl http://localhost:4000/system/status   # ランタイムモジュール概�
 
 エージェントのアクションが外部システムに到達した際、タイムアウトやクラッシュによって「実行されたのか」「何回実行されたのか」「どのようなペイロードだったのか」という 3 つの疑問が残ります。無暗な再試行は書き込みの重複を招き、諦めればアクションが喪失します。
 
-Commander は、承認された要求とその実行状態をエージェントの外部に記録し、曖昧な応答の後に結果を照会し、証拠が決定的でない場合は明示的な未知状態にとどまります。副作用を取り消す処理は、個別に承認された別のアクションとして実行されます。
+Praetor は、承認された要求とその実行状態をエージェントの外部に記録し、曖昧な応答の後に結果を照会し、証拠が決定的でない場合は明示的な未知状態にとどまります。副作用を取り消す処理は、個別に承認された別のアクションとして実行されます。
 
-GitHub 標準の権限や Actions の承認などのネイティブ制御で十分な場合も多くあります。Commander は、エージェントとワーカーにわたって一元的な承認と復旧の記録を必要とするチーム向けに設計されています。
+GitHub 標準の権限や Actions の承認などのネイティブ制御で十分な場合も多くあります。Praetor は、エージェントとワーカーにわたって一元的な承認と復旧の記録を必要とするチーム向けに設計されています。
 
 ---
 
@@ -451,8 +451,8 @@ GitHub 標準の権限や Actions の承認などのネイティブ制御で十�
 
 - **リアル vs シミュレーション:** オンボーディングタスクの結果は、UI/API が `source=real` を報告した場合にのみ実際の実行結果となります。フォールバックや POC の数値はシミュレーション/デモデータです。
 - **プライバシー:** プロンプトは選択した LLM プロバイダーに送信される場合があり、ローカルトレース、メモリ、監査データ、オプションの OpenTelemetry エクスポートが永続化される場合があります。機密データを入力する前に [PRIVACY.md](PRIVACY.md) を確認してください。
-- **バグ報告:** [GitHub Issues](https://github.com/PStarH/Commander/issues) に投稿してください。事前にプロンプト、ログ、設定、個人情報（PII）、シークレットをマスキングしてください。
-- **質問や提案:** [GitHub Issues](https://github.com/PStarH/Commander/issues) をご利用ください。
+- **バグ報告:** [GitHub Issues](https://github.com/PStarH/Praetor/issues) に投稿してください。事前にプロンプト、ログ、設定、個人情報（PII）、シークレットをマスキングしてください。
+- **質問や提案:** [GitHub Issues](https://github.com/PStarH/Praetor/issues) をご利用ください。
 - **セキュリティの脆弱性:** 公開 Issue を作成せず、[SECURITY.md](SECURITY.md) の手順に従って非公開で報告してください。
 
 ---

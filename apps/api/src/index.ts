@@ -14,7 +14,7 @@ import {
   resolveMemoryStoreType,
   installOutboundNetworkPolicy,
   resetOutboundNetworkPolicy,
-} from '@commander/core';
+} from '@praetor/core';
 import express from 'express';
 import { createWarRoomStore, apiStore } from './store';
 import { AgentStateStore } from './agentStateStore';
@@ -72,12 +72,12 @@ import { createApprovalConfigRouter } from './approvalConfigEndpoints';
 import { createHallucinationRouter } from './hallucinationEndpoints';
 import { createLineageRouter } from './lineageEndpoints';
 import { createSecurityPostureRouter } from './securityPostureEndpoints';
-import dingtalkPlugin from '@commander/core/plugins/im/dingtalk';
-import feishuPlugin from '@commander/core/plugins/im/feishu';
-import wecomPlugin from '@commander/core/plugins/im/wecom';
-import slackPlugin from '@commander/core/plugins/im/slack';
-import teamsPlugin from '@commander/core/plugins/im/teams';
-import discordPlugin from '@commander/core/plugins/im/discord';
+import dingtalkPlugin from '@praetor/core/plugins/im/dingtalk';
+import feishuPlugin from '@praetor/core/plugins/im/feishu';
+import wecomPlugin from '@praetor/core/plugins/im/wecom';
+import slackPlugin from '@praetor/core/plugins/im/slack';
+import teamsPlugin from '@praetor/core/plugins/im/teams';
+import discordPlugin from '@praetor/core/plugins/im/discord';
 import { createApiKeyRouter } from './apiKeyEndpoints';
 import { createSettingsRouter } from './settingsEndpoints';
 import { createOutgoingWebhookRouter } from './outgoingWebhookEndpoints';
@@ -95,8 +95,8 @@ import { createAuditLogRouter } from './auditLogEndpoints';
 import { createAuditMiddleware } from './auditMiddleware';
 import { createSagaRouter } from './sagaEndpoints';
 import { createHubCorrelationsRouter } from './hubCorrelationsEndpoints';
-import { getUnifiedAuditLog, dlpResponseMiddleware } from '@commander/core/security';
-import { getGlobalTenantProvider, SimpleTenantProvider } from '@commander/core/runtime';
+import { getUnifiedAuditLog, dlpResponseMiddleware } from '@praetor/core/security';
+import { getGlobalTenantProvider, SimpleTenantProvider } from '@praetor/core/runtime';
 import { registerRouter, mountRegisteredRouters, listRegisteredRouters } from './routerRegistry';
 import { generateOpenApiSpec } from './openApiGenerator';
 import { enterpriseRouteFreeze, legacyHeader } from './enterpriseGateway';
@@ -1084,7 +1084,7 @@ async function startServer(): Promise<void> {
   // WS9: opt-in audit chain manifest + verify timer (COMMANDER_AUDIT_MANIFEST_DIR).
   if (process.env.COMMANDER_AUDIT_MANIFEST_DIR) {
     try {
-      const { getAuditChainLedger, installAuditChainIntegrity } = await import('@commander/core');
+      const { getAuditChainLedger, installAuditChainIntegrity } = await import('@praetor/core');
       installAuditChainIntegrity(getAuditChainLedger());
       process.stdout.write('[startup] AuditChainIntegrity installed (manifest + verify timer)\n');
     } catch (err) {

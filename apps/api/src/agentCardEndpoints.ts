@@ -1,6 +1,6 @@
 import { Router } from 'express';
 import type { Request, Response, NextFunction } from 'express';
-import { TenantIsolationError } from '@commander/core/runtime/tenantContext';
+import { TenantIsolationError } from '@praetor/core/runtime/tenantContext';
 import { AgentCardRegistry } from './agentCard';
 import { hasRole } from './userStore';
 

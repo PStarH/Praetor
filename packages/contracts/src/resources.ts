@@ -2,7 +2,7 @@
  * Versioned V2 resource shapes for public SDK/API consumption.
  *
  * These types intentionally omit internal implementation fields and never
- * import from @commander/core. They are the public contract.
+ * import from @praetor/core. They are the public contract.
  */
 
 import type { RunState, StepState } from './states.js';

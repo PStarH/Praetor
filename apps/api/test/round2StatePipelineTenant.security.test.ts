@@ -10,7 +10,7 @@ import {
   getWorkCoordinator,
   resetMessageBus,
   resetWorkCoordinator,
-} from '@commander/core';
+} from '@praetor/core';
 import { createPipelineRouter } from '../src/pipelineEndpoints.js';
 import stateMachineRouter from '../src/stateMachineEndpoints.js';
 import { createStreamRouter } from '../src/streamEndpoints.js';

@@ -8,7 +8,7 @@ import {
   runKernelMigrations,
   seedWorkerAllowedTenants,
   type NewKernelStep,
-} from '@commander/kernel';
+} from '@praetor/kernel';
 import {
   WorkerService,
   PostgresWorkerRegistry,
@@ -16,15 +16,15 @@ import {
   ToolStepExecutor,
   createWorkerPolicyEvaluator,
   type StepExecutor,
-} from '@commander/worker-plane';
+} from '@praetor/worker-plane';
 import {
   CapabilityTokenIssuer,
   CapabilityTokenVerifier,
   EffectBroker,
   canonicalRequestHash,
   createEvidenceSigner,
-} from '@commander/effect-broker';
-import { InMemoryKernelRepository } from '@commander/kernel/testing/inMemoryRepository';
+} from '@praetor/effect-broker';
+import { InMemoryKernelRepository } from '@praetor/kernel/testing/inMemoryRepository';
 import { InMemoryWorkerRegistry } from '../registry.js';
 import { InMemoryTicketAdapter } from '../ticketAdapter.js';
 import type { KernelWorkerPort } from '../types.js';

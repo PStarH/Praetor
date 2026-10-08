@@ -8,7 +8,7 @@ import {
   type CompensationTokenProvider,
   type CompensationTokenContext,
   type OperationsReadiness,
-} from '@commander/kernel';
+} from '@praetor/kernel';
 import {
   EffectBroker,
   canonicalRequestHash,
@@ -21,7 +21,7 @@ import {
   type EffectBrokerOptions,
   type EvidenceRecord,
   type PolicyEvaluator,
-} from '@commander/effect-broker';
+} from '@praetor/effect-broker';
 import {
   ActionAdapterRegistry,
   EnvAdapterCredentialProvider,
@@ -30,7 +30,7 @@ import {
   createServiceNowIncidentCreateAdapter,
   type AdapterCompensateInput,
   type AdapterExecuteInput,
-} from '@commander/action-adapters';
+} from '@praetor/action-adapters';
 import { randomUUID } from 'node:crypto';
 import { chmod, mkdir, readFile, rename, rm, stat, writeFile } from 'node:fs/promises';
 import { join } from 'node:path';

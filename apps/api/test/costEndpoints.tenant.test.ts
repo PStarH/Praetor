@@ -4,10 +4,10 @@ import express from 'express';
 import type { AddressInfo } from 'node:net';
 
 import { createCostRouter, entryMatchesTenant } from '../src/costEndpoints';
-import type { CostLedgerEntry } from '@commander/core';
+import type { CostLedgerEntry } from '@praetor/core';
 import { tenantContextMiddleware } from '../src/tenantContextMiddleware';
-import { getUnifiedCostAuthority, resetUnifiedCostAuthority } from '@commander/core';
-import { runWithTenant } from '@commander/core/runtime/tenantContext';
+import { getUnifiedCostAuthority, resetUnifiedCostAuthority } from '@praetor/core';
+import { runWithTenant } from '@praetor/core/runtime/tenantContext';
 
 describe('cost endpoints tenant isolation', () => {
   let app: express.Express;

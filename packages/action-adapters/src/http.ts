@@ -1,4 +1,4 @@
-import { AdapterExecutionError, adapterErrorFromHttpStatus } from '@commander/effect-broker';
+import { AdapterExecutionError, adapterErrorFromHttpStatus } from '@praetor/effect-broker';
 
 export type FetchFn = typeof fetch;
 

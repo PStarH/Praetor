@@ -4,7 +4,7 @@ import { createServer, type Server } from 'node:https';
 import { isAbsolute } from 'node:path';
 import { performance } from 'node:perf_hooks';
 import { createSecureContext } from 'node:tls';
-import { createVerifiedPostgresPool } from '@commander/postgres-runtime';
+import { createVerifiedPostgresPool } from '@praetor/postgres-runtime';
 import type { Pool } from 'pg';
 import {
   TASK1_READINESS_PROOF_PATH,

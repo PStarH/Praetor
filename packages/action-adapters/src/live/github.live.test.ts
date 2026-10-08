@@ -9,7 +9,7 @@
  */
 import assert from 'node:assert/strict';
 import { after, describe, it } from 'node:test';
-import { GITHUB_PULL_REQUEST_CREATE_DESCRIPTOR } from '@commander/contracts';
+import { GITHUB_PULL_REQUEST_CREATE_DESCRIPTOR } from '@praetor/contracts';
 import { createGitHubPullRequestCreateAdapter, EnvAdapterCredentialProvider } from '../index.js';
 import {
   createGitHubResponseCutFetch,

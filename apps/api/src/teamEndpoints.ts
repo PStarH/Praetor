@@ -1,6 +1,6 @@
 import { Router } from 'express';
 import type { Request, Response, NextFunction } from 'express';
-import { getWorkCoordinator, type TeamStatus, type WorkItem } from '@commander/core';
+import { getWorkCoordinator, type TeamStatus, type WorkItem } from '@praetor/core';
 import { hasRole } from './userStore';
 
 const RUN_ID_PATTERN = /^[a-zA-Z0-9_.-]+$/;

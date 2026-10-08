@@ -27,18 +27,18 @@ import type {
   GovernedActionV1,
   RunState,
   StepState,
-} from '@commander/contracts';
+} from '@praetor/contracts';
 
 export const SDK_API_VERSION = 'v1' as const;
 
-/** Canonical run state. Re-exported from @commander/contracts. */
+/** Canonical run state. Re-exported from @praetor/contracts. */
 export type RunStateV1 = RunState;
 
-/** Canonical step state. Re-exported from @commander/contracts. */
+/** Canonical step state. Re-exported from @praetor/contracts. */
 export type StepStateV1 = StepState;
 
 /**
- * @deprecated Use {@link RunStateV1} from @commander/contracts.
+ * @deprecated Use {@link RunStateV1} from @praetor/contracts.
  * Legacy lowercase status names are being removed in Architecture V2 (WP7).
  */
 export type RunStatusV1 = RunStateV1;

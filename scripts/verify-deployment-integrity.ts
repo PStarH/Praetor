@@ -208,7 +208,7 @@ function checkDockerfileClosure(): void {
       );
     }
 
-    // Scoped package names contain a slash (e.g. @commander/contracts).
+    // Scoped package names contain a slash (e.g. @praetor/contracts).
     const filters = [...text.matchAll(/--filter\s+(@?[A-Za-z0-9_./-]+)/g)].map((m) => m[1]);
     const copiedManifests = new Set(
       [...text.matchAll(/COPY\s+\S*package\.json\s+\.?\/?(.+?)\s*$/gm)]
@@ -270,7 +270,7 @@ function checkDockerfileClosure(): void {
     // tsc resolves a sibling workspace package through its emitted `dist`
     // declarations, so a `RUN cd packages/X && tsc --noEmit` that runs before
     // `X`'s workspace dependency has emitted fails with
-    // TS2307 "Cannot find module '@commander/<dep>'". Only the `--filter` set and
+    // TS2307 "Cannot find module '@praetor/<dep>'". Only the `--filter` set and
     // the manifests were checked before, so packages/worker-plane/Dockerfile
     // built packages/core before packages/postgres-runtime and every image build
     // died — while this gate stayed green.

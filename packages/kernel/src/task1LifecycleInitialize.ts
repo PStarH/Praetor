@@ -1,7 +1,7 @@
 import { createHash, randomUUID, X509Certificate } from 'node:crypto';
 import { readFileSync } from 'node:fs';
 import { isIP } from 'node:net';
-import { createVerifiedPostgresPool } from '@commander/postgres-runtime';
+import { createVerifiedPostgresPool } from '@praetor/postgres-runtime';
 import type { Pool, PoolClient } from 'pg';
 import {
   TASK1_DATABASE_ROLES,

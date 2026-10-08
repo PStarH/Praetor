@@ -2,7 +2,7 @@ import assert from 'node:assert/strict';
 import { createHash, createHmac, generateKeyPairSync, randomBytes, sign } from 'node:crypto';
 import { after, before, describe, it } from 'node:test';
 import { Pool } from 'pg';
-import { actionGatewayPolicySnapshot } from '@commander/contracts';
+import { actionGatewayPolicySnapshot } from '@praetor/contracts';
 import { canonicalBytes } from './canonical.js';
 import {
   parseShadowManifest,

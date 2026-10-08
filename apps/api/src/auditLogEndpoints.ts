@@ -37,7 +37,7 @@ import {
   type UnifiedAuditSeverity,
   type AuditQueryFilters,
   type AuditExportFormat,
-} from '@commander/core/security';
+} from '@praetor/core/security';
 
 // ── Types ────────────────────────────────────────────────────────────────
 

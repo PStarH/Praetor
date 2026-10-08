@@ -5,7 +5,7 @@ import { tmpdir } from 'node:os';
 import { join } from 'node:path';
 import { rootCertificates } from 'node:tls';
 import { describe, it } from 'node:test';
-import { buildVerifiedPostgresPoolConfig } from '@commander/postgres-runtime';
+import { buildVerifiedPostgresPoolConfig } from '@praetor/postgres-runtime';
 import { loadShadowStartupConfig } from './startupConfig.js';
 
 function validEnvironment(): NodeJS.ProcessEnv {

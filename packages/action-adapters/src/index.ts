@@ -2,7 +2,7 @@ export {
   AdapterExecutionError,
   type AdapterCommitState,
   type AdapterRetryMode,
-} from '@commander/effect-broker';
+} from '@praetor/effect-broker';
 
 export { ActionAdapterRegistry } from './registry.js';
 export { createGitHubPullRequestCreateAdapter } from './github/pullRequestCreate.js';

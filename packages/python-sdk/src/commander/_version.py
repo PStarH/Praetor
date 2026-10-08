@@ -1,4 +1,1 @@
-"""Package version."""
-
-__version__ = "0.2.0"
-VERSION = __version__
+from praetor._version import *  # noqa: F403

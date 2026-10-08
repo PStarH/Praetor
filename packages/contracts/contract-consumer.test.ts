@@ -281,7 +281,7 @@ const RESOURCE_EXAMPLES: Record<ContractSchemaName, Record<string, unknown>> = {
   },
   actionProposeRequest: {
     source: 'sdk',
-    package: '@commander/sdk',
+    package: '@praetor/sdk',
     model: 'gpt-5',
     tool: 'ticket.create',
     destination: 'demo://tickets/approval',
@@ -361,7 +361,7 @@ describe('Consumer-Driven Contract Test — SDK vs Contracts', () => {
         'COMPENSATED',
       ];
 
-      // The SDK's RunStateV1 is a re-export of RunState from @commander/contracts.
+      // The SDK's RunStateV1 is a re-export of RunState from @praetor/contracts.
       // Verify the contract's RUN_STATES matches the canonical set.
       assert.deepStrictEqual(
         [...RUN_STATES],

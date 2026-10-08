@@ -10,12 +10,12 @@ import type {
   MissionRiskLevel,
   MissionGovernanceMode,
   ProjectMemoryKind,
-} from '@commander/core';
+} from '@praetor/core';
 import {
   createSlimSnapshot,
   getDefaultInvocationProfile,
   recommendStrategy,
-} from '@commander/core';
+} from '@praetor/core';
 import type { IWarRoomStore } from './store';
 import type { ProjectMemoryStoreAdapter } from './memoryStoreAdapter';
 import type { AgentStateStore } from './agentStateStore';

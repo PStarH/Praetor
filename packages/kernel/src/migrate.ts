@@ -1,7 +1,7 @@
 import {
   createVerifiedPostgresPool,
   type VerifiedPostgresPoolInput,
-} from '@commander/postgres-runtime';
+} from '@praetor/postgres-runtime';
 import type { Pool } from 'pg';
 import { pathToFileURL } from 'node:url';
 import {

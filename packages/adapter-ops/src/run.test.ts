@@ -10,10 +10,10 @@ import {
   CAPABILITY_KEY_ID_ENV,
   CAPABILITY_PRIVATE_KEY_PEM_ENV,
   createCapabilityAuthority,
-} from '@commander/kernel';
-import { InMemoryKernelRepository } from '@commander/kernel/testing/inMemoryRepository';
-import type { CompensationOutboxPort } from '@commander/kernel';
-import { EnvAdapterCredentialProvider } from '@commander/action-adapters';
+} from '@praetor/kernel';
+import { InMemoryKernelRepository } from '@praetor/kernel/testing/inMemoryRepository';
+import type { CompensationOutboxPort } from '@praetor/kernel';
+import { EnvAdapterCredentialProvider } from '@praetor/action-adapters';
 import {
   canonicalCompensationHash,
   sealGovernedCompensationAuthorization,

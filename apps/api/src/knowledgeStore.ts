@@ -14,7 +14,7 @@
  * Embeddings use a zero-dependency hashing-trick LocalEmbeddingFunction (copied
  * from packages/core/src/runtime/embedding.ts so we do not depend on the core
  * build output, and because LocalEmbeddingFunction is not re-exported from
- * `@commander/core`). This means NO OpenAI API key is required.
+ * `@praetor/core`). This means NO OpenAI API key is required.
  *
  * Evidence:
  * - Feature hashing is the standard free approximate-similarity approach
@@ -23,8 +23,8 @@
  *   sufficient for keyword-overlapping enterprise docs and avoids the cost /
  *   privacy concerns of sending internal docs to an external API.
  */
-import { reportSilentFailure } from '@commander/core';
-import { tenantPathSegment, validateTenantId } from '@commander/core/runtime/tenantContext';
+import { reportSilentFailure } from '@praetor/core';
+import { tenantPathSegment, validateTenantId } from '@praetor/core/runtime/tenantContext';
 import * as fsp from 'fs/promises';
 import * as path from 'path';
 import { v4 as uuidv4 } from 'uuid';
@@ -134,7 +134,7 @@ export interface KnowledgeRagContext {
  *
  * NOTE: This is a verbatim copy of the class in
  * `packages/core/src/runtime/embedding.ts`. We duplicate it here because the
- * class is not re-exported from the `@commander/core` package entry point
+ * class is not re-exported from the `@praetor/core` package entry point
  * (only `MockEmbeddingFunction` and `cosineSimilarity` are). Copying avoids a
  * hard dependency on the core build output and keeps the knowledge store fully
  * self-contained.

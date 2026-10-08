@@ -10,10 +10,10 @@ import assert from 'node:assert/strict';
 import { mkdir, writeFile } from 'node:fs/promises';
 import { join } from 'node:path';
 import { setTimeout as sleep } from 'node:timers/promises';
-import { GITHUB_PULL_REQUEST_CREATE_DESCRIPTOR } from '@commander/contracts';
-import { KERNEL_COMPENSATION_TOPIC, type KernelCompensationRequest } from '@commander/kernel';
-import { InMemoryKernelRepository } from '@commander/kernel/testing/inMemoryRepository';
-// Root package.json does not declare @commander/action-adapters, so the bare
+import { GITHUB_PULL_REQUEST_CREATE_DESCRIPTOR } from '@praetor/contracts';
+import { KERNEL_COMPENSATION_TOPIC, type KernelCompensationRequest } from '@praetor/kernel';
+import { InMemoryKernelRepository } from '@praetor/kernel/testing/inMemoryRepository';
+// Root package.json does not declare @praetor/action-adapters, so the bare
 // specifier cannot resolve from scripts/; import the workspace source directly.
 import {
   ActionAdapterRegistry,

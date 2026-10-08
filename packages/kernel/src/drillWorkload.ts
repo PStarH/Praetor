@@ -6,7 +6,7 @@
  */
 
 import { createHash, randomUUID } from 'node:crypto';
-import { createVerifiedPostgresPool } from '@commander/postgres-runtime';
+import { createVerifiedPostgresPool } from '@praetor/postgres-runtime';
 import { PostgresKernelRepository, PostgresTenantContextAuthority } from './postgres.js';
 import { runKernelMigrations, runTask1ClosureMigrations } from './migrations.js';
 import { seedTenantAuthorityAllowedTenants } from './seedWorkerClaimSecret.js';

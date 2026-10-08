@@ -12,7 +12,7 @@ import {
   type MCPServerCapabilities,
   type ActionGatewayExecutor,
   type JSONRPCRequest,
-} from '@commander/core';
+} from '@praetor/core';
 
 export interface McpActionGatewayRequest {
   method: 'GET' | 'POST';

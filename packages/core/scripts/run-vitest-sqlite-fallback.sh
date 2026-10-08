@@ -3,7 +3,7 @@
 #
 # DEGRADED, DIAGNOSTIC-ONLY test entry point.
 #
-# Runs the @commander/core vitest suite with the SQLite-dependent suites
+# Runs the @praetor/core vitest suite with the SQLite-dependent suites
 # excluded. It exists so an operator can still exercise the non-SQLite half of
 # the suite on a machine where the better-sqlite3 native binding cannot be built.
 #
@@ -120,7 +120,7 @@ binding, but the functional probe (open/create/insert/select/close) succeeded.
 Running it would silently drop durability coverage for no reason.
 
 Run the full suite instead:
-  pnpm --filter @commander/core test
+  pnpm --filter @praetor/core test
 EOF
   exit 1
 fi

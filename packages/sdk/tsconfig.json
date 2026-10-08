@@ -9,8 +9,8 @@
     "sourceMap": true,
     "baseUrl": ".",
     "paths": {
-      "@commander/core": ["../core/dist"],
-      "@commander/core/src/*": ["../core/dist/*"]
+      "@praetor/core": ["../core/dist"],
+      "@praetor/core/src/*": ["../core/dist/*"]
     }
   },
   "include": ["src"],

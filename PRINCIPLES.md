@@ -1,6 +1,6 @@
 # PRINCIPLES.md
 
-The single living document of architectural invariants and naming rules for Commander.
+The single living document of architectural invariants and naming rules for Praetor (formerly Commander).
 Kept short, current, and checked against on every change. This is the **target** shape;
 where today's code diverges, the divergence is named as debt, not hidden.
 
@@ -18,21 +18,21 @@ were produced so they're reproducible. Backing inventory: workflow run `wf_db80b
 
 ## 0. Two generations (read this first)
 
-Commander is mid-strangler-migration. Two architectures coexist on disk:
+Praetor is mid-strangler-migration. Two architectures coexist on disk:
 
-- **V1** — `@commander/core`: a 304,435-LOC, 882-file monolith whose `src/index.ts` is a
+- **V1** — `@praetor/core`: a 304,435-LOC, 882-file monolith whose `src/index.ts` is a
   1643-line barrel re-exporting 43 subsystems (runtime, 11+ orchestrators, 5+ memory systems,
   security guards, SQLite/Postgres drivers, CLI, TUI). This is what the live CLI and most of
   `apps/api` run today. WIRED.
-- **V2** — the plane-separated target: `@commander/contracts` (types) → `@commander/kernel`
+- **V2** — the plane-separated target: `@praetor/contracts` (types) → `@praetor/kernel`
   (durable Postgres authority **and** always-on ops binary under `packages/kernel/src/ops`) →
-  `@commander/worker-plane` (execution) + `@commander/effect-broker` (capability PEP), fronted by
-  `apps/api` (Gateway). `@commander/operations` was **deleted in WS1** (`b8a8c484`) and is
+  `@praetor/worker-plane` (execution) + `@praetor/effect-broker` (capability PEP), fronted by
+  `apps/api` (Gateway). `@praetor/operations` was **deleted in WS1** (`b8a8c484`) and is
   **ABSENT on master**; arch-guard **bans** resurrecting it. Ops live in kernel-ops only.
-  Deploy unit `@commander/adapter-ops` owns EffectBroker-backed compensation / UNKNOWN
-  reconcile (**not** a fifth plane; **not** a rename/reintroduction of `@commander/operations`).
+  Deploy unit `@praetor/adapter-ops` owns EffectBroker-backed compensation / UNKNOWN
+  reconcile (**not** a fifth plane; **not** a rename/reintroduction of `@praetor/operations`).
   Partially built; durable `/v1` kernel defaults ON in production / V2 mode / when a DSN is set
-  (`isCommanderKernelEnabled`, see §4). Explicit `COMMANDER_KERNEL_ENABLED=0` remains non-prod opt-out.
+  (`isPraetorKernelEnabled`, see §4). Explicit `PRAETOR_KERNEL_ENABLED=0` remains non-prod opt-out.
 
 The principles below define **V2 as the invariant set**. V1 duplication is the debt to retire.
 Every "one canonical X" rule names the current count so consolidation is measurable.
@@ -43,8 +43,8 @@ Every "one canonical X" rule names the current count so consolidation is measura
 
 **Invariants**
 
-1. `@commander/contracts` depends on nothing internal; everything may depend on it.
-2. No package imports the `@commander/core` barrel wholesale. If you need one thing from core,
+1. `@praetor/contracts` depends on nothing internal; everything may depend on it.
+2. No package imports the `@praetor/core` barrel wholesale. If you need one thing from core,
    that thing gets a real home (a submodule path at minimum, its own package ideally).
 
 **Conformance today**
@@ -55,14 +55,14 @@ Every "one canonical X" rule names the current count so consolidation is measura
   exported by `packages/contracts/src/index.ts:72-84`. `scripts/arch-guard.sh:128-145` checks
   the leaf rule; CI runs `pnpm arch:guard:test` and `pnpm arch:guard` (`.github/workflows/ci.yml:257-263`).
 - (2) **VIOLATED, widely.** The core root barrel is imported wholesale by:
-  `apps/api` (50 `from '@commander/core'` imports, e.g. `apps/api/src/index.ts:1-19`),
+  `apps/api` (50 `from '@praetor/core'` imports, e.g. `apps/api/src/index.ts:1-19`),
   `worker-plane` (`workerRuntimeAdapter.ts:1`), `mcp-server` (`stdioServer.ts:1-11`, 9 symbols),
   `sdk` (`commanderClient.ts:26,139,381` incl. a sync `require`),
   and the `apps/memory` writer (`apps/api/src/memoryIndexManager.ts:14`).
-  (`@commander/adapter-ops` does not import the core barrel.)
+  (`@praetor/adapter-ops` does not import the core barrel.)
 - **Enforcement: PARTIAL.** The contracts leaf rule and V2 package dependency graph are
   **ENFORCED** by `scripts/arch-guard.sh` and `.github/workflows/ci.yml`. The broader V1 rule
-  against wholesale `@commander/core` imports remains debt; existing compatibility files are
+  against wholesale `@praetor/core` imports remains debt; existing compatibility files are
   explicitly listed by the architecture gate and are not silently expanded.
 
 **Gap to close:** retire the documented V1 core-barrel exceptions as the runtime extraction
@@ -78,7 +78,7 @@ proceeds. The WS0 guard prevents new V2 boundary violations and the sole
 1. Only the Gateway (`apps/api`) imports an HTTP framework.
 2. Only the worker/execution plane runs the LLM/provider runtime.
 3. Only the durable kernel (`packages/kernel`) writes the `runs` / `steps` / `events` tables.
-4. Every cross-plane value is a `@commander/contracts` type — no ad-hoc shapes crossing boundaries.
+4. Every cross-plane value is a `@praetor/contracts` type — no ad-hoc shapes crossing boundaries.
 
 **Conformance today**
 
@@ -113,11 +113,11 @@ over the one implementation, not a new class. Count before/after on any change t
 
 | Concept               | Real impls                                                                                                                                                         | Canonical (intended)                                                                                                                                                | Notable duplication / dead code                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                      |
 | --------------------- | ------------------------------------------------------------------------------------------------------------------------------------------------------------------ | ------------------------------------------------------------------------------------------------------------------------------------------------------------------- | ------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------ |
-| Orchestrator          | **10** (was 13)                                                                                                                                                    | V1 `UltimateOrchestrator` (`core/src/ultimate/orchestrator.ts:64`); V2 `planWorkGraph` (`core/src/planner/workGraphPlanner.ts:112`) → kernel → worker StepExecutors | DELETED 2026-07-14: `apps/api` dead `Orchestrator` class (file slimmed to the live, tested `runAgentStep`), `AdaptiveOrchestrator`, the whole `@commander/orchestration` package (dead divergent fork). Remaining: 6 wired V1 orchestrators (Ultimate/TELOS/Swarm/Drive/Goal/AgentLoop) + 3 coordinators overlap the V2 planner path. DELETED 2026-07-15: orphan `apps/api/src/deterministicTaskAllocator.ts` (484 LOC; zero importers; was not an Orchestrator count). WS0 keeps the deleted package shell absent via `arch:guard`. |
+| Orchestrator          | **10** (was 13)                                                                                                                                                    | V1 `UltimateOrchestrator` (`core/src/ultimate/orchestrator.ts:64`); V2 `planWorkGraph` (`core/src/planner/workGraphPlanner.ts:112`) → kernel → worker StepExecutors | DELETED 2026-07-14: `apps/api` dead `Orchestrator` class (file slimmed to the live, tested `runAgentStep`), `AdaptiveOrchestrator`, the whole `@praetor/orchestration` package (dead divergent fork). Remaining: 6 wired V1 orchestrators (Ultimate/TELOS/Swarm/Drive/Goal/AgentLoop) + 3 coordinators overlap the V2 planner path. DELETED 2026-07-15: orphan `apps/api/src/deterministicTaskAllocator.ts` (484 LOC; zero importers; was not an Orchestrator count). WS0 keeps the deleted package shell absent via `arch:guard`. |
 | Store / Repository    | **49** classes (was 51; −2 after LockFree + DatasetStore dedupe 2026-07-15)                                                                                        | per-concept: kernel `KernelRepository`, core `MemoryStore`, `apiStore`, `WarRoomStore` (≈4 parallel roots, not 1)                                                   | `EpisodicMemoryStore` defined in **both** `core/src/memory/episodicStore.ts:41` and `apps/api/src/episodicMemoryStore.ts:398`. DELETED 2026-07-15: orphan `LockFreeStateStore` (zero importers; stub remains without class). DatasetStore dual file collapsed to re-export of `observability/dataset.ts` (plugin path no longer declares a second class).                                                                                                                                                                            |
 | Memory system         | **7** (methodology-locked; L3-10a 2026-07-17: −5 non-product internals off allowlist; prior −1 MemorySystem facade; prior −1 apps/api EpisodicMemoryStore Phase B) | `UnifiedMemory` over `ThreeLayerMemory`; product writes via `writeProductMemory` → `MemoryStore` → `MemoryService.store` (MEMORY-001)                               | Product allowlist: Unified/ThreeLayer + MemoryCurator + Conversation/Semantic/Procedural + MemoryIndexManager. Non-product internals (still in tree, not counted): EpisodicMemoryStore (ACT-R), MemoryFederation, MemoryManagerAgent, MemoryQualityGate, CrossModelMemory. Path-walk of `memory/**` helpers is NOT the locked definition. `MemoryStoreTool` FS path is scratch-only; agent-identified calls fail-closed (L3-10a).                                                                                                    |
 | State machine         | **6** (4 `*StateMachine` classes + `RUN_TRANSITIONS` + `STEP_TRANSITIONS`)                                                                                         | `contracts/src/states.ts:49/61` (RUN/STEP lifecycle tables)                                                                                                         | Classes: `TaskStateMachine`, `StateMachine`, `PatternStateMachine`, `TopologyStateMachine`. Canonical transition tables have **zero call sites** — the kernel enforces transitions in SQL (`kernel/src/postgres.ts:342`) instead; `apps/api/src/stateMachine.ts:245` and `patternStateMachine.ts:214` are two legacy engines with byte-identical interface names                                                                                                                                                                     |
-| Policy decision point | multiple                                                                                                                                                           | `@commander/effect-broker` PEP for external effects (`effect-broker/src/index.ts:294`, fail-closed)                                                                 | `apps/api` middleware chain (`authMiddleware`/`jwtMiddleware`/`tenantContextMiddleware`/`securityMiddleware`); worker-plane default `PolicyEvaluator` is **deny-all** (`createWorkerPolicyEvaluator`; permit only via `COMMANDER_WORKER_EFFECT_POLICY=permit`); core hosts many guards (`GuardianAgent`, `OutboundNetworkPolicy`, `ToolPoisoningGuard`…). No single authz choke point. _(census pending; enumerated from package maps)_                                                                                              |
+| Policy decision point | multiple                                                                                                                                                           | `@praetor/effect-broker` PEP for external effects (`effect-broker/src/index.ts:294`, fail-closed)                                                                 | `apps/api` middleware chain (`authMiddleware`/`jwtMiddleware`/`tenantContextMiddleware`/`securityMiddleware`); worker-plane default `PolicyEvaluator` is **deny-all** (`createWorkerPolicyEvaluator`; permit only via `COMMANDER_WORKER_EFFECT_POLICY=permit`); core hosts many guards (`GuardianAgent`, `OutboundNetworkPolicy`, `ToolPoisoningGuard`…). No single authz choke point. _(census pending; enumerated from package maps)_                                                                                              |
 
 **Enforcement: ENFORCED (ceilings).** `packages/core/tests/architecture/duplicationCountGuard.test.ts`
 (wired into `pnpm test:arch`) fails if orchestrator/store/memory/stateMachine counts increase
@@ -177,14 +177,14 @@ keep claim-honesty guards green; prefer kernel event log over dual V1 event engi
 **Invariant:** package, dir, module, and class names describe **function, not ambition**. If a rename
 would make the purpose obvious to someone outside the team, do the rename.
 
-**Conformance today — VIOLATED broadly.** Aspirational names in `@commander/core`:
+**Conformance today — VIOLATED broadly.** Aspirational names in `@praetor/core`:
 `ultimate/` (45 files) + `UltimateOrchestrator`, `telos/` + `TELOSOrchestrator`, `hub/`, `showcase/`
 
 - `ShowcaseRunner` ("killer demo"), `swarm/`, `drive/`, `shadow/`, `selfEvolution/`, `companyEngine.ts`,
   `contracts/pillarI.ts`…`pillarIV.ts`. In `apps/api`: war-room theming (`store.ts:93`), `/api/v1/hub`
   (`index.ts:730`). Default project id is `project-war-room` (`apps/api/src/index.ts:111`).
-  WS0 folded the misnamed `@commander/control-plane` types-only package into
-  `@commander/contracts` and deleted the empty `@commander/orchestration` shell.
+  WS0 folded the misnamed `@praetor/control-plane` types-only package into
+  `@praetor/contracts` and deleted the empty `@praetor/orchestration` shell.
 
 **Enforcement: PARTIAL.** `scripts/arch-guard.sh` **ENFORCES** that no new
 `control-plane`, `orchestration`, `orchestrator`, or `security` workspace package role exists.
@@ -213,7 +213,7 @@ The real ENFORCED layer today is `packages/core/tests/architecture/` (run via `p
   compensation rollback, RPO/RTO drill, cross-tenant live-fire, worker autoscale.
 
 **Unenforced principles** (aspirational text only — flag if still unenforced at next review):
-the broader V1 ban on wholesale `@commander/core` imports and the remaining source/module naming
+the broader V1 ban on wholesale `@praetor/core` imports and the remaining source/module naming
 rules. The contracts leaf, V2 package graph, and new package-role ban are ENFORCED by
 `pnpm arch:guard`.
 §3 duplication count ceilings are ENFORCED via `duplicationCountGuard.test.ts` (growth-only).
@@ -222,13 +222,13 @@ rules. The contracts leaf, V2 package graph, and new package-role ban are ENFORC
 
 ## Change log
 
-- **2026-07-20 (L4-B adapter-ops deploy unit)** — Land `@commander/adapter-ops` as a
-  deploy unit (not a V2 plane; not a resurrected `@commander/operations`). Registry
+- **2026-07-20 (L4-B adapter-ops deploy unit)** — Land `@praetor/adapter-ops` as a
+  deploy unit (not a V2 plane; not a resurrected `@praetor/operations`). Registry
   deny-default PEP by default; `COMMANDER_ADAPTER_OPS_DEMO_OPEN=1` switches a real
   hollow/permit-all PEP (forbidden in production/enterprise). Non-demo cells refuse
   outbound daemon `start()` until `COMMANDER_ADAPTER_EGRESS_ALLOWLIST` is set; hostname
   allowlist also gates adapter HTTP fetch. Coordinates with #66 honesty: contracts leaf
-  stays **ENFORCED** via `pnpm arch:guard`; `@commander/operations` remains ABSENT+banned.
+  stays **ENFORCED** via `pnpm arch:guard`; `@praetor/operations` remains ABSENT+banned.
 
 - **2026-07-17 (L3-10a: memory ceiling / single write API)** — Preferred product write =
   `writeProductMemory` → `MemoryStore` → `MemoryService.store` (MEMORY-001 ENFORCED).
@@ -238,7 +238,7 @@ rules. The contracts leaf, V2 package graph, and new package-role ban are ENFORC
   `spec/l3-10a-memory-ceiling.md`.
 
 - **2026-07-15 (WS0 contracts constitution)** — Folded the types-only
-  `@commander/control-plane` surface into `packages/contracts/src/controlPlane.ts`, deleted
+  `@praetor/control-plane` surface into `packages/contracts/src/controlPlane.ts`, deleted
   the tracked `packages/control-plane` package and ignored `packages/orchestration` residue,
   and added `scripts/arch-guard.sh`. The guard is wired to `pnpm arch:guard` in CI and enforces
   the contracts leaf, V2 dependency direction, forbidden orchestrator/security package roles,
@@ -349,7 +349,7 @@ rules. The contracts leaf, V2 package graph, and new package-role ban are ENFORC
   adversarial verify-dead review (workflow `wf_0ef6d0a1-41b`, one refuting skeptic per candidate):
   `AdaptiveOrchestrator` (+ its orphaned `TaskComplexityOptions` import), the dead `Orchestrator`
   class/plan section of `apps/api/src/orchestrator.ts` (file slimmed to the live, test-covered
-  `runAgentStep`), the whole `@commander/orchestration` package (dead divergent fork of
+  `runAgentStep`), the whole `@praetor/orchestration` package (dead divergent fork of
   `core/src/planner/workGraphPlanner.ts`), `core/src/runtime/lockFreeStateStore.ts` (whole file
   - orphaned `ILockFreeStateStore` in `pillarI.ts`), and the `DatasetStore` verbatim copy
     (5 consumers repointed to `core/src/observability/dataset.ts`). Counts: orchestrator 13→10,

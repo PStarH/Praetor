@@ -13,7 +13,7 @@ import { fileURLToPath } from 'node:url';
 import { tmpdir } from 'node:os';
 import { join } from 'node:path';
 import { describe, it } from 'node:test';
-import { actionGatewayPolicySnapshot } from '@commander/contracts';
+import { actionGatewayPolicySnapshot } from '@praetor/contracts';
 import { canonicalBytes, sha256Hex } from './canonical.js';
 import { parseShadowManifest, parseShadowObservation } from './contracts.js';
 import { observationDigest } from './evaluator.js';

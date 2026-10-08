@@ -5,7 +5,7 @@ import {
   KUBERNETES_DEPLOYMENT_ROLLBACK_DESCRIPTOR,
   type ActionAdapter,
   type AdapterExecuteInput,
-} from '@commander/action-adapters';
+} from '@praetor/action-adapters';
 import {
   createActionAdapterEffectExecutor,
   createProductionAdapterRegistry,

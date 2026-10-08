@@ -10,7 +10,7 @@ import {
   NullTenantProvider,
   type TenantProvider,
   type TenantConfig,
-} from '@commander/core/runtime';
+} from '@praetor/core/runtime';
 import { createJwtMiddleware, signAccessToken, type AuthUser } from '../src/jwtMiddleware.js';
 import type { User } from '../src/userStore.js';
 import {

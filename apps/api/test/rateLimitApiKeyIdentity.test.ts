@@ -6,7 +6,7 @@
  * the pre-limiter canonical lookup (`apiKeyIdentityMiddleware`) and the
  * tenant/principal buckets it must produce.
  */
-import { hashSecret } from '@commander/core/runtime';
+import { hashSecret } from '@praetor/core/runtime';
 
 // Pin tiny limits BEFORE importing securityMiddleware (parsed at module load).
 process.env.API_RATE_LIMIT = '10';

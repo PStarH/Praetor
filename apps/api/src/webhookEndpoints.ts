@@ -19,7 +19,7 @@
  * Config persistence: `.commander/webhooks.json` (IM configs carry a `platform`
  * field so they coexist with any pre-existing outgoing-webhook entries).
  */
-import { reportSilentFailure } from '@commander/core';
+import { reportSilentFailure } from '@praetor/core';
 import { Router, text, type NextFunction, type Request, type Response } from 'express';
 import { z } from 'zod';
 import * as crypto from 'crypto';

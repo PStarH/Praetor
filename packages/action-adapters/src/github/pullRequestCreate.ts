@@ -1,6 +1,6 @@
-import { githubPrBodyMarker, GITHUB_PULL_REQUEST_CREATE_DESCRIPTOR } from '@commander/contracts';
-import { AdapterExecutionError } from '@commander/effect-broker';
-import type { EffectRemoteOutcome } from '@commander/effect-broker';
+import { githubPrBodyMarker, GITHUB_PULL_REQUEST_CREATE_DESCRIPTOR } from '@praetor/contracts';
+import { AdapterExecutionError } from '@praetor/effect-broker';
+import type { EffectRemoteOutcome } from '@praetor/effect-broker';
 import {
   assertOkResponse,
   adapterFetch,

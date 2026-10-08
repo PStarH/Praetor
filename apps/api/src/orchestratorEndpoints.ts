@@ -1,6 +1,6 @@
 import { Router } from 'express';
 import type { Request, Response, NextFunction } from 'express';
-import { SSEStream } from '@commander/core';
+import { SSEStream } from '@praetor/core';
 import { legacyExecutionDisabledReason, isLegacyExecutionAllowed } from './legacyExecutionGuard';
 import { hasRole, type UserRole } from './userStore';
 
@@ -67,7 +67,7 @@ export function createOrchestratorRouter(): Router {
     const { goal } = req.body ?? {};
     if (!goal) return res.status(400).json({ error: 'goal is required' });
 
-    const { deliberate } = await import('@commander/core');
+    const { deliberate } = await import('@praetor/core');
     const plan = deliberate(goal);
     res.json(plan);
   });

@@ -28,7 +28,7 @@
  */
 
 import type { RequestHandler } from 'express';
-import { OPENAPI_V1_SPEC } from '@commander/contracts';
+import { OPENAPI_V1_SPEC } from '@praetor/contracts';
 import {
   listRegisteredRouters,
   nestedMountPrefixOf,
@@ -291,7 +291,7 @@ export function generateOpenApiSpec(options: GenerateOptions): OpenApiDocument {
       description:
         'Returns the health of /v1 Gateway dependencies (kernel hard-gate). ' +
         'Does not report EffectBroker / PEP readiness — that monopoly lives in ' +
-        'worker-plane `@commander/effect-broker` (bootstrap + production assert; ' +
+        'worker-plane `@praetor/effect-broker` (bootstrap + production assert; ' +
         'L4-B worker GET /ready). Ops loop readiness is kernel-ops GET /ready ' +
         '(COMMANDER_OPS_HEALTH_PORT). EffectBroker-backed compensation drain / ' +
         'UNKNOWN reconcile readiness is the future adapter-ops deploy unit ' +
@@ -341,7 +341,7 @@ export function generateOpenApiSpec(options: GenerateOptions): OpenApiDocument {
     paths,
     components: {
       // Component schemas are published from the canonical contract
-      // (`@commander/contracts` OPENAPI_V1_SPEC), NOT reflected from route code:
+      // (`@praetor/contracts` OPENAPI_V1_SPEC), NOT reflected from route code:
       // the route factories carry no schema metadata, so reflection can only
       // ever produce paths. Without these, a client generated from this
       // document cannot resolve any `#/components/schemas/...` reference.

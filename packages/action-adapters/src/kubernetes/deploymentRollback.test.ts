@@ -1,7 +1,7 @@
 import assert from 'node:assert/strict';
 import { describe, it } from 'node:test';
-import { commanderActionMarker, compensationIdempotencyKey } from '@commander/contracts';
-import { AdapterExecutionError } from '@commander/effect-broker';
+import { commanderActionMarker, compensationIdempotencyKey } from '@praetor/contracts';
+import { AdapterExecutionError } from '@praetor/effect-broker';
 import type { KubernetesCredentialProvider } from '../types.js';
 import { createKubernetesDeploymentRollbackAdapter } from './deploymentRollback.js';
 

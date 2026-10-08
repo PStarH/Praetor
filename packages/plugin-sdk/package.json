@@ -1,5 +1,5 @@
 {
-  "name": "@commander/plugin-sdk",
+  "name": "@praetor/plugin-sdk",
   "version": "0.2.0",
   "type": "module",
   "description": "Plugin SDK for Commander — build tools, skills, and hooks for the Commander agent platform",

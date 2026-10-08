@@ -6,7 +6,7 @@
 import express, { Request, Response, Router } from 'express';
 import { CheckpointManager, RiskScoreCalculator } from './governanceCheckpoint';
 import type { GovernanceCheckpoint, CheckpointStats, RiskFactor } from './governanceCheckpoint';
-import { MissionGovernanceMode, MissionRiskLevel } from '@commander/core';
+import { MissionGovernanceMode, MissionRiskLevel } from '@praetor/core';
 import { hasRole } from './userStore';
 
 function requestTenant(req: Request): string | undefined {

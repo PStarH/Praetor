@@ -11,7 +11,7 @@
  *
  * Effect monopoly / PEP readiness is NOT observed on Gateway `/ready` or
  * `/v1/health`. Operators must look at:
- * - **worker-plane**: `@commander/effect-broker` is constructed in worker
+ * - **worker-plane**: `@praetor/effect-broker` is constructed in worker
  *   bootstrap (`createEffectBroker`); production/enterprise fail-closed via
  *   `assertEffectBrokerForProduction` (L4-B adds worker `GET /ready`).
  * - **kernel-ops**: `packages/kernel/src/ops` `GET /ready`
@@ -20,7 +20,7 @@
  * - **adapter-ops** (L4-B follow-up name only on master): future deploy-unit
  *   `/ready` for EffectBroker-backed compensation drain / UNKNOWN reconcile.
  *
- * Do not probe `@commander/core/security/effectBroker` (process-local registry
+ * Do not probe `@praetor/core/security/effectBroker` (process-local registry
  * never set on the product Gateway path).
  */
 

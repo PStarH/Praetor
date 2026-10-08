@@ -2,7 +2,7 @@ import assert from 'node:assert/strict';
 import { spawnSync } from 'node:child_process';
 import { fileURLToPath } from 'node:url';
 import { describe, it } from 'node:test';
-import { githubPrBodyMarker } from '@commander/contracts';
+import { githubPrBodyMarker } from '@praetor/contracts';
 import { createGitHubPullRequestCreateAdapter } from '../github/pullRequestCreate.js';
 import type { AdapterCredentialProvider } from '../types.js';
 import {

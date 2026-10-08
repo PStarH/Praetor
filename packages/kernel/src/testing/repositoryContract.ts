@@ -1,7 +1,7 @@
 import assert from 'node:assert/strict';
 import { describe, it } from 'node:test';
-import { validateRunTransition } from '@commander/contracts';
-import { deriveEffectIdempotencyKey } from '@commander/effect-broker';
+import { validateRunTransition } from '@praetor/contracts';
+import { deriveEffectIdempotencyKey } from '@praetor/effect-broker';
 import type { KernelRepository } from '../repository.js';
 import type {
   NewKernelStep,

@@ -24,18 +24,18 @@
     "v2Packages": {
       "type": "array",
       "minItems": 1,
-      "description": "Packages that must not import @commander/core at all. Each entry must exist on disk with a src/ directory, otherwise the gate would silently check nothing.",
+      "description": "Packages that must not import @praetor/core at all. Each entry must exist on disk with a src/ directory, otherwise the gate would silently check nothing.",
       "items": { "type": "string", "minLength": 1 }
     },
     "forbiddenCoreImports": {
       "type": "array",
       "minItems": 1,
-      "description": "Forbidden module specifiers. Matching is prefix-aware (a specifier matches when it equals the entry or continues it with '/'), so `@commander/core-extra` is not caught by `@commander/core`.",
+      "description": "Forbidden module specifiers. Matching is prefix-aware (a specifier matches when it equals the entry or continues it with '/'), so `@praetor/core-extra` is not caught by `@praetor/core`.",
       "items": { "type": "string", "minLength": 1 }
     },
     "v2ImportExceptions": {
       "type": "array",
-      "description": "Repo-relative paths of v2 files allowed to import @commander/core, or a bare basename matched as a path suffix.",
+      "description": "Repo-relative paths of v2 files allowed to import @praetor/core, or a bare basename matched as a path suffix.",
       "items": { "type": "string", "minLength": 1 }
     },
     "api": {
@@ -50,7 +50,7 @@
         },
         "legacyImportExceptions": {
           "type": "array",
-          "description": "Basenames under api.path that predate the boundary and may still import @commander/core.",
+          "description": "Basenames under api.path that predate the boundary and may still import @praetor/core.",
           "items": { "type": "string", "minLength": 1 }
         },
         "unversionedRouteExceptions": {

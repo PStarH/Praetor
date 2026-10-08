@@ -5,7 +5,7 @@
 import { describe, it, afterEach } from 'node:test';
 import assert from 'node:assert/strict';
 import express, { type Request, type Response } from 'express';
-import { getCurrentTenantId } from '@commander/core/runtime/tenantContext';
+import { getCurrentTenantId } from '@praetor/core/runtime/tenantContext';
 import { authMiddleware } from '../src/authMiddleware';
 import { tenantContextMiddleware } from '../src/tenantContextMiddleware';
 

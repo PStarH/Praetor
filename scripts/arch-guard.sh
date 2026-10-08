@@ -13,61 +13,61 @@ const failures = [];
 const skipDirectories = new Set(['node_modules', 'dist', '.git', '.turbo', 'coverage']);
 const forbiddenPackagePattern = /(^|[-_.])(control-plane|orchestration|orchestrator|security)(?=$|[-_.])/i;
 // WS1 folded packages/operations into packages/kernel/src/ops.
-// Ban resurrecting the ghost plane; adapter compensation lives in @commander/adapter-ops.
-const deletedPackageImportPattern = /^@commander\/(control-plane|orchestration|operations)(?:\/|$)/;
+// Ban resurrecting the ghost plane; adapter compensation lives in @praetor/adapter-ops.
+const deletedPackageImportPattern = /^@(commander|praetor)\/(control-plane|orchestration|operations)(?:\/|$)/;
 
 const allowedDependencies = {
-  '@commander/contracts': [],
+  '@praetor/contracts': [],
   // Task 3: createCapabilityAuthority + durable replay/revocation adapters live in
   // kernel and construct effect-broker issuer/verifier (no reverse dep).
-  '@commander/kernel': [
-    '@commander/contracts',
-    '@commander/effect-broker',
-    '@commander/postgres-runtime',
+  '@praetor/kernel': [
+    '@praetor/contracts',
+    '@praetor/effect-broker',
+    '@praetor/postgres-runtime',
   ],
-  '@commander/effect-broker': ['@commander/contracts'],
+  '@praetor/effect-broker': ['@praetor/contracts'],
   // L4 action adapters (GitHub/ServiceNow); leaf package — no kernel/ops.
-  '@commander/action-adapters': ['@commander/contracts', '@commander/effect-broker'],
+  '@praetor/action-adapters': ['@praetor/contracts', '@praetor/effect-broker'],
   // Deploy unit for EffectBroker-backed compensation/reconcile — not a V2 plane.
-  '@commander/adapter-ops': [
-    '@commander/kernel',
-    '@commander/contracts',
-    '@commander/effect-broker',
-    '@commander/action-adapters',
+  '@praetor/adapter-ops': [
+    '@praetor/kernel',
+    '@praetor/contracts',
+    '@praetor/effect-broker',
+    '@praetor/action-adapters',
   ],
-  '@commander/worker-plane': [
-    '@commander/contracts',
-    '@commander/kernel',
-    '@commander/effect-broker',
-    '@commander/action-adapters',
-    '@commander/core',
-    '@commander/postgres-runtime',
+  '@praetor/worker-plane': [
+    '@praetor/contracts',
+    '@praetor/kernel',
+    '@praetor/effect-broker',
+    '@praetor/action-adapters',
+    '@praetor/core',
+    '@praetor/postgres-runtime',
   ],
-  '@commander/api': [
-    '@commander/contracts',
-    '@commander/kernel',
-    '@commander/worker-plane',
-    '@commander/effect-broker',
-    '@commander/core',
-    '@commander/postgres-runtime',
+  '@praetor/api': [
+    '@praetor/contracts',
+    '@praetor/kernel',
+    '@praetor/worker-plane',
+    '@praetor/effect-broker',
+    '@praetor/core',
+    '@praetor/postgres-runtime',
   ],
-  '@commander/core': [
-    '@commander/plugin-sdk',
-    '@commander/contracts',
-    '@commander/postgres-runtime',
+  '@praetor/core': [
+    '@praetor/plugin-sdk',
+    '@praetor/contracts',
+    '@praetor/postgres-runtime',
   ],
-  '@commander/postgres-runtime': [],
-  '@commander/plugin-sdk': [],
-  '@commander/sdk': ['@commander/contracts', '@commander/core'],
-  '@commander/mcp-server': ['@commander/core'],
-  '@commander/web': ['@commander/contracts'],
+  '@praetor/postgres-runtime': [],
+  '@praetor/plugin-sdk': [],
+  '@praetor/sdk': ['@praetor/contracts', '@praetor/core'],
+  '@praetor/mcp-server': ['@praetor/core'],
+  '@praetor/web': ['@praetor/contracts'],
   // Shadow pilot (docs/pilot/shadow, `scripts/shadow-phase-a-gate.ts`). It was
   // added without an entry here, so the guard's fail-closed
   // "No dependency policy exists" check fired for it. Its internal surface is
   // exactly these two, and its transitive closure is separately validated by
   // `scripts/shadow-dependency-guard.ts` — this entry records reality, it does
   // not widen anything.
-  '@commander/shadow-plane': ['@commander/contracts', '@commander/postgres-runtime'],
+  '@praetor/shadow-plane': ['@praetor/contracts', '@praetor/postgres-runtime'],
 };
 
 function exists(file) {
@@ -122,7 +122,7 @@ for (const directory of packageDirectories()) {
     failures.push(`Package manifest has no name: ${path.relative(root, manifestPath)}`);
     continue;
   }
-  if (forbiddenPackagePattern.test(manifest.name.replace(/^@commander\//, ''))) {
+  if (forbiddenPackagePattern.test(manifest.name.replace(/^@(commander|praetor)\//, ''))) {
     failures.push(`Forbidden package name: ${manifest.name}`);
   }
   packageInfo.set(manifest.name, {
@@ -148,7 +148,7 @@ function dependencyNames(manifest) {
     ...(manifest.devDependencies ?? {}),
     ...(manifest.peerDependencies ?? {}),
     ...(manifest.optionalDependencies ?? {}),
-  }).filter((name) => name.startsWith('@commander/'));
+  }).filter((name) => name.startsWith('@praetor/'));
 }
 
 function allowed(owner, dependency) {
@@ -161,7 +161,7 @@ for (const [owner, info] of packageInfo) {
   if (!allowedDependencies[owner]) {
     failures.push(`No dependency policy exists for workspace package ${owner}`);
   }
-  if (owner === '@commander/contracts' && dependencies.length > 0) {
+  if (owner === '@praetor/contracts' && dependencies.length > 0) {
     failures.push(`Contracts must be a leaf; found internal dependency ${dependencies.join(', ')}`);
   }
   for (const dependency of dependencies) {
@@ -233,27 +233,27 @@ for (const file of sourceFiles) {
     if (!dependency || dependency === owner) continue;
     graph.get(owner)?.add(dependency);
     const isWorkerCoreBridge =
-      owner === '@commander/worker-plane' &&
-      dependency === '@commander/core' &&
+      owner === '@praetor/worker-plane' &&
+      dependency === '@praetor/core' &&
       workerCoreBridgeFiles.has(relativeFile(file));
     const apiSourceFile =
-      owner === '@commander/api' && relativeFile(file).startsWith('apps/api/src/')
+      owner === '@praetor/api' && relativeFile(file).startsWith('apps/api/src/')
         ? relativeFile(file).slice('apps/api/src/'.length)
         : null;
     const isApiLegacyCoreImport =
-      owner === '@commander/api' &&
-      dependency === '@commander/core' &&
+      owner === '@praetor/api' &&
+      dependency === '@praetor/core' &&
       apiSourceFile !== null &&
       apiLegacyCoreFiles.has(apiSourceFile);
     if (
       !allowed(owner, dependency) ||
-      (dependency === '@commander/core' && owner === '@commander/worker-plane' && !isWorkerCoreBridge) ||
-      (dependency === '@commander/core' && owner === '@commander/api' && !isApiLegacyCoreImport)
+      (dependency === '@praetor/core' && owner === '@praetor/worker-plane' && !isWorkerCoreBridge) ||
+      (dependency === '@praetor/core' && owner === '@praetor/api' && !isApiLegacyCoreImport)
     ) {
       failures.push(`Illegal source dependency: ${relativeFile(file)} (${owner} -> ${dependency})`);
     }
-    if (['@commander/kernel', '@commander/effect-broker', '@commander/adapter-ops'].includes(owner) && dependency === '@commander/core') {
-      failures.push(`V2 implementation package ${owner} imports forbidden @commander/core in ${relativeFile(file)}`);
+    if (['@praetor/kernel', '@praetor/effect-broker', '@praetor/adapter-ops'].includes(owner) && dependency === '@praetor/core') {
+      failures.push(`V2 implementation package ${owner} imports forbidden @praetor/core in ${relativeFile(file)}`);
     }
   }
 }
@@ -262,14 +262,14 @@ for (const file of ['package.json', 'pnpm-lock.yaml']) {
   const absolute = path.join(root, file);
   if (!fs.existsSync(absolute)) continue;
   const source = fs.readFileSync(absolute, 'utf8');
-  if (/@commander\/(control-plane|orchestration|operations)\b/.test(source)) {
+  if (/@(commander|praetor)\/(control-plane|orchestration|operations)\b/.test(source)) {
     failures.push(`${file} references a deleted package`);
   }
 }
 
 for (const info of packageInfo.values()) {
   const source = fs.readFileSync(info.manifestPath, 'utf8');
-  if (/@commander\/(control-plane|orchestration|operations)\b/.test(source)) {
+  if (/@(commander|praetor)\/(control-plane|orchestration|operations)\b/.test(source)) {
     failures.push(`${relativeFile(info.manifestPath)} references a deleted package`);
   }
 }
@@ -290,12 +290,12 @@ function visit(name, chain = []) {
 }
 for (const name of graph.keys()) visit(name);
 
-const grantAuthorityPackages = new Set(['@commander/api', '@commander/worker-plane']);
+const grantAuthorityPackages = new Set(['@praetor/api', '@praetor/worker-plane']);
 for (const file of sourceFiles) {
   const src = fs.readFileSync(file, 'utf8');
   const owner = packageForFile(file)?.name;
   if (owner && grantAuthorityPackages.has(owner) && /\binterface\s+(CapabilityGrant|GrantV1)\b/.test(src)) {
-    failures.push(`Ad-hoc grant interface in ${relativeFile(file)}; use @commander/contracts GrantV1`);
+    failures.push(`Ad-hoc grant interface in ${relativeFile(file)}; use @praetor/contracts GrantV1`);
   }
 }
 

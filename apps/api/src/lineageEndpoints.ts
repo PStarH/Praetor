@@ -13,11 +13,11 @@
  * empty structure — closing GAP-05 from the UX audit report without modifying
  * Core or relying on in-memory state.
  */
-import { reportSilentFailure } from '@commander/core';
+import { reportSilentFailure } from '@praetor/core';
 import { Router } from 'express';
 import * as fsp from 'fs/promises';
 import * as path from 'path';
-import { resolveConfiguredTraceBase, resolveTraceDir } from '@commander/core/runtime/traceStore';
+import { resolveConfiguredTraceBase, resolveTraceDir } from '@praetor/core/runtime/traceStore';
 import { toErrorMessage } from './routeHelpers';
 
 // ── Types ─────────────────────────────────────────────────────────────────

@@ -1,11 +1,11 @@
-import { KernelStepExecutor, createAgentRuntimeFactory } from '@commander/core';
+import { KernelStepExecutor, createAgentRuntimeFactory } from '@praetor/core';
 import type { StepExecutor, ClaimedStep, WorkerLease } from './types.js';
 import type {
   AgentRuntimeFactoryOptions,
   AgentRuntimeInterface,
   LLMProvider,
-} from '@commander/core';
-import type { CapabilityTokenIssuer, EffectBroker } from '@commander/effect-broker';
+} from '@praetor/core';
+import type { CapabilityTokenIssuer, EffectBroker } from '@praetor/effect-broker';
 import {
   createLlmEffectAuth,
   runWithLlmEffectAuth,
@@ -19,8 +19,8 @@ export {
   SandboxManager,
   getControlPlane,
   resetControlPlane,
-} from '@commander/core';
-export type { WorkloadIdentity } from '@commander/core';
+} from '@praetor/core';
+export type { WorkloadIdentity } from '@praetor/core';
 
 export type AgentStepExecutorOptions = AgentRuntimeFactoryOptions & {
   defaultMaxSteps?: number;

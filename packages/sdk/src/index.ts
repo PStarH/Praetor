@@ -1,12 +1,12 @@
 /**
- * @commander/sdk — Commander Agent SDK
+ * @praetor/sdk — Commander Agent SDK
  *
  * Embed Commander's multi-agent orchestration in your own applications.
  *
  * ## Quick Start
  *
  * ```typescript
- * import { CommanderClient, Topology } from '@commander/sdk';
+ * import { CommanderClient, Topology } from '@praetor/sdk';
  *
  * const client = new CommanderClient({ provider: 'openai' });
  * await client.connect();
@@ -49,7 +49,7 @@
  */
 
 // ── Core Client ──────────────────────────────────────────────────────────
-export { CommanderClient, Agent, createClient } from './commanderClient';
+export { CommanderClient, PraetorClient, Agent, createClient } from './commanderClient';
 
 // ── Topology ─────────────────────────────────────────────────────────────
 export { Topology } from './types';
@@ -58,6 +58,8 @@ export { Topology } from './types';
 export type {
   // Client
   CommanderClientConfig,
+  CommanderClientConfig as PraetorClientConfig,
+
   // Execution
   ExecutionResult,
   ExecutionStatus,
@@ -122,5 +124,12 @@ export type {
   ActionEvidenceJwks,
   ActionEvidenceVerification,
 } from './v1/resources';
-export { CommanderGatewayClient, CommanderGatewayError, verifyActionEvidence } from './v1/client';
+export {
+  CommanderGatewayClient,
+  PraetorGatewayClient,
+  CommanderGatewayError,
+  PraetorGatewayError,
+  verifyActionEvidence,
+} from './v1/client';
 export type { GatewayClientOptions, GatewayRun } from './v1/client';
+

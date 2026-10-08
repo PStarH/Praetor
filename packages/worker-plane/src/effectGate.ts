@@ -1,4 +1,4 @@
-import { EffectBrokerError } from '@commander/effect-broker';
+import { EffectBrokerError } from '@praetor/effect-broker';
 import { WorkerExecutionError } from './types.js';
 /**
  * Production/enterprise EffectBroker requirement gate (WS2 §4 / L3-03a).

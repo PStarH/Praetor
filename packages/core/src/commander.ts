@@ -21,7 +21,7 @@
  * });
  * ```
  *
- * For remote/HTTP access, use @commander/sdk's CommanderClient instead.
+ * For remote/HTTP access, use @praetor/sdk's CommanderClient instead.
  */
 
 import { probeEnvironment } from './commander/probe';

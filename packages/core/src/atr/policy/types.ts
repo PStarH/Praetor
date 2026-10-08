@@ -1,6 +1,6 @@
-import type { PolicyEffect } from '@commander/contracts';
+import type { PolicyEffect } from '@praetor/contracts';
 
-export type { PolicyEffect } from '@commander/contracts';
+export type { PolicyEffect } from '@praetor/contracts';
 
 export type PolicyDenyClass =
   | 'deny_shell'

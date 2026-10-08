@@ -15,7 +15,7 @@
 // |----------------------------------------------|-------------------------------------------|--------|
 // | lsp/lspClient.ts:457 (sendNotification)      | sendRequest()                             | keep   |
 // | pluginTypes.ts:296 (hookManager field)       | PluginLoader + sandbox context            | keep   |
-// | logging.ts:421 (legacy adapter)              | Logger factory in @commander/core/logging | keep   |
+// | logging.ts:421 (legacy adapter)              | Logger factory in @praetor/core/logging | keep   |
 // | ultimate/types.ts:52,63 (topology aliases)   | D3.2 canonical topology names             | keep   |
 // ============================================================================
 export * from './models';

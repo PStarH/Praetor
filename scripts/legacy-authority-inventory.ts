@@ -63,31 +63,31 @@ const ISO_DATE = /^\d{4}-\d{2}-\d{2}$/;
 const MAX_APPROVAL_DAYS = 180;
 
 const CANONICAL_ENTRYPOINTS = new Map<string, string>([
-  ['apps/api/src/v1GatewayEndpoints.ts', '@commander/api'],
-  ['apps/api/src/actionGatewayEndpoints.ts', '@commander/api'],
-  ['apps/api/src/task1ReadinessRuntime.ts', '@commander/api'],
-  ['apps/api/src/v1GatewayKernel.ts', '@commander/api'],
-  ['packages/kernel/src/postgres.ts', '@commander/kernel'],
-  ['packages/kernel/src/sqlite.ts', '@commander/kernel'],
-  ['packages/kernel/src/migrations.ts', '@commander/kernel'],
-  ['packages/kernel/src/capabilityStores.ts', '@commander/kernel'],
-  ['packages/kernel/src/drillWorkload.ts', '@commander/kernel'],
-  ['packages/kernel/src/ops/outbox/postgresOutboxDeliveryPort.ts', '@commander/kernel'],
-  ['packages/kernel/src/seedWorkerClaimSecret.ts', '@commander/kernel'],
-  ['packages/kernel/src/task1LifecycleLedger.ts', '@commander/kernel'],
-  ['packages/kernel/src/task1LifecycleInitialize.ts', '@commander/kernel'],
-  ['packages/kernel/src/task1LifecycleOwnerCommand.ts', '@commander/kernel'],
-  ['packages/kernel/src/task1RolloutProof.ts', '@commander/kernel'],
-  ['packages/kernel/src/task1RolloutProofPostgres.ts', '@commander/kernel'],
-  ['packages/kernel/src/task1TenantContext.ts', '@commander/kernel'],
-  ['packages/effect-broker/src/index.ts', '@commander/effect-broker'],
-  ['packages/effect-broker/src/evidenceSink.ts', '@commander/effect-broker'],
-  ['packages/worker-plane/src/workerService.ts', '@commander/worker-plane'],
-  ['packages/worker-plane/src/bootstrap.ts', '@commander/worker-plane'],
-  ['packages/worker-plane/src/registry.ts', '@commander/worker-plane'],
-  ['packages/adapter-ops/src/wiring.ts', '@commander/adapter-ops'],
-  ['packages/adapter-ops/src/reconciliationDaemon.ts', '@commander/adapter-ops'],
-  ['packages/adapter-ops/src/compensationDaemon.ts', '@commander/adapter-ops'],
+  ['apps/api/src/v1GatewayEndpoints.ts', '@praetor/api'],
+  ['apps/api/src/actionGatewayEndpoints.ts', '@praetor/api'],
+  ['apps/api/src/task1ReadinessRuntime.ts', '@praetor/api'],
+  ['apps/api/src/v1GatewayKernel.ts', '@praetor/api'],
+  ['packages/kernel/src/postgres.ts', '@praetor/kernel'],
+  ['packages/kernel/src/sqlite.ts', '@praetor/kernel'],
+  ['packages/kernel/src/migrations.ts', '@praetor/kernel'],
+  ['packages/kernel/src/capabilityStores.ts', '@praetor/kernel'],
+  ['packages/kernel/src/drillWorkload.ts', '@praetor/kernel'],
+  ['packages/kernel/src/ops/outbox/postgresOutboxDeliveryPort.ts', '@praetor/kernel'],
+  ['packages/kernel/src/seedWorkerClaimSecret.ts', '@praetor/kernel'],
+  ['packages/kernel/src/task1LifecycleLedger.ts', '@praetor/kernel'],
+  ['packages/kernel/src/task1LifecycleInitialize.ts', '@praetor/kernel'],
+  ['packages/kernel/src/task1LifecycleOwnerCommand.ts', '@praetor/kernel'],
+  ['packages/kernel/src/task1RolloutProof.ts', '@praetor/kernel'],
+  ['packages/kernel/src/task1RolloutProofPostgres.ts', '@praetor/kernel'],
+  ['packages/kernel/src/task1TenantContext.ts', '@praetor/kernel'],
+  ['packages/effect-broker/src/index.ts', '@praetor/effect-broker'],
+  ['packages/effect-broker/src/evidenceSink.ts', '@praetor/effect-broker'],
+  ['packages/worker-plane/src/workerService.ts', '@praetor/worker-plane'],
+  ['packages/worker-plane/src/bootstrap.ts', '@praetor/worker-plane'],
+  ['packages/worker-plane/src/registry.ts', '@praetor/worker-plane'],
+  ['packages/adapter-ops/src/wiring.ts', '@praetor/adapter-ops'],
+  ['packages/adapter-ops/src/reconciliationDaemon.ts', '@praetor/adapter-ops'],
+  ['packages/adapter-ops/src/compensationDaemon.ts', '@praetor/adapter-ops'],
 ]);
 
 const CANONICAL_SIGNALS = new Map<string, readonly string[]>([
@@ -222,7 +222,7 @@ const CANONICAL_SIGNALS = new Map<string, readonly string[]>([
 ]);
 
 const CANONICAL_CLIENT_ENTRYPOINTS = new Map<string, string>([
-  ['apps/web/src/pages/ActionsPage.tsx', '@commander/web'],
+  ['apps/web/src/pages/ActionsPage.tsx', '@praetor/web'],
   ['scripts/l4-b-adapter-chaos.ts', 'repository-proofs'],
   ['scripts/l4-b-cell-reconciliation-e2e.ts', 'repository-proofs'],
 ]);
@@ -237,13 +237,13 @@ const CANONICAL_CLIENT_SIGNALS = new Map<string, readonly string[]>([
 ]);
 
 const TEMPORARY_GATES = new Map<string, string>([
-  ['apps/api/src/legacyExecutionGuard.ts', '@commander/api'],
+  ['apps/api/src/legacyExecutionGuard.ts', '@praetor/api'],
   ['scripts/architecture-gate.ts', 'repository'],
   ['scripts/legacy-authority-inventory.ts', 'repository'],
 ]);
 
 const READ_ONLY_ENTRYPOINTS = new Map<string, string>([
-  ['apps/web/src/hooks/useWarRoom.ts', '@commander/web'],
+  ['apps/web/src/hooks/useWarRoom.ts', '@praetor/web'],
 ]);
 
 const CONSTRUCTORS = new Set([

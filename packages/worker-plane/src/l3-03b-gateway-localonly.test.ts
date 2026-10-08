@@ -4,7 +4,7 @@
  */
 import assert from 'node:assert/strict';
 import { describe, it } from 'node:test';
-import { CapabilityTokenIssuer } from '@commander/effect-broker';
+import { CapabilityTokenIssuer } from '@praetor/effect-broker';
 import { issueLocalToolCapabilityToken } from './stepWorkloadIdentity.js';
 import { ConnectorStepExecutor } from './connectorStepExecutor.js';
 import {

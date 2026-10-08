@@ -382,7 +382,7 @@ Tooling + dependency updates:
   in commit 3 replaces it).
 
 SDK parity:
-- packages/python-sdk/*: feature parity expansion for @commander/sdk
+- packages/python-sdk/*: feature parity expansion for @praetor/sdk
   (341+ lines __init__.py, 1793 lines _client.py, 1531 lines _types.py,
   442 +++-- security.py, advisor.py, governance.py, _streaming.py,
   _sync.py). Adds: chat, cost, knowledge, runtime, governance, auth

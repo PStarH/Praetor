@@ -54,7 +54,7 @@ describe('API typecheck gate', () => {
     });
     assert.deepEqual(output, [
       'typecheck ok\n',
-      'COMMANDER_GATE_CHILD api-typecheck/v1 command="pnpm --filter @commander/api run typecheck" exit=0\n',
+      'COMMANDER_GATE_CHILD api-typecheck/v1 command="pnpm --filter @praetor/api run typecheck" exit=0\n',
       'COMMANDER_GATE_EXECUTED api-typecheck/v1\n',
     ]);
   });

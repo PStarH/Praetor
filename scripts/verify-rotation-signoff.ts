@@ -1,7 +1,7 @@
 #!/usr/bin/env tsx
 /**
  * Rotation sign-off verifier — THIN ASYNC CLI WRAPPER around the library
- * surface published from `@commander/core`.
+ * surface published from `@praetor/core`.
  *
  * D3.2: this wrapper now drives the async surface (`runVerifierAsync`) so
  * CI runners batching N×SHAs concurrently do not block the event loop. The
@@ -11,7 +11,7 @@
  * The pure library body (parsing, git verification, policy evaluation, exit-
  * code routing, result-shape contract) lives in
  * `packages/core/src/security/rotationSignoffVerifier.ts` and is reachable
- * as top-level exports from `@commander/core` (see `packages/core/src/index.ts`).
+ * as top-level exports from `@praetor/core` (see `packages/core/src/index.ts`).
  *
  * This wrapper's job is JUST:
  *   1. Compute its own REPO_ROOT (script dir → 1 level up = `<repo>/`).

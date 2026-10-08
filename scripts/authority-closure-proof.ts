@@ -49,7 +49,7 @@ import {
   seedWorkerClaimSecret,
   KERNEL_COMPENSATION_TOPIC,
 } from '../packages/kernel/src/index.js';
-import { InMemoryKernelRepository } from '@commander/kernel/testing/inMemoryRepository';
+import { InMemoryKernelRepository } from '@praetor/kernel/testing/inMemoryRepository';
 import {
   PostgresTenantContextAuthority,
   type SqlClient,

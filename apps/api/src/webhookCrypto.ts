@@ -2,7 +2,7 @@
  * Shared IM webhook crypto helpers (DingTalk / Feishu / WeCom).
  * Production routes and unit tests must import from here — do not fork.
  */
-import { reportSilentFailure } from '@commander/core';
+import { reportSilentFailure } from '@praetor/core';
 import * as crypto from 'crypto';
 
 /**

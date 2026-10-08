@@ -23,7 +23,7 @@ const DEFAULT_IMAGE_TAG = 'l4-b-image-boot-smoke-local';
 const CONTAINER_WORKDIR = '/app/packages/worker-plane';
 const CONTAINER_CONTRACTS_ROOT = '/app/packages/contracts';
 
-const HELP = `L4-B image boot smoke — in-image @commander/contracts + schemas probe (P6)
+const HELP = `L4-B image boot smoke — in-image @praetor/contracts + schemas probe (P6)
 
 Usage:
   pnpm cell:image-boot-smoke [--image-tag TAG] [--skip-build] [--help]

@@ -1,7 +1,7 @@
 import { Router } from 'express';
 import type { Request, Response, NextFunction, RequestHandler } from 'express';
 import { randomUUID } from 'node:crypto';
-import { SequentialPipeline } from '@commander/core';
+import { SequentialPipeline } from '@praetor/core';
 import { PatternStateMachineFactory, PatternStateMachine } from './patternStateMachine';
 import {
   SequentialExecutor,

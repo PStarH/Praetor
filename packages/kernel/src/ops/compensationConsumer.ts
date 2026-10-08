@@ -1,5 +1,5 @@
-import type { EffectEnvelope } from '@commander/contracts';
-import { deriveEffectIdempotencyKey } from '@commander/effect-broker';
+import type { EffectEnvelope } from '@praetor/contracts';
+import { deriveEffectIdempotencyKey } from '@praetor/effect-broker';
 import {
   canonicalCompensationHash,
   validateGovernedCompensationAuthorization,

@@ -5,7 +5,7 @@ import {
   createExecutorManifest,
   toLlmBrokerLease,
 } from './workerRuntimeAdapter.js';
-import type { EffectBroker } from '@commander/effect-broker';
+import type { EffectBroker } from '@praetor/effect-broker';
 
 describe('workerRuntimeAdapter', () => {
   it('creates an agent step executor without dynamic require', () => {
@@ -20,7 +20,7 @@ describe('workerRuntimeAdapter', () => {
     } as unknown as EffectBroker;
     const issuer = {
       issue: () => 'tok',
-    } as unknown as import('@commander/effect-broker').CapabilityTokenIssuer;
+    } as unknown as import('@praetor/effect-broker').CapabilityTokenIssuer;
 
     process.env.NODE_ENV = 'production';
     try {

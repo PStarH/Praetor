@@ -291,5 +291,5 @@ export type {
 
 // Object storage (interface only — implementations are in testing/)
 export type { ObjectStorage, ObjectStorageRef } from './testing/objectStorage.js';
-// InMemoryKernelRepository: import from `@commander/kernel/testing/inMemoryRepository`
+// InMemoryKernelRepository: import from `@praetor/kernel/testing/inMemoryRepository`
 // — not re-exported from the main barrel (tests/harnesses only).

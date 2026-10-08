@@ -6,7 +6,7 @@ import {
   CapabilityTokenIssuer,
   CapabilityTokenVerifier,
   InMemoryCapabilityReplayStore,
-} from '@commander/effect-broker';
+} from '@praetor/effect-broker';
 import { CampaignFaultControlHandler, type FaultControlCommand } from './faultControl.js';
 
 const audience = 'commander.g3.fault-control';

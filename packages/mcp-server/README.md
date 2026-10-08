@@ -1,4 +1,4 @@
-# @commander/mcp-server
+# @praetor/mcp-server
 
 Publishable MCP (Model Context Protocol) server for Commander. Exposes Commander tools over line-delimited stdin/stdout JSON-RPC so any MCP client (Claude Desktop, Cursor, etc.) can call them.
 
@@ -10,9 +10,9 @@ Publishable MCP (Model Context Protocol) server for Commander. Exposes Commander
 ## Installation
 
 ```bash
-pnpm add @commander/mcp-server
+pnpm add @praetor/mcp-server
 # or
-npm install @commander/mcp-server
+npm install @praetor/mcp-server
 ```
 
 ## Usage
@@ -40,7 +40,7 @@ Options:
 ### Programmatic
 
 ```typescript
-import { createStdioMcpServer } from '@commander/mcp-server';
+import { createStdioMcpServer } from '@praetor/mcp-server';
 
 const { server, status } = createStdioMcpServer();
 console.log(`Exposing ${status.tools.length} tools`);
@@ -57,7 +57,7 @@ The exported package surface is `createStdioMcpServer`,
 `createFetchMcpActionGatewayExecutor`, `isLocalRuntimeEnabled`, and `run`
 (the CLI entry point). `startStdioServer` lives in the internal
 `stdioServer` module and is **not** re-exported from the package root, so do not
-import it from `@commander/mcp-server`.
+import it from `@praetor/mcp-server`.
 
 ### Wiring into an MCP client config
 
@@ -100,9 +100,9 @@ call an LLM provider. `--model-router-only` narrows this development surface to
 the three model-router tools. `--allow-dangerous-tools` additionally requires a
 configured Action Gateway.
 
-## HTTP API (when used inside `@commander/api`)
+## HTTP API (when used inside `@praetor/api`)
 
-The `@commander/api` package mounts the MCP router at `/mcp` and exposes:
+The `@praetor/api` package mounts the MCP router at `/mcp` and exposes:
 
 - `POST /mcp` — JSON-RPC 2.0 endpoint
 - `GET /.well-known/mcp` — capability discovery

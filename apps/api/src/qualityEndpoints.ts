@@ -1,6 +1,6 @@
 import { Router, type NextFunction, type Request, type Response } from 'express';
-import { HallucinationDetector } from '@commander/core';
-import { tenantKey } from '@commander/core/runtime/tenantContext';
+import { HallucinationDetector } from '@praetor/core';
+import { tenantKey } from '@praetor/core/runtime/tenantContext';
 import { getConsistencyMonitorManager, type ConsistencyReport } from './consistencyMonitor';
 import { hasRole } from './userStore';
 

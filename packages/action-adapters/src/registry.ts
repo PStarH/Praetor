@@ -1,5 +1,5 @@
-import type { EffectOutcomeQuerier } from '@commander/effect-broker';
-import type { ActionAdapterDescriptorV1 } from '@commander/contracts';
+import type { EffectOutcomeQuerier } from '@praetor/effect-broker';
+import type { ActionAdapterDescriptorV1 } from '@praetor/contracts';
 import type {
   ActionAdapter,
   AdapterCredentialProvider,

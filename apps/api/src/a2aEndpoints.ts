@@ -5,7 +5,7 @@
  */
 
 import express, { Request, Response, Router } from 'express';
-import { TenantIsolationError } from '@commander/core/runtime/tenantContext';
+import { TenantIsolationError } from '@praetor/core/runtime/tenantContext';
 import { AgentCardGenerator, AgentCardRegistry } from './agentCard';
 import { TaskManager, ArtifactManager, Task, TaskStatus } from './a2aTask';
 import { requireA2ABearerAuth } from './a2aAuth';

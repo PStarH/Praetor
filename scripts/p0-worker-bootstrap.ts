@@ -13,9 +13,9 @@
  */
 import { randomUUID } from 'node:crypto';
 import { hostname } from 'node:os';
-import { PostgresKernelRepository } from '@commander/kernel';
-import { createVerifiedPostgresPool } from '@commander/postgres-runtime';
-import type { LLMProvider, LLMRequest, LLMResponse } from '@commander/core';
+import { PostgresKernelRepository } from '@praetor/kernel';
+import { createVerifiedPostgresPool } from '@praetor/postgres-runtime';
+import type { LLMProvider, LLMRequest, LLMResponse } from '@praetor/core';
 import {
   WorkerService,
   PostgresWorkerRegistry,
@@ -24,7 +24,7 @@ import {
   resolveWorkerTenantScope,
   type WorkerDefinition,
   type WorkerIdentity,
-} from '@commander/worker-plane';
+} from '@praetor/worker-plane';
 
 class MockProvider implements LLMProvider {
   readonly name = 'mock';

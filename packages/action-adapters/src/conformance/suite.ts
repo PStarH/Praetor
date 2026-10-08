@@ -5,7 +5,7 @@ import {
   findAdapterManifest,
   githubPrBodyMarker,
   servicenowCorrelationId,
-} from '@commander/contracts';
+} from '@praetor/contracts';
 import {
   AdapterExecutionError,
   buildEffectEvidenceBundle,
@@ -18,7 +18,7 @@ import {
   deriveEffectIdempotencyKey,
   type EffectExecutor,
   type EffectKernelPort,
-} from '@commander/effect-broker';
+} from '@praetor/effect-broker';
 import type { ActionAdapter } from '../types.js';
 import { toEvidenceSummary } from '../types.js';
 import { ActionAdapterRegistry } from '../registry.js';

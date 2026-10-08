@@ -8,7 +8,7 @@ import {
   createFetchActionGatewayExecutor,
   resetGuardianAgent,
   type Tool,
-} from '@commander/core';
+} from '@praetor/core';
 import {
   assertActionGatewayConfigured,
   createStdioMcpServer,
@@ -19,7 +19,7 @@ import {
   type McpActionGatewayExecutor,
 } from '../src/stdioServer';
 import { isDirectCliInvocation, run } from '../src/cli';
-import { MCP_PROTOCOL_VERSION } from '@commander/core';
+import { MCP_PROTOCOL_VERSION } from '@praetor/core';
 
 beforeEach(() => {
   resetGuardianAgent();
@@ -568,7 +568,7 @@ describe('action gateway guards', () => {
 
 describe('action gateway MCP routing', () => {
   it('maps ticket.create to demo.ticket.create in the action envelope', async () => {
-    const { buildMcpActionEnvelope } = await import('@commander/core');
+    const { buildMcpActionEnvelope } = await import('@praetor/core');
     const tool = {
       definition: { name: 'ticket.create', description: 'create', inputSchema: { type: 'object' } },
       isReadOnly: false,
@@ -581,7 +581,7 @@ describe('action gateway MCP routing', () => {
   });
 
   it('surfaces ActionGatewayPolicyError as MCP text', async () => {
-    const { MCPServer, ActionGatewayPolicyError } = await import('@commander/core');
+    const { MCPServer, ActionGatewayPolicyError } = await import('@praetor/core');
     const tool = {
       definition: {
         name: 'demo_external_write',

@@ -1,7 +1,7 @@
 /**
  * Plugin API Bridge
  *
- * Implements the CommanderPluginAPI interface from @commander/plugin-sdk,
+ * Implements the CommanderPluginAPI interface from @praetor/plugin-sdk,
  * bridging plugin calls to Commander's internal ToolRegistry, HookManager, and CLI.
  */
 import type {
@@ -11,7 +11,7 @@ import type {
   PluginLogger,
   HookPoint,
   CommandOpts,
-} from '@commander/plugin-sdk';
+} from '@praetor/plugin-sdk';
 import { getGlobalLogger } from './logging';
 import type { Tool, ToolDefinition } from './runtime';
 

@@ -6,7 +6,7 @@ import {
   githubPrBodyMarker,
   servicenowCorrelationId,
   SERVICENOW_INCIDENT_CREATE_DESCRIPTOR,
-} from '@commander/contracts';
+} from '@praetor/contracts';
 import { createGitHubPullRequestCreateAdapter } from '../github/pullRequestCreate.js';
 import { createServiceNowIncidentCreateAdapter } from '../servicenow/incidentCreate.js';
 import { createKubernetesDeploymentRollbackAdapter } from '../kubernetes/deploymentRollback.js';

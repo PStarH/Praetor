@@ -3,7 +3,7 @@ import {
   validateStepTransition,
   type RunState,
   type StepState,
-} from '@commander/contracts';
+} from '@praetor/contracts';
 import { KernelInvariantError } from './types.js';
 
 export function assertRunTransition(from: RunState, to: RunState): void {
@@ -11,7 +11,7 @@ export function assertRunTransition(from: RunState, to: RunState): void {
   if (!result.ok) {
     throw new KernelInvariantError(
       'INVALID_TRANSITION',
-      `run transition ${from} -> ${to} rejected by @commander/contracts`,
+      `run transition ${from} -> ${to} rejected by @praetor/contracts`,
     );
   }
 }
@@ -21,7 +21,7 @@ export function assertStepTransition(from: StepState, to: StepState): void {
   if (!result.ok) {
     throw new KernelInvariantError(
       'INVALID_TRANSITION',
-      `step transition ${from} -> ${to} rejected by @commander/contracts`,
+      `step transition ${from} -> ${to} rejected by @praetor/contracts`,
     );
   }
 }

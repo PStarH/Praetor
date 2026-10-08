@@ -1,5 +1,5 @@
 {
-  "name": "@commander/adapter-ops",
+  "name": "@praetor/adapter-ops",
   "version": "0.2.0",
   "description": "Adapter-ops deploy unit: EffectBroker-backed compensation/reconcile drain (not a V2 plane; kernel-ops owns reclaim/timer/outbox)",
   "type": "module",
@@ -21,17 +21,17 @@
     "build": "tsc -p tsconfig.json && node ../../scripts/fix-esm-imports.mjs dist",
     "typecheck": "tsc --noEmit",
     "typecheck:test": "tsc -p tsconfig.test.json",
-    "pretest": "pnpm --filter @commander/contracts build && pnpm --filter @commander/effect-broker build && pnpm --filter @commander/kernel build && pnpm --filter @commander/action-adapters build",
+    "pretest": "pnpm --filter @praetor/contracts build && pnpm --filter @praetor/effect-broker build && pnpm --filter @praetor/kernel build && pnpm --filter @praetor/action-adapters build",
     "test": "node --import tsx --test src/egressAudit.test.ts src/compensationDaemon.test.ts src/reconciliationDaemon.test.ts src/healthServer.test.ts src/lifecycle.test.ts src/run.test.ts src/chaos/timeoutAfterCommit.test.ts src/chaos/workerKillRestart.test.ts src/chaos/dualProcessClaim.test.ts",
     "start": "node dist/run.js",
     "prepublishOnly": "tsc -p tsconfig.json"
   },
   "license": "MIT",
   "dependencies": {
-    "@commander/action-adapters": "workspace:*",
-    "@commander/contracts": "workspace:*",
-    "@commander/effect-broker": "workspace:*",
-    "@commander/kernel": "workspace:*"
+    "@praetor/action-adapters": "workspace:*",
+    "@praetor/contracts": "workspace:*",
+    "@praetor/effect-broker": "workspace:*",
+    "@praetor/kernel": "workspace:*"
   },
   "devDependencies": {
     "tsx": "^4.23.1",

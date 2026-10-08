@@ -85,7 +85,7 @@ describe('l4-b-cell-smoke', () => {
     assert.equal(result.steps.S2, undefined);
     assert.equal(result.steps.S3, undefined);
     if (!result.steps.S6) {
-      t.skip('chaos deps unavailable — build @commander/effect-broker first');
+      t.skip('chaos deps unavailable — build @praetor/effect-broker first');
       return;
     }
     assert.equal(result.steps.S6, true);

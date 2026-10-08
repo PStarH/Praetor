@@ -2,7 +2,7 @@
 // 统计高风险任务、审批率、风险 Agent 分布
 // v2: 增加磁盘持久化，治理证据不再仅存内存
 
-import { reportSilentFailure } from '@commander/core';
+import { reportSilentFailure } from '@praetor/core';
 import * as fs from 'fs';
 import * as path from 'path';
 

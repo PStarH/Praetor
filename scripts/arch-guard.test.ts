@@ -62,10 +62,10 @@ function runGuard(root: string): string {
 test('passes the minimal allowed package graph', () => {
   const root = fixture({
     packages: {
-      contracts: { name: '@commander/contracts' },
+      contracts: { name: '@praetor/contracts' },
       kernel: {
-        name: '@commander/kernel',
-        deps: { '@commander/contracts': 'workspace:*' },
+        name: '@praetor/kernel',
+        deps: { '@praetor/contracts': 'workspace:*' },
       },
     },
   });
@@ -75,8 +75,8 @@ test('passes the minimal allowed package graph', () => {
 test('rejects a new orchestrator package', () => {
   const root = fixture({
     packages: {
-      contracts: { name: '@commander/contracts' },
-      orchestrator: { name: '@commander/orchestrator' },
+      contracts: { name: '@praetor/contracts' },
+      orchestrator: { name: '@praetor/orchestrator' },
     },
   });
   assert.throws(() => runGuard(root), /forbidden package/i);
@@ -85,8 +85,8 @@ test('rejects a new orchestrator package', () => {
 test('rejects a reintroduced orchestration package', () => {
   const root = fixture({
     packages: {
-      contracts: { name: '@commander/contracts' },
-      orchestration: { name: '@commander/orchestration' },
+      contracts: { name: '@praetor/contracts' },
+      orchestration: { name: '@praetor/orchestration' },
     },
   });
   assert.throws(() => runGuard(root), /forbidden package/i);
@@ -95,8 +95,8 @@ test('rejects a reintroduced orchestration package', () => {
 test('rejects a reintroduced security package role', () => {
   const root = fixture({
     packages: {
-      contracts: { name: '@commander/contracts' },
-      security: { name: '@commander/security' },
+      contracts: { name: '@praetor/contracts' },
+      security: { name: '@praetor/security' },
     },
   });
   assert.throws(() => runGuard(root), /forbidden package/i);
@@ -105,11 +105,11 @@ test('rejects a reintroduced security package role', () => {
 test('rejects imports of deleted control-plane package', () => {
   const root = fixture({
     packages: {
-      contracts: { name: '@commander/contracts' },
+      contracts: { name: '@praetor/contracts' },
       kernel: {
-        name: '@commander/kernel',
-        deps: { '@commander/contracts': 'workspace:*' },
-        source: "import '@commander/control-plane';\n",
+        name: '@praetor/kernel',
+        deps: { '@praetor/contracts': 'workspace:*' },
+        source: "import '@praetor/control-plane';\n",
       },
     },
   });
@@ -119,34 +119,34 @@ test('rejects imports of deleted control-plane package', () => {
 test('rejects reintroduced operations package (ghost plane banned)', () => {
   const root = fixture({
     packages: {
-      contracts: { name: '@commander/contracts' },
+      contracts: { name: '@praetor/contracts' },
       kernel: {
-        name: '@commander/kernel',
-        deps: { '@commander/contracts': 'workspace:*' },
+        name: '@praetor/kernel',
+        deps: { '@praetor/contracts': 'workspace:*' },
       },
       operations: {
-        name: '@commander/operations',
+        name: '@praetor/operations',
         deps: {
-          '@commander/kernel': 'workspace:*',
-          '@commander/contracts': 'workspace:*',
+          '@praetor/kernel': 'workspace:*',
+          '@praetor/contracts': 'workspace:*',
         },
       },
     },
   });
   assert.throws(
     () => runGuard(root),
-    /no dependency policy exists for workspace package @commander\/operations/i,
+    /no dependency policy exists for workspace package @(commander|praetor)\/operations/i,
   );
 });
 
 test('rejects imports of deleted operations package', () => {
   const root = fixture({
     packages: {
-      contracts: { name: '@commander/contracts' },
+      contracts: { name: '@praetor/contracts' },
       kernel: {
-        name: '@commander/kernel',
-        deps: { '@commander/contracts': 'workspace:*' },
-        source: "import '@commander/operations';\n",
+        name: '@praetor/kernel',
+        deps: { '@praetor/contracts': 'workspace:*' },
+        source: "import '@praetor/operations';\n",
       },
     },
   });
@@ -156,13 +156,13 @@ test('rejects imports of deleted operations package', () => {
 test('rejects root package.json references to deleted packages', () => {
   const root = fixture({
     packages: {
-      contracts: { name: '@commander/contracts' },
+      contracts: { name: '@praetor/contracts' },
     },
     rootFiles: {
       'package.json': JSON.stringify({
         name: 'commander-monorepo',
         dependencies: {
-          '@commander/orchestration': 'workspace:*',
+          '@praetor/orchestration': 'workspace:*',
         },
       }),
     },
@@ -173,16 +173,16 @@ test('rejects root package.json references to deleted packages', () => {
 test('rejects worker-plane core imports outside configured bridge files', () => {
   const root = fixture({
     packages: {
-      contracts: { name: '@commander/contracts' },
-      core: { name: '@commander/core', deps: { '@commander/contracts': 'workspace:*' } },
+      contracts: { name: '@praetor/contracts' },
+      core: { name: '@praetor/core', deps: { '@praetor/contracts': 'workspace:*' } },
       'worker-plane': {
-        name: '@commander/worker-plane',
+        name: '@praetor/worker-plane',
         deps: {
-          '@commander/contracts': 'workspace:*',
-          '@commander/core': 'workspace:*',
+          '@praetor/contracts': 'workspace:*',
+          '@praetor/core': 'workspace:*',
         },
         sourcePath: 'rogueBridge.ts',
-        source: "import '@commander/core';\n",
+        source: "import '@praetor/core';\n",
       },
     },
   });
@@ -192,8 +192,8 @@ test('rejects worker-plane core imports outside configured bridge files', () => 
 test('rejects a reintroduced control-plane package', () => {
   const root = fixture({
     packages: {
-      contracts: { name: '@commander/contracts' },
-      'control-plane': { name: '@commander/control-plane' },
+      contracts: { name: '@praetor/contracts' },
+      'control-plane': { name: '@praetor/control-plane' },
     },
   });
   assert.throws(() => runGuard(root), /forbidden package/i);
@@ -202,34 +202,34 @@ test('rejects a reintroduced control-plane package', () => {
 test('rejects reintroduced operations package (ghost plane banned)', () => {
   const root = fixture({
     packages: {
-      contracts: { name: '@commander/contracts' },
+      contracts: { name: '@praetor/contracts' },
       kernel: {
-        name: '@commander/kernel',
-        deps: { '@commander/contracts': 'workspace:*' },
+        name: '@praetor/kernel',
+        deps: { '@praetor/contracts': 'workspace:*' },
       },
       operations: {
-        name: '@commander/operations',
+        name: '@praetor/operations',
         deps: {
-          '@commander/kernel': 'workspace:*',
-          '@commander/contracts': 'workspace:*',
+          '@praetor/kernel': 'workspace:*',
+          '@praetor/contracts': 'workspace:*',
         },
       },
     },
   });
   assert.throws(
     () => runGuard(root),
-    /no dependency policy exists for workspace package @commander\/operations/i,
+    /no dependency policy exists for workspace package @(commander|praetor)\/operations/i,
   );
 });
 
 test('rejects imports of deleted operations package', () => {
   const root = fixture({
     packages: {
-      contracts: { name: '@commander/contracts' },
+      contracts: { name: '@praetor/contracts' },
       kernel: {
-        name: '@commander/kernel',
-        deps: { '@commander/contracts': 'workspace:*' },
-        source: "import '@commander/operations';\n",
+        name: '@praetor/kernel',
+        deps: { '@praetor/contracts': 'workspace:*' },
+        source: "import '@praetor/operations';\n",
       },
     },
   });
@@ -239,11 +239,11 @@ test('rejects imports of deleted operations package', () => {
 test('rejects kernel importing core', () => {
   const root = fixture({
     packages: {
-      contracts: { name: '@commander/contracts' },
+      contracts: { name: '@praetor/contracts' },
       kernel: {
-        name: '@commander/kernel',
-        deps: { '@commander/core': 'workspace:*' },
-        source: "import '@commander/core';\n",
+        name: '@praetor/kernel',
+        deps: { '@praetor/core': 'workspace:*' },
+        source: "import '@praetor/core';\n",
       },
     },
   });
@@ -254,11 +254,11 @@ test('rejects contracts importing an implementation package', () => {
   const root = fixture({
     packages: {
       contracts: {
-        name: '@commander/contracts',
-        deps: { '@commander/kernel': 'workspace:*' },
-        source: "import '@commander/kernel';\n",
+        name: '@praetor/contracts',
+        deps: { '@praetor/kernel': 'workspace:*' },
+        source: "import '@praetor/kernel';\n",
       },
-      kernel: { name: '@commander/kernel' },
+      kernel: { name: '@praetor/kernel' },
     },
   });
   assert.throws(() => runGuard(root), /contracts.*leaf|illegal.*dependency/i);
@@ -268,12 +268,12 @@ test('rejects a cycle in internal package dependencies', () => {
   const root = fixture({
     packages: {
       contracts: {
-        name: '@commander/contracts',
-        deps: { '@commander/kernel': 'workspace:*' },
+        name: '@praetor/contracts',
+        deps: { '@praetor/kernel': 'workspace:*' },
       },
       kernel: {
-        name: '@commander/kernel',
-        deps: { '@commander/contracts': 'workspace:*' },
+        name: '@praetor/kernel',
+        deps: { '@praetor/contracts': 'workspace:*' },
       },
     },
   });
@@ -284,10 +284,10 @@ test('rejects a relative import that escapes its package boundary', () => {
   const root = fixture({
     packages: {
       contracts: {
-        name: '@commander/contracts',
+        name: '@praetor/contracts',
         source: "import '../../kernel/src/index.js';\n",
       },
-      kernel: { name: '@commander/kernel' },
+      kernel: { name: '@praetor/kernel' },
     },
   });
   assert.throws(() => runGuard(root), /relative import escapes package boundary/i);
@@ -296,51 +296,51 @@ test('rejects a relative import that escapes its package boundary', () => {
 test('rejects action-adapters importing core', () => {
   const root = fixture({
     packages: {
-      contracts: { name: '@commander/contracts' },
-      'effect-broker': { name: '@commander/effect-broker' },
+      contracts: { name: '@praetor/contracts' },
+      'effect-broker': { name: '@praetor/effect-broker' },
       'action-adapters': {
-        name: '@commander/action-adapters',
+        name: '@praetor/action-adapters',
         deps: {
-          '@commander/contracts': 'workspace:*',
-          '@commander/effect-broker': 'workspace:*',
-          '@commander/core': 'workspace:*',
+          '@praetor/contracts': 'workspace:*',
+          '@praetor/effect-broker': 'workspace:*',
+          '@praetor/core': 'workspace:*',
         },
-        source: "import '@commander/core';\n",
+        source: "import '@praetor/core';\n",
       },
     },
   });
   assert.throws(() => runGuard(root), /illegal.*dependency|action-adapters.*core/i);
 });
 
-test('rejects adapter-ops importing @commander/core', () => {
+test('rejects adapter-ops importing @praetor/core', () => {
   const root = fixture({
     packages: {
-      contracts: { name: '@commander/contracts' },
+      contracts: { name: '@praetor/contracts' },
       kernel: {
-        name: '@commander/kernel',
-        deps: { '@commander/contracts': 'workspace:*' },
+        name: '@praetor/kernel',
+        deps: { '@praetor/contracts': 'workspace:*' },
       },
       'effect-broker': {
-        name: '@commander/effect-broker',
-        deps: { '@commander/contracts': 'workspace:*' },
+        name: '@praetor/effect-broker',
+        deps: { '@praetor/contracts': 'workspace:*' },
       },
       'action-adapters': {
-        name: '@commander/action-adapters',
+        name: '@praetor/action-adapters',
         deps: {
-          '@commander/contracts': 'workspace:*',
-          '@commander/effect-broker': 'workspace:*',
+          '@praetor/contracts': 'workspace:*',
+          '@praetor/effect-broker': 'workspace:*',
         },
       },
       'adapter-ops': {
-        name: '@commander/adapter-ops',
+        name: '@praetor/adapter-ops',
         deps: {
-          '@commander/kernel': 'workspace:*',
-          '@commander/contracts': 'workspace:*',
-          '@commander/effect-broker': 'workspace:*',
-          '@commander/action-adapters': 'workspace:*',
-          '@commander/core': 'workspace:*',
+          '@praetor/kernel': 'workspace:*',
+          '@praetor/contracts': 'workspace:*',
+          '@praetor/effect-broker': 'workspace:*',
+          '@praetor/action-adapters': 'workspace:*',
+          '@praetor/core': 'workspace:*',
         },
-        source: "import '@commander/core';\n",
+        source: "import '@praetor/core';\n",
       },
     },
   });
@@ -353,29 +353,29 @@ test('rejects adapter-ops importing @commander/core', () => {
 test('rejects adapter-ops importing apps/api', () => {
   const root = fixture({
     packages: {
-      contracts: { name: '@commander/contracts' },
+      contracts: { name: '@praetor/contracts' },
       kernel: {
-        name: '@commander/kernel',
-        deps: { '@commander/contracts': 'workspace:*' },
+        name: '@praetor/kernel',
+        deps: { '@praetor/contracts': 'workspace:*' },
       },
       'effect-broker': {
-        name: '@commander/effect-broker',
-        deps: { '@commander/contracts': 'workspace:*' },
+        name: '@praetor/effect-broker',
+        deps: { '@praetor/contracts': 'workspace:*' },
       },
       'action-adapters': {
-        name: '@commander/action-adapters',
+        name: '@praetor/action-adapters',
         deps: {
-          '@commander/contracts': 'workspace:*',
-          '@commander/effect-broker': 'workspace:*',
+          '@praetor/contracts': 'workspace:*',
+          '@praetor/effect-broker': 'workspace:*',
         },
       },
       'adapter-ops': {
-        name: '@commander/adapter-ops',
+        name: '@praetor/adapter-ops',
         deps: {
-          '@commander/kernel': 'workspace:*',
-          '@commander/contracts': 'workspace:*',
-          '@commander/effect-broker': 'workspace:*',
-          '@commander/action-adapters': 'workspace:*',
+          '@praetor/kernel': 'workspace:*',
+          '@praetor/contracts': 'workspace:*',
+          '@praetor/effect-broker': 'workspace:*',
+          '@praetor/action-adapters': 'workspace:*',
         },
         source: "import '../../../apps/api/src/index.js';\n",
       },
@@ -387,33 +387,33 @@ test('rejects adapter-ops importing apps/api', () => {
 test('rejects action-adapters importing core via source', () => {
   const root = fixture({
     packages: {
-      contracts: { name: '@commander/contracts' },
-      core: { name: '@commander/core', deps: { '@commander/contracts': 'workspace:*' } },
+      contracts: { name: '@praetor/contracts' },
+      core: { name: '@praetor/core', deps: { '@praetor/contracts': 'workspace:*' } },
       'effect-broker': {
-        name: '@commander/effect-broker',
-        deps: { '@commander/contracts': 'workspace:*' },
+        name: '@praetor/effect-broker',
+        deps: { '@praetor/contracts': 'workspace:*' },
       },
       'action-adapters': {
-        name: '@commander/action-adapters',
+        name: '@praetor/action-adapters',
         deps: {
-          '@commander/contracts': 'workspace:*',
-          '@commander/effect-broker': 'workspace:*',
+          '@praetor/contracts': 'workspace:*',
+          '@praetor/effect-broker': 'workspace:*',
         },
-        source: "import '@commander/core';\n",
+        source: "import '@praetor/core';\n",
       },
     },
   });
   assert.throws(() => runGuard(root), /illegal source dependency|illegal dependency/i);
 });
 
-test('rejects commander dev importing @commander/kernel', () => {
+test('rejects commander dev importing @praetor/kernel', () => {
   const root = fixture({
     packages: {
-      contracts: { name: '@commander/contracts' },
+      contracts: { name: '@praetor/contracts' },
       core: {
-        name: '@commander/core',
-        deps: { '@commander/contracts': 'workspace:*', '@commander/kernel': 'workspace:*' },
-        source: "import '@commander/kernel';\nexport async function cmdDev() {}\n",
+        name: '@praetor/core',
+        deps: { '@praetor/contracts': 'workspace:*', '@praetor/kernel': 'workspace:*' },
+        source: "import '@praetor/kernel';\nexport async function cmdDev() {}\n",
       },
     },
   });
@@ -423,9 +423,9 @@ test('rejects commander dev importing @commander/kernel', () => {
 test('rejects commander dev importing apps/api paths', () => {
   const root = fixture({
     packages: {
-      contracts: { name: '@commander/contracts' },
+      contracts: { name: '@praetor/contracts' },
       core: {
-        name: '@commander/core',
+        name: '@praetor/core',
         source: "import '../../../apps/api/src/index.js';\nexport async function cmdDev() {}\n",
       },
     },
@@ -433,19 +433,19 @@ test('rejects commander dev importing apps/api paths', () => {
   assert.throws(() => runGuard(root), /relative import escapes package boundary/i);
 });
 
-test('rejects commander dev importing @commander/worker-plane', () => {
+test('rejects commander dev importing @praetor/worker-plane', () => {
   const root = fixture({
     packages: {
-      contracts: { name: '@commander/contracts' },
-      kernel: { name: '@commander/kernel', deps: { '@commander/contracts': 'workspace:*' } },
+      contracts: { name: '@praetor/contracts' },
+      kernel: { name: '@praetor/kernel', deps: { '@praetor/contracts': 'workspace:*' } },
       'worker-plane': {
-        name: '@commander/worker-plane',
-        deps: { '@commander/kernel': 'workspace:*' },
+        name: '@praetor/worker-plane',
+        deps: { '@praetor/kernel': 'workspace:*' },
       },
       core: {
-        name: '@commander/core',
-        deps: { '@commander/worker-plane': 'workspace:*' },
-        source: "import '@commander/worker-plane';\nexport async function cmdDev() {}\n",
+        name: '@praetor/core',
+        deps: { '@praetor/worker-plane': 'workspace:*' },
+        source: "import '@praetor/worker-plane';\nexport async function cmdDev() {}\n",
       },
     },
   });
@@ -455,16 +455,16 @@ test('rejects commander dev importing @commander/worker-plane', () => {
 test('rejects ad-hoc CapabilityGrant interface in worker-plane', () => {
   const root = fixture({
     packages: {
-      contracts: { name: '@commander/contracts' },
+      contracts: { name: '@praetor/contracts' },
       kernel: {
-        name: '@commander/kernel',
-        deps: { '@commander/contracts': 'workspace:*' },
+        name: '@praetor/kernel',
+        deps: { '@praetor/contracts': 'workspace:*' },
       },
       'worker-plane': {
-        name: '@commander/worker-plane',
+        name: '@praetor/worker-plane',
         deps: {
-          '@commander/contracts': 'workspace:*',
-          '@commander/kernel': 'workspace:*',
+          '@praetor/contracts': 'workspace:*',
+          '@praetor/kernel': 'workspace:*',
         },
         source: 'export interface CapabilityGrant { jti: string }\n',
       },

@@ -17,7 +17,7 @@
  */
 
 import { fileURLToPath } from 'node:url';
-import { createVerifiedPostgresPool } from '@commander/postgres-runtime';
+import { createVerifiedPostgresPool } from '@praetor/postgres-runtime';
 import { reportSilentFailure } from '../../silentFailureReporter';
 import { getGlobalLogger } from '../../logging';
 import { $, section, kv } from './_shared';

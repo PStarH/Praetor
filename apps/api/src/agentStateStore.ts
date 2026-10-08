@@ -1,6 +1,6 @@
 import fs from 'fs';
 import path from 'path';
-import { AgentState } from '@commander/core';
+import { AgentState } from '@praetor/core';
 import { atomicWriteFileSync, readJsonFileSafe } from './atomicWrite';
 
 import { getDirname, getRequire } from './esmCompat';

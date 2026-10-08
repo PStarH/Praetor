@@ -1,7 +1,7 @@
 import { Router } from 'express';
-import { getUnifiedCostAuthority } from '@commander/core';
-import { getCurrentTenantId } from '@commander/core/runtime/tenantContext';
-import type { CostSummary, CostRecord, BudgetAlert, CostLedgerEntry } from '@commander/core';
+import { getUnifiedCostAuthority } from '@praetor/core';
+import { getCurrentTenantId } from '@praetor/core/runtime/tenantContext';
+import type { CostSummary, CostRecord, BudgetAlert, CostLedgerEntry } from '@praetor/core';
 
 function ledgerEntryToCostRecord(entry: CostLedgerEntry): CostRecord {
   return {

@@ -43,24 +43,24 @@ import type {
   EffectKernelPort,
   EffectBrokerOptions,
   ConfiguredEvidenceSigner,
-} from '@commander/effect-broker';
+} from '@praetor/effect-broker';
 import {
   EffectBroker,
   CapabilityTokenIssuer,
   canonicalRequestHash,
   createEvidenceSigner,
-} from '@commander/effect-broker';
-import type { KernelInteraction, KernelRun, KernelStep, KernelRepository } from '@commander/kernel';
+} from '@praetor/effect-broker';
+import type { KernelInteraction, KernelRun, KernelStep, KernelRepository } from '@praetor/kernel';
 import {
   createCapabilityAuthority,
   createVerifiedPostgresPool,
   type CapabilityAuthority,
-} from '@commander/kernel';
-import { ACTION_GATEWAY_POLICY_ID, evaluateActionGatewayPolicy } from '@commander/contracts';
+} from '@praetor/kernel';
+import { ACTION_GATEWAY_POLICY_ID, evaluateActionGatewayPolicy } from '@praetor/contracts';
 import {
   ActionAdapterRegistry,
   parseKubernetesDeploymentDestination,
-} from '@commander/action-adapters';
+} from '@praetor/action-adapters';
 import {
   createActionAdapterEffectExecutor,
   createProductionAdapterRegistry,
@@ -322,7 +322,7 @@ export async function createWorkerService(
     // BYPASSRLS) and carry an explicit tenant scope on every write. Tenant
     // configuration never grants database authority; scheduler mode is reserved
     // for the kernel-ops entrypoint.
-    const { PostgresKernelRepository } = (await import('@commander/kernel')) as unknown as {
+    const { PostgresKernelRepository } = (await import('@praetor/kernel')) as unknown as {
       PostgresKernelRepository: new (pool: any, options?: { schedulerMode?: boolean }) => any;
     };
     const kernel = new PostgresKernelRepository(pool, { schedulerMode });
@@ -798,7 +798,7 @@ export function createWorkerEffectExecutor(
 }
 
 /**
- * Wire EffectBroker via Task 3 `createCapabilityAuthority` from `@commander/kernel`.
+ * Wire EffectBroker via Task 3 `createCapabilityAuthority` from `@praetor/kernel`.
  * Production / enterprise refuse `CapabilityTokenIssuer.generate()` (factory gate).
  * Durable `replay` + `revocations` are non-optional on broker options (presence);
  * EffectBroker ctor fail-closed when requireDurable / production profile.

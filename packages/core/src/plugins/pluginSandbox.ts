@@ -26,9 +26,9 @@ import { reportSilentFailure } from '../silentFailureReporter';
 // Types
 // ──────────────────────────────────────────────────────────────────────────
 
-import type { PluginSandboxMode } from '@commander/contracts';
+import type { PluginSandboxMode } from '@praetor/contracts';
 
-export type { PluginSandboxMode } from '@commander/contracts';
+export type { PluginSandboxMode } from '@praetor/contracts';
 
 export type PluginRuntime = 'javascript' | 'typescript' | 'shell' | 'python' | 'unknown';
 

@@ -11,8 +11,8 @@ import {
   wrapProviderWithEffectBroker,
   type LlmEffectAuth,
 } from './llmBrokerBridge.js';
-import type { LLMProvider, LLMRequest, LLMResponse } from '@commander/core';
-import { resetControlPlane } from '@commander/core';
+import type { LLMProvider, LLMRequest, LLMResponse } from '@praetor/core';
+import { resetControlPlane } from '@praetor/core';
 import {
   CapabilityTokenIssuer,
   CapabilityTokenVerifier,
@@ -24,7 +24,7 @@ import {
   type EffectKernelPort,
   type PolicyEvaluator,
   type AuditSink,
-} from '@commander/effect-broker';
+} from '@praetor/effect-broker';
 import type { ClaimedStep } from './types.js';
 import { runWithStepWorkloadIdentity } from './stepWorkloadIdentity.js';
 

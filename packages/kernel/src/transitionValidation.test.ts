@@ -4,7 +4,7 @@ import { KernelInvariantError } from './types.js';
 import { assertRunTransition, assertStepTransition } from './transitionValidation.js';
 
 describe('kernel transition validation', () => {
-  it('accepts transitions declared by @commander/contracts', () => {
+  it('accepts transitions declared by @praetor/contracts', () => {
     assert.doesNotThrow(() => assertRunTransition('PENDING', 'RUNNING'));
     assert.doesNotThrow(() => assertStepTransition('RUNNING', 'RETRY_WAIT'));
   });

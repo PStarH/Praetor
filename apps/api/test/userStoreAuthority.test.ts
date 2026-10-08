@@ -1,6 +1,6 @@
 import assert from 'node:assert/strict';
 import { test } from 'node:test';
-import type { SqlClient, SqlPool, SqlQueryResult } from '@commander/kernel';
+import type { SqlClient, SqlPool, SqlQueryResult } from '@praetor/kernel';
 import { PostgresUserRepository } from '../src/userStore.js';
 
 class RecordingClient implements SqlClient {

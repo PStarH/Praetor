@@ -15,7 +15,7 @@ import {
   deriveEffectIdempotencyKey,
   type CapabilityTokenIssuer,
   type WorkloadBinding,
-} from '@commander/effect-broker';
+} from '@praetor/effect-broker';
 import {
   assertEffectBrokerForProduction,
   isProductionEffectGate,

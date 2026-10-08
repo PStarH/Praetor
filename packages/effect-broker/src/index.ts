@@ -9,7 +9,7 @@ import {
   KeyObject,
 } from 'node:crypto';
 import { AdapterExecutionError } from './adapterErrors.js';
-import { isClassAEffectType } from '@commander/contracts';
+import { isClassAEffectType } from '@praetor/contracts';
 import {
   buildRunEvidenceBundle,
   canonicalEvidenceBody,
@@ -19,7 +19,7 @@ import {
   type EvidenceSigner,
 } from './evidenceBundle.js';
 import { assertEvidenceRecord, type EvidenceRecord } from './evidenceSink.js';
-export { isClassAEffectType } from '@commander/contracts';
+export { isClassAEffectType } from '@praetor/contracts';
 
 export interface CapabilityGrant {
   jti: string;
@@ -229,7 +229,7 @@ export interface EffectKernelPort {
   /**
    * Terminal fail for effects that never committed remotely (AdapterCommitState NOT_COMMITTED).
    * Distinct from markEffectCompletionUnknown (QUERY_FIRST / UNKNOWN).
-   * Shape matches kernel FailEffectRequest (lease + error); broker does not import @commander/kernel.
+   * Shape matches kernel FailEffectRequest (lease + error); broker does not import @praetor/kernel.
    */
   failEffect?(input: {
     effectId: string;

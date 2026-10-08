@@ -4,7 +4,7 @@ import { createPublicKey, type KeyObject } from 'node:crypto';
 import { createReadStream, realpathSync } from 'node:fs';
 import { open } from 'node:fs/promises';
 import { pathToFileURL } from 'node:url';
-import { createVerifiedPostgresPool } from '@commander/postgres-runtime';
+import { createVerifiedPostgresPool } from '@praetor/postgres-runtime';
 import { atomicExport } from './atomicExport.js';
 import { parseShadowManifest, ShadowContractError, type ShadowManifestV1 } from './contracts.js';
 import {

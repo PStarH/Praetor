@@ -2,7 +2,7 @@
  * L3-08a demo reversible write adapter — in-memory ticket store.
  * Implements queryOutcome for UNKNOWN reconcile without re-executing writes.
  */
-import type { EffectOutcomeQuerier, EffectRemoteOutcome } from '@commander/effect-broker';
+import type { EffectOutcomeQuerier, EffectRemoteOutcome } from '@praetor/effect-broker';
 
 export interface TicketRecord {
   ticketId: string;

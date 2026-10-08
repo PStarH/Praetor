@@ -14,8 +14,8 @@ import {
   sealGovernedCompensationAuthorization,
 } from './ops/compensationAuthority.js';
 import { KERNEL_COMPENSATION_TOPIC } from './ops/compensationConsumer.js';
-import { buildTerminalEvidenceRecordFromKernel } from '@commander/effect-broker';
-import { deriveEffectIdempotencyKey } from '@commander/effect-broker';
+import { buildTerminalEvidenceRecordFromKernel } from '@praetor/effect-broker';
+import { deriveEffectIdempotencyKey } from '@praetor/effect-broker';
 
 const adminUrl = process.env.COMMANDER_COMPENSATION_PG_URL;
 

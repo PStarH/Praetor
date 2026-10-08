@@ -22,7 +22,7 @@ import type {
   SequentialEventHandler,
   TokenUsage,
   CommanderRunContextV2,
-} from '@commander/core';
+} from '@praetor/core';
 
 /**
  * Agent executor function type.

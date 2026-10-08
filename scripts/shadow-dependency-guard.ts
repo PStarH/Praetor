@@ -12,8 +12,8 @@ export interface ShadowPackageManifest {
 }
 
 const SHADOW_PRODUCTION_ALLOWLIST = new Set([
-  '@commander/contracts',
-  '@commander/postgres-runtime',
+  '@praetor/contracts',
+  '@praetor/postgres-runtime',
   'json-canonicalize',
   'pg',
 ]);
@@ -85,7 +85,7 @@ export function readShadowDependencyClosure(
 export function validateShadowDependencyClosure(
   manifests: Record<string, ShadowPackageManifest>,
 ): string[] {
-  const root = '@commander/shadow-plane';
+  const root = '@praetor/shadow-plane';
   const issues: string[] = [];
   const visited = new Set<string>();
   const rootKey =

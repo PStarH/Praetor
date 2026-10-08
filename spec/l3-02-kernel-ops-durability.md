@@ -52,7 +52,7 @@
 2. **TimerWakeupWorker**：同上
 3. **KernelOpsRuntime**：四 loop mock 均 healthy → `isReady()` true；任一 stale → false
 4. **KernelOpsRuntime**：缺少 compensation 构造应 type-error（required field）
-5. **现有测试套件**：`pnpm --filter @commander/kernel test` 全绿
+5. **现有测试套件**：`pnpm --filter @praetor/kernel test` 全绿
 
 ## 5. 风险
 

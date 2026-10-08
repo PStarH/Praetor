@@ -3,9 +3,9 @@ import {
   commanderActionMarker,
   compensationIdempotencyKey,
   KUBERNETES_DEPLOYMENT_ROLLBACK_DESCRIPTOR,
-} from '@commander/contracts';
-import { AdapterExecutionError } from '@commander/effect-broker';
-import type { EffectRemoteOutcome } from '@commander/effect-broker';
+} from '@praetor/contracts';
+import { AdapterExecutionError } from '@praetor/effect-broker';
+import type { EffectRemoteOutcome } from '@praetor/effect-broker';
 import { adapterFetch, readJsonResponse, type FetchFn } from '../http.js';
 import type {
   ActionAdapter,

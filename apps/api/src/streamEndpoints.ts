@@ -15,10 +15,10 @@
  *   - Sends `: heartbeat` comments on the wire to keep proxies / load balancers alive
  *   - Cleans up the MessageBus subscription + heartbeat when the client disconnects
  */
-import { reportSilentFailure } from '@commander/core';
+import { reportSilentFailure } from '@praetor/core';
 import { Router, Request, Response } from 'express';
-import { getMessageBus } from '@commander/core';
-import type { MessageBusTopic, BusMessage } from '@commander/core';
+import { getMessageBus } from '@praetor/core';
+import type { MessageBusTopic, BusMessage } from '@praetor/core';
 import { hasRole } from './userStore';
 
 const DEFAULT_TOPICS: MessageBusTopic[] = [

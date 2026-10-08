@@ -3,7 +3,7 @@
  * KernelRepository (commander_capability_replays + revocations).
  */
 
-import type { CapabilityReplayStore, CapabilityRevocationStore } from '@commander/effect-broker';
+import type { CapabilityReplayStore, CapabilityRevocationStore } from '@praetor/effect-broker';
 import type { KernelRepository } from './repository.js';
 
 export type CapabilityReplayRepository = Pick<KernelRepository, 'consumeCapabilityReplay'>;

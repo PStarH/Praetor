@@ -4,13 +4,13 @@ import {
   type CompensationOutboxPort,
   type CompensationTokenProvider,
   type KernelEffect,
-} from '@commander/kernel';
+} from '@praetor/kernel';
 import {
   buildTerminalEvidenceRecordFromKernel,
   type EffectBroker,
   type EvidenceSigner,
-} from '@commander/effect-broker';
-import type { ActionAdapterRegistry } from '@commander/action-adapters';
+} from '@praetor/effect-broker';
+import type { ActionAdapterRegistry } from '@praetor/action-adapters';
 import {
   opsLoopErrorCode,
   opsLoopErrorMessage,
@@ -46,17 +46,17 @@ export interface CompensationDaemonOptions {
       Awaited<
         ReturnType<
           NonNullable<
-            import('@commander/effect-broker').EffectKernelPort['getTerminalEvidenceContext']
+            import('@praetor/effect-broker').EffectKernelPort['getTerminalEvidenceContext']
           >
         >
-      > & { evidence: import('@commander/kernel').KernelEvidenceRecord | null }
+      > & { evidence: import('@praetor/kernel').KernelEvidenceRecord | null }
     >;
   };
   evidenceRepository?: {
     getEvidence(
       runId: string,
       tenantId: string,
-    ): Promise<import('@commander/kernel').KernelEvidenceRecord | null>;
+    ): Promise<import('@praetor/kernel').KernelEvidenceRecord | null>;
     listEffectsForRun(runId: string, tenantId: string): Promise<KernelEffect[]>;
     listEvents(
       runId: string,
@@ -268,7 +268,7 @@ export class CompensationDaemon {
     eventType: string;
     disposition: 'COMPLETED' | 'CONFIRMED_NOT_APPLIED' | 'ESCALATED';
     claimToken: string;
-  }): Promise<import('@commander/kernel').KernelEvidenceRecord> {
+  }): Promise<import('@praetor/kernel').KernelEvidenceRecord> {
     const evidenceRepository = this.options.evidenceRepository;
     if (!evidenceRepository) {
       throw Object.assign(new Error('compensation evidence lifecycle repository is required'), {

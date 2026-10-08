@@ -1,9 +1,9 @@
 import assert from 'node:assert/strict';
 import { generateKeyPairSync } from 'node:crypto';
 import { describe, it } from 'node:test';
-import { EffectBroker, canonicalRequestHash, createEvidenceSigner } from '@commander/effect-broker';
-import { InMemoryKernelRepository } from '@commander/kernel/testing/inMemoryRepository';
-import type { CompensationOutboxPort } from '@commander/kernel';
+import { EffectBroker, canonicalRequestHash, createEvidenceSigner } from '@praetor/effect-broker';
+import { InMemoryKernelRepository } from '@praetor/kernel/testing/inMemoryRepository';
+import type { CompensationOutboxPort } from '@praetor/kernel';
 import { CompensationDaemon } from './compensationDaemon.js';
 import { canonicalCompensationHash } from '../../kernel/src/ops/compensationAuthority.js';
 

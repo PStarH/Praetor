@@ -11,8 +11,8 @@
  */
 
 import type { Request, Response, NextFunction } from 'express';
-import type { SqlPool } from '@commander/kernel';
-import { createVerifiedPostgresPool } from '@commander/postgres-runtime';
+import type { SqlPool } from '@praetor/kernel';
+import { createVerifiedPostgresPool } from '@praetor/postgres-runtime';
 import { createAuthPool, type VerifiedPoolFactory } from './authDb';
 import { resolvePositiveSafeInteger } from './startupConfig';
 

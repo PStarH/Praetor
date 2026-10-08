@@ -21,8 +21,8 @@ import {
   type CreateInteractionRequest,
   type RequestCompensationInput,
   type RequestCompensationResult,
-} from '@commander/kernel';
-import type { EvidenceBundle, EvidenceSignature } from '@commander/effect-broker';
+} from '@praetor/kernel';
+import type { EvidenceBundle, EvidenceSignature } from '@praetor/effect-broker';
 
 export type {
   KillSwitch,
@@ -30,7 +30,7 @@ export type {
   KillSwitchScope,
   PutKillSwitchInput,
   RemoveKillSwitchInput,
-} from '@commander/kernel';
+} from '@praetor/kernel';
 
 export type ActionReconcileRequestResult = RequestReconcileResult;
 
@@ -125,7 +125,7 @@ export interface V1KernelGateway {
   findMatchingKillSwitch(tenantId: string, dims: KillSwitchMatchDims): Promise<KillSwitch | null>;
 }
 
-export type { KernelRun } from '@commander/kernel';
+export type { KernelRun } from '@praetor/kernel';
 
 function sha256(value: string): string {
   return createHash('sha256').update(value).digest('hex');
@@ -381,41 +381,30 @@ let repositoryHandle: KernelRepositoryHandle | null = null;
  * Empty string when neither is set.
  */
 export function getKernelDatabaseUrl(env: NodeJS.ProcessEnv = process.env): string {
-  return (env.COMMANDER_KERNEL_DATABASE_URL ?? env.DATABASE_URL ?? '').trim();
+  return (
+    env.PRAETOR_KERNEL_DATABASE_URL ??
+    env.COMMANDER_KERNEL_DATABASE_URL ??
+    env.DATABASE_URL ??
+    ''
+  ).trim();
 }
 
-/**
- * Whether the shared durable execution kernel should be initialized.
- *
- * Default policy (Architecture V2 strangler — PRINCIPLES §2.3 / §4):
- * - Explicit `COMMANDER_KERNEL_ENABLED=0|false|off|no` → OFF
- *   (non-prod escape hatch for local UI without durable /v1; production refuse rejects this).
- * - Explicit `COMMANDER_KERNEL_ENABLED=1|true|on|yes` → ON.
- * - Otherwise ON when any of:
- *     - NODE_ENV=production (production never boots without durable /v1)
- *     - COMMANDER_V2_MODE=1
- *     - COMMANDER_KERNEL_DATABASE_URL or DATABASE_URL is non-empty
- * - Otherwise OFF (dev without a Postgres DSN keeps /v1 as KERNEL_UNAVAILABLE
- *   rather than crashing boot on a missing database).
- *
- * WarRoomStore remains a non-/v1 mission/log store; it is not the /v1 run authority.
- * Initializes when this returns true. Gateway has no local /v1 fallback;
- * missing shared persistence fails closed at init or as 503.
- */
-export function isCommanderKernelEnabled(env: NodeJS.ProcessEnv = process.env): boolean {
-  const raw = (env.COMMANDER_KERNEL_ENABLED ?? '').trim().toLowerCase();
+export function isPraetorKernelEnabled(env: NodeJS.ProcessEnv = process.env): boolean {
+  const raw = (env.PRAETOR_KERNEL_ENABLED ?? env.COMMANDER_KERNEL_ENABLED ?? '').trim().toLowerCase();
   if (raw === '0' || raw === 'false' || raw === 'off' || raw === 'no') return false;
   if (raw === '1' || raw === 'true' || raw === 'on' || raw === 'yes') return true;
   if (env.NODE_ENV === 'production') return true;
-  if (env.COMMANDER_V2_MODE === '1') return true;
+  if (env.PRAETOR_V2_MODE === '1' || env.COMMANDER_V2_MODE === '1') return true;
   return getKernelDatabaseUrl(env).length > 0;
 }
 
-/** True when COMMANDER_KERNEL_ENABLED is an explicit off value. */
-export function isCommanderKernelExplicitlyDisabled(env: NodeJS.ProcessEnv = process.env): boolean {
-  const raw = (env.COMMANDER_KERNEL_ENABLED ?? '').trim().toLowerCase();
+export function isPraetorKernelExplicitlyDisabled(env: NodeJS.ProcessEnv = process.env): boolean {
+  const raw = (env.PRAETOR_KERNEL_ENABLED ?? env.COMMANDER_KERNEL_ENABLED ?? '').trim().toLowerCase();
   return raw === '0' || raw === 'false' || raw === 'off' || raw === 'no';
 }
+
+export const isCommanderKernelEnabled = isPraetorKernelEnabled;
+export const isCommanderKernelExplicitlyDisabled = isPraetorKernelExplicitlyDisabled;
 
 export async function initializeV1KernelGateway(): Promise<void> {
   if (!isCommanderKernelEnabled()) return;

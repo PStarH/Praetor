@@ -9,7 +9,7 @@
  *
  * @example
  * ```typescript
- * import { CommanderClient, Topology } from '@commander/sdk';
+ * import { CommanderClient, Topology } from '@praetor/sdk';
  *
  * // Auto-detect environment (tier, provider, model)
  * const client = new CommanderClient();
@@ -25,8 +25,8 @@
 
 import { createRequire } from 'node:module';
 
-import { reportSilentFailure } from '@commander/core';
-import type { CommanderOptions } from '@commander/core';
+import { reportSilentFailure } from '@praetor/core';
+import type { CommanderOptions } from '@praetor/core';
 
 /**
  * ESM-safe `require`. This package is `"type": "module"`, so the global
@@ -116,7 +116,7 @@ export class Agent {
 
 export class CommanderClient {
   private config: CommanderClientConfig;
-  private commander: Awaited<ReturnType<typeof import('@commander/core').Commander.create>> | null =
+  private commander: Awaited<ReturnType<typeof import('@praetor/core').Commander.create>> | null =
     null;
   private connected = false;
   private startTime: number = 0;
@@ -146,7 +146,7 @@ export class CommanderClient {
     this.startTime = Date.now();
 
     // Delegate all environment probing + tier selection + wiring to core Commander
-    const { Commander } = await import('@commander/core');
+    const { Commander } = await import('@praetor/core');
     const options: CommanderOptions = {};
 
     if (this.config.provider) options.provider = this.config.provider;
@@ -158,7 +158,7 @@ export class CommanderClient {
     this.commander = await Commander.create(options);
 
     // Wire SSE events
-    const { getMessageBus } = await import('@commander/core');
+    const { getMessageBus } = await import('@praetor/core');
     const bus = getMessageBus();
     bus.subscribe('agent.started', (msg) => {
       this.activeSessions++;
@@ -364,7 +364,7 @@ export class CommanderClient {
 
   async writeMemory(content: string, options: MemoryWriteOptions = {}): Promise<string | null> {
     try {
-      const { getGlobalThreeLayerMemory } = await import('@commander/core');
+      const { getGlobalThreeLayerMemory } = await import('@praetor/core');
       const memory = getGlobalThreeLayerMemory();
       const id = `mem_${Date.now()}_${Math.random().toString(36).slice(2, 8)}`;
       memory.add(
@@ -388,7 +388,7 @@ export class CommanderClient {
   queryMemory(options: MemoryQueryOptions = {}): MemoryItem[] {
     try {
       // Synchronous access to global ThreeLayerMemory (already initialized by core)
-      const { getGlobalThreeLayerMemory } = nodeRequire('@commander/core');
+      const { getGlobalThreeLayerMemory } = nodeRequire('@praetor/core');
       const memory = getGlobalThreeLayerMemory();
       const entries = memory.querySync({
         keywords: options.keywords,
@@ -431,7 +431,7 @@ export class CommanderClient {
    */
   async getMemoryStats(): Promise<MemoryStats> {
     try {
-      const { getGlobalThreeLayerMemory } = await import('@commander/core');
+      const { getGlobalThreeLayerMemory } = await import('@praetor/core');
       const memory = getGlobalThreeLayerMemory();
       const stats = memory.getStats();
       const entries = memory.getAll() as Array<{
@@ -595,3 +595,6 @@ export async function createClient(config?: CommanderClientConfig): Promise<Comm
   await client.connect();
   return client;
 }
+
+export const PraetorClient = CommanderClient;
+

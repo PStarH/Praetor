@@ -702,7 +702,7 @@ class RepositoryKubernetesRollbackKindDriver implements KubernetesRollbackKindDr
     const destination = `k8s://${this.config.cluster}/${this.config.namespace}/deployments/${this.config.deployment}`;
     const envelope = {
       source: 'commander-kind-proof',
-      package: '@commander/action-adapters',
+      package: '@praetor/action-adapters',
       model: 'controlled-change-proof',
       tool: 'kubernetes.deployment.rollback',
       destination,
@@ -1001,7 +1001,7 @@ class RepositoryKubernetesRollbackKindDriver implements KubernetesRollbackKindDr
     const destination = `k8s://${this.config.cluster}/${this.config.namespace}/deployments/${this.config.deployment}`;
     const envelope = {
       source: 'commander-kind-proof',
-      package: '@commander/action-adapters',
+      package: '@praetor/action-adapters',
       model: 'controlled-change-proof-irreducible-unknown',
       tool: 'kubernetes.deployment.rollback',
       destination,

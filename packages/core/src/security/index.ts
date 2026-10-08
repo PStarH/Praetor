@@ -746,14 +746,14 @@ export type {
   RunVerifierOptions,
   RunVerifierAsyncOptions,
   // VerifyResult is intentionally NOT re-exported from the security barrel:
-  // `@commander/core/security` already exports an unrelated `VerifyResult`
+  // `@praetor/core/security` already exports an unrelated `VerifyResult`
   // from `./capabilityToken` (used by AuthManager), and TypeScript forbids
   // duplicate identifiers at the barrel surface. Consumers should reach this
   // module's `VerifyResult` via one of three alternatives:
   //   • Value-inference:  const r = await evaluateSignoffAsync(rows);  // r: VerifyResult
   //   • Direct path:      import type { VerifyResult } from
-  //                        '@commander/core/security/rotationSignoffVerifier'
-  //   • Main-barrel alias: import type { RotationSignoffResult } from '@commander/core'
+  //                        '@praetor/core/security/rotationSignoffVerifier'
+  //   • Main-barrel alias: import type { RotationSignoffResult } from '@praetor/core'
 } from './rotationSignoffVerifier';
 
 // A2AMessageSecurity — A2A 协议消息级安全（OWASP ASI07）：HMAC 签名 + AES-256-GCM

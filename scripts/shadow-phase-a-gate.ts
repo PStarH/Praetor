@@ -161,12 +161,12 @@ async function packageVersion(): Promise<string> {
 function baseCommands(packageDirectory: string, packageFile: string): ShadowPhaseACommand[] {
   const extracted = join(packageDirectory, 'extracted');
   return [
-    { id: 'contracts', file: 'pnpm', args: ['--filter', '@commander/contracts', 'test'] },
-    { id: 'contracts-build', file: 'pnpm', args: ['--filter', '@commander/contracts', 'build'] },
+    { id: 'contracts', file: 'pnpm', args: ['--filter', '@praetor/contracts', 'test'] },
+    { id: 'contracts-build', file: 'pnpm', args: ['--filter', '@praetor/contracts', 'build'] },
     {
       id: 'postgres-runtime-build',
       file: 'pnpm',
-      args: ['--filter', '@commander/postgres-runtime', 'build'],
+      args: ['--filter', '@praetor/postgres-runtime', 'build'],
     },
     {
       id: 'architecture',
@@ -183,12 +183,12 @@ function baseCommands(packageDirectory: string, packageFile: string): ShadowPhas
     {
       id: 'shadow-tests',
       file: 'pnpm',
-      args: ['--filter', '@commander/shadow-plane', 'test'],
+      args: ['--filter', '@praetor/shadow-plane', 'test'],
     },
     {
       id: 'shadow-typecheck',
       file: 'pnpm',
-      args: ['--filter', '@commander/shadow-plane', 'typecheck'],
+      args: ['--filter', '@praetor/shadow-plane', 'typecheck'],
     },
     {
       id: 'shadow-clean',
@@ -200,7 +200,7 @@ function baseCommands(packageDirectory: string, packageFile: string): ShadowPhas
       ],
       cwd: resolve(process.cwd(), 'packages/shadow-plane'),
     },
-    { id: 'shadow-build', file: 'pnpm', args: ['--filter', '@commander/shadow-plane', 'build'] },
+    { id: 'shadow-build', file: 'pnpm', args: ['--filter', '@praetor/shadow-plane', 'build'] },
     {
       id: 'shadow-package',
       file: 'pnpm',
@@ -213,7 +213,7 @@ function baseCommands(packageDirectory: string, packageFile: string): ShadowPhas
       file: 'sh',
       args: [
         '-ec',
-        `pnpm --filter @commander/shadow-plane deploy --prod "$2/deployed" && mkdir -p "$2/package" && mv "$2/deployed/node_modules" "$2/package/node_modules" && tar -xzf "$1" -C "$2" && cd "$2/package" && node --input-type=module --eval 'import { readFile } from "node:fs/promises"; const manifest = JSON.parse(await readFile("package.json", "utf8")); const dependencies = manifest.dependencies; if (!dependencies || typeof dependencies !== "object" || Array.isArray(dependencies) || Object.entries(dependencies).some(([name, version]) => !name || typeof version !== "string" || !version.trim())) process.exit(1);' && node --input-type=module --eval 'import { readFile } from "node:fs/promises"; const manifest = JSON.parse(await readFile("package.json", "utf8")); for (const dependency of Object.keys(manifest.dependencies)) await import(dependency); await import("./dist/index.js");'`,
+        `pnpm --filter @praetor/shadow-plane deploy --prod "$2/deployed" && mkdir -p "$2/package" && mv "$2/deployed/node_modules" "$2/package/node_modules" && tar -xzf "$1" -C "$2" && cd "$2/package" && node --input-type=module --eval 'import { readFile } from "node:fs/promises"; const manifest = JSON.parse(await readFile("package.json", "utf8")); const dependencies = manifest.dependencies; if (!dependencies || typeof dependencies !== "object" || Array.isArray(dependencies) || Object.entries(dependencies).some(([name, version]) => !name || typeof version !== "string" || !version.trim())) process.exit(1);' && node --input-type=module --eval 'import { readFile } from "node:fs/promises"; const manifest = JSON.parse(await readFile("package.json", "utf8")); for (const dependency of Object.keys(manifest.dependencies)) await import(dependency); await import("./dist/index.js");'`,
         'shadow-phase-a-gate',
         packageFile,
         extracted,
@@ -281,7 +281,7 @@ export async function runShadowPhaseAGate(
     const databaseResult = await run({
       id: 'postgres-live',
       file: 'pnpm',
-      args: ['--filter', '@commander/shadow-plane', 'test:postgres-live'],
+      args: ['--filter', '@praetor/shadow-plane', 'test:postgres-live'],
     });
     if (databaseResult.exitCode !== 0) {
       return {

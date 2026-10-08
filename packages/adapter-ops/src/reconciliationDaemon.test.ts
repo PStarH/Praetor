@@ -9,7 +9,7 @@ import {
   verifyEvidenceSignature,
   type EvidenceBundle,
   type EvidenceSignature,
-} from '@commander/effect-broker';
+} from '@praetor/effect-broker';
 import {
   ReconciliationDaemon,
   reconcileQueryThrownError,

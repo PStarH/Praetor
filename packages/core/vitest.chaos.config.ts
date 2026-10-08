@@ -9,7 +9,7 @@ import { defineConfig } from 'vitest/config';
  * arguments only *filter* the configured `include`, `vitest run tests/chaos`
  * finds nothing; widening `include` here is the supported way to run them.
  *
- *   pnpm --filter @commander/core test:chaos:layers
+ *   pnpm --filter @praetor/core test:chaos:layers
  */
 export default defineConfig({
   test: {

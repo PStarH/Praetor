@@ -51,7 +51,7 @@ export default defineConfig({
       'tests/cli/nodeSupport.test.ts',
       'tests/planner/workGraphPlanner.test.ts',
       // Tenant Bridge/Silo deployment scripts. Tracked and green, but absent
-      // from this explicit list — so the `pnpm --filter @commander/core test
+      // from this explicit list — so the `pnpm --filter @praetor/core test
       // tests/deployment/tenantDeployment.test.ts` command documented in
       // deploy/README.md failed with "No test files found".
       'tests/deployment/tenantDeployment.test.ts',

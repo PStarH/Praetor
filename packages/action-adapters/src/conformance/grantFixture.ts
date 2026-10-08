@@ -1,4 +1,4 @@
-import type { CapabilityTokenIssuer } from '@commander/effect-broker';
+import type { CapabilityTokenIssuer } from '@praetor/effect-broker';
 
 type ConformanceIssueInput = Parameters<CapabilityTokenIssuer['issue']>[0];
 

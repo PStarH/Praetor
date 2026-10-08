@@ -3,7 +3,7 @@
  * Contract snapshot baseline check.
  *
  * Snapshots the current public contract surface area (resources, run/step
- * states, error codes, schema names) from @commander/contracts and compares
+ * states, error codes, schema names) from @praetor/contracts and compares
  * it against a committed baseline.
  *
  * Modes:

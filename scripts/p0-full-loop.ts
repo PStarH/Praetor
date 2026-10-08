@@ -25,8 +25,8 @@ import {
   runTask1ClosureMigrations,
   seedTenantAuthorityAllowedTenants,
   seedWorkerAllowedTenants,
-} from '@commander/kernel';
-import { createVerifiedPostgresPool } from '@commander/postgres-runtime';
+} from '@praetor/kernel';
+import { createVerifiedPostgresPool } from '@praetor/postgres-runtime';
 import { hashSecret } from '../packages/core/src/runtime/apiCredentialHash';
 import { buildP0RuntimeDatabaseUrls } from './p0-runtime-config.js';
 

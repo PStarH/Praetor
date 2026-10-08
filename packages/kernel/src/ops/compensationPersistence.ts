@@ -1,4 +1,4 @@
-import { deriveEffectIdempotencyKey } from '@commander/effect-broker';
+import { deriveEffectIdempotencyKey } from '@praetor/effect-broker';
 import {
   canonicalCompensationHash,
   sealGovernedCompensationAuthorization,

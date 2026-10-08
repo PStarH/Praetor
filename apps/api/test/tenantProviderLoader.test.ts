@@ -8,7 +8,7 @@ import {
   resetGlobalTenantProvider,
   SimpleTenantProvider,
   NullTenantProvider,
-} from '@commander/core/runtime';
+} from '@praetor/core/runtime';
 import { loadTenantProvider, getConfiguredTenantIds } from '../src/tenantProviderLoader';
 
 let originalTenantConfigPath: string | undefined;

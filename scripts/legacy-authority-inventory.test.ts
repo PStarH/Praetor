@@ -136,7 +136,7 @@ fetch(\`\${API_BASE}/missions/\${missionId}\`, { method: 'PATCH' });
 
   it('tracks constructor aliases, computed properties, and composed route paths', () => {
     const source = `
-import { AgentRuntime as Runtime } from '@commander/core';
+import { AgentRuntime as Runtime } from '@praetor/core';
 const base = '/v1';
 const suffix = '/runs';
 new Runtime();
@@ -283,7 +283,7 @@ await pool.query('SELECT * FROM commander_runs');
       path,
       sourceSha256: sha256(source),
       callersSha256: callersSha256({}),
-      owner: '@commander/api',
+      owner: '@praetor/api',
       reason: 'Known mission authority pending deletion',
       expiresAt: '2026-10-31',
       canonicalReplacement: 'POST /v1/runs',
@@ -340,7 +340,7 @@ await pool.query('SELECT * FROM commander_runs');
       path,
       sourceSha256: sha256(source),
       callersSha256: callersSha256({}),
-      owner: '@commander/api',
+      owner: '@praetor/api',
       reason: 'Known legacy boundary pending authority migration',
       expiresAt: '2026-10-31',
       canonicalReplacement: 'POST /v1/runs',
@@ -379,7 +379,7 @@ await pool.query('SELECT * FROM commander_runs');
       path: authorityPath,
       sourceSha256: sha256(authority),
       callersSha256: callersSha256({ [callerPath]: caller }),
-      owner: '@commander/api',
+      owner: '@praetor/api',
       reason: 'Known mission authority pending deletion',
       expiresAt: '2026-10-31',
       canonicalReplacement: 'POST /v1/runs',
@@ -602,7 +602,7 @@ await pool.query('SELECT * FROM commander_runs');
       path,
       sourceSha256: sha256(source),
       callersSha256: callersSha256({}),
-      owner: '@commander/api',
+      owner: '@praetor/api',
       reason: 'Pending canonical gateway migration',
       expiresAt: '2026-10-31',
       canonicalReplacement: 'POST /v1/runs',

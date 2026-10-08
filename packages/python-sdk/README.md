@@ -1,10 +1,10 @@
-# Commander Python SDK
+# Praetor Python SDK
 
-[![PyPI](https://img.shields.io/pypi/v/commander-ai)](https://pypi.org/project/commander-ai/)
-[![Python](https://img.shields.io/pypi/pyversions/commander-ai)](https://pypi.org/project/commander-ai/)
-[![License](https://img.shields.io/pypi/l/commander-ai)](LICENSE)
+[![PyPI](https://img.shields.io/pypi/v/praetor-ai)](https://pypi.org/project/praetor-ai/)
+[![Python](https://img.shields.io/pypi/pyversions/praetor-ai)](https://pypi.org/project/praetor-ai/)
+[![License](https://img.shields.io/pypi/l/praetor-ai)](LICENSE)
 
-Python SDK for [Commander](https://github.com/PStarH/Commander) - multi-agent orchestration via HTTP.
+Python SDK for [Praetor](https://github.com/PStarH/Praetor) - multi-agent orchestration via HTTP.
 
 > **Alpha / non-production-ready:** the SDK and Enterprise Gateway are alpha. Provider calls,
 > prompts, responses, traces, and memory may be persisted or sent to the configured provider.
@@ -12,18 +12,18 @@ Python SDK for [Commander](https://github.com/PStarH/Commander) - multi-agent or
 > use unattended production workloads without your own validation.
 
 ```bash
-pip install commander-ai
+pip install praetor-ai
 ```
 
 ## Quick Start
 
 ```python
 import asyncio
-from commander import CommanderClient
+from praetor import PraetorClient
 
 async def main():
-    async with CommanderClient(
-        api_key="cmd-...",
+    async with PraetorClient(
+        api_key="praetor-...",
         base_url="http://localhost:4000",
     ) as client:
         # Zero-cost planning

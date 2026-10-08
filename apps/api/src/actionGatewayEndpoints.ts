@@ -3,7 +3,7 @@ import {
   evaluateActionGatewayPolicy,
   isClassAEffectType,
   type ActionStateV1,
-} from '@commander/contracts';
+} from '@praetor/contracts';
 import { z } from 'zod';
 import {
   assertTerminalEvidence,
@@ -11,7 +11,7 @@ import {
   verifyEvidenceBundle,
   verifyEvidenceSignature,
   type EvidenceJwks,
-} from '@commander/effect-broker';
+} from '@praetor/effect-broker';
 import {
   GatewayIdempotencyConflictError,
   GatewayStepIdConflictError,

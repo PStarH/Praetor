@@ -1,5 +1,5 @@
 {
-  "name": "@commander/kernel",
+  "name": "@praetor/kernel",
   "version": "0.2.0",
   "description": "Commander execution kernel — shared durable runs, leases, idempotency, outbox, and recovery (Architecture V2)",
   "type": "module",
@@ -27,11 +27,11 @@
     "LICENSE"
   ],
   "scripts": {
-    "prebuild": "pnpm --filter @commander/postgres-runtime build && pnpm --filter @commander/effect-broker build",
+    "prebuild": "pnpm --filter @praetor/postgres-runtime build && pnpm --filter @praetor/effect-broker build",
     "build": "tsc -p tsconfig.json && node .././../scripts/fix-esm-imports.mjs dist",
     "typecheck": "tsc --noEmit",
     "typecheck:test": "tsc -p tsconfig.test.json",
-    "pretest": "pnpm --filter @commander/postgres-runtime build && pnpm --filter @commander/effect-broker build",
+    "pretest": "pnpm --filter @praetor/postgres-runtime build && pnpm --filter @praetor/effect-broker build",
     "test": "node --import tsx --test src/kernel.test.ts src/productionSignal.test.ts src/sqlSafety.test.ts src/transitionValidation.test.ts src/tenantPause.test.ts src/ws2-acceptance.test.ts src/contracts.test.ts src/kernel-m2.test.ts src/killSwitch.test.ts src/repositoryFactory.test.ts src/sqliteSchema.test.ts src/claimAuthzParity.test.ts src/capabilityAuthority.test.ts src/seedWorkerClaimSecret.test.ts src/postgres.outbox-worker-mode.test.ts src/postgresRoleSetup.test.ts src/task1Authority.test.ts src/authorityClassifierManifest.test.ts src/canonicalBootstrap.test.ts src/task1Catalog.test.ts src/task1DatabasePeer.test.ts src/task1PostgresInitMaterialize.test.ts src/migrate.test.ts src/task1LifecycleInitialize.test.ts src/task1LifecycleOwnerCommand.test.ts src/task1RolloutProof.test.ts src/task1RolloutProofPostgres.test.ts src/task1ReadinessChallengeClient.test.ts src/task1KubernetesProofObserver.test.ts src/tenantCutoverStateMachine.test.ts src/task1LifecycleLedger.test.ts src/task1TenantContext.test.ts src/tenantContextRepository.test.ts src/testing/repositoryContract.ts src/ops/compensationConsumer.test.ts src/ops/compensationConsumerDaemon.test.ts src/ops/compensationReclaimConsume.test.ts src/ops/healthServer.test.ts src/ops/opsRuntime.test.ts src/ops/reclaimDaemon.test.ts src/ops/timerWakeupWorker.test.ts src/ops/outbox/kernelOutboxPublisher.test.ts src/ops/outbox/outboxDelivery.test.ts src/ops/outbox/compensationPublisherRace.integration.test.ts src/sqliteRowGuards.test.ts src/authPersistenceSchema.test.ts src/campaign2CriticalHardening.test.ts src/capabilityPersistence.test.ts src/compensationPersistence.test.ts src/disasterRecovery.test.ts src/drillWorkload.test.ts src/evidenceRepository.test.ts src/ops/compensationAuthority.test.ts src/sqliteReconciliation.test.ts src/v2-distributed-fault.test.ts",
     "test:task1:postgres": "node -e \"if (!process.env.COMMANDER_TASK1_PG_URL) { console.error('COMMANDER_TASK1_PG_URL is required'); process.exit(1) }\" && node --import tsx --test --test-concurrency=1 src/task1.migration-live.test.ts src/task1.postgres-live.test.ts src/task1LifecycleInitialize.postgres.test.ts",
     "test:task1:tenant-context:postgres": "node -e \"if (!process.env.COMMANDER_TASK1_APP_DATABASE_URL || !process.env.COMMANDER_TASK1_AUTHORITY_DATABASE_URL || !(process.env.COMMANDER_TASK1_OWNER_DATABASE_URL || process.env.COMMANDER_OWNER_DATABASE_URL)) { console.error('COMMANDER_TASK1_APP_DATABASE_URL, COMMANDER_TASK1_AUTHORITY_DATABASE_URL and COMMANDER_TASK1_OWNER_DATABASE_URL (or COMMANDER_OWNER_DATABASE_URL) are required'); process.exit(1) }\" && node --import tsx --test src/task1TenantContext.postgres.integration.test.ts",
@@ -67,9 +67,9 @@
     "access": "public"
   },
   "dependencies": {
-    "@commander/contracts": "workspace:*",
-    "@commander/effect-broker": "workspace:*",
-    "@commander/postgres-runtime": "workspace:*",
+    "@praetor/contracts": "workspace:*",
+    "@praetor/effect-broker": "workspace:*",
+    "@praetor/postgres-runtime": "workspace:*",
     "better-sqlite3": "^12.11.1",
     "pg": "^8.15.0"
   },

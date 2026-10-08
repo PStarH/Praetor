@@ -1,7 +1,7 @@
 /**
  * Gap Discovery & SLA Enforcement — single createGapPlugin factory.
  * Tools: gap_record / gap_list / gap_close / gap_audit.
- * Library APIs remain importable from sibling modules and @commander/core.
+ * Library APIs remain importable from sibling modules and @praetor/core.
  */
 import type { CommanderPlugin } from '../../../pluginTypes';
 import { getGlobalLogger } from '../../../logging';

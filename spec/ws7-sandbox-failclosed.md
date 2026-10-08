@@ -141,7 +141,7 @@ tenant B / run 3 / step 1 ──> commander-sbx-<opaque-workload-id>
 - Core sandbox focused suite：`83 passed, 1 skipped`；boot-refuse 包含无 Docker、旁路、探针失败、full-access、SSH、arbitrary Docker exec 和 local bypass 拒绝，容器安全参数测试确认非 root UID/GID。
 - Worker suite：`6 passed`；沙箱 readiness 失败发生在 registry 初始化/注册之前，已 claim step 的沙箱初始化失败映射为 `SANDBOX_UNAVAILABLE` 并走 `failStep`。
 - Effect Broker regression：`5 passed`。
-- `pnpm --filter @commander/core build:production`：静态 policy gate、TypeScript 编译和 ESM 产物处理均通过。
-- `pnpm --filter @commander/worker-plane build`、Prettier check、`git diff --check` 均通过。
+- `pnpm --filter @praetor/core build:production`：静态 policy gate、TypeScript 编译和 ESM 产物处理均通过。
+- `pnpm --filter @praetor/worker-plane build`、Prettier check、`git diff --check` 均通过。
 - CI 已加入 core production static/boot-refuse 与 Worker production boot-refuse job steps。
 - 本地 Docker daemon 和 `runsc` 不可用；因此真实 Docker/gVisor workload 执行仍需在具备运行时的 WS5/CI 节点执行，不能由本地测试结果替代。

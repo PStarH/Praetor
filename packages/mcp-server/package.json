@@ -1,5 +1,5 @@
 {
-  "name": "@commander/mcp-server",
+  "name": "@praetor/mcp-server",
   "version": "0.2.0",
   "description": "Publishable MCP server for Commander — exposes Commander tools via stdin/stdout JSON-RPC.",
   "type": "module",
@@ -20,6 +20,7 @@
     "node": ">=20.0.0"
   },
   "bin": {
+    "praetor-mcp-server": "./dist/cli.js",
     "commander-mcp-server": "./dist/cli.js"
   },
   "main": "dist/index.js",
@@ -45,7 +46,7 @@
     "prepublishOnly": "pnpm run build"
   },
   "dependencies": {
-    "@commander/core": "workspace:*"
+    "@praetor/core": "workspace:*"
   },
   "devDependencies": {
     "@types/node": "^26.1.1",

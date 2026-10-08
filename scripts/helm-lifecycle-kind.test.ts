@@ -2746,7 +2746,7 @@ describe('helm-lifecycle-kind helpers', () => {
     const kindJob = workflow.match(/  kind:\n[\s\S]*?(?=\n  [a-z]|$)/)?.[0];
 
     assert.ok(kindJob, 'the Kind lifecycle job must exist');
-    const build = kindJob.indexOf('pnpm --filter @commander/postgres-runtime build');
+    const build = kindJob.indexOf('pnpm --filter @praetor/postgres-runtime build');
     const harness = kindJob.indexOf('pnpm exec tsx scripts/helm-lifecycle-kind.ts run');
     assert.ok(build >= 0, 'the Kind lifecycle job must build workspace runtime dependencies');
     assert.ok(build < harness, 'workspace runtime dependencies must build before the harness');

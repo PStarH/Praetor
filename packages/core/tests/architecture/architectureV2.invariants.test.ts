@@ -88,12 +88,12 @@ describe('Architecture V2 invariants', () => {
     assert.equal(existsSync(join(ROOT, 'packages/orchestration')), false);
   });
 
-  it('InMemoryKernelRepository is not re-exported from @commander/kernel main barrel', () => {
+  it('InMemoryKernelRepository is not re-exported from @praetor/kernel main barrel', () => {
     const barrel = read('packages/kernel/src/index.ts');
     assert.doesNotMatch(
       barrel,
       /export\s*\{[^}]*InMemoryKernelRepository/,
-      'InMemory must stay on @commander/kernel/testing/inMemoryRepository only',
+      'InMemory must stay on @praetor/kernel/testing/inMemoryRepository only',
     );
     const pkg = JSON.parse(read('packages/kernel/package.json')) as {
       exports?: Record<string, unknown>;

@@ -4,7 +4,7 @@ import {
   CapabilityTokenIssuer,
   CapabilityTokenVerifier,
   canonicalRequestHash,
-} from '@commander/effect-broker';
+} from '@praetor/effect-broker';
 import { buildConformanceIssueInput, conformanceGrantIssueFields } from './grantFixture.js';
 
 describe('conformance grant fixture', () => {

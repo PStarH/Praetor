@@ -9,8 +9,8 @@ import {
   getWebhookDispatcher,
   resetMessageBus,
   resetWebhookDispatcher,
-} from '@commander/core';
-import { runWithTenant } from '@commander/core/runtime/tenantContext';
+} from '@praetor/core';
+import { runWithTenant } from '@praetor/core/runtime/tenantContext';
 import { createOutgoingWebhookRouter } from '../src/outgoingWebhookEndpoints';
 
 function listen(app: express.Express): Promise<{ port: number; close: () => Promise<void> }> {

@@ -12,15 +12,15 @@ import {
   handleObservabilityRequest,
   type ObservabilityDeps,
   OBSERVABILITY_HTTP_ROUTES,
-} from '@commander/core/observability';
-import { getTraceRecorder, PersistentTraceStore } from '@commander/core/runtime';
-import { resolveConfiguredTraceBase } from '@commander/core/runtime/traceStore';
+} from '@praetor/core/observability';
+import { getTraceRecorder, PersistentTraceStore } from '@praetor/core/runtime';
+import { resolveConfiguredTraceBase } from '@praetor/core/runtime/traceStore';
 
 /**
  * Resolve the trace base directory for this process.
  *
  * Delegates to the single owner of the trace-directory rule in
- * `@commander/core/runtime/traceStore` so the observability reader can never
+ * `@praetor/core/runtime/traceStore` so the observability reader can never
  * disagree with the trace writer (or with the lineage/hallucination/cost
  * readers) about where traces live.
  */

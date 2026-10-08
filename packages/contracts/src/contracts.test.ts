@@ -24,7 +24,7 @@ import {
   validateStepTransition,
 } from './index.js';
 
-describe('@commander/contracts state machine', () => {
+describe('@praetor/contracts state machine', () => {
   it('has stable canonical run states', () => {
     assert.deepStrictEqual(RUN_STATES, [
       'PENDING',
@@ -112,7 +112,7 @@ describe('@commander/contracts state machine', () => {
   });
 });
 
-describe('@commander/contracts resources', () => {
+describe('@praetor/contracts resources', () => {
   it('exports all 15 canonical resources', () => {
     const resources = [
       'OrganizationV2',
@@ -152,7 +152,7 @@ describe('@commander/contracts resources', () => {
   });
 });
 
-describe('@commander/contracts event envelope', () => {
+describe('@praetor/contracts event envelope', () => {
   it('uses tenantId (not tenant) per ADR 007', () => {
     // Verify the field is named tenantId by checking the schema.
     const eventSchema = CONTRACT_SCHEMAS.kernelEvent;
@@ -162,7 +162,7 @@ describe('@commander/contracts event envelope', () => {
   });
 });
 
-describe('@commander/contracts JSON schemas', () => {
+describe('@praetor/contracts JSON schemas', () => {
   it('has schemas for all resources + event + error', () => {
     const expected = [
       'organization',
@@ -272,7 +272,7 @@ describe('@commander/contracts JSON schemas', () => {
   });
 });
 
-describe('@commander/contracts OpenAPI V1 spec', () => {
+describe('@praetor/contracts OpenAPI V1 spec', () => {
   it('has correct metadata', () => {
     assert.equal(OPENAPI_V1_SPEC.openapi, '3.1.0');
     assert.equal(OPENAPI_V1_SPEC.info.title, 'Commander V1 Resource API');
@@ -330,7 +330,7 @@ describe('@commander/contracts OpenAPI V1 spec', () => {
   });
 });
 
-describe('@commander/contracts compatibility', () => {
+describe('@praetor/contracts compatibility', () => {
   it('contract version matches', () => {
     assert.equal(CONTRACT_VERSION, CONTRACTS_VERSION);
     assert.equal(CONTRACT_VERSION, 'v2');
@@ -404,7 +404,7 @@ describe('@commander/contracts compatibility', () => {
   });
 });
 
-describe('@commander/contracts action rejection request', () => {
+describe('@praetor/contracts action rejection request', () => {
   it('requires an accountability reason', () => {
     // A rejection is an operator decision recorded for audit. `required: []`
     // made an empty object a valid rejection, so the contract proved nothing

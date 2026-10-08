@@ -38,7 +38,7 @@ import {
   type BusMessage,
   type BusPayloadMap,
   type MessageBusTopic,
-} from '@commander/core/runtime';
+} from '@praetor/core/runtime';
 import { isProductionEnv, describeProdSignal } from './envSignal';
 
 const CORRELATION_TOPICS = [

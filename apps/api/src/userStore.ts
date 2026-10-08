@@ -1,8 +1,8 @@
 import { randomUUID } from 'node:crypto';
 import { hashSync } from 'bcryptjs';
 import { resolveBootstrapAdminPassword } from './startupConfig';
-import type { SqlPool } from '@commander/kernel';
-import { createVerifiedPostgresPool } from '@commander/postgres-runtime';
+import type { SqlPool } from '@praetor/kernel';
+import { createVerifiedPostgresPool } from '@praetor/postgres-runtime';
 import {
   createAuthPool,
   withClient,

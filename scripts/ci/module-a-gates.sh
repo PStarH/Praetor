@@ -29,14 +29,14 @@ run_gate() {
 run_gate module-a-ci-config \
   pnpm --workspace-root exec node --import tsx --test scripts/module-a-ci.test.ts
 run_gate build-prerequisites bash -c '
-  pnpm --filter @commander/contracts build &&
-  pnpm --filter @commander/plugin-sdk build &&
-  pnpm --filter @commander/effect-broker build &&
-  pnpm --filter @commander/kernel build &&
-  pnpm --filter @commander/action-adapters build &&
-  pnpm --filter @commander/core build &&
-  pnpm --filter @commander/worker-plane build &&
-  pnpm --filter @commander/api build
+  pnpm --filter @praetor/contracts build &&
+  pnpm --filter @praetor/plugin-sdk build &&
+  pnpm --filter @praetor/effect-broker build &&
+  pnpm --filter @praetor/kernel build &&
+  pnpm --filter @praetor/action-adapters build &&
+  pnpm --filter @praetor/core build &&
+  pnpm --filter @praetor/worker-plane build &&
+  pnpm --filter @praetor/api build
 '
 run_gate focused \
   pnpm --workspace-root exec node --import tsx --test \
@@ -70,9 +70,9 @@ run_gate evidence-signer-persistence \
   pnpm --workspace-root exec node --import tsx --test \
   packages/effect-broker/src/evidenceSigner.test.ts \
   packages/effect-broker/src/evidenceSink.test.ts
-run_gate worker-typecheck pnpm --filter @commander/worker-plane typecheck
-run_gate effect-broker-typecheck pnpm --filter @commander/effect-broker typecheck
-run_gate api-typecheck pnpm --filter @commander/api typecheck
+run_gate worker-typecheck pnpm --filter @praetor/worker-plane typecheck
+run_gate effect-broker-typecheck pnpm --filter @praetor/effect-broker typecheck
+run_gate api-typecheck pnpm --filter @praetor/api typecheck
 run_gate arch-guard pnpm arch:guard
 run_gate arch-gate pnpm --workspace-root exec node --import tsx scripts/architecture-gate.ts
 run_gate deploy-portability pnpm test:deploy-portability

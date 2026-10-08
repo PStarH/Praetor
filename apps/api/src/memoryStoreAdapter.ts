@@ -5,11 +5,11 @@ import {
   type ProjectMemoryItem,
   type ProjectMemoryOverview,
   type ProjectMemorySearchOptions,
-} from '@commander/core';
+} from '@praetor/core';
 
 /**
  * Adapter that exposes project-level memory operations on top of the canonical
- * MemoryStore interface from @commander/core.
+ * MemoryStore interface from @praetor/core.
  *
  * This is the convergence layer recommended by the memory mechanism research:
  * API-layer semantics (list/overview/search/append) are implemented as a thin

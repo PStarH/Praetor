@@ -4,7 +4,7 @@ import {
   canonicalRequestHash,
   type AuditSink,
   type CapabilityTokenPort,
-} from '@commander/effect-broker';
+} from '@praetor/effect-broker';
 
 export const FAULT_CONTROL_EFFECT_TYPE = 'fault-control.campaign';
 export const DEFAULT_FAULT_CONTROL_TIMEOUT_MS = 30_000;

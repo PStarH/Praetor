@@ -1,9 +1,9 @@
-# @commander/sdk
+# @praetor/sdk
 
 TypeScript SDK for Commander. It ships **two** clients with different
 requirements — pick the one that matches how you run Commander.
 
-| Client | Transport | Needs `@commander/core` | Use it for |
+| Client | Transport | Needs `@praetor/core` | Use it for |
 | --- | --- | --- | --- |
 | `CommanderGatewayClient` | HTTP to the Gateway `/v1` API | No | The current server path. Recommended for integrations. |
 | `CommanderClient` | In-process (dynamic import) | Yes (peer dependency) | Embedding the orchestration runtime in your own Node process. Alpha. |
@@ -11,7 +11,7 @@ requirements — pick the one that matches how you run Commander.
 Both are exported from the package root:
 
 ```typescript
-import { CommanderGatewayClient, CommanderClient } from '@commander/sdk';
+import { CommanderGatewayClient, CommanderClient } from '@praetor/sdk';
 ```
 
 > Alpha: use this package for evaluated integrations only. It is not a claim
@@ -26,13 +26,13 @@ import { CommanderGatewayClient, CommanderClient } from '@commander/sdk';
 ## Install
 
 ```bash
-npm install @commander/sdk
+npm install @praetor/sdk
 ```
 
 ## Gateway client
 
 ```typescript
-import { CommanderGatewayClient } from '@commander/sdk';
+import { CommanderGatewayClient } from '@praetor/sdk';
 
 const client = new CommanderGatewayClient({
   baseUrl: process.env.COMMANDER_API_URL!,
@@ -56,12 +56,12 @@ action as complete.
 ## In-process client
 
 `CommanderClient` embeds the runtime in your process. It dynamically imports
-`@commander/core`, so `@commander/core` must be installed alongside this
+`@praetor/core`, so `@praetor/core` must be installed alongside this
 package. It is **alpha** and is **not** a read-only path: it may initialize
 local state under `.commander_state/` and invoke configured tools.
 
 ```typescript
-import { CommanderClient } from '@commander/sdk';
+import { CommanderClient } from '@praetor/sdk';
 
 const client = new CommanderClient({
   provider: 'openai',

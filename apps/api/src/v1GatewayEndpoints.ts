@@ -7,8 +7,8 @@ import {
   type KernelRun,
   type V1KernelGateway,
 } from './v1GatewayKernel';
-import { isTerminalRunState } from '@commander/contracts';
-import { getGlobalGdprComplianceManager } from '@commander/core/security/gdprCompliance';
+import { isTerminalRunState } from '@praetor/contracts';
+import { getGlobalGdprComplianceManager } from '@praetor/core/security/gdprCompliance';
 import { createActionGatewayRouter } from './actionGatewayEndpoints';
 import { mountNestedRouter } from './routerRegistry';
 

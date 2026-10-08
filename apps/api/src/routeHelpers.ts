@@ -5,7 +5,7 @@ import type {
   MissionGovernanceMode,
   ProjectMemoryKind,
   LogLevel,
-} from '@commander/core';
+} from '@praetor/core';
 
 export function isMissionStatus(value: string): value is MissionStatus {
   return ['PLANNED', 'RUNNING', 'BLOCKED', 'DONE'].includes(value);

@@ -1,7 +1,7 @@
 [project]
-name = "commander-ai"
+name = "praetor-ai"
 version = "0.2.0"
-description = "Commander Agent SDK — multi-agent orchestration via HTTP"
+description = "Praetor Agent SDK — multi-agent orchestration via HTTP"
 readme = "README.md"
 license = { text = "MIT" }
 requires-python = ">=3.10"
@@ -10,7 +10,7 @@ authors = [
 ]
 keywords = [
     "ai", "agent", "llm", "multi-agent", "orchestration",
-    "commander", "workflow",
+    "praetor", "commander", "workflow",
 ]
 classifiers = [
     "Development Status :: 3 - Alpha",
