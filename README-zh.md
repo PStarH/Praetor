@@ -12,7 +12,7 @@
   <em>杜绝重复外部变更 · 网络丢包与超时安全恢复 · 密码学签名存证链</em>
 </p>
 
-> **状态：Alpha。** Commander 是一个开源分布式控制面与评估框架。通过三层控制解耦，将不受信的智能体推理与生产写凭据物理隔离，提供 Preflight 执行前排重、双阶段密码学门禁与 PostgreSQL WAL 故障自愈。详见 [GitHub 试点边界](docs/pilot/github/README.md) 与 [ENTERPRISE_READINESS.md](ENTERPRISE_READINESS.md)。
+> **状态：Alpha。** Praetor 是一个开源分布式控制面与评估框架。通过三层控制解耦，将不受信的智能体推理与生产写凭据物理隔离，提供 Preflight 执行前排重、双阶段密码学门禁与 PostgreSQL WAL 故障自愈。详见 [GitHub 试点边界](docs/pilot/github/README.md) 与 [ENTERPRISE_READINESS.md](ENTERPRISE_READINESS.md)。
 
 <p align="center">
   <a href="#快速上手"><img src="https://img.shields.io/badge/⚡_立即体验-000?style=for-the-badge" /></a>
@@ -25,7 +25,7 @@
 ## AI 智能体面临的分布式系统挑战
 
 <p align="center">
-  <img src="docs/assets/commander-overview-zh.png" alt="Commander 核心架构与安全治理全景" width="100%">
+  <img src="docs/assets/commander-overview-zh.png" alt="Praetor 核心架构与安全治理全景" width="100%">
 </p>
 
 <details>
@@ -65,14 +65,14 @@
 
 盲目重试会导致重复 PR、重复交易或状态污染；直接放弃又会留下孤立的外部副作用。
 
-| 核心挑战 | 传统智能体朴素执行 | Praetor 受治理执行 |
-| --- | --- | --- |
-| **响应丢失**（如创建 PR 时遭遇 504 超时） | 重新规划或盲目重试 → **产生重复 PR 与脏变更** | **重试前预检（Query-Before-Retry）**：基于操作身份查询远端结果，避免重复执行 |
-| **节点中途崩溃** | 状态丢失或归零重跑，产生不可控的悬空变更 | **持久化 PostgreSQL Kernel**：租约安全回收，新 Worker 无缝接管与恢复 |
-| **凭据暴露风险** | 智能体进程直接持有写权限 API Token / GitHub 密钥 | **严格职责边界**：智能体仅具备提议（Propose）权限，写凭据严格隔离在 Worker 平面 |
-| **人类审批确认** | 纯文本确认或无约束的确认按钮 | **密码学参数绑定**：审批不可变锁定请求摘要与策略快照 |
-| **审计与存证归因** | 终端易失日志 | **Ed25519 签名存证**：JWS 签名收据，支持第三方独立验证 |
-| **回滚与撤销** | 临时补丁脚本或无法安全回滚 | **受治理的补偿机制**：要求独立的人类授权绑定与专属收据 |
+| 核心挑战                                  | 传统智能体朴素执行                               | Praetor 受治理执行                                                              |
+| ----------------------------------------- | ------------------------------------------------ | ------------------------------------------------------------------------------- |
+| **响应丢失**（如创建 PR 时遭遇 504 超时） | 重新规划或盲目重试 → **产生重复 PR 与脏变更**    | **重试前预检（Query-Before-Retry）**：基于操作身份查询远端结果，避免重复执行    |
+| **节点中途崩溃**                          | 状态丢失或归零重跑，产生不可控的悬空变更         | **持久化 PostgreSQL Kernel**：租约安全回收，新 Worker 无缝接管与恢复            |
+| **凭据暴露风险**                          | 智能体进程直接持有写权限 API Token / GitHub 密钥 | **严格职责边界**：智能体仅具备提议（Propose）权限，写凭据严格隔离在 Worker 平面 |
+| **人类审批确认**                          | 纯文本确认或无约束的确认按钮                     | **密码学参数绑定**：审批不可变锁定请求摘要与策略快照                            |
+| **审计与存证归因**                        | 终端易失日志                                     | **Ed25519 签名存证**：JWS 签名收据，支持第三方独立验证                          |
+| **回滚与撤销**                            | 临时补丁脚本或无法安全回滚                       | **受治理的补偿机制**：要求独立的人类授权绑定与专属收据                          |
 
 深入阅读工程论文：[为什么智能体的外部写操作不能盲目重试？](docs/content/why-retrying-ai-agent-external-actions-is-unsafe.md)。
 
@@ -82,16 +82,16 @@
 
 ---
 
-## 什么是 Commander
+## 什么是 Praetor
 
 智能体请求创建一个 Pull Request。人类批准了它。GitHub 接受了写入——但工作节点（Worker）丢失了响应。操作是否真正发生了？下一个 Worker 该做什么？
 
-Commander 将已批准的请求及其执行状态保存在一起。其 GitHub 适配器能够在响应丢失后查询匹配结果，在证据不明确时保留未决结果，并且只能通过经单独授权的补偿操作关闭未合并的 PR。
+Praetor 将已批准的请求及其执行状态保存在一起。其 GitHub 适配器能够在响应丢失后查询匹配结果，在证据不明确时保留未决结果，并且只能通过经单独授权的补偿操作关闭未合并的 PR。
 
 首个试点有意保持聚焦：**基于同仓库现有分支创建 PR**。它不生成或推送代码，不合并 PR，也不部署到生产环境。分支内容仍需通过 GitHub 的常规审查与检查。
 
 - [运行 GitHub 试点](docs/pilot/github/README.md)：提议 → 批准 → 检查 → 单独授权关闭。
-- [为什么不仅使用 GitHub 原生权限和 Actions 审批？](docs/pilot/github/native-controls.md)：原生控制通常已经足够；只有当统一的操作身份、恢复机制和存证链有明确价值时才使用 Commander。
+- [为什么不仅使用 GitHub 原生权限和 Actions 审批？](docs/pilot/github/native-controls.md)：原生控制通常已经足够；只有当统一的操作身份、恢复机制和存证链有明确价值时才使用 Praetor。
 - [安全边界与限制](docs/pilot/github/threat-model.md)：关联标记不是数字签名，外部副作用无法保证全局绝对 Exactly-Once。
 
 适配器契约与 CLI 包含自动化本地测试。一个手动触发的 CI 任务针对单一沙箱仓库，在真实的 GitHub API 上运行真实 Gateway、Worker 和 PostgreSQL：测试代理切断或保留创建响应，Worker 被终止并重启，重启后的新 Worker 找到已存在的 PR 而不是创建重复 PR。丢失的响应由该测试代理注入，并非自然网络故障。此处不代表任何采纳承诺或生产就绪声明。下文同样提供既有的本地智能体运行时与只读审查工具。
@@ -102,14 +102,14 @@ Commander 将已批准的请求及其执行状态保存在一起。其 GitHub �
 
 GitHub 试点使用 **Enterprise Gateway**，这是一条仍处于 **alpha** 阶段的持久化服务端路径。**Local CLI** 是独立的本地智能体运行时；其模拟演示并不能证明 Gateway 的受治理写入行为。
 
-|                    | Local CLI                                                                     | Enterprise Gateway                                                     |
-| ------------------ | ----------------------------------------------------------------------------- | ---------------------------------------------------------------------- |
-| **入口**           | `commander review --real`（首个提供商试用）；其他命令仍为 alpha               | `POST /v1/runs`（经由 `apps/api`）                                     |
-| **状态**           | 本地 SQLite / JSON (`.commander_state/`)                                      | Postgres kernel (`runs`/`steps`/`events`/outbox/leases)                |
-| **认证**           | 无（单用户）                                                                  | `COMMANDER_API_KEY` + JWT 租户声明                                     |
-| **多租户**         | 无（隐式 `__default__`）                                                      | Alpha — kernel RLS + 租户感知单例；存储隔离为 opt-in                   |
-| **持久化 Kernel**  | 否                                                                            | 是（生产环境 / 设置 Postgres DSN 时自动开启）                           |
-| **状态**           | Alpha 本地评估工具 — 尚未达到生产就绪                                         | Alpha — 尚未在真实后端经过实战检验                                     |
+|                   | Local CLI                                                                  | Enterprise Gateway                                      |
+| ----------------- | -------------------------------------------------------------------------- | ------------------------------------------------------- |
+| **入口**          | `praetor review --real`（兼容别名 `commander review`）；其他命令仍为 alpha | `POST /v1/runs`（经由 `apps/api`）                      |
+| **状态**          | 本地 SQLite / JSON (`.commander_state/`)                                   | Postgres kernel (`runs`/`steps`/`events`/outbox/leases) |
+| **认证**          | 无（单用户）                                                               | `COMMANDER_API_KEY` + JWT 租户声明                      |
+| **多租户**        | 无（隐式 `__default__`）                                                   | Alpha — kernel RLS + 租户感知单例；存储隔离为 opt-in    |
+| **持久化 Kernel** | 否                                                                         | 是（生产环境 / 设置 Postgres DSN 时自动开启）           |
+| **状态**          | Alpha 本地评估工具 — 尚未达到生产就绪                                      | Alpha — 尚未在真实后端经过实战检验                      |
 
 以下首用户路径是基于源码的 **E0 模拟演示**。它不需要凭据，不向提供商或目标系统发起写入，且与基于真实提供商的 Local CLI 使用及 E1 Enterprise Gateway 试点路径相互独立。克隆、安装和构建仍会在本机写入检出目录、依赖缓存和构建产物。
 
@@ -119,20 +119,22 @@ GitHub 试点使用 **Enterprise Gateway**，这是一条仍处于 **alpha** 阶
 
 ### ⚡ 4 条探索路径（60 秒内上手）
 
-| 体验路径 | 执行命令 | 核心验证内容 |
-| --- | --- | --- |
-| **1. 零依赖模拟演示** | `pnpm demo:l4-a` | 多智能体研讨拓扑、5 层质量门禁评估、内存级闭环执行（无需配置 API Key） |
-| **2. 真实 Provider 只读代码审查** | `pnpm exec tsx packages/core/src/cliEntry.ts review --commit HEAD --real --provider=openai` | 基于真实 LLM 与质量门禁对本地 Git diff 进行严格只读审查 |
-| **3. Web 交互式控制台** | `pnpm gui` | 启动浏览器仪表盘 (`:5173`)：实时拓扑流、DLQ 观测与审批队列 |
-| **4. 受治理动作离线契约测试** | `pnpm test:github:offline` | 130 项断言离线验证断网丢失响应后的幂等反查与两阶段签批 |
+| 体验路径                          | 执行命令                                                                                    | 核心验证内容                                                           |
+| --------------------------------- | ------------------------------------------------------------------------------------------- | ---------------------------------------------------------------------- |
+| **1. 零依赖模拟演示**             | `pnpm demo:l4-a`                                                                            | 多智能体研讨拓扑、5 层质量门禁评估、内存级闭环执行（无需配置 API Key） |
+| **2. 真实 Provider 只读代码审查** | `pnpm exec tsx packages/core/src/cliEntry.ts review --commit HEAD --real --provider=openai` | 基于真实 LLM 与质量门禁对本地 Git diff 进行严格只读审查                |
+| **3. Web 交互式控制台**           | `pnpm gui`                                                                                  | 启动浏览器仪表盘 (`:5173`)：实时拓扑流、DLQ 观测与审批队列             |
+| **4. 受治理动作离线契约测试**     | `pnpm test:github:offline`                                                                  | 130 项断言离线验证断网丢失响应后的幂等反查与两阶段签批                 |
 
 ### 📦 SDK 与 MCP 快速集成
 
-#### Python SDK (`commander-ai`)
-```python
-from commander import CommanderClient
+#### Python SDK (`praetor-ai`)
 
-async with CommanderClient(base_url="http://127.0.0.1:4000", api_key="cmd-...") as client:
+```python
+# 标准包：praetor（同时保留对 'commander' 兼容导入的支持）
+from praetor import PraetorClient
+
+async with PraetorClient(base_url="http://127.0.0.1:4000", api_key="cmd-...") as client:
     # 零模型消耗的拓扑智能规划
     plan = await client.plan("审查代码库安全漏洞并提议修复方案")
     print(f"推荐拓扑: {plan.topology} ({plan.estimated_steps} 步，预估预算: ${plan.estimate.cost_budget_usd:.2f})")
@@ -143,10 +145,11 @@ async with CommanderClient(base_url="http://127.0.0.1:4000", api_key="cmd-...") 
 ```
 
 #### 受治理动作网关 (Python)
-```python
-from commander import CommanderGatewayClient, ProposeActionInput
 
-async with CommanderGatewayClient(base_url="http://127.0.0.1:4000", api_key="cmd-...") as gateway:
+```python
+from praetor import PraetorGatewayClient, ProposeActionInput
+
+async with PraetorGatewayClient(base_url="http://127.0.0.1:4000", api_key="cmd-...") as gateway:
     # 提议带有幂等排重保障的外部写操作
     action, replay, accepted = await gateway.propose_action(
         ProposeActionInput(
@@ -161,15 +164,17 @@ async with CommanderGatewayClient(base_url="http://127.0.0.1:4000", api_key="cmd
 ```
 
 #### 通用 Model Context Protocol (MCP) 集成
+
 支持任意标准 MCP 客户端（Claude Code、Cursor、Windsurf、LangGraph、OpenAI Agents SDK 等）：
+
 ```json
 {
   "mcpServers": {
-    "commander": {
-      "command": "commander-mcp-server",
+    "praetor": {
+      "command": "praetor-mcp-server",
       "env": {
-        "COMMANDER_ACTION_GATEWAY_URL": "http://127.0.0.1:4000",
-        "COMMANDER_API_KEY": "cmd-..."
+        "PRAETOR_ACTION_GATEWAY_URL": "http://127.0.0.1:4000",
+        "PRAETOR_API_KEY": "cmd-..."
       }
     }
   }
@@ -190,7 +195,7 @@ async with CommanderGatewayClient(base_url="http://127.0.0.1:4000", api_key="cmd
 
 ```bash
 git clone https://github.com/PStarH/Praetor.git
-cd Commander
+cd Praetor
 corepack enable
 pnpm install --frozen-lockfile
 pnpm build
@@ -202,7 +207,7 @@ pnpm demo:l4-a
 
 `doctor --offline` 检查本地前置条件，不联系 LLM 提供商。`demo:l4-a` 使用模拟/内存依赖和本机回环服务器；它不调用真实提供商，也不执行外部写入。演示进程拥有并会自动停止其回环服务器，因此无需外部资源清理命令。命令成功退出即完成 E0 清理。
 
-跑通此路径仅作为开发/演示证据。它不是已发布的包安装，不是 E1 受治理写入证明，也不是 Commander 达到生产就绪的凭证。
+跑通此路径仅作为开发/演示证据。它不是已发布的包安装，不是 E1 受治理写入证明，也不是 Praetor 达到生产就绪的凭证。
 
 ### 真实 Provider 的受控只读代码审查（首个真实 Provider 试用）
 
@@ -218,11 +223,11 @@ pnpm exec tsx packages/core/src/cliEntry.ts review \
   --commit HEAD --real --provider=anthropic
 ```
 
-此命令读取选定的 Git diff 和本地审查指引，最多向显式选定的提供商发送 15,000 个 diff 字符，并将提供商响应限制在 4,000 tokens 与 8 MiB 内。Commander 在 120 秒后中止提供商传输，并在 JSON 解析前拒绝超过 8 MiB 的响应正文。提供商/模型未分配任何执行工具，因此无法发起命令执行、文件修改、网络浏览或目标系统写入。CLI 本身运行固定的只读 `git diff` 命令，并在系统临时目录中更新跨进程速率限制状态。
+此命令读取选定的 Git diff 和本地审查指引，最多向显式选定的提供商发送 15,000 个 diff 字符，并将提供商响应限制在 4,000 tokens 与 8 MiB 内。Praetor 在 120 秒后中止提供商传输，并在 JSON 解析前拒绝超过 8 MiB 的响应正文。提供商/模型未分配任何执行工具，因此无法发起命令执行、文件修改、网络浏览或目标系统写入。CLI 本身运行固定的只读 `git diff` 命令，并在系统临时目录中更新跨进程速率限制状态。
 
 输出会标识 `source=real`、提供商、模型、端点主机、提示词字节数、截断 diff 的实际覆盖比例以及完成响应上限。凭据缺失、空 diff、提供商错误、超时、超限响应和无效结构化输出均会以非零状态退出，绝不静默回退至模拟审查。
 
-Diff 和审查指引会离开本机，可能包含仓库敏感材料，并受提供商保留政策约束。使用前请先阅读 [PRIVACY.md](PRIVACY.md)。普通 `commander run`、`pnpm gui`、MCP、SDK 以及 Enterprise Gateway 流程不属于此首用户路径，不得表述为只读或生产就绪。
+Diff 和审查指引会离开本机，可能包含仓库敏感材料，并受提供商保留政策约束。使用前请先阅读 [PRIVACY.md](PRIVACY.md)。普通 `praetor run`（或 `commander run`）、`pnpm gui`、MCP、SDK 以及 Enterprise Gateway 流程不属于此首用户路径，不得表述为只读或生产就绪。
 
 ### Enterprise Gateway（alpha）
 
@@ -234,7 +239,7 @@ Diff 和审查指引会离开本机，可能包含仓库敏感材料，并受提
 
 ### 推理引擎（Deliberation Engine）
 
-任务分类、复杂度评估和拓扑选择——全自动完成。Commander 将任务分类（CODING / RESEARCH / ANALYSIS / FACTUAL），估算复杂度，并从 5 种标准拓扑中选择：SINGLE、CHAIN、DISPATCH、ORCHESTRATOR、REVIEW。一行简短任务使用 1 个智能体；跨仓库全面审计可扩展到 15 个智能体。
+任务分类、复杂度评估和拓扑选择——全自动完成。Praetor 将任务分类（CODING / RESEARCH / ANALYSIS / FACTUAL），估算复杂度，并从 5 种标准拓扑中选择：SINGLE、CHAIN、DISPATCH、ORCHESTRATOR、REVIEW。一行简短任务使用 1 个智能体；跨仓库全面审计可扩展到 15 个智能体。
 
 ### 实时流式传输（Live Streaming）
 
@@ -265,33 +270,33 @@ Diff 和审查指引会离开本机，可能包含仓库敏感材料，并受提
 
 ### 25 个提供商与自动故障转移
 
-设置任意一个 API 密钥。Commander 自动检测提供商；若调用失败，则按可配置链回退。OpenAI → Anthropic → DeepSeek → Groq → Ollama —— 你定义顺序，Commander 处理路由。
+设置任意一个 API 密钥。Praetor 自动检测提供商；若调用失败，则按可配置链回退。OpenAI → Anthropic → DeepSeek → Groq → Ollama —— 你定义顺序，Praetor 处理路由。
 
 OpenAI · Anthropic · Google · Azure · DeepSeek · GLM · MiMo · Xiaomi · Groq · Together · Perplexity · Fireworks · Replicate · Mistral · Cohere · OpenRouter · xAI · Anyscale · DeepInfra · Agnes · Ollama · vLLM · AWS Bedrock · StepFun · MiniMax
 
 ### 配置的质量门控（Quality Gates）
 
-在启用验证管线的路径上，Commander 在返回结果前运行以下 5 项配置的检查：
+在启用验证管线的路径上，Praetor 在返回结果前运行以下 5 项配置的检查：
 
-| 门控 | 检查内容 |
-| ------------- | ------------------------------------------- |
+| 门控                     | 检查内容                         |
+| ------------------------ | -------------------------------- |
 | 幻觉检测 (Hallucination) | 基于 LLM-as-Judge 检测编造的事实 |
-| 一致性 (Consistency) | 跨智能体一致性，杜绝自相矛盾 |
-| 完整性 (Completeness) | 覆盖所有必需维度 |
-| 准确性 (Accuracy) | 对照源材料的事实正确性 |
-| 安全性 (Safety) | 内容扫描与提示注入检测 |
+| 一致性 (Consistency)     | 跨智能体一致性，杜绝自相矛盾     |
+| 完整性 (Completeness)    | 覆盖所有必需维度                 |
+| 准确性 (Accuracy)        | 对照源材料的事实正确性           |
+| 安全性 (Safety)          | 内容扫描与提示注入检测           |
 
 如果输出未能通过配置的门控，系统会重试或附带完整上下文报告失败。
 
 ### 弹性与容错（Resilience）
 
-| 能力 | 实现机制 |
-| ----------------- | ------------------------------------------------------------------ |
-| 断路器 (Circuit Breakers) | 三态（CLOSED/OPEN/HALF-OPEN），单提供商错误率跟踪 |
-| 死信队列 (Dead Letter Queue) | 追加写入 NDJSON，7 种分类，支持重放 |
-| Saga 补偿 (Saga Compensation) | 注册补偿步骤；外部回滚无法绝对保证 |
-| 检查点 (Checkpointing) | SQLite + WAL，崩溃安全恢复（目标 <5s） |
-| 语义缓存 (Semantic Caching) | SHA-256 精确匹配 + 余弦相似度去重 |
+| 能力                          | 实现机制                                          |
+| ----------------------------- | ------------------------------------------------- |
+| 断路器 (Circuit Breakers)     | 三态（CLOSED/OPEN/HALF-OPEN），单提供商错误率跟踪 |
+| 死信队列 (Dead Letter Queue)  | 追加写入 NDJSON，7 种分类，支持重放               |
+| Saga 补偿 (Saga Compensation) | 注册补偿步骤；外部回滚无法绝对保证                |
+| 检查点 (Checkpointing)        | SQLite + WAL，崩溃安全恢复（目标 <5s）            |
+| 语义缓存 (Semantic Caching)   | SHA-256 精确匹配 + 余弦相似度去重                 |
 
 ### 安全体系（Security）
 
@@ -345,7 +350,7 @@ AES-256-GCM 加密密钥库。进程内防篡改 HMAC 审计链（外部 WORM/KM
 
 ### 受治理动作执行平面 (Architecture V2)
 
-Commander 将不受信的智能体推理与外部实体变更彻底解耦，通过双阶段密码学门禁与数字签名收据确保确定性：
+Praetor 将不受信的智能体推理与外部实体变更彻底解耦，通过双阶段密码学门禁与数字签名收据确保确定性：
 
 <p align="center">
   <img src="docs/assets/commander-crypto-gate-zh.svg" alt="两阶段人机密码学门禁与 JWS 存证全生命周期" width="100%" />
@@ -355,7 +360,7 @@ Commander 将不受信的智能体推理与外部实体变更彻底解耦，通�
 
 ## Web 控制台
 
-Commander 包含基于 Web 的控制台，用于可视化监控、基于对话的智能体交互和治理：
+Praetor 包含基于 Web 的控制台，用于可视化监控、基于对话的智能体交互和治理：
 
 ```bash
 # 需要 PostgreSQL 以及显式设置的 JWT_SECRET 和 ADMIN_PASSWORD；详见 docs/deploy.md。
@@ -365,29 +370,29 @@ pnpm gui
 
 打开 `http://localhost:5173`。控制台路由清单：
 
-| 路由 | 页面说明 |
-| ---------------------------- | --------------------------------------------------------------------------------------- |
-| `/`                          | 仪表盘 — 战报、Token 趋势、实时拓扑、智能体花名册、任务看板 |
-| `/agents`                    | 智能体花名册 |
-| `/missions`                  | 任务看板与审批队列 |
-| `/execution`                 | 实时执行动态源 |
-| `/memory`                    | 记忆浏览器与检索 |
-| `/governance`                | 审批队列与策略统一配置 |
+| 路由                         | 页面说明                                                                      |
+| ---------------------------- | ----------------------------------------------------------------------------- |
+| `/`                          | 仪表盘 — 战报、Token 趋势、实时拓扑、智能体花名册、任务看板                   |
+| `/agents`                    | 智能体花名册                                                                  |
+| `/missions`                  | 任务看板与审批队列                                                            |
+| `/execution`                 | 实时执行动态源                                                                |
+| `/memory`                    | 记忆浏览器与检索                                                              |
+| `/governance`                | 审批队列与策略统一配置                                                        |
 | `/security`                  | 安全态势 — ISO 42001 / NIST AI RMF **报告脚手架**（生成报告工具，非认证证书） |
-| `/slo`                       | SLO 监控面板 |
-| `/chat`                      | 对话交互界面，支持智能体实时流式输出 |
-| `/dlq`                       | 死信队列管理与重放 |
-| `/audit`                     | 审计日志 |
-| `/cost`                      | 成本与 Token 用量报告 |
-| `/knowledge`                 | 知识库管理 |
-| `/alerts`                    | 告警中心 |
-| `/onboarding`                | 首次使用引导 |
-| `/users`                     | 用户管理 |
-| `/settings`, `/settings/sso` | 系统设置与 OIDC/SSO 单点登录配置 |
-| `/workflows`                 | 工作流列表与调度 |
-| `/poc`                       | POC / 演示视图 |
-| `/research`                  | 调研视图 |
-| `/actions`                   | Action Gateway 队列（审批 / 拒绝 / 补偿） |
+| `/slo`                       | SLO 监控面板                                                                  |
+| `/chat`                      | 对话交互界面，支持智能体实时流式输出                                          |
+| `/dlq`                       | 死信队列管理与重放                                                            |
+| `/audit`                     | 审计日志                                                                      |
+| `/cost`                      | 成本与 Token 用量报告                                                         |
+| `/knowledge`                 | 知识库管理                                                                    |
+| `/alerts`                    | 告警中心                                                                      |
+| `/onboarding`                | 首次使用引导                                                                  |
+| `/users`                     | 用户管理                                                                      |
+| `/settings`, `/settings/sso` | 系统设置与 OIDC/SSO 单点登录配置                                              |
+| `/workflows`                 | 工作流列表与调度                                                              |
+| `/poc`                       | POC / 演示视图                                                                |
+| `/research`                  | 调研视图                                                                      |
+| `/actions`                   | Action Gateway 队列（审批 / 拒绝 / 补偿）                                     |
 
 当使用 Compose 的 `web` profile 而非 `pnpm gui` 运行时，控制台运行在 `http://localhost:3000`。
 
@@ -395,12 +400,12 @@ pnpm gui
 
 ## 可靠性目标
 
-| 目标 | 预期指标 | 实现机制 |
-| ------------------- | ---- | -------------------------- |
-| 检查点恢复 | <5s  | SQLite + WAL               |
-| 提供商故障转移 | <10s | 自动回退链 |
-| Saga 补偿 | <30s | 补偿调度器 |
-| DLQ 队列处理 | <60s | 追加写入 NDJSON，支持重放 |
+| 目标           | 预期指标 | 实现机制                  |
+| -------------- | -------- | ------------------------- |
+| 检查点恢复     | <5s      | SQLite + WAL              |
+| 提供商故障转移 | <10s     | 自动回退链                |
+| Saga 补偿      | <30s     | 补偿调度器                |
+| DLQ 队列处理   | <60s     | 追加写入 NDJSON，支持重放 |
 
 ---
 
@@ -408,13 +413,13 @@ pnpm gui
 
 > 以下所有基准测试均运行在**模拟/脚本化测试套件**或作为 **CI 基线**。它们衡量的是测试工具本身，而非生产环境 SLA 或 SOC 审计凭证。
 
-| 套件 | 覆盖范围 | 结果 |
-| ----------------- | ----------------------------------------- | ------------------------------------------------- |
-| 混沌工程 (Chaos Engineering) | 200 个合成案例 + 55 个变异案例（共 255） | 测试套件入口；结果见基准矩阵保留数据 |
-| 红队 (Red Team) | 47 个场景、8 类攻击 | 所列用例均已阻断（模拟套件） |
-| AgentDojo | 12 个安全测试案例 | 所列用例均已阻断（模拟套件） |
-| GAIA Spine | 核心能力基准 | 已调度快速/离线运行；完整 fixture 待补齐 |
-| SLO | API 可用性 99.95%、P95 调度延迟 <5s | CI 基线，非生产环境 SLA |
+| 套件                         | 覆盖范围                                 | 结果                                     |
+| ---------------------------- | ---------------------------------------- | ---------------------------------------- |
+| 混沌工程 (Chaos Engineering) | 200 个合成案例 + 55 个变异案例（共 255） | 测试套件入口；结果见基准矩阵保留数据     |
+| 红队 (Red Team)              | 47 个场景、8 类攻击                      | 所列用例均已阻断（模拟套件）             |
+| AgentDojo                    | 12 个安全测试案例                        | 所列用例均已阻断（模拟套件）             |
+| GAIA Spine                   | 核心能力基准                             | 已调度快速/离线运行；完整 fixture 待补齐 |
+| SLO                          | API 可用性 99.95%、P95 调度延迟 <5s      | CI 基线，非生产环境 SLA                  |
 
 完整矩阵：[BENCHMARK.md](BENCHMARK.md)
 
@@ -437,13 +442,13 @@ curl http://localhost:4000/system/status   # 运行时模块摘要
 
 ---
 
-## 为什么选择 Commander
+## 为什么选择 Praetor
 
 一旦智能体的操作触达外部系统，超时或崩溃就会留下三个悬而未决的问题：操作是否发生、发生了几次、携带了什么载荷。盲目重试可能导致重复写入；直接放弃可能丢失操作。
 
-Commander 将已批准的请求及其执行状态保存在智能体外部，在响应模糊时查询真实结果，并在证据不确定时停留在明确的未知状态。撤销副作用是单独发起并需单独批准的操作。
+Praetor 将已批准的请求及其执行状态保存在智能体外部，在响应模糊时查询真实结果，并在证据不确定时停留在明确的未知状态。撤销副作用是单独发起并需单独批准的操作。
 
-GitHub 原生权限和 Actions 审批等控制手段通常已足够。Commander 适用于需要在智能体与工作节点间维护统一审批与恢复记录的团队。
+GitHub 原生权限和 Actions 审批等控制手段通常已足够。Praetor 适用于需要在智能体与工作节点间维护统一审批与恢复记录的团队。
 
 ---
 

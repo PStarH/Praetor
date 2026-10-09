@@ -1,4 +1,4 @@
-# Commander 快速开始
+# Praetor 快速开始
 
 先用不需要凭据的 E0 模拟路径验证安装，再按需运行 provider-backed CLI 或 Web
 Console。
@@ -64,7 +64,7 @@ pnpm demo:l4-a
 
 ## 3. 配置 API Key（仅 provider-backed 路径）
 
-Commander 会自动识别你设置的是哪家提供商：
+Praetor 会自动识别你设置的是哪家提供商：
 
 ```bash
 export OPENAI_API_KEY=sk-...
@@ -108,7 +108,7 @@ host、prompt 字节数、截断后实际覆盖范围和完成响应上限；凭
 diff 和 guidelines 会离开本机，可能包含仓库敏感信息，并受 provider 的保留政策
 约束。guidelines 会从 `AGENTS.md`、`.review.md`、`REVIEW.md`、
 `.github/review.md` 和 `.commander/review.md` 的 Markdown 列表项自动收集，并限制为
-合并后的前 1,000 字符。普通 `commander run`、`pnpm gui`、MCP、SDK 和 Enterprise
+合并后的前 1,000 字符。普通 `praetor run`（兼容别名 `commander run`）、`pnpm gui`、MCP、SDK 和 Enterprise
 Gateway 不属于该首用户路径，目前不能宣称只读或生产就绪。
 
 ---

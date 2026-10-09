@@ -25,7 +25,7 @@
 ## The Distributed Systems Problem for AI Agents
 
 <p align="center">
-  <img src="docs/assets/commander-overview.png" alt="Commander Architecture Overview — Decoupling Untrusted AI Reasoning from Production Infrastructure" width="100%">
+  <img src="docs/assets/commander-overview.png" alt="Praetor Architecture Overview — Decoupling Untrusted AI Reasoning from Production Infrastructure" width="100%">
 </p>
 
 <details>
@@ -65,14 +65,14 @@ Did the write happen? How many times? What was actually committed?
 
 Retrying blindly creates duplicate PRs, double transactions, or corrupted state. Giving up leaves orphaned mutations.
 
-| Challenge | Naive Agent Execution | Praetor Governed Action |
-| --- | --- | --- |
-| **Response Loss** (e.g. 504 Gateway Timeout during PR creation) | Re-plans or retries blindly → **Duplicate PRs & mutations** | **Preflight Query-Before-Retry**: Checks remote outcome by action identity before retry |
-| **Worker Crash Mid-Task** | State lost or restarted from zero with orphaned external side effects | **Durable PostgreSQL Kernel**: Step lease reclaims; new worker resumes safely |
-| **Credential Exposure** | Agent process directly holds write API keys / GitHub tokens | **Strict Boundary**: Agent only has *propose* authority; write tokens stay in worker plane |
-| **Human Sign-Off** | Text-based prompt or unverified button | **Cryptographic Binding**: Approval locks immutable request digest & policy snapshot |
-| **Audit & Forensics** | Ephemeral console text | **Ed25519 Evidence**: JWS signed receipts for independent verification |
-| **Rollback / Undo** | Ad-hoc scripts or impossible | **Governed Compensation**: Requires separate authorization binding and dedicated receipt |
+| Challenge                                                       | Naive Agent Execution                                                 | Praetor Governed Action                                                                    |
+| --------------------------------------------------------------- | --------------------------------------------------------------------- | ------------------------------------------------------------------------------------------ |
+| **Response Loss** (e.g. 504 Gateway Timeout during PR creation) | Re-plans or retries blindly → **Duplicate PRs & mutations**           | **Preflight Query-Before-Retry**: Checks remote outcome by action identity before retry    |
+| **Worker Crash Mid-Task**                                       | State lost or restarted from zero with orphaned external side effects | **Durable PostgreSQL Kernel**: Step lease reclaims; new worker resumes safely              |
+| **Credential Exposure**                                         | Agent process directly holds write API keys / GitHub tokens           | **Strict Boundary**: Agent only has _propose_ authority; write tokens stay in worker plane |
+| **Human Sign-Off**                                              | Text-based prompt or unverified button                                | **Cryptographic Binding**: Approval locks immutable request digest & policy snapshot       |
+| **Audit & Forensics**                                           | Ephemeral console text                                                | **Ed25519 Evidence**: JWS signed receipts for independent verification                     |
+| **Rollback / Undo**                                             | Ad-hoc scripts or impossible                                          | **Governed Compensation**: Requires separate authorization binding and dedicated receipt   |
 
 Read the in-depth essay: [Why retrying an AI agent's external action is unsafe](docs/content/why-retrying-ai-agent-external-actions-is-unsafe.md).
 
@@ -89,7 +89,7 @@ Praetor sits between your Coding / DevOps agents and external write targets.
 The first pilot is intentionally narrow: **same-repository PR creation from existing branches**. An agent proposes the action; a separately authenticated human approves the exact request. When a response is lost, the recovery path queries GitHub using persisted action identity and approved parameters before ever retrying.
 
 - [Run the GitHub pilot](docs/pilot/github/README.md): propose → approve → inspect → separately authorize close.
-- [Why not just GitHub permissions and Actions approval?](docs/pilot/github/native-controls.md): native controls are often enough; use Commander when shared action identity, recovery and evidence justify the integration.
+- [Why not just GitHub permissions and Actions approval?](docs/pilot/github/native-controls.md): native controls are often enough; use Praetor when shared action identity, recovery and evidence justify the integration.
 - [Security boundary and limitations](docs/pilot/github/threat-model.md): a correlation marker is not a signature, and external effects are not universally exactly-once.
 
 The adapter contracts and CLI have automated local tests. A manually
@@ -109,14 +109,14 @@ The GitHub pilot uses the **Enterprise Gateway**, a durable server path that
 is still **alpha**. The **Local CLI** is a separate local agent runtime; its
 simulated demo does not prove the Gateway's governed-write behavior.
 
-|                    | Local CLI                                                                     | Enterprise Gateway                                                     |
-| ------------------ | ----------------------------------------------------------------------------- | ---------------------------------------------------------------------- |
-| **Entry**          | `commander review --real` (first provider trial); other commands remain alpha | `POST /v1/runs` via `apps/api`                                         |
-| **State**          | Local SQLite / JSON (`.commander_state/`)                                     | Postgres kernel (`runs`/`steps`/`events`/outbox/leases)                |
-| **Auth**           | None (single user)                                                            | `COMMANDER_API_KEY` + JWT tenant claims                                |
-| **Tenancy**        | None (implicit `__default__`)                                                 | Alpha — kernel RLS + tenant-aware singletons; storage isolation opt-in |
-| **Durable kernel** | No                                                                            | Yes (auto-on in production / when a Postgres DSN is set)               |
-| **Status**         | Alpha local evaluation tool — not production-ready                            | Alpha — not yet live-fire-proven on real backends                      |
+|                    | Local CLI                                                                  | Enterprise Gateway                                                     |
+| ------------------ | -------------------------------------------------------------------------- | ---------------------------------------------------------------------- |
+| **Entry**          | `praetor review --real` (legacy: `commander review`); other commands alpha | `POST /v1/runs` via `apps/api`                                         |
+| **State**          | Local SQLite / JSON (`.commander_state/`)                                  | Postgres kernel (`runs`/`steps`/`events`/outbox/leases)                |
+| **Auth**           | None (single user)                                                         | `COMMANDER_API_KEY` + JWT tenant claims                                |
+| **Tenancy**        | None (implicit `__default__`)                                              | Alpha — kernel RLS + tenant-aware singletons; storage isolation opt-in |
+| **Durable kernel** | No                                                                         | Yes (auto-on in production / when a Postgres DSN is set)               |
+| **Status**         | Alpha local evaluation tool — not production-ready                         | Alpha — not yet live-fire-proven on real backends                      |
 
 The first-user path below is a source-based **E0 simulated demo**. It needs no
 credentials, makes no provider or target-system writes, and is separate from
@@ -128,22 +128,24 @@ on your machine.
 
 ## Quick Start
 
-### ⚡ 4 Ways to Experience Commander (Under 60 Seconds)
+### ⚡ 4 Ways to Experience Praetor (Under 60 Seconds)
 
-| Path | Command | What It Exercises |
-| --- | --- | --- |
-| **1. Zero-Dependency Demo** | `pnpm demo:l4-a` | Multi-agent deliberation, 5 quality gates, in-memory execution (no API key needed) |
-| **2. Real Provider Code Review** | `pnpm exec tsx packages/core/src/cliEntry.ts review --commit HEAD --real --provider=openai` | Read-only analysis of your Git diff across configured quality gates |
-| **3. Interactive Web Console** | `pnpm gui` | Live control room on `:5173`: agent topology, DLQ inspection, and approval queue |
-| **4. Governed Action Offline Test** | `pnpm test:github:offline` | 130 offline contract assertions for idempotency & response-loss recovery |
+| Path                                | Command                                                                                     | What It Exercises                                                                  |
+| ----------------------------------- | ------------------------------------------------------------------------------------------- | ---------------------------------------------------------------------------------- |
+| **1. Zero-Dependency Demo**         | `pnpm demo:l4-a`                                                                            | Multi-agent deliberation, 5 quality gates, in-memory execution (no API key needed) |
+| **2. Real Provider Code Review**    | `pnpm exec tsx packages/core/src/cliEntry.ts review --commit HEAD --real --provider=openai` | Read-only analysis of your Git diff across configured quality gates                |
+| **3. Interactive Web Console**      | `pnpm gui`                                                                                  | Live control room on `:5173`: agent topology, DLQ inspection, and approval queue   |
+| **4. Governed Action Offline Test** | `pnpm test:github:offline`                                                                  | 130 offline contract assertions for idempotency & response-loss recovery           |
 
 ### 📦 SDK & MCP Integration
 
-#### Python SDK (`commander-ai`)
-```python
-from commander import CommanderClient
+#### Python SDK (`praetor-ai`)
 
-async with CommanderClient(base_url="http://127.0.0.1:4000", api_key="cmd-...") as client:
+```python
+# Canonical package: praetor (backward-compatible 'commander' import also supported)
+from praetor import PraetorClient
+
+async with PraetorClient(base_url="http://127.0.0.1:4000", api_key="cmd-...") as client:
     # Deliberation planning without LLM costs
     plan = await client.plan("Audit repository for security vulnerabilities")
     print(f"Topology: {plan.topology} ({plan.estimated_steps} steps, est: ${plan.estimate.cost_budget_usd:.2f})")
@@ -154,10 +156,11 @@ async with CommanderClient(base_url="http://127.0.0.1:4000", api_key="cmd-...") 
 ```
 
 #### Governed Action Gateway (Python)
-```python
-from commander import CommanderGatewayClient, ProposeActionInput
 
-async with CommanderGatewayClient(base_url="http://127.0.0.1:4000", api_key="cmd-...") as gateway:
+```python
+from praetor import PraetorGatewayClient, ProposeActionInput
+
+async with PraetorGatewayClient(base_url="http://127.0.0.1:4000", api_key="cmd-...") as gateway:
     # Propose external mutation with preflight idempotency
     action, replay, accepted = await gateway.propose_action(
         ProposeActionInput(
@@ -172,15 +175,17 @@ async with CommanderGatewayClient(base_url="http://127.0.0.1:4000", api_key="cmd
 ```
 
 #### Universal Model Context Protocol (MCP)
+
 Integrate with Claude Code, Cursor, Windsurf, LangGraph, or OpenAI Agents SDK:
+
 ```json
 {
   "mcpServers": {
-    "commander": {
-      "command": "commander-mcp-server",
+    "praetor": {
+      "command": "praetor-mcp-server",
       "env": {
-        "COMMANDER_ACTION_GATEWAY_URL": "http://127.0.0.1:4000",
-        "COMMANDER_API_KEY": "cmd-..."
+        "PRAETOR_ACTION_GATEWAY_URL": "http://127.0.0.1:4000",
+        "PRAETOR_API_KEY": "cmd-..."
       }
     }
   }
@@ -208,7 +213,7 @@ installation.
 
 ```bash
 git clone https://github.com/PStarH/Praetor.git
-cd Commander
+cd Praetor
 corepack enable
 pnpm install --frozen-lockfile
 pnpm build
@@ -225,7 +230,7 @@ demo owns and automatically stops its loopback servers, so there is no external
 resource teardown command. Successful command exit completes E0 teardown.
 
 Passing this path is development/demo evidence only. It is not a published
-package install, an E1 governed-write proof, or evidence that Commander is
+package install, an E1 governed-write proof, or evidence that Praetor is
 production-ready.
 
 ### Provider-backed read-only review (first real-provider trial)
@@ -244,7 +249,7 @@ pnpm exec tsx packages/core/src/cliEntry.ts review \
 
 This command reads the selected Git diff and local review guidelines, sends at
 most 15,000 diff characters to the explicitly selected provider, and caps the
-provider response at 4,000 tokens. Commander aborts provider transport after
+provider response at 4,000 tokens. Praetor aborts provider transport after
 120 seconds and rejects a response body over 8 MiB before JSON parsing. The
 provider/model receives no
 execution tools, so it cannot initiate commands, file edits, web browsing, or
@@ -259,7 +264,7 @@ back to a simulated review.
 
 The diff and guidelines leave your machine, may contain repository-sensitive
 material, and are subject to provider retention. Read [PRIVACY.md](PRIVACY.md)
-first. Ordinary `commander run`, `pnpm gui`, MCP, SDK, and Enterprise Gateway
+first. Ordinary `praetor run` (or `commander run`), `pnpm gui`, MCP, SDK, and Enterprise Gateway
 flows are not part of this first-user path and must not be presented as
 read-only or production-ready.
 
@@ -282,7 +287,7 @@ writes, and shared multi-tenant use remains alpha.
 
 ### Deliberation Engine
 
-Task classification, complexity estimation, and topology selection — all automatic. Commander classifies your task (CODING / RESEARCH / ANALYSIS / FACTUAL), estimates complexity, and picks from 5 canonical topologies: SINGLE, CHAIN, DISPATCH, ORCHESTRATOR, REVIEW. A one-line task uses 1 agent. A cross-repository audit can fan out to 15 agents.
+Task classification, complexity estimation, and topology selection — all automatic. Praetor classifies your task (CODING / RESEARCH / ANALYSIS / FACTUAL), estimates complexity, and picks from 5 canonical topologies: SINGLE, CHAIN, DISPATCH, ORCHESTRATOR, REVIEW. A one-line task uses 1 agent. A cross-repository audit can fan out to 15 agents.
 
 ### Live Streaming
 
@@ -313,13 +318,13 @@ Agent events, tool calls, and configured gate decisions stream to your terminal 
 
 ### 25 Providers with Auto-Failover
 
-Set any one API key. Commander detects your provider, and if it fails, falls through a configurable chain. OpenAI → Anthropic → DeepSeek → Groq → Ollama — you define the order, Commander handles the routing.
+Set any one API key. Praetor detects your provider, and if it fails, falls through a configurable chain. OpenAI → Anthropic → DeepSeek → Groq → Ollama — you define the order, Praetor handles the routing.
 
 OpenAI · Anthropic · Google · Azure · DeepSeek · GLM · MiMo · Xiaomi · Groq · Together · Perplexity · Fireworks · Replicate · Mistral · Cohere · OpenRouter · xAI · Anyscale · DeepInfra · Agnes · Ollama · vLLM · AWS Bedrock · StepFun · MiniMax
 
 ### Configured Quality Gates
 
-On paths with the verification pipeline enabled, Commander runs these 5 configured checks before returning a result:
+On paths with the verification pipeline enabled, Praetor runs these 5 configured checks before returning a result:
 
 | Gate          | What it checks                              |
 | ------------- | ------------------------------------------- |
@@ -393,7 +398,7 @@ A meta-learner using Thompson Sampling and Reflexion tunes agent configurations 
 
 ### Governed Action Execution Plane (Architecture V2)
 
-Commander decouples untrusted agent reasoning from external side-effects using a two-phase cryptographic gate and signed execution receipts:
+Praetor decouples untrusted agent reasoning from external side-effects using a two-phase cryptographic gate and signed execution receipts:
 
 <p align="center">
   <img src="docs/assets/commander-crypto-gate-en.svg" alt="Two-Phase Cryptographic Human Gate & JWS Evidence" width="100%" />
@@ -403,7 +408,7 @@ Commander decouples untrusted agent reasoning from external side-effects using a
 
 ## Web Console
 
-Commander includes a web-based control console for visual monitoring, chat-based agent interaction, and governance:
+Praetor includes a web-based control console for visual monitoring, chat-based agent interaction, and governance:
 
 ```bash
 # Requires PostgreSQL plus explicit JWT_SECRET and ADMIN_PASSWORD; see docs/deploy.md.
@@ -487,13 +492,13 @@ Monitors: memory, circuit breakers, DLQ size, checkpoint staleness, pending comp
 
 ---
 
-## Why Commander
+## Why Praetor
 
 Once an agent's action reaches an external system, a timeout or crash can leave three questions open: did it happen, how many times, and with what payload. Retrying blindly can duplicate the write; giving up can lose it.
 
-Commander records the approved request and its execution state outside the agent, looks up the outcome after an ambiguous response, and stops in an explicit unknown state when the evidence is not conclusive. Undoing an effect is a separate, separately approved action.
+Praetor records the approved request and its execution state outside the agent, looks up the outcome after an ambiguous response, and stops in an explicit unknown state when the evidence is not conclusive. Undoing an effect is a separate, separately approved action.
 
-Native controls such as GitHub permissions and Actions approvals are often enough. Commander is for teams that need one approval and recovery record across agents and workers.
+Native controls such as GitHub permissions and Actions approvals are often enough. Praetor is for teams that need one approval and recovery record across agents and workers.
 
 ---
 
