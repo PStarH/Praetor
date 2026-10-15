@@ -48,7 +48,7 @@
     "access": "public"
   },
   "devDependencies": {
-    "tsx": "^4.8.1",
+    "tsx": "^4.23.15",
     "typescript": "^5.0.0"
   }
 }
