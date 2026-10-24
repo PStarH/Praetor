@@ -1,0 +1,90 @@
+{
+  "schemaVersion": 2,
+  "benchmark": "memory-poisoning",
+  "config": {
+    "vectors": 6
+  },
+  "report": {
+    "targetName": "three_layer_memory",
+    "totalCases": 6,
+    "defended": 6,
+    "leaks": [],
+    "errors": 0,
+    "durationMs": 2,
+    "vectorDetails": [
+      {
+        "vector": "V1_tenant_id_spoof_in_metadata",
+        "victimTenant": "tenant-a-poison-v1",
+        "attackerTenant": "tenant-b-clean-v1",
+        "poisonedPayload": "CONFIDENTIAL-TENANT-A-ONLY-7f3a",
+        "leakedContent": null,
+        "leakedEntryId": null,
+        "passed": true
+      },
+      {
+        "vector": "V2_longterm_cross_tenant_promotion",
+        "victimTenant": "tenant-a-poison-v2",
+        "attackerTenant": "tenant-b-clean-v2",
+        "poisonedPayload": "PROMOTED-LONGTERM-LEAK-9d2e",
+        "leakedContent": null,
+        "leakedEntryId": null,
+        "passed": true
+      },
+      {
+        "vector": "V3_searchRelated_keyword_collision",
+        "victimTenant": "tenant-a-poison-v3",
+        "attackerTenant": "tenant-b-clean-v3",
+        "poisonedPayload": "Project Phoenix secret API key: ABC123XYZ-PHOENIX",
+        "leakedContent": null,
+        "leakedEntryId": null,
+        "passed": true
+      },
+      {
+        "vector": "V4_importance_threshold_bypass",
+        "victimTenant": "tenant-a-poison-v4",
+        "attackerTenant": "tenant-b-clean-v4",
+        "poisonedPayload": "HIGH-IMPORTANCE-LEAK-2b8c",
+        "leakedContent": null,
+        "leakedEntryId": null,
+        "passed": true
+      },
+      {
+        "vector": "V5_contradictionIds_metadata_leak",
+        "victimTenant": "tenant-a-poison-v5",
+        "attackerTenant": "tenant-b-clean-v5",
+        "poisonedPayload": "rejected",
+        "leakedContent": null,
+        "leakedEntryId": "rejected",
+        "passed": true
+      },
+      {
+        "vector": "V6_promoteToLongTerm_layer_transition",
+        "victimTenant": "tenant-a-poison-v6",
+        "attackerTenant": "tenant-b-clean-v6",
+        "poisonedPayload": "EXPLICIT-PROMOTE-LEAK-5e1a",
+        "leakedContent": null,
+        "leakedEntryId": null,
+        "passed": true
+      }
+    ]
+  },
+  "summary": {
+    "passed": true,
+    "leakCount": 0
+  },
+  "env": {
+    "evidence": "simulated",
+    "gitSha": "6384979caec473a2fb2a24c87bd871c98efa989c",
+    "gitBranch": "feat/rename-to-praetor",
+    "gitDirty": false,
+    "nodeVersion": "v22.23.3",
+    "pnpmVersion": "9.15.4",
+    "topology": {
+      "gateways": 1,
+      "workers": 1,
+      "operations": 1,
+      "model": "single"
+    }
+  },
+  "runAt": "2026-10-24T12:09:46.726Z"
+}
