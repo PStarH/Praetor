@@ -1,0 +1,39 @@
+{
+  "schemaVersion": 2,
+  "benchmark": "tenant-isolation",
+  "config": {
+    "maxMutations": 1000
+  },
+  "report": {
+    "targetName": "memory_store",
+    "totalCases": 261,
+    "defended": 261,
+    "leaks": 0,
+    "errors": 0,
+    "durationMs": 7,
+    "leakDetails": []
+  },
+  "summary": {
+    "passed": true,
+    "errors": 0,
+    "failed": 0,
+    "skipped": 0,
+    "leakCount": 0,
+    "errorCount": 0
+  },
+  "env": {
+    "evidence": "simulated",
+    "gitSha": "6384979caec473a2fb2a24c87bd871c98efa989c",
+    "gitBranch": "feat/rename-to-praetor",
+    "gitDirty": false,
+    "nodeVersion": "v22.23.4",
+    "pnpmVersion": "9.15.4",
+    "topology": {
+      "gateways": 1,
+      "workers": 1,
+      "operations": 1,
+      "model": "single"
+    }
+  },
+  "runAt": "2026-10-31T13:48:02.722Z"
+}
