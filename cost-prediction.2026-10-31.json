@@ -1,0 +1,326 @@
+{
+  "schemaVersion": 2,
+  "benchmark": "cost-prediction",
+  "results": [
+    {
+      "model": "gpt-4o-mini",
+      "modelTier": "eco",
+      "taskCategory": "code",
+      "predictedCostUsd": 0.0009071999999999999,
+      "actualCostUsd": 0.0008862,
+      "errorUsd": 0.00002099999999999997,
+      "errorPct": 2.369668246445494,
+      "predictedTokens": 3024,
+      "actualTokens": 2782
+    },
+    {
+      "model": "gpt-4o-mini",
+      "modelTier": "eco",
+      "taskCategory": "search",
+      "predictedCostUsd": 0.0009071999999999999,
+      "actualCostUsd": 0.0007774500000000001,
+      "errorUsd": 0.00012974999999999987,
+      "errorPct": 16.689176152807235,
+      "predictedTokens": 3024,
+      "actualTokens": 2597
+    },
+    {
+      "model": "gpt-4o-mini",
+      "modelTier": "eco",
+      "taskCategory": "analysis",
+      "predictedCostUsd": 0.0009071999999999999,
+      "actualCostUsd": 0.0008716500000000001,
+      "errorUsd": 0.00003554999999999986,
+      "errorPct": 4.0784718637067465,
+      "predictedTokens": 3024,
+      "actualTokens": 3063
+    },
+    {
+      "model": "gpt-4o-mini",
+      "modelTier": "eco",
+      "taskCategory": "creative",
+      "predictedCostUsd": 0.0009071999999999999,
+      "actualCostUsd": 0.0008282999999999999,
+      "errorUsd": 0.00007890000000000002,
+      "errorPct": 9.52553422672945,
+      "predictedTokens": 3024,
+      "actualTokens": 2765
+    },
+    {
+      "model": "gpt-4o-mini",
+      "modelTier": "eco",
+      "taskCategory": "structured",
+      "predictedCostUsd": 0.0009071999999999999,
+      "actualCostUsd": 0.00101745,
+      "errorUsd": 0.0001102500000000001,
+      "errorPct": 10.835913312693508,
+      "predictedTokens": 3024,
+      "actualTokens": 3327
+    },
+    {
+      "model": "gpt-4o-mini",
+      "modelTier": "eco",
+      "taskCategory": "general",
+      "predictedCostUsd": 0.0009071999999999999,
+      "actualCostUsd": 0.0009622499999999999,
+      "errorUsd": 0.000055049999999999956,
+      "errorPct": 5.720966484801243,
+      "predictedTokens": 3024,
+      "actualTokens": 3220
+    },
+    {
+      "model": "gpt-4o",
+      "modelTier": "standard",
+      "taskCategory": "code",
+      "predictedCostUsd": 0.015120000000000001,
+      "actualCostUsd": 0.014430000000000002,
+      "errorUsd": 0.0006899999999999996,
+      "errorPct": 4.781704781704779,
+      "predictedTokens": 3024,
+      "actualTokens": 3081
+    },
+    {
+      "model": "gpt-4o",
+      "modelTier": "standard",
+      "taskCategory": "search",
+      "predictedCostUsd": 0.015120000000000001,
+      "actualCostUsd": 0.014995,
+      "errorUsd": 0.00012500000000000185,
+      "errorPct": 0.8336112037345905,
+      "predictedTokens": 3024,
+      "actualTokens": 2941
+    },
+    {
+      "model": "gpt-4o",
+      "modelTier": "standard",
+      "taskCategory": "analysis",
+      "predictedCostUsd": 0.015120000000000001,
+      "actualCostUsd": 0.013847499999999999,
+      "errorUsd": 0.0012725000000000028,
+      "errorPct": 9.189384365408939,
+      "predictedTokens": 3024,
+      "actualTokens": 2908
+    },
+    {
+      "model": "gpt-4o",
+      "modelTier": "standard",
+      "taskCategory": "creative",
+      "predictedCostUsd": 0.015120000000000001,
+      "actualCostUsd": 0.0140975,
+      "errorUsd": 0.0010225000000000008,
+      "errorPct": 7.253059053023591,
+      "predictedTokens": 3024,
+      "actualTokens": 2948
+    },
+    {
+      "model": "gpt-4o",
+      "modelTier": "standard",
+      "taskCategory": "structured",
+      "predictedCostUsd": 0.015120000000000001,
+      "actualCostUsd": 0.01626,
+      "errorUsd": 0.0011399999999999987,
+      "errorPct": 7.011070110701098,
+      "predictedTokens": 3024,
+      "actualTokens": 3090
+    },
+    {
+      "model": "gpt-4o",
+      "modelTier": "standard",
+      "taskCategory": "general",
+      "predictedCostUsd": 0.015120000000000001,
+      "actualCostUsd": 0.014095,
+      "errorUsd": 0.0010250000000000016,
+      "errorPct": 7.272082298687489,
+      "predictedTokens": 3024,
+      "actualTokens": 2827
+    },
+    {
+      "model": "claude-3-5-sonnet",
+      "modelTier": "standard",
+      "taskCategory": "code",
+      "predictedCostUsd": 0.021168,
+      "actualCostUsd": 0.02223,
+      "errorUsd": 0.0010620000000000004,
+      "errorPct": 4.777327935222674,
+      "predictedTokens": 3024,
+      "actualTokens": 3134
+    },
+    {
+      "model": "claude-3-5-sonnet",
+      "modelTier": "standard",
+      "taskCategory": "search",
+      "predictedCostUsd": 0.021168,
+      "actualCostUsd": 0.020178,
+      "errorUsd": 0.0009899999999999978,
+      "errorPct": 4.906333630686876,
+      "predictedTokens": 3024,
+      "actualTokens": 2918
+    },
+    {
+      "model": "claude-3-5-sonnet",
+      "modelTier": "standard",
+      "taskCategory": "analysis",
+      "predictedCostUsd": 0.021168,
+      "actualCostUsd": 0.022833,
+      "errorUsd": 0.0016649999999999998,
+      "errorPct": 7.292077256602286,
+      "predictedTokens": 3024,
+      "actualTokens": 3291
+    },
+    {
+      "model": "claude-3-5-sonnet",
+      "modelTier": "standard",
+      "taskCategory": "creative",
+      "predictedCostUsd": 0.021168,
+      "actualCostUsd": 0.022524000000000002,
+      "errorUsd": 0.001356000000000003,
+      "errorPct": 6.020245071923295,
+      "predictedTokens": 3024,
+      "actualTokens": 3272
+    },
+    {
+      "model": "claude-3-5-sonnet",
+      "modelTier": "standard",
+      "taskCategory": "structured",
+      "predictedCostUsd": 0.021168,
+      "actualCostUsd": 0.022695,
+      "errorUsd": 0.0015270000000000006,
+      "errorPct": 6.728354263053539,
+      "predictedTokens": 3024,
+      "actualTokens": 3041
+    },
+    {
+      "model": "claude-3-5-sonnet",
+      "modelTier": "standard",
+      "taskCategory": "general",
+      "predictedCostUsd": 0.021168,
+      "actualCostUsd": 0.018792,
+      "errorUsd": 0.0023759999999999996,
+      "errorPct": 12.643678160919539,
+      "predictedTokens": 3024,
+      "actualTokens": 2752
+    },
+    {
+      "model": "step-3.7-flash",
+      "modelTier": "eco",
+      "taskCategory": "code",
+      "predictedCostUsd": 0.0015119999999999999,
+      "actualCostUsd": 0.0015267,
+      "errorUsd": 0.000014700000000000086,
+      "errorPct": 0.962861072902344,
+      "predictedTokens": 3024,
+      "actualTokens": 2973
+    },
+    {
+      "model": "step-3.7-flash",
+      "modelTier": "eco",
+      "taskCategory": "search",
+      "predictedCostUsd": 0.0015119999999999999,
+      "actualCostUsd": 0.0015657000000000002,
+      "errorUsd": 0.000053700000000000275,
+      "errorPct": 3.4297758191224545,
+      "predictedTokens": 3024,
+      "actualTokens": 3115
+    },
+    {
+      "model": "step-3.7-flash",
+      "modelTier": "eco",
+      "taskCategory": "analysis",
+      "predictedCostUsd": 0.0015119999999999999,
+      "actualCostUsd": 0.0013758,
+      "errorUsd": 0.00013619999999999995,
+      "errorPct": 9.89969472307021,
+      "predictedTokens": 3024,
+      "actualTokens": 2700
+    },
+    {
+      "model": "step-3.7-flash",
+      "modelTier": "eco",
+      "taskCategory": "creative",
+      "predictedCostUsd": 0.0015119999999999999,
+      "actualCostUsd": 0.001527,
+      "errorUsd": 0.00001500000000000004,
+      "errorPct": 0.9823182711198454,
+      "predictedTokens": 3024,
+      "actualTokens": 3158
+    },
+    {
+      "model": "step-3.7-flash",
+      "modelTier": "eco",
+      "taskCategory": "structured",
+      "predictedCostUsd": 0.0015119999999999999,
+      "actualCostUsd": 0.0015168,
+      "errorUsd": 0.000004800000000000117,
+      "errorPct": 0.3164556962025393,
+      "predictedTokens": 3024,
+      "actualTokens": 3188
+    },
+    {
+      "model": "step-3.7-flash",
+      "modelTier": "eco",
+      "taskCategory": "general",
+      "predictedCostUsd": 0.0015119999999999999,
+      "actualCostUsd": 0.0014892,
+      "errorUsd": 0.000022799999999999904,
+      "errorPct": 1.5310233682514038,
+      "predictedTokens": 3024,
+      "actualTokens": 3106
+    }
+  ],
+  "statistics": {
+    "mae": 6.043782807063383,
+    "p50": 6.020245071923295,
+    "p95": 12.643678160919539,
+    "maxError": 16.689176152807235,
+    "totalTasks": 24
+  },
+  "perModel": {
+    "gpt-4o-mini": {
+      "mae": 8.203288381197279,
+      "p95": 16.689176152807235,
+      "count": 6
+    },
+    "gpt-4o": {
+      "mae": 6.056818635543414,
+      "p95": 9.189384365408939,
+      "count": 6
+    },
+    "claude-3-5-sonnet": {
+      "mae": 7.061336053068035,
+      "p95": 12.643678160919539,
+      "count": 6
+    },
+    "step-3.7-flash": {
+      "mae": 2.853688158444799,
+      "p95": 9.89969472307021,
+      "count": 6
+    }
+  },
+  "summary": {
+    "passed": true,
+    "errors": 0,
+    "failed": 0,
+    "skipped": 0,
+    "mae": 6.043782807063383,
+    "p95": 12.643678160919539,
+    "totalActualCostUsd": 0.23132149999999999,
+    "maxCostUsd": 0.3,
+    "costOverrunUsd": 0
+  },
+  "env": {
+    "evidence": "simulated",
+    "gitSha": "6384979caec473a2fb2a24c87bd871c98efa989c",
+    "gitBranch": "feat/rename-to-praetor",
+    "gitDirty": false,
+    "nodeVersion": "v22.23.4",
+    "pnpmVersion": "9.15.4",
+    "topology": {
+      "gateways": 1,
+      "workers": 1,
+      "operations": 1,
+      "model": "single"
+    },
+    "datasetVersion": "cost-prediction-v1"
+  },
+  "runAt": "2026-10-31T12:57:27.445Z"
+}
