@@ -1,0 +1,39 @@
+{
+  "schemaVersion": 2,
+  "mode": "quick",
+  "passed": true,
+  "exitCode": 0,
+  "failedReason": null,
+  "executionMode": "scaffold",
+  "capabilityStatus": "NOT_EVALUATED",
+  "scoringEligible": false,
+  "oracleEcho": true,
+  "summary": {
+    "total": 10,
+    "correct": 7,
+    "incorrect": 0,
+    "ungraded": 3,
+    "ungradedRate": 30,
+    "effectiveScore": 100,
+    "spineErrors": 0,
+    "scoringRegressions": 0,
+    "defenseEvents": 0
+  },
+  "durationMs": 624,
+  "env": {
+    "evidence": "source",
+    "gitSha": "6384979caec473a2fb2a24c87bd871c98efa989c",
+    "gitBranch": "feat/rename-to-praetor",
+    "gitDirty": false,
+    "nodeVersion": "v22.23.4",
+    "pnpmVersion": "9.15.4",
+    "topology": {
+      "gateways": 1,
+      "workers": 1,
+      "operations": 1,
+      "model": "single"
+    },
+    "datasetVersion": "gaia-fixture-v1"
+  },
+  "runAt": "2026-10-31T14:07:51.749Z"
+}
