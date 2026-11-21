@@ -1,0 +1,39 @@
+{
+  "schemaVersion": 2,
+  "timestamp": "2026-11-21T14:19:43.183Z",
+  "iterations": 2000,
+  "warmup": 50,
+  "backend": "wal",
+  "rowsPerSec": 18716.69101630182,
+  "latency": {
+    "p50Us": 33.432,
+    "p99Us": 104.985,
+    "p999Us": 3731.512,
+    "avgUs": 53.00714399999994,
+    "minUs": 28.213,
+    "maxUs": 4360.523
+  },
+  "hint": "lower latency and higher rowsPerSec are better; this is the steady-state single-writer baseline.",
+  "summary": {
+    "passed": true,
+    "errors": 0,
+    "failed": 0,
+    "skipped": 0
+  },
+  "env": {
+    "evidence": "simulated",
+    "gitSha": "6384979caec473a2fb2a24c87bd871c98efa989c",
+    "gitBranch": "feat/rename-to-praetor",
+    "gitDirty": false,
+    "nodeVersion": "v22.23.5",
+    "pnpmVersion": "9.15.4",
+    "topology": {
+      "gateways": 1,
+      "workers": 1,
+      "operations": 1,
+      "model": "single"
+    },
+    "datasetVersion": "wal-throughput-v1"
+  },
+  "runAt": "2026-11-21T14:19:43.531Z"
+}
